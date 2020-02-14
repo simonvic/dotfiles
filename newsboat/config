@@ -1,0 +1,21 @@
+# colors
+color background          default  	default
+color listnormal          color0   	default
+color listnormal_unread   color0   	default bold
+color listfocus           color1	default
+color listfocus_unread    color1	default bold
+color info                color1	default reverse
+color article             color0	default
+
+# highlights
+highlight article "^(Feed):.*$" 		color0 default bold
+highlight article "^(Title|Date|Author):.*$" 	color0 default bold
+highlight article "^(Link):.*$" 		color0 default
+highlight article "https?://[^ ]+" 		color117 default underline
+highlight article "\\[[0-9]+\\]" 		color117 default dim
+highlight article "\\[image\\ [0-9]+\\]" 	color117 default dim
+highlight feedlist "^─.*$" 			color61 color235 bold underline
+
+
+auto-reload yes
+browser "/bin/newsboat-browser.sh"

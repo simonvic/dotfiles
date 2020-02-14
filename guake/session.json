@@ -1,0 +1,20 @@
+{
+    "schema_version": 2,
+    "timestamp": 1581694703,
+    "workspace": {
+        "0": [
+            [
+                {
+                    "panes": [
+                        {
+                            "type": "term",
+                            "directory": "/home/simonvic/Documents/BlockNotes"
+                        }
+                    ],
+                    "label": "simonvic@arch-simonvic: ~/Documents/BlockNotes",
+                    "custom_label_set": false
+                }
+            ]
+        ]
+    }
+}

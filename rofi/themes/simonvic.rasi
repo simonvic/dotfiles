@@ -1,0 +1,149 @@
+/**
+ * User: simonvic
+ * Copyright: simonvic
+ *
+ */
+
+configuration {
+	display-drun: "Applications ->";
+	display-run: "$->";
+	display-window: "|<- ->|";
+	display-ssh: "~#";
+	show-icons: true;
+	sidebar-mode: false;
+	font: "NotoSans Regular 9";
+}
+
+* {
+	text-color: @foreground;
+	active-background: rgb(100,50,50);
+	active-foreground: @foreground;
+	normal-background: @background;
+	normal-foreground: @foreground;
+	urgent-background: #9E2A5E;
+	urgent-foreground: @foreground;
+	alternate-active-background: @background;
+	alternate-active-foreground: @foreground;
+	alternate-normal-background: @background;
+	alternate-normal-foreground: @foreground;
+	alternate-urgent-background: @background;
+	alternate-urgent-foreground: @foreground;
+	selected-active-background: rgb(200,10,10);
+	selected-active-foreground: #FFFFFF;
+	selected-normal-background: rgb(200,50,50);
+	selected-normal-foreground: #FFFFFF;
+	selected-urgent-background: #9D596B;
+	selected-urgent-foreground: @foreground;
+	background-color: transparent;
+	background: rgba(33,33,33 ,0.6);
+	foreground: rgb(200,200,200);
+	spacing: 0;
+	
+}
+
+window {
+	location: center;
+	anchor: center;
+	height: 100%;
+	width: 100%;
+	orientation: vertical;
+	children: [mainbox];
+	hide-scrollbar: true;
+	padding: 20% 35% 20% 35%;
+	background-color: #00000000;
+}
+
+mainbox {
+	children: [inputbar, listview];
+}
+
+
+
+listview {
+	spacing: 0.6em;
+	dynamic: false;
+	cycle: false;
+	padding: 5px 5px 5px 5px;
+}
+
+inputbar {
+	border-radius: 50%;
+	padding: 10px;
+	border-spacing: 5px 0 0 0;
+	border: 0px;
+	spacing: 0px;
+	margin: 10px;
+	border-color: rgb(200,50,50);
+	background-color: @background;
+	text-color: #FFFFFF;
+
+}
+
+entry{
+	padding: 5px;
+	border: 0px 0px 2px 0px;
+	border-color: rgb(250,50,50);
+	background-color: rgba(0,0,0,0);
+	text-color: #FFFFFF;
+}
+
+
+prompt{
+	padding: 5px;
+	background-color: #00000000;
+	text-color: #FFFFFF;
+}
+
+
+element {
+	padding: 10px;
+	border-radius: 50%;
+}
+
+
+element normal.normal {
+	background-color: @normal-background;
+	text-color: @normal-foreground;
+}
+
+element normal.urgent {
+	background-color: @urgent-background;
+	text-color: @urgent-foreground;
+}
+
+element normal.active {
+	background-color: @active-background;
+	text-color: @active-foreground;
+}
+
+element selected.normal {
+	background-color: @selected-normal-background;
+	text-color: @selected-normal-foreground;
+	border-color: @active-background;
+}
+
+element selected.urgent {
+	background-color: @selected-urgent-background;
+	text-color: @selected-urgent-foreground;
+}
+
+element selected.active {
+	background-color: @selected-active-background;
+	text-color: @selected-active-foreground;
+}
+
+element alternate.normal {
+	background-color: @normal-background;
+	text-color: @normal-foreground;
+}
+
+element alternate.urgent {
+	background-color: @urgent-background;
+	text-color: @urgent-foreground;
+}
+
+element alternate.active {
+	background-color: @active-background;
+	text-color: @active-foreground;
+}
+

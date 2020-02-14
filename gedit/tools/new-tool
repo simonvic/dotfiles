@@ -1,0 +1,8 @@
+#!/bin/sh
+# [Gedit Tool]
+# Name=New tool
+# Input=nothing
+# Output=output-panel
+# Applicability=all
+# Save-files=nothing
+
