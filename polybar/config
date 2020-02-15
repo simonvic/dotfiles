@@ -18,8 +18,8 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #69000000
-background-alt = #444
+background = #69333333
+background-alt = #FF333333
 ;foreground = ${xrdb:color7:#222}
 foreground = #FFFFFF
 foreground-alt = #555
@@ -27,8 +27,9 @@ primary = #FF3737
 secondary = #e60053
 alert = #bd2c40
 
-[bar/simonvic]
+[bar/top]
 ;monitor = ${env:MONITOR:HDMI-1}
+enable-ipc = true
 width = 100%
 height = 20
 ;offset-x = 0
@@ -49,7 +50,7 @@ padding-left = 2
 padding-right = 2
 
 module-margin-left = 0
-module-margin-right = 7
+module-margin-right = 2
 
 ;BACKUP
 ;font-0 = Work Sans:style=Regular:pixelsize=10;1
@@ -60,27 +61,79 @@ font-0 = "Work Sans:size=9;2"
 font-1 = "Iosevka Nerd Font:size=12;2"
 font-2 = "Iosevka Nerd Font:size=16;3"
 
-modules-left = i3
+modules-left = i3 
 modules-center = date
-modules-right = wlan eth pulseaudioBAR memory cpu battery temperature powermenu
+modules-right = wlan eth info-redshift-temp pulseaudio battery options_open
 
 tray-position = right
 tray-padding = 2
 tray-background = #0063ff
 
-;override-redirect = true
-
-;wm-restack = bspwm
-;wm-restack = i3
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[bar/expanded]
+;monitor = ${env:MONITOR:eDP1}
+enable-ipc = true
+
+override-redirect = true 
+;wm-restack = i3
+bottom = false
+
+height = 20
+width = 100%
+
+offset-y = 0
+offset-x = 0
+
+radius = 5%
+
+fixed-center = true
+spacing = 1
+
+background = ${colors.background-alt}
+foreground = ${colors.foreground}
+
+font-0 = "Work Sans:size=9;2"
+font-1 = "Iosevka Nerd Font:size=12;2"
+font-2 = "Iosevka Nerd Font:size=16;3"
+
+modules-left = i3 xkeyboard filesystem memory cpu
+modules-center = 
+modules-right =  wlan-extended eth backlight-acpi info-redshift-temp-extended pulseaudio-expanded battery options_close
+
+line-size = 2
+line-color = #333333
+
+border-size = 3
+border-color = #00000000
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#======MODULES===============================================
+
 
 [module/xwindow]
 type = internal/xwindow
@@ -90,17 +143,14 @@ label = %title:0:30:...%
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
 
 label-layout = %layout%
-label-layout-underline = ${colors.secondary}
 
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
@@ -108,31 +158,9 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = %mountpoint%%{F-}: %percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
-
-[module/bspwm]
-type = internal/bspwm
-
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
-label-focused-padding = 2
-
-label-occupied = %index%
-label-occupied-padding = 2
-
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
-
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 2
-
-; Separator in between workspaces
-; label-separator = |
+label-unmounted-foreground = ${colors.foreground}
 
 [module/i3]
 type = internal/i3
@@ -189,7 +217,7 @@ label-song-ellipsis = true
 type = internal/xbacklight
 
 format = <label> <bar>
-label = BL
+label = 
 
 bar-width = 10
 bar-indicator = |
@@ -202,10 +230,13 @@ bar-empty = ─
 bar-empty-font = 2
 bar-empty-foreground = ${colors.foreground-alt}
 
+
+
 [module/backlight-acpi]
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
+
 
 [module/cpu]
 type = internal/cpu
@@ -226,7 +257,29 @@ label = %percentage_used%%
 [module/wlan]
 type = internal/network
 interface = wlp3s0
-interval = 1.0
+interval = 5.0
+
+format-connected = <ramp-signal> <label-connected>
+;format-connected-underline = #9f78e1
+label-connected = %downspeed% 祝%upspeed%
+
+format-disconnected = 睊
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground}
+
+ramp-signal-0 = 直
+ramp-signal-1 = 直
+ramp-signal-2 = 直
+ramp-signal-3 = 直
+ramp-signal-4 = 直
+ramp-signal-foreground = ${colors.foreground}
+
+[module/wlan-extended]
+type = internal/network
+interface = wlp3s0
+interval = 5.0
 
 format-connected = <ramp-signal> <label-connected>
 ;format-connected-underline = #9f78e1
@@ -244,6 +297,7 @@ ramp-signal-2 = 直
 ramp-signal-3 = 直
 ramp-signal-4 = 直
 ramp-signal-foreground = ${colors.foreground}
+
 
 [module/eth]
 type = internal/network
@@ -266,10 +320,10 @@ type = internal/date
 interval = 1
 
 date = "%d/%m"
-date-alt = "%d %A %B %Y"
+date-alt = " %d %A %B %Y"
 
-time = %H:%M
-time-alt = %H:%M:%S
+time = "%H:%M"
+time-alt = " %H:%M:%S"
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -280,54 +334,39 @@ label = %time%   %date%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-; You can find the different card numbers in `/proc/asound/cards`
-;;master-soundcard = default
-;;speaker-soundcard = default
-;;headphone-soundcard = default
-
-; Default: Master
-;;master-mixer = Master
-
-; Optionally define speaker and headphone mixers
-; Default: none
-;;speaker-mixer = Speaker
-; Default: none
-;;headphone-mixer = Headphone
-
-; Default: 5
-;;interval = 5
-
-; Available tags:
-;   <label-volume> (default)
-;   <ramp-volume>
-;   <bar-volume>
-format-volume = <ramp-volume>
-
-; Available tags:
-;   <label-muted> (default)
-;   <ramp-volume>
-;   <bar-volume>
-;format-muted = <label-muted>
-
-; Available tokens:
-;   %percentage% (default)
+format-volume = <ramp-volume> <label-volume>
 label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
 
-; Available tokens:
-;   %percentage% (default
 label-muted = ﱝ
-label-muted-foreground = ${color.fg-alt}
+label-muted-foreground = ${colors.primary}
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
 
 ramp-volume-0 = 
 ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-2 = 墳
 ramp-volume-3 = 
 
-[module/pulseaudioBAR]
+[module/pulseaudio-expanded]
 type = internal/pulseaudio
 
-;format-volume = <ramp-volume> <label-volume> <bar-volume>
-format-volume = <ramp-volume> <label-volume>
+format-volume = <ramp-volume> <label-volume> <bar-volume>
 label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
@@ -442,12 +481,43 @@ menu-1-0 = cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
 menu-1-1-exec = sudo reboot
-
+ 
 menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
+[module/options_open]
+type = custom/text
+content-foreground = ${colors.foreground}
+content = ""
+click-left = ~/.config/i3/scripts/polybar_wrapper open_options
+
+[module/options_close]
+type = custom/text
+content-foreground = ${colors.primary}
+content = ""
+click-left = ~/.config/i3/scripts/polybar_wrapper close_options
+
+[module/info-redshift-temp]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/info-redshift-temp.sh
+interval = 5
+click-left = exec redshift -P -O 4000 
+click-right = exec redshift -x 
+
+[module/info-redshift-temp-extended]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/info-redshift-temp-extended.sh
+interval = 5
+
+[module/system-bluetooth-bluetoothctl]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/system-bluetooth-bluetoothctl.sh
+tail = true
+click-left = ~/.config/polybar/polybar-scripts/system-bluetooth-bluetoothctl.sh --toggle &
+
+#====GENERAL====================
 [settings]
 screenchange-reload = true
 ;compositing-background = xor

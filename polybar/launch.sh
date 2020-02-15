@@ -7,6 +7,8 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar, using default config location ~/.config/polybar/config
-polybar simonvic &
+#polybar simonvic &
+
+exec ~/.config/i3/scripts/polybar_wrapper launch
 
 echo "Polybar launched..."
