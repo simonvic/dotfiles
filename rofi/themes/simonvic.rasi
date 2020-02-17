@@ -5,13 +5,13 @@
  */
 
 configuration {
-	display-drun: "Applications ->";
-	display-run: "$->";
-	display-window: "|<- ->|";
+	display-drun: "§";
+	display-run: "$";
+	display-window: "缾";
 	display-ssh: "~#";
 	show-icons: true;
 	sidebar-mode: false;
-	font: "NotoSans Regular 9";
+	font: "NotoSans Regular 16";
 }
 
 * {
