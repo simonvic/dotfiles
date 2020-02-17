@@ -16,6 +16,7 @@
 Sorry for the uncut, unedited and shitty quality video. I'll upload better videos later
 
 ## Polybar and Dunst
+https://streamable.com/uosn5
 * Modules in main polybar: 
   * i3
   * l.date / extended date
@@ -34,7 +35,6 @@ Sorry for the uncut, unedited and shitty quality video. I'll upload better video
      * Reboot
      * Shutdown
      
-https://streamable.com/uosn5
 
 ## Rofi
 https://streamable.com/4c9ie
