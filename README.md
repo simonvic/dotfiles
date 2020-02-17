@@ -1,4 +1,4 @@
 # dotfiles
 Configs for simonvic personal style 
 
-![Image of Yaktocat](https://github.com/simonvic/dotfiles/Preview/Rice.png)
+![Overview with useless but cool stuff](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice.png)
