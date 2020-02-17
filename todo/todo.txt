@@ -1,0 +1,16 @@
+ polybar
+ guake
+ picom
+ oh my zsh
+ fonts
+ keyboards and mouse settings
+ dunst
+ redshift
+ newsboat
+ GEDIT
+ netbeans
+ tor
+ todo
+ nvidia drivers
+ neofetch color
+ power managemenet/suspend etc
