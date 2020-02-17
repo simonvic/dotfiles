@@ -82,6 +82,7 @@ bindsym $mod+Shift+q kill
 
 # rofi
 bindsym $mod+a exec rofi -show drun -theme .config/rofi/themes/simonvic
+bindsym $mod+Ctrl+a exec rofi -show run -theme .config/rofi/themes/simonvic
 bindsym $mod+Tab exec rofi -show window -theme .config/rofi/themes/simonvic
 
 # change focus
