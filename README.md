@@ -1,7 +1,6 @@
-# dotfiles
 # Configs for simonvic personal style 
 
-## Overview with useless but cool stuff
+## Overview with cool and useless stuff
 ![Overview with useless but cool stuff](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice.png)
 
 ## Firefox and GEdit
