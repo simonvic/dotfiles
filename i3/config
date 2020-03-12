@@ -24,11 +24,11 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id feh --bg-fill /home/simonvic/Pictures/Wallpapers/mountain.jpg
 
 # Windows transparency
-exec_always --no-startup-id picom -o 0.5 --experimental-backends --config .config/picom/picom.conf
+exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
+#bar 
 #        status_command i3status
 #        position top
 #}
@@ -44,16 +44,20 @@ set $mod Mod4
 # ======================================================== 
 # ======KEYBINDINGS=======================================
 # ======================================================== 
+
+# Drop down terminal
+bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
+
+
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec /home/simonvic/.config/i3/scripts/volume.sh up
+bindsym XF86AudioLowerVolume exec /home/simonvic/.config/i3/scripts/volume.sh down
+bindsym XF86AudioMute exec /home/simonvic/.config/i3/scripts/volume.sh mute
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 -step 500 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 -step 500 # decrease screen brightness
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -332,6 +336,5 @@ title_align center
 
 #borders
 # default_border normal 10
-
 
 
