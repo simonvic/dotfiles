@@ -56,8 +56,8 @@ bindsym XF86AudioLowerVolume exec /home/simonvic/.config/i3/scripts/volume.sh do
 bindsym XF86AudioMute exec /home/simonvic/.config/i3/scripts/volume.sh mute
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 -step 500 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 -step 500 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec /home/simonvic/.config/i3/scripts/brightness.sh up
+bindsym XF86MonBrightnessDown exec /home/simonvic/.config/i3/scripts/brightness.sh down
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
