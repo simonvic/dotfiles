@@ -17,11 +17,19 @@
 # Restore GNOME's settings
 exec --no-startup-id /usr/libexec/gnome-settings-daemon-localeexec
 
+# Lockscreen
+exec xset s 600
+exec --no-startup-id xss-lock -- betterlockscreen -s dim
+
+# Restore redshift state
+exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
+
 # Run polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Use feh to set wallpaper
-exec_always --no-startup-id feh --bg-fill /home/simonvic/Pictures/Wallpapers/mountain.jpg
+# exec_always --no-startup-id feh --bg-fill /home/simonvic/Pictures/Wallpapers/mountain.jpg
+exec_always --no-startup-id feh --bg-fill /home/simonvic/Pictures/LogoRemakeFinal/4k\ background\ +\ ps.jpg .jpg
 
 # Windows transparency
 exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
