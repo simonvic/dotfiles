@@ -9,10 +9,10 @@
 ## Minimal Polybar, Dunst notification, Dunst volume & brightness bar
 ![top](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2018-05-45.png)
 
-## You can "extend" the polybar to show some more detailed information
-![extend](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice4.png)
+## Rofi
+![rofi](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-29-44.png)
 
-## Polybar and Dunst
+## Polybar and Dunst in action
 https://streamable.com/uosn5
 * Modules in main polybar: 
   * i3
@@ -32,7 +32,3 @@ https://streamable.com/uosn5
      * Reboot
      * Shutdown
      * Sleep
-     
-
-## Rofi
-https://streamable.com/4c9ie
