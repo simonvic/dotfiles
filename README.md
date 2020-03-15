@@ -1,19 +1,16 @@
 # Configs for simonvic personal style 
 
 ## Overview with cool and useless stuff
-![Overview with useless but cool stuff](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice.png)
+![Overview with useless but cool stuff](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-22-03.png)
 
-## Firefox and GEdit
-![Real](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice2.png)
+## Firefox with drop-down terminal
+![Real](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-28-40.png)
 
-## Minimal Polybar, oh-my-zsh theme, Dunst notification
-![top](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice3.png)
+## Minimal Polybar, Dunst notification, Dunst volume & brightness bar
+![top](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2018-05-45.png)
 
 ## You can "extend" the polybar to show some more detailed information
 ![extend](https://github.com/simonvic/dotfiles/blob/master/Preview/Rice4.png)
-
-# Super LAZY videos about the workflow
-Sorry for the uncut, unedited and shitty quality video. I'll upload better videos later
 
 ## Polybar and Dunst
 https://streamable.com/uosn5
@@ -34,6 +31,7 @@ https://streamable.com/uosn5
   * Powermenu
      * Reboot
      * Shutdown
+     * Sleep
      
 
 ## Rofi
