@@ -8,6 +8,7 @@
 
 ## Minimal Polybar, Dunst notification, Dunst volume & brightness bar
 ![top](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2018-05-45.png)
+![gif](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/2020-03-15_18-38-39_1.gif)
 
 ## Rofi
 ![rofi](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-29-44.png)
