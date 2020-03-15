@@ -27,7 +27,7 @@ plain_text = no
 #format = "<b>%a</b> %i %I %p : <big><b>%s</b></big>\n%b"
 
 #NORMAL
-format = "<small>%a</small>: <big><b>%s</b></big>\n<small>%b</small>"
+format = "<small>%a</small>: <big><b>%s</b></big>\n<small>%b\n%p</small>"
 
 # Sort messages by urgency.
 sort = yes
@@ -84,7 +84,7 @@ shrink = no
 # The transparency of the window.  Range: [0; 100].
 # This option will only work if a compositing windowmanager is
 # present (e.g. xcompmgr, compiz, etc.).
-transparency = 30
+transparency = 20
 
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
@@ -120,18 +120,18 @@ show_indicators = yes
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
 # This adds empty space above and under the text.
-line_height = 1
+line_height = -1
 
 # Draw a line of "separatpr_height" pixel height between two
 # notifications.
 # Set to 0 to disable.
-separator_height = 2
+separator_height = 5
 
 # Padding between text and separator.
-padding = 5
+padding = 10
 
 # Horizontal padding.
-horizontal_padding = 10
+horizontal_padding = 20
 
 # Define a color for the separator.
 # possible values are:
@@ -147,10 +147,10 @@ separator_color = auto
 startup_notification = false
 
 # dmenu path.
-dmenu = /usr/bin/dmenu -p dmenu:
+dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic
 
 # Browser for opening urls in context menu.
-browser = /usr/bin/firefox -new-tab
+browser = /usr/bin/firefox --new-tab
 
 # Align icons left/right/off
 icon_position = left
@@ -260,3 +260,21 @@ timeout = 16
 #    urgency = normal
 #
 # vim: ft=cfg
+
+[volume]
+	appname = Volume
+	msg_urgency = normal
+	format = "%b"
+
+[volume-warning]
+	appname = Volume
+	msg_urgency = critical
+	format = "%b"
+	#foreground = "#FFA500"
+
+[brightness]
+	appname = Brightness
+	msg_urgency = normal
+	format = "%b"
+	
+	
