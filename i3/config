@@ -61,18 +61,27 @@ set $mod Mod4
 bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 
 # Extend polybar
-bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar_wrapper switch_state
+bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar_wrapper switch_state
 
 
-# Adjust volume
-# TO-DO use shift modifier
-bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up
-bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down
+# Adjust volume 
+#	(hold Ctrl to increase/decrease by 10)
+bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 1
+bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 1
+bindsym Ctrl+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 10
+bindsym Ctrl+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 10
 bindsym XF86AudioMute exec $HOME/.config/i3/scripts/volume.sh mute
 
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up
-bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down
+# Sreen brightness/temperature controls
+#	(hold Ctrl to increase/decrease brightness by 10)
+#	(hold Shift to increase/decrease temperature)
+bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up 1
+bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down 1
+bindsym Ctrl+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up 10
+bindsym Ctrl+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down 10
+# TO-DO a lot of optimization :D
+bindsym Shift+XF86MonBrightnessUp exec source ~/.config/polybar/scripts/env.sh && $HOME/.config/polybar/scripts/redshift.sh increase
+bindsym Shift+XF86MonBrightnessDown exec source ~/.config/polybar/scripts/env.sh && $HOME/.config/polybar/scripts/redshift.sh decrease
 
 # Media player controls
 bindsym XF86AudioPlay exec $HOME/.config/i3/scripts/playerctl.sh play-pause
@@ -353,5 +362,3 @@ title_align center
 
 #borders
 # default_border normal 10
-
-
