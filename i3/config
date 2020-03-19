@@ -60,6 +60,8 @@ set $mod Mod4
 # Drop down terminal
 bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 
+# Extend polybar
+bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar_wrapper switch_state
 
 # Use pactl to adjust volume in PulseAudio.
 # set $refresh_i3status killall -SIGUSR1 i3status
