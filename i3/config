@@ -63,8 +63,9 @@ bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 # Extend polybar
 bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar_wrapper switch_state
 
-# Use pactl to adjust volume in PulseAudio.
-# set $refresh_i3status killall -SIGUSR1 i3status
+
+# Adjust volume
+# TO-DO use shift modifier
 bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up
 bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down
 bindsym XF86AudioMute exec $HOME/.config/i3/scripts/volume.sh mute
@@ -74,10 +75,10 @@ bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up
 bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down
 
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec $HOME/.config/i3/scripts/playerctl.sh play-pause
+bindsym XF86AudioStop exec $HOME/.config/i3/scripts/playerctl.sh stop
+bindsym XF86AudioNext exec $HOME/.config/i3/scripts/playerctl.sh next
+bindsym XF86AudioPrev exec $HOME/.config/i3/scripts/playerctl.sh previous
 
 # Calculator
 bindsym XF86Calculator exec gnome-calculator
