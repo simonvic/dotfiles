@@ -6,6 +6,8 @@ WINDOW_ID_CONKY=/tmp/conky_window_id
 WINDOW_ID_TOP=/tmp/polybar_top_window_id
 WINDOW_ID_EXPANDED=/tmp/polybar_expanded_window_id
 
+OPTIONS_STATE=/tmp/polybar_state
+
 conky_launch() {
     # Hacky X11 magic to make Conky appear above polybar
     killall conky
@@ -20,14 +22,14 @@ conky_launch() {
 
 polybar_launch() {
     killall polybar
-    echo launchPolybar
-    polybar top &
+	
+	polybar top &
     xdotool search --sync --pid $! > $WINDOW_ID_TOP
 
     polybar expanded &
     xdotool search --sync --pid $! > $WINDOW_ID_EXPANDED
-
     bar_collapse
+    
 }
 
 launch() {
@@ -36,36 +38,30 @@ launch() {
     polybar_launch
 }
 
-bar_expand() {
+bar_extend() {
     xdotool windowmap $(cat $WINDOW_ID_EXPANDED)
+    echo "extended" > $OPTIONS_STATE
 }
 
 bar_collapse() {
     xdotool windowunmap $(cat $WINDOW_ID_EXPANDED)
+    echo "collapsed" > $OPTIONS_STATE
 }
 
-options_open() {
-    bar_expand    
-    echo "open" > /tmp/polybar_side_panel_state
-    #ID_CONKY=$(cat $WINDOW_ID_CONKY)
-    #xdotool windowmap $ID_CONKY
-    #xdotool windowraise $ID_CONKY
-}
-
-options_close() {    
-    #echo "open" > /tmp/polybar_side_panel_state
-    #ID_CONKY=$(cat $WINDOW_ID_CONKY)
-    #xdotool windowunmap $ID_CONKY
-    bar_collapse
+options_switch() {
+	if [[ $(< $OPTIONS_STATE) = "extended" ]]; then
+		bar_collapse
+	elif [[ $(< $OPTIONS_STATE) = "collapsed" ]]; then
+		bar_extend
+	else
+		echo "Unknown state"
+	fi
 }
 
 case "$1" in
-    open_options)
-        options_open;;
-    close_options)
-        options_close;;
+    switch_state)
+    	options_switch;;    	
     launch)
         launch;;
 esac
-
 
