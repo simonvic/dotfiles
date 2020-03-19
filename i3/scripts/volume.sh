@@ -13,7 +13,7 @@ increaseAmount=1
 drawBox=false
 
 #	Default icon
-icon=audio-volume-medium
+icon=/usr/share/icons/Paper/24x24/panel/audio-volume-medium.svg
 
 #	Default urgency level [Available: low, normal, critical]
 urgency=normal
@@ -65,7 +65,7 @@ function sendNotification {
 
 	if [ $volume -ge $warningLevel ]; then
   		urgency=critical
-  		icon=audio-volume-high
+		icon=/usr/share/icons/Paper/24x24/panel/audio-volume-high.svg
   	fi
   	
     # Send the notification
@@ -96,7 +96,7 @@ case $1 in
 		else
 			body="$emptyBar\t<b>Muted</b>"
 		fi
-		dunstify -a "Volume" -i audio-volume-low -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
+		dunstify -a "Volume" -i /usr/share/icons/Paper/24x24/panel/audio-volume-low.svg -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
 	else
 	    sendNotification
 	fi
