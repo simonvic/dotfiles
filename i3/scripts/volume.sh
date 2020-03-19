@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#	Increase the volume by x%
-increaseAmount=1
-
 #	With drawBox = true
 #	┌────────────────────┐
 #	│████████████▃░░░░░░░│ 62%
@@ -77,12 +74,12 @@ case $1 in
     up)
 	# Set the volume on (if it was muted)
 	amixer -D pulse set Master on > /dev/null
-	amixer -D pulse sset Master "$increaseAmount"%+ > /dev/null
+	amixer -D pulse sset Master "$2"%+ > /dev/null
 	sendNotification
 	;;
     down)
 	amixer -D pulse set Master on > /dev/null
-	amixer -D pulse sset Master "$increaseAmount"%- > /dev/null
+	amixer -D pulse sset Master "$2"%- > /dev/null
 	sendNotification
 	;;
     mute)
