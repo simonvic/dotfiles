@@ -2,8 +2,6 @@
 
 source ~/.config/polybar/scripts/env.sh
 
-#	Increase the volume by x%
-increaseAmount=1
 
 #	With drawBox = true
 #	┌────────────────────┐
@@ -12,7 +10,7 @@ increaseAmount=1
 
 #	With drawBox = false
 #	████████████▃░░░░░░░ 62%
-drawBox=true
+drawBox=false
 
 #	Default icon
 icon=/usr/share/icons/Paper/scalable/status/display-brightness-medium-symbolic.svg
@@ -71,11 +69,11 @@ function sendNotification {
 
 case $1 in
     up)
-     xbacklight -inc 1
+     xbacklight -inc $2
 	  sendNotification
 	;;
     down)
-     xbacklight -dec 1
+     xbacklight -dec $2
 	  sendNotification
 	;;
 esac
