@@ -1,4 +1,4 @@
-todoFile=~/Documents/scripts/todo/todo.txt
+todoFile=~/Documents/Programming/scripts/todo/todo.txt
 doneSymbol=
 todoSymbol=
 
@@ -22,19 +22,27 @@ Usage
 	todo [options]
 
 Options
+	help	show this help
 	list	[filter]	List things to do with a filter
 	done		List things done
-	undone	List things to do if any
 	new	<name>		Add a new thing to do with name <name>
-	do	<name>		Mark it done
-	undo	<name>		Mark it undone
+	do	<id>		Mark it done
+	undo	<id>		Mark it undone
+	edit	Edit manually the todo list
 "
 }
 
 if [ -z "$1" ]
 then
 	printHeader;
-	printUsage;
+	thingsUndone=`grep -c -e  $todoFile`;
+	    	if [ $thingsUndone -ge 1 ]
+	    	then
+  		    	cat $todoFile | grep 
+  		   else
+  		   	echo "Nothing to do! NICE! (this is pure utopia)"
+  		   fi
+	
 else
 	case $1 in 
 		list)
@@ -54,23 +62,27 @@ else
 	    	printHeader;
 	    	cat $todoFile | grep 
 	    ;;
-	    undone)
-	    	thingsUndone=`grep -c -e  $todoFile`;
-	    	if [ $thingsUndone -ge 1 ]
-	    	then
-				printHeader;
-  		    	cat $todoFile | grep 
-  		   fi
+	    help)
+	    	printHeader;
+	    	printUsage;
 	    ;;
 	    new)
-	    	echo " $2" >> $todoFile
+	    	if [ -z "$2" ]
+	    	then
+	    		printUsage;	    	
+	    	else
+	    		newID=$((`tail -n 1 $todoFile | cut -d "[" -f2 | cut -d "]" -f1` + 1)) 
+	    		echo " [$newID] $2" >> $todoFile
+	    	fi
 	    ;;
 	    do)
-	    	sed -i "s/ $2/ $2/g" $todoFile
+	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
 	    ;;
 	    undo)
-	    	sed -i "s/ $2/ $2/g" $todoFile
+	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
+	    ;;
+	    edit)
+	    	xdg-open $todoFile
 	    ;;
 	esac
 fi
-
