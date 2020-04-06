@@ -25,7 +25,7 @@ exec_always --no-startup-id picom --experimental-backends --config .config/picom
 
 # Lockscreen
 exec xset s 1800
-exec --no-startup-id xss-lock -- betterlockscreen -s dim
+exec --no-startup-id xss-lock -l -- betterlockscreen -s dim
 
 # Restore redshift state
 exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
@@ -111,9 +111,12 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # rofi
-bindsym $mod+a exec rofi -show drun -theme .config/rofi/themes/simonvic
-bindsym $mod+Ctrl+a exec rofi -show run -theme .config/rofi/themes/simonvic
-bindsym $mod+Tab exec rofi -show window -theme .config/rofi/themes/simonvic
+# Available: 
+#		DRUN: 	simonvic, simonvic_reverse, simonvic_fullscreen, simonvic_fullscreen_reverse
+#		WINDOW:	simonvic_window, simonvic_window_reverse, simonvic_window_fullscreen, simonvic_window_fullscreen_reverse
+bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_fullscreen
+bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic
+bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_window
 
 # change focus
 bindsym $mod+j focus left
