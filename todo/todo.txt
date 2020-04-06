@@ -1,2 +1,2 @@
- Stuff done
- Stuff to do
+ [0] Check out https://github.com/simonvic/dotfiles
+ [1] Star da dots
