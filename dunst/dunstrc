@@ -27,7 +27,7 @@ plain_text = no
 #format = "<b>%a</b> %i %I %p : <big><b>%s</b></big>\n%b"
 
 #NORMAL
-format = "<small>%a</small>: <big><b>%s</b></big>\n<small>%b\n%p</small>"
+format = "<small>%a</small>: <big><b>%s</b></big>\n<small>%b</small>"
 
 # Sort messages by urgency.
 sort = yes
@@ -75,7 +75,8 @@ hide_duplicates_count = no
 # The width can be negative.  In this case the actual width is the
 # screen width minus the width defined in within the geometry option.
 #geometry = "250x50-40+40"
-geometry = "500x3-710+40"
+geometry = "500x30-710+40"
+
 
 # Shrink window if it's smaller than the width.  Will be ignored if
 # width is 0.
@@ -120,7 +121,7 @@ show_indicators = yes
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
 # This adds empty space above and under the text.
-line_height = -1
+line_height = -3
 
 # Draw a line of "separatpr_height" pixel height between two
 # notifications.
@@ -280,5 +281,4 @@ timeout = 16
 [playerctl]
 	appname = playerctl
 	format = "%b"
-	
-	
+		
