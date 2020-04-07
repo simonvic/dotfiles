@@ -20,7 +20,7 @@
 #Numlock enable
 exec numlockx
 
-# Windows transparency
+# Picom
 exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
 
 # Lockscreen
@@ -35,7 +35,7 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Use feh to set wallpaper
 # exec_always --no-startup-id feh --bg-fill /home/simonvic/Pictures/Wallpapers/mountain.jpg
-exec_always --no-startup-id feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4k\ background\ +\ ps.jpg .jpg
+ exec_always --no-startup-id feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -111,7 +111,7 @@ bindsym $mod+Shift+q kill
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # rofi
-# Available: 
+# Themes available: 
 #		DRUN: 	simonvic, simonvic_reverse, simonvic_fullscreen, simonvic_fullscreen_reverse
 #		WINDOW:	simonvic_window, simonvic_window_reverse, simonvic_window_fullscreen, simonvic_window_fullscreen_reverse
 bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_fullscreen
@@ -365,3 +365,5 @@ title_align center
 
 #borders
 # default_border normal 10
+
+
