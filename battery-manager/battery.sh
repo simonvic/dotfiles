@@ -43,26 +43,26 @@ function monitor {
 	capacity=`getCapacity`
 	
 	if [ "$status" = "Not charging" -a "$capacity" -eq 100 ]; then
-		title="Not charging"
+		title="$capacity %"
 		body="Battery fully charged"
 		urgency=low
 		icon=battery-100-charging
 		sendNotification
 	elif [ "$status" = "Discharging" ]; then
 		if [ "$capacity" -le 10 ]; then
-				title="Critical"
+				title="$capacity %"
 				body="Battery is at a critical level"
 				urgency=critical
 				icon=battery-caution
 				sendNotification
 			elif [ "$capacity" -eq 20 ]; then
-				title="Low"
+				title="$capacity %"
 				body="Battery will need to be charged soon"
 				urgency=normal
 				icon=battery-low
 				sendNotification
 			elif [ "$capacity" -eq 50 ]; then
-				title="Half"
+				title="$capacity %"
 				body="Battery is 50%"
 				urgency=low
 				icon=battery-medium
@@ -70,8 +70,8 @@ function monitor {
 			fi
 	elif [ "$status" = "Charging" ]; then
 		if [ "$capacity" -eq 80 ]; then
-				title="Over 80"
-				body="BATTERY IS OVER HEIGHTTHOUSAND"
+				title="$capacity %"
+				body="IT'S OVER HEIGHTTHOUSAND"
 				urgency=low
 				timeout=1500
 				icon=battery-080-charging
@@ -89,6 +89,19 @@ function plugout {
 	echo "plugout"
 }
 
+function current {
+	status=`getStatus`
+	capacity=`getCapacity`
+	if [ "$status" = "Discharging" ]; then
+		icon=battery-000
+	elif [ "$status" = "Charging" ]; then
+		icon=battery-000-charging
+	fi
+	title="$capacity %"
+	body="Status: <b>$status</b>"
+	sendNotification
+}
+
 case $1 in
 	monitor)
 		monitor
@@ -99,4 +112,6 @@ case $1 in
 	plugout)
  		plugout
 	;;
+	current)
+		current
 esac
