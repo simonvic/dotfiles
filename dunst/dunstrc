@@ -1,5 +1,5 @@
 [global]
-font = WorkSans 12
+font = WorkSans Regular 11
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -85,12 +85,12 @@ shrink = no
 # The transparency of the window.  Range: [0; 100].
 # This option will only work if a compositing windowmanager is
 # present (e.g. xcompmgr, compiz, etc.).
-transparency = 20
+transparency = 10
 
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
 # Set to 0 to disable.
-idle_threshold = 30
+idle_threshold = 5
 
 # Which monitor should the notifications be displayed on.
 monitor = 0
@@ -113,7 +113,7 @@ follow = none
 sticky_history = yes
 
 # Maximum amount of notifications kept in history
-history_length = 30
+history_length = 50
 
 # Display indicators for URLs (U) and actions (A).
 show_indicators = yes
@@ -132,7 +132,7 @@ separator_height = 5
 padding = 10
 
 # Horizontal padding.
-horizontal_padding = 20
+horizontal_padding = 10
 
 # Define a color for the separator.
 # possible values are:
@@ -148,7 +148,7 @@ separator_color = auto
 startup_notification = false
 
 # dmenu path.
-dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic
+dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_window
 
 # Browser for opening urls in context menu.
 browser = /usr/bin/firefox --new-tab
