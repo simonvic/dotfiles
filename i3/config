@@ -1,12 +1,26 @@
+###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+
+
+
+
 # ======================================================== 
 # ======STARTUP=========================================== 
 # ======================================================== 
 
 #Numlock enable
 exec numlockx
-
-# Picom
-exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
 
 # Lockscreen
 exec xset s 1800
@@ -15,11 +29,17 @@ exec --no-startup-id xss-lock -l -- betterlockscreen -s dim
 # Restore redshift state
 exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
 
-# Run polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 # Use feh to set wallpaper
 exec_always --no-startup-id feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
+
+# Picom
+exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
+
+# Run polybar
+exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
+# [WIP] Enable autohide for the selected bar 
+# exec_always $HOME/.config/polybar/scripts/polybar-manager.sh autohide 0
+
 
 
 
@@ -36,8 +56,17 @@ set $mod Mod4
 # Drop down terminal
 bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 
-# Extend polybar
-bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar_wrapper switch_state
+# === Polybar
+# Toggle my main bar polybars
+bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 0
+# Toggle my secondary bar polybars
+bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 1
+# Toggle my tertiary bar
+bindsym $mod+Ctrl+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 2
+# Toggle my tertiary bar
+bindsym $mod+Ctrl+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh hideAll
+# Toggle the tray
+bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
 # Adjust volume 
@@ -343,3 +372,7 @@ title_align center
 # default_border normal 10
 
 
+# ========================================================
+# ======FLOATING WINDOWS===================================
+# ======================================================== 
+for_window [class="sample.Main"] floating enable
