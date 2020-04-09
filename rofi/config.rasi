@@ -18,7 +18,7 @@ configuration {
 	show-icons: true;
 	drun-display-format: "{name}";
 	sidebar-mode: false;
-	theme: "/home/simonvic/.config/rofi/themes/simonvic.rasi";
+	theme: "~/.config/rofi/themes/simonvic.rasi";
 	display-window: "缾";
 	display-run: "$";
 	display-ssh: "~#";
