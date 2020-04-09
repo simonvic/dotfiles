@@ -1,5 +1,21 @@
 #!/bin/sh
 
+###########################################
+# Made by
+	
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+
+
 ### Call this script in a crontab (preferably every minute)
 ### EXAMPLE of my crontab:
 ### 	* * * * * DISPLAY=':0' DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus' $HOME/Documents/Programming/scripts/battery-manager/battery.sh monitor
@@ -21,6 +37,8 @@ timeout=3000
 #	Unique dunst notification id
 uid=2596
 
+isFullyCharged=/tmp/battery-status
+
 
 
 function getStatus {
@@ -31,23 +49,28 @@ function getCapacity {
 	acpi -b | awk -F '[,:%]' '{print $3}' | cut -d ' ' -f2
 }
 
+function isFullyCharged {
+	cat $isFullyCharged
+}
+
 function sendNotification {
 	/usr/bin/dunstify -a "Battery" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"	
  	if [ $playSound = true ]; then
- 		paplay $sound -s /run/user/1000/pulse/native
+ 		paplay $sound -s /run/user/1000/pulse/native &
  	fi
 }
 
 function monitor {
 	status=`getStatus`
 	capacity=`getCapacity`
-	
-	if [ "$status" = "Not charging" -a "$capacity" -eq 100 ]; then
+		
+	if [ `isFullyCharged` != "true" -a "$status" = "Not charging" -a "$capacity" -eq 100 ]; then
 		title="$capacity %"
 		body="Battery fully charged"
 		urgency=low
 		icon=battery-100-charging
 		sendNotification
+		echo true > $isFullyCharged
 	elif [ "$status" = "Discharging" ]; then
 		if [ "$capacity" -le 10 ]; then
 				title="$capacity %"
@@ -68,6 +91,7 @@ function monitor {
 				icon=battery-medium
 				sendNotification
 			fi
+		echo false > $isFullyCharged
 	elif [ "$status" = "Charging" ]; then
 		if [ "$capacity" -eq 80 ]; then
 				title="$capacity %"
@@ -77,6 +101,7 @@ function monitor {
 				icon=battery-080-charging
 				sendNotification
 		fi
+		echo false > $isFullyCharged
 	fi
 }
 
