@@ -1,3 +1,17 @@
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -12,7 +26,7 @@ ZSH_THEME="simonvic-minimal"
 
 # STARTUP EXEC
 # neofetch --color_blocks off
-~/Documents/scripts/todo/todo.sh undone
+~/Documents/Programming/scripts/todo/todo.sh
 
 
 # Set list of themes to pick from when loading at random
@@ -105,7 +119,7 @@ plugins=(git)
 alias t="tree -h -F -D -L 1"
 alias feeds="xdg-open .newsboat/urls"
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
-alias todo=~/Documents/scripts/todo/todo.sh 
+alias todo=~/Documents/Programming/scripts/todo/todo.sh 
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
