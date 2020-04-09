@@ -1,20 +1,16 @@
-;==========================================================
-;
-;
-;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
-;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
-;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
-;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
-;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
-;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-;
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/polybar/polybar
-;
-;   The README contains a lot of information
-;
-;==========================================================
+###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
 
 [colors]
 ;background = ${xrdb:color0:#222}
@@ -26,9 +22,11 @@ primary = #FF3737
 secondary = #e60053
 alert = #bd2c40
 
-[bar/top]
+[bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
 enable-ipc = true
+
+override-redirect = false
 width = 100%
 height = 3%
 ;offset-x = 0
@@ -58,12 +56,21 @@ font-2 = "Iosevka Nerd Font:size=16;3"
 
 modules-left = i3 
 modules-center = date
-modules-right = wlan eth redshift pulseaudio battery options_open
+modules-right = wlan eth redshift pulseaudio battery secondary_bar_toggle
 
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[bar/expanded]
+tray-position = right
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 0
+tray-background = ${colors.background}
+tray-detached = false
+
+
+
+[bar/secondary]
 ;monitor = ${env:MONITOR:eDP1}
 enable-ipc = true
 
@@ -71,13 +78,13 @@ override-redirect = true
 ;wm-restack = i3
 bottom = false
 
-height = 3%
+height = 3%:3
 width = 100%
 
 offset-y = 0
 offset-x = 0
 
-radius = 5%
+radius = 0
 
 fixed-center = true
 spacing = 1
@@ -89,20 +96,15 @@ font-0 = "Work Sans:size=11;2"
 font-1 = "Iosevka Nerd Font:size=16;2"
 font-2 = "Iosevka Nerd Font:size=16;3"
 
-modules-left = i3 xkeyboard filesystem memory cpu
+modules-left = xkeyboard filesystem memory cpu
 modules-center = 
-modules-right =  wlan-extended eth redshift-extended backlight-acpi pulseaudio-expanded battery powermenu options_close
-
-tray-position = none
-tray-padding = 0
-tray-background = ${colors.background}
-tray-detached = false
+modules-right =  wlan-extended eth redshift-extended backlight-acpi pulseaudio-expanded battery-extended powermenu
 
 line-size = 2
 line-color = #333333
 
-border-size = 3
-border-color = #00000000
+border-size = 0
+border-color = ${colors.background-alt}
 
 padding-left = 2
 padding-right = 2
@@ -115,13 +117,52 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 
+[bar/tertiary]
+;monitor = ${env:MONITOR:eDP1}
+enable-ipc = true
+
+override-redirect = false
+;wm-restack = i3
+bottom = true
+
+height = 3%
+width = 30%
+
+offset-y = 0
+offset-x = 672
+
+radius = 10
+
+fixed-center = true
+spacing = 1
+
+background = ${colors.background-alt}
+foreground = ${colors.foreground}
+
+font-0 = "Work Sans:size=11;2"
+font-1 = "Iosevka Nerd Font:size=16;2"
+font-2 = "Iosevka Nerd Font:size=16;3"
+
+#TO-DO add conky? 
+modules-left = 
+modules-center = xwindow
+modules-right =
+
+line-size = 2
+line-color = #333333
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 0
 
 
-
-
-
-
-
+cursor-click = pointer
+cursor-scroll = ns-resize
 
 
 
@@ -133,7 +174,7 @@ cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:100:...%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -316,7 +357,7 @@ type = internal/date
 interval = 1
 
 date = "%d/%m"
-date-alt = "   %d %A %B %Y"
+date-alt = "   %A %d %B(%m) %Y"
 
 time = "%H:%M"
 time-alt = "   %H:%M:%S"
@@ -404,7 +445,7 @@ format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 ;format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
+format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground}
 ;format-full-underline = ${self.format-charging-underline}
 
@@ -428,7 +469,56 @@ animation-charging-4 = " "
 animation-charging-5 = " "
 animation-charging-6 = " "
 animation-charging-foreground = ${colors.foreground}
-animation-charging-framerate = 750
+animation-charging-framerate = 1000
+
+;animation-discharging-0 = 
+;animation-discharging-1 = 
+;animation-discharging-2 = 
+;animation-discharging-foreground = ${colors.foreground-alt}
+;animation-discharging-framerate = 750
+
+[module/battery-extended]
+type = internal/battery
+battery = BAT0
+adapter = AC0
+full-at = 100
+
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M left
+
+format-charging = <animation-charging> <label-charging>
+label-charging = %percentage%% %consumption%W %time%
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%% %consumption%W %time%
+
+format-full-prefix = " "
+format-full = <label-full>
+label-full = Fully charged
+
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
+ramp-capacity-5 = " "
+ramp-capacity-6 = " "
+ramp-capacity-7 = " "
+ramp-capacity-8 = " "
+ramp-capacity-9 = " "
+ramp-capacity-foreground = ${colors.foreground}
+
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+animation-charging-5 = " "
+animation-charging-6 = " "
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 1000
 
 ;animation-discharging-0 = 
 ;animation-discharging-1 = 
@@ -491,17 +581,14 @@ menu-3-0-exec = systemctl suspend
 menu-3-1 = cancel
 menu-3-1-exec = menu-open-0
 
-[module/options_open]
-type = custom/text
-content-foreground = ${colors.foreground}
-content = "  﨡  "
-click-left = ~/.config/polybar/scripts/polybar_wrapper open_options
+[module/secondary_bar_toggle]
+type = custom/script
+exec = ~/.config/polybar/scripts/polybar-manager.sh status 1
+click-left = ~/.config/polybar/scripts/polybar-manager.sh toggle 1
+interval=0.5
 
-[module/options_close]
-type = custom/text
-content-foreground = ${colors.primary}
-content = "  蘒  "
-click-left = ~/.config/polybar/scripts/polybar_wrapper close_options
+
+
 
 [module/redshift]
 type = custom/script   
@@ -509,7 +596,7 @@ exec = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/reds
 click-left = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift.sh toggle 
 scroll-up = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift.sh increase
 scroll-down = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift.sh decrease
-interval=0.5
+interval=1
 
 [module/redshift-extended]
 type = custom/script
@@ -517,12 +604,41 @@ exec = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/reds
 click-left = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift-extended.sh toggle 
 scroll-up = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift-extended.sh increase
 scroll-down = source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift-extended.sh decrease
-interval=0.5
+interval=1
+
+[module/welcome-text]
+type = custom/text
+content = Hello and thanks for using my dotfiles. Check out https://github.com/simonvic/dotfiles for updates!
 
 
 #====GENERAL====================
 [settings]
-screenchange-reload = true
+; The throttle settings lets the eventloop swallow up til X events
+; if they happen within Y millisecond after first event was received.
+; This is done to prevent flood of update event.
+;
+; For example if 5 modules emit an update event at the same time, we really
+; just care about the last one. But if we wait too long for events to swallow
+; the bar would appear sluggish so we continue if timeout
+; expires or limit is reached.
+throttle-output = 5
+throttle-output-for = 10
+
+; Time in milliseconds that the input handler will wait between processing events
+throttle-input-for = 30
+
+; Reload upon receiving XCB_RANDR_SCREEN_CHANGE_NOTIFY events
+screenchange-reload = false
+
+; Compositing operators
+; @see: https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-operator-t
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+#OLD SETTINGS
+;screenchange-reload = true
 ;compositing-background = xor
 ;compositing-background = screen
 ;compositing-foreground = source
@@ -530,7 +646,7 @@ screenchange-reload = true
 ;pseudo-transparency = false
 
 [global/wm]
-margin-top = 5
-margin-bottom = 5
+margin-top = 100
+margin-bottom = 100
 
 ; vim:ft=dosini
