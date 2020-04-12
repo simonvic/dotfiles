@@ -94,7 +94,7 @@ function sendNotification {
   dunstify -a "Volume" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body"
   
   if [ $playSound = true ]; then
-		paplay $sound
+		paplay $sound &
 	fi
 }
 
