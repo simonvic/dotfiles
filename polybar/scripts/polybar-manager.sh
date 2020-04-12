@@ -47,10 +47,21 @@ function launchPolybar() {
 	echo "$(xdotool search --classname 'tray'):visible" > $TRAY
 }
 
+conky_launch() {
+    # Hacky X11 magic to make Conky appear above polybar
+    killall conky
+    # xdotool search can't find Conky's window but fortunately Conky outputs it
+    conky -c ~/.config/conky/config 2> /tmp/conky_out
+    # Extract the hex window id from Conky's output
+    HEX=$(awk '/drawing to created window/ {print $NF}' /tmp/conky_out | tr -d '()' | awk -Fx '{print $2}')
+    WIN_ID=$(( 16#$HEX )) # convert to decimal
+    xdotool windowunmap $WIN_ID
+    echo $WIN_ID > $WINDOW_ID_CONKY
+}
+
 function launch() {
   launchPolybar
   hide 1
-  hide 2 
   #TO-DO add conky :)
 }
 
