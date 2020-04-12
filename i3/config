@@ -19,21 +19,24 @@
 # ======STARTUP=========================================== 
 # ======================================================== 
 
+
 #Numlock enable
 exec numlockx
 
 # Lockscreen
-exec xset s 1800
-exec --no-startup-id xss-lock -l -- betterlockscreen -s dim
+exec light-locker
+#exec xset s 1800 10
+#exec xss-lock -l -- betterlockscreen -s dim
 
 # Restore redshift state
-exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
+exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always --no-startup-id feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
+exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain.jpg
+#exec feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
 
 # Picom
-exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
+exec_always --no-startup-id picom --experimental-backends --blur-strength 10 --config .config/picom/picom.conf
 
 # Run polybar
 exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
@@ -63,30 +66,36 @@ bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 0
 bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 1
 # Toggle my tertiary bar
 bindsym $mod+Ctrl+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 2
-# Toggle my tertiary bar
+# Hide all bars
 bindsym $mod+Ctrl+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh hideAll
 # Toggle the tray
 bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
 # Adjust volume 
-#	(hold Ctrl to increase/decrease by 10)
+#	(hold Shift to increase/decrease by 10)
+# TODO microphone with ctrl
 bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 1
 bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 1
-bindsym Ctrl+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 10
-bindsym Ctrl+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 10
+bindsym Shift+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 10
+bindsym Shift+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 10
 bindsym XF86AudioMute exec $HOME/.config/i3/scripts/volume.sh mute
 
 # Sreen brightness/temperature controls
-#	(hold Ctrl to increase/decrease brightness by 10)
-#	(hold Shift to increase/decrease temperature)
-bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up 1
-bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down 1
-bindsym Ctrl+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh up 10
-bindsym Ctrl+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh down 10
-# TO-DO a lot of optimization :D
-bindsym Shift+XF86MonBrightnessUp exec source ~/.config/polybar/scripts/env.sh && $HOME/.config/polybar/scripts/redshift.sh increase
-bindsym Shift+XF86MonBrightnessDown exec source ~/.config/polybar/scripts/env.sh && $HOME/.config/polybar/scripts/redshift.sh decrease
+# -Ctrl is used to control the temperature
+# -Shift is used to change values at higher rate
+bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh increase
+bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh decrease
+bindsym Shift+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh increase 10
+bindsym Shift+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh decrease 10
+bindsym XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh set 1
+bindsym Shift+XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh set 100
+
+bindsym Ctrl+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh redshift increase
+bindsym Ctrl+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh redshift decrease
+bindsym Ctrl+Shift+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh redshift increase 400
+bindsym Ctrl+Shift+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh redshift decrease 400
+bindsym Ctrl+XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh redshift toggle
 
 # Media player controls
 bindsym XF86AudioPlay exec $HOME/.config/i3/scripts/playerctl.sh play-pause
@@ -373,6 +382,6 @@ title_align center
 
 
 # ========================================================
-# ======FLOATING WINDOWS===================================
+# ======PER WINDOWS===================================
 # ======================================================== 
 for_window [class="sample.Main"] floating enable
