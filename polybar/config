@@ -67,7 +67,6 @@ tray-offset-y = 0
 tray-padding = 0
 tray-background = ${colors.background}
 tray-detached = false
-OO
 
 
 [bar/secondary]
@@ -145,8 +144,8 @@ font-1 = "Iosevka Nerd Font:size=14;3"
 
 #TO-DO add conky? 
 modules-left = xkeyboard aur_updates filesystem memory cpu fan temperature
-modules-center =  
-modules-right = todo_list
+modules-center = todo_list
+modules-right = 
 
 
 separator = "|"
@@ -316,6 +315,7 @@ interval = 1.0
 
 format-connected = <ramp-signal> <label-connected>
 ;format-connected-underline = #9f78e1
+label-connected = %essid%  %downspeed% 祝 %upspeed% %ifname% %local_ip%
 
 format-disconnected = 睊
 ;format-disconnected = <label-disconnected>
@@ -366,7 +366,7 @@ format-volume = <ramp-volume>  <label-volume>
 label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = "ﱝ"
+label-muted = "ﱝ "
 label-muted-foreground = ${colors.primary}
 
 ;
@@ -413,35 +413,35 @@ battery = BAT0
 adapter = AC0
 full-at = 100
 
-format-charging = <animation-charging> <label-charging>
+format-charging = <animation-charging>  <label-charging>
 ;format-charging-underline = #ffb52a
 
-format-discharging = <ramp-capacity> <label-discharging>
+format-discharging = <ramp-capacity>  <label-discharging>
 ;format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
+format-full-prefix = ""
 format-full-prefix-foreground = ${colors.foreground}
 ;format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
-ramp-capacity-3 = " "
-ramp-capacity-4 = " "
-ramp-capacity-5 = " "
-ramp-capacity-6 = " "
-ramp-capacity-7 = " "
-ramp-capacity-8 = " "
-ramp-capacity-9 = " "
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-5 = ""
+ramp-capacity-6 = ""
+ramp-capacity-7 = ""
+ramp-capacity-8 = ""
+ramp-capacity-9 = ""
 ramp-capacity-foreground = ${colors.foreground}
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-2 = " "
-animation-charging-3 = " "
-animation-charging-4 = " "
-animation-charging-5 = " "
-animation-charging-6 = " "
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+animation-charging-5 = ""
+animation-charging-6 = ""
 animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 1000
 
@@ -465,32 +465,32 @@ time-format = %H:%M left
 format-charging = <animation-charging> <label-charging>
 label-charging = %percentage%% %consumption%W %time%
 
-format-discharging = <ramp-capacity> <label-discharging>
+format-discharging = <ramp-capacity>  <label-discharging>
 label-discharging = %percentage%% %consumption%W %time%
 
-format-full-prefix = " "
+format-full-prefix = ""
 format-full = <label-full>
 label-full = Fully charged
 
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
-ramp-capacity-3 = " "
-ramp-capacity-4 = " "
-ramp-capacity-5 = " "
-ramp-capacity-6 = " "
-ramp-capacity-7 = " "
-ramp-capacity-8 = " "
-ramp-capacity-9 = " "
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-5 = ""
+ramp-capacity-6 = ""
+ramp-capacity-7 = ""
+ramp-capacity-8 = ""
+ramp-capacity-9 = ""
 ramp-capacity-foreground = ${colors.foreground}
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-2 = " "
-animation-charging-3 = " "
-animation-charging-4 = " "
-animation-charging-5 = " "
-animation-charging-6 = " "
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-4 = ""
+animation-charging-5 = ""
+animation-charging-6 = ""
 animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 1000
 
