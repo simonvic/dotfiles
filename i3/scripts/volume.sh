@@ -25,10 +25,10 @@
 drawBox=false
 
 #	Default icon
-mutedIcon=/usr/share/icons/Vimix-Ruby/22/actions/audio-volume-muted.svg
-lowIcon=/usr/share/icons/Vimix-Ruby/22/actions/audio-volume-low.svg
-icon=/usr/share/icons/Vimix-Ruby/22/actions/audio-volume-medium.svg
-warningIcon=/usr/share/icons/Vimix-Ruby/22/actions/audio-volume-high.svg
+mutedIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-muted.svg
+lowIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-low.svg
+icon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-medium.svg
+warningIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-high.svg
 
 # Enable to play sound
 playSound=true
@@ -112,7 +112,7 @@ case $1 in
 	;;
 	mute)
  	# Toggle mute
-		amixer -D pulse set Master 1+ toggle > /dev/null
+		amixer -D pulse set Master toggle > /dev/null
 		if isMute ; then
 			emptyBar=$(seq -s "░" $((100/5 +1)) | sed 's/[0-9]//g')
 			
