@@ -22,6 +22,15 @@ player=spotify
 # Show more info abou author and song
 moreInfo=false
 
+# [WIP] Show the song cover (spotify) as the notification icon
+# Sometimes you might not be able to see the image, set useSpotifyCache to false
+# to directly download the image (it might take more time to show the notification)
+songCover=false
+useSpotifyCache=false
+
+iconCachePath=$HOME/.cache/spotifyIcon
+spotifyCachePath=$HOME/.cache/spotify/Browser/Cache
+
 #	Default urgency level [Available: low, normal, critical]
 urgency=low
 
@@ -48,30 +57,48 @@ function getStatus {
 	playerctl -p "$player" status
 }
 
+function fetchSpotifyIcon {
+	if [ $useSpotifyCache = true ]; then
+		for f in $(ls -r -d $spotifyCachePath/f*); do
+		echo $f
+			if [ $(file $f -b --extension) = "jpeg/jpg/jpe/jfif" ]; then
+				icon=$f
+				break
+			fi
+		done
+	else
+		wget $(playerctl metadata mpris:artUrl | sed s/open.spotify.com/i.scdn.co/g) -O $iconCachePath
+		icon=$iconCachePath
+	fi
+}
+
 function buildBody() {
 	if [ $moreInfo = true ]; then
 		printf "<big><b>$title</b></big><small> ($artist)\n$album\n<i>$player</i></small>"
 	else
 		printf "<big><b>$title</b></big><small> ($artist)</small>"
 	fi
-
 }
 
 function sendNotification {
-	status=`getStatus`
-	if [ $status = "Playing" ]; then
-		icon=/usr/share/icons/Paper/scalable/actions/media-playback-start-symbolic.svg
-	elif [ $status = "Paused" ]; then	
-		icon=/usr/share/icons/Paper/scalable/actions/media-playback-pause-symbolic.svg
+	if [ $songCover = false ]; then
+		status=`getStatus`
+		if [ $status = "Playing" ]; then
+			icon=/usr/share/icons/Paper/scalable/actions/media-playback-start-symbolic.svg
+		elif [ $status = "Paused" ]; then	
+			icon=/usr/share/icons/Paper/scalable/actions/media-playback-pause-symbolic.svg
+		fi
+	else
+		fetchSpotifyIcon
 	fi
 	artist=`getArtist`
 	title=`getTitle`
 	album=`getAlbum`
 	body=`buildBody`
-		
-    # Send the notification
-    dunstify -a "playerctl" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
-    
+	
+  # Send the notification
+  dunstify -a "playerctl" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
+  
 }
 
 case $1 in
