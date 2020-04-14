@@ -32,7 +32,7 @@ exec light-locker
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain.jpg
+exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
 #exec feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
 
 # Picom
@@ -43,6 +43,12 @@ exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh lau
 # [WIP] Enable autohide for the selected bar 
 # exec_always $HOME/.config/polybar/scripts/polybar-manager.sh autohide 0
 
+
+# Always mute microphone at startup, you know... FBI and stuff
+exec_always $HOME/.config/i3/scripts/microphone.sh mute off
+
+# Use Headset Mic as default input source
+exec_always amixer -c0 sset "Input Source" "Headset Mic" 
 
 
 
@@ -73,13 +79,19 @@ bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
 # Adjust volume 
-#	(hold Shift to increase/decrease by 10)
-# TODO microphone with ctrl
+# -Ctrl is used to control the microphone
+# -Shift is used to change values at higher rate
 bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 1
 bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 1
 bindsym Shift+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 10
 bindsym Shift+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 10
 bindsym XF86AudioMute exec $HOME/.config/i3/scripts/volume.sh mute
+
+bindsym Ctrl+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/microphone.sh up 1
+bindsym Ctrl+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/microphone.sh down 1
+bindsym Ctrl+Shift+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/microphone.sh up 10
+bindsym Ctrl+Shift+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/microphone.sh down 10
+bindsym Ctrl+XF86AudioMute exec $HOME/.config/i3/scripts/microphone.sh mute
 
 # Sreen brightness/temperature controls
 # -Ctrl is used to control the temperature
@@ -128,9 +140,9 @@ bindsym $mod+Shift+q kill
 # Themes available: 
 #		DRUN: 	simonvic, simonvic_reverse, simonvic_fullscreen, simonvic_fullscreen_reverse
 #		WINDOW:	simonvic_window, simonvic_window_reverse, simonvic_window_fullscreen, simonvic_window_fullscreen_reverse
-bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_fullscreen
-bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic
-bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_window
+bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_window_reverse
+bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic_reverse
+bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_window_reverse
 
 # change focus
 bindsym $mod+j focus left
