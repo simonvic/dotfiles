@@ -176,10 +176,15 @@ function printTemperature() {
 #	elif [ $REDSHIFT_TEMP -le 25000 ]; then
 #		color="#0000FF"
 #	fi
-	suffix=
 	body=""
-	if [ "$1" = "extended" ]; then
-		body="$REDSHIFT_TEMP K"
+	if [ $REDSHIFT_STATUS = off ]; then
+		suffix=盛
+	else
+		suffix=
+		body=""
+		if [ "$1" = "extended" ]; then
+			body="$REDSHIFT_TEMP K"
+		fi
 	fi
 	echo "%{F$color}$suffix $body%{B- F-}"
 }
