@@ -13,7 +13,7 @@
 ###########################################
 
 [global]
-font = WorkSans Regular 11
+font = WorkSans Regular 12
 
 # Allow a small subset of html markup:
 #   <b>bold</b>
@@ -135,7 +135,7 @@ show_indicators = yes
 # The height of a single line.  If the height is smaller than the
 # font height, it will get raised to the font height.
 # This adds empty space above and under the text.
-line_height = -3
+line_height = -1
 
 # Draw a line of "separatpr_height" pixel height between two
 # notifications.
@@ -185,18 +185,18 @@ frame_color = "#N"
 # Xev might be helpful to find names for keys.
 
 # Close notification.
-#close = ctrl+space
+close = mod4+ctrl+n
 
 # Close all notifications.
-#close_all = ctrl+shift+space
+close_all = mod4+ctrl+shift+n
 
 # Redisplay last message(s).
 # On the US keyboard layout "grave" is normally above TAB and left
 # of "1".
-history = mod4+ctrl+n
+history = mod4+shift+n
 
 # Context menu.
-context = mod4+ctrl+m
+context = mod4+n
 
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
@@ -279,13 +279,22 @@ timeout = 16
 [volume]
 	appname = Volume
 	msg_urgency = normal
-	format = "%b"
+	format = "%b"	
 
 [volume-warning]
 	appname = Volume
 	msg_urgency = critical
 	format = "%b"
-	#foreground = "#FFA500"
+
+[microphone]
+	appname = Microphone
+	msg_urgency = normal
+	format = "%b"
+
+[microphone-warning]
+	appname = Microphone
+	msg_urgency = critical
+	format = "%b"
 
 [brightness]
 	appname = Brightness
