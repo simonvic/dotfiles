@@ -15,14 +15,6 @@
 
 
 
-#	With drawBox = true
-#	┌────────────────────┐
-#	│████████████▃░░░░░░░│ 62%
-#	└────────────────────┘
-
-#	With drawBox = false
-#	████████████▃░░░░░░░ 62%
-drawBox=false
 
 #	Default icon
 mutedIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-muted.svg
@@ -48,10 +40,6 @@ timeout=1500
 uid=2593
 
 
-line=$(seq -s "─" 0 5 100 | sed 's/[0-9]//g')
-
-
-
 function getVolume {
     amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
 }
@@ -60,28 +48,15 @@ function isMute {
     amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
 }
 
+function buildBar {
+	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
+}
+
 function sendNotification {
   volume=`getVolume`
 
 	# Building the volume bar
-	# TO-DO make colored warning bar
-    bar=$(seq -s "█" 0 5 $volume | sed 's/[0-9]//g') 
-	if [ $(( ($volume-4) % 5 )) -eq 0 ]; then
-		midBar=▆
-	elif [ $(( ($volume-3) % 5 )) -eq 0 ]; then
-		midBar=▅
-	elif [ $(( ($volume-2) % 5 )) -eq 0 ]; then
-		midBar=▃
-	elif [ $(( ($volume-1) % 5 )) -eq 0 ]; then
-		midBar=▁
-	fi
-    emptyBar=$(seq -s "░" $(( ((100-$volume) /5)+1 )) | sed 's/[0-9]//g')
-   
-   	if [ $drawBox = true ]; then
- 	 body="┌$line┐\n│$bar$midBar$emptyBar│<b>$volume%</b>\n└$line┘\t"	 
-	else
-	 body="$bar$midBar$emptyBar\t<b>$volume%</b>\t"
- 	fi
+	body="`buildBar 5 $volume false`\t<b>$volume%</b>\t"
 
 	if [ $volume -ge $warningLevel ]; then
   	urgency=critical
@@ -89,13 +64,13 @@ function sendNotification {
 	elif [ $volume -le 20 ]; then
 		icon=$lowIcon
 	fi
+
+	if [ $playSound = true ]; then
+		paplay $sound &
+	fi
 	
   # Send the notification
   dunstify -a "Volume" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body"
-  
-  if [ $playSound = true ]; then
-		paplay $sound &
-	fi
 }
 
 case $1 in
@@ -114,13 +89,8 @@ case $1 in
  	# Toggle mute
 		amixer -D pulse set Master toggle > /dev/null
 		if isMute ; then
-			emptyBar=$(seq -s "░" $((100/5 +1)) | sed 's/[0-9]//g')
-			
-			if [ $drawBox = true ]; then
-				body="┌$line┐\n│$emptyBar│\t<b>Muted</b>\n└$line┘"
-			else
-				body="$emptyBar\t<b>Muted</b>"
-			fi
+			# Building the volume bar
+			body="`buildBar 5 100 true`\t<b>Muted</b>\t"
 			dunstify -a "Volume" -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
 		else
 			  sendNotification
