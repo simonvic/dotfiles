@@ -112,8 +112,10 @@ case $1 in
 	;;
 	next)
 		playerctl -p "$player" next
+		sendNotification
 	;;
 	previous)
 		playerctl -p "$player" previous
+		sendNotification
 	;;
 esac
