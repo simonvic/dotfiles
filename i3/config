@@ -25,7 +25,7 @@ exec numlockx
 
 # Lockscreen
 exec light-locker
-#exec xset s 1800 10
+#exec xset s 1800
 #exec xss-lock -l -- betterlockscreen -s dim
 
 # Restore redshift state
@@ -45,7 +45,7 @@ exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh lau
 
 
 # Always mute microphone at startup, you know... FBI and stuff
-exec_always $HOME/.config/i3/scripts/microphone.sh mute off
+exec_always amixer sset Capture nocap
 
 # Use Headset Mic as default input source
 exec_always amixer -c0 sset "Input Source" "Headset Mic" 
@@ -78,45 +78,48 @@ bindsym $mod+Ctrl+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh 
 bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
+# === Lock the screen
+bindsym $mod+l exec light-locker-command -l
+
 # Adjust volume 
 # -Ctrl is used to control the microphone
 # -Shift is used to change values at higher rate
-bindsym XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 1
-bindsym XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 1
-bindsym Shift+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/volume.sh up 10
-bindsym Shift+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/volume.sh down 10
-bindsym XF86AudioMute exec $HOME/.config/i3/scripts/volume.sh mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh up 1
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh down 1
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh up 10
+bindsym Shift+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh down 10
+bindsym XF86AudioMute exec --no-startup-id $HOME/.config/i3/scripts/volume.sh mute
 
-bindsym Ctrl+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/microphone.sh up 1
-bindsym Ctrl+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/microphone.sh down 1
-bindsym Ctrl+Shift+XF86AudioRaiseVolume exec $HOME/.config/i3/scripts/microphone.sh up 10
-bindsym Ctrl+Shift+XF86AudioLowerVolume exec $HOME/.config/i3/scripts/microphone.sh down 10
-bindsym Ctrl+XF86AudioMute exec $HOME/.config/i3/scripts/microphone.sh mute
+bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh up 1
+bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh down 1
+bindsym Ctrl+Shift+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh up 10
+bindsym Ctrl+Shift+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh down 10
+bindsym Ctrl+XF86AudioMute exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh mute
 
 # Sreen brightness/temperature controls
 # -Ctrl is used to control the temperature
 # -Shift is used to change values at higher rate
-bindsym XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh increase
-bindsym XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh decrease
-bindsym Shift+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh increase 10
-bindsym Shift+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh decrease 10
-bindsym XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh set 1
-bindsym Shift+XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh set 100
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh increase
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh decrease
+bindsym Shift+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh increase 10
+bindsym Shift+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh decrease 10
+bindsym XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh set 1
+bindsym Shift+XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh set 100
 
-bindsym Ctrl+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh redshift increase
-bindsym Ctrl+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh redshift decrease
-bindsym Ctrl+Shift+XF86MonBrightnessUp exec $HOME/.config/i3/scripts/brightness.sh redshift increase 400
-bindsym Ctrl+Shift+XF86MonBrightnessDown exec $HOME/.config/i3/scripts/brightness.sh redshift decrease 400
-bindsym Ctrl+XF86ScreenSaver exec $HOME/.config/i3/scripts/brightness.sh redshift toggle
+bindsym Ctrl+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift increase
+bindsym Ctrl+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift decrease
+bindsym Ctrl+Shift+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift increase 400
+bindsym Ctrl+Shift+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift decrease 400
+bindsym Ctrl+XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift toggle
 
 # Media player controls
-bindsym XF86AudioPlay exec $HOME/.config/i3/scripts/playerctl.sh play-pause
-bindsym XF86AudioStop exec $HOME/.config/i3/scripts/playerctl.sh stop
-bindsym XF86AudioNext exec $HOME/.config/i3/scripts/playerctl.sh next
-bindsym XF86AudioPrev exec $HOME/.config/i3/scripts/playerctl.sh previous
+bindsym XF86AudioPlay exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh play-pause
+bindsym XF86AudioStop exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh stop
+bindsym XF86AudioNext exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh next
+bindsym XF86AudioPrev exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh previous
 
 # Calculator
-bindsym XF86Calculator exec gnome-calculator
+bindsym XF86Calculator exec --no-startup-id gnome-calculator
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -144,25 +147,14 @@ bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_windo
 bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic_reverse
 bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_window_reverse
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+ograve focus right
 
-# alternatively, you can use the cursor keys:
+# you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ograve move right
-
-# alternatively, you can use the cursor keys:
+# you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
