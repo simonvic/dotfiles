@@ -14,16 +14,6 @@
 ###########################################
 
 
-
-#	With drawBox = true
-#	┌────────────────────┐
-#	│████████████▃░░░░░░░│ 62%
-#	└────────────────────┘
-
-#	With drawBox = false
-#	████████████▃░░░░░░░ 62%
-drawBox=false
-
 #	Default icon
 mutedIcon=/usr/share/icons/Vimix-Ruby/22/panel/microphone-sensitivity-muted.svg
 lowIcon=/usr/share/icons/Vimix-Ruby/22/panel/microphone-sensitivity-low.svg
@@ -47,41 +37,23 @@ timeout=1500
 #	Unique dunst notification id
 uid=2592
 
-
-line=$(seq -s "─" 0 5 100 | sed 's/[0-9]//g')
-
-
-
 function getVolume {
-    amixer sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+  amixer sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
 }
 
 function isMute {
-    amixer get Capture | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+  amixer get Capture | grep '%' | grep -oE '[^ ]+$' | grep off
+}
+
+function buildBar {
+	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
 }
 
 function sendNotification {
   volume=`getVolume`
 
 	# Building the volume bar
-	# TO-DO make colored warning bar
-    bar=$(seq -s "█" 0 5 $volume | sed 's/[0-9]//g') 
-	if [ $(( ($volume-4) % 5 )) -eq 0 ]; then
-		midBar=▆
-	elif [ $(( ($volume-3) % 5 )) -eq 0 ]; then
-		midBar=▅
-	elif [ $(( ($volume-2) % 5 )) -eq 0 ]; then
-		midBar=▃
-	elif [ $(( ($volume-1) % 5 )) -eq 0 ]; then
-		midBar=▁
-	fi
-    emptyBar=$(seq -s "░" $(( ((100-$volume) /5)+1 )) | sed 's/[0-9]//g')
-   
-   	if [ $drawBox = true ]; then
- 	 body="┌$line┐\n│$bar$midBar$emptyBar│<b>$volume%</b>\n└$line┘\t"	 
-	else
-	 body="$bar$midBar$emptyBar\t<b>$volume%</b>\t"
- 	fi
+	body="`buildBar 5 $volume false`\t<b>$volume%</b>\t"
 
 	if [ $volume -ge $warningLevel ]; then
   	urgency=critical
@@ -90,12 +62,13 @@ function sendNotification {
 		icon=$lowIcon
 	fi
 	
-  # Send the notification
-  dunstify -a "Microphone" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body"
-  
-  if [ $playSound = true ]; then
+	if [ $playSound = true ]; then
 		paplay $sound &
 	fi
+	
+  # Send the notification
+  dunstify -a "Microphone" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body" 
+
 }
 
 case $1 in
@@ -108,15 +81,11 @@ case $1 in
 		sendNotification
 	;;
 	mute)
-		amixer -D pulse sset Capture toggle "$2" > /dev/null
+		amixer -D pulse sset Capture toggle > /dev/null
 		if isMute ; then
-			emptyBar=$(seq -s "░" $((100/5 +1)) | sed 's/[0-9]//g')
+			# Building the volume bar
+			body="`buildBar 5 100 true`\t<b>Muted</b>\t"
 			
-			if [ $drawBox = true ]; then
-				body="┌$line┐\n│$emptyBar│\t<b>Muted</b>\n└$line┘"
-			else
-				body="$emptyBar\t<b>Muted</b>"
-			fi
 			dunstify -a "Microphone" -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
 		else
 			  sendNotification
