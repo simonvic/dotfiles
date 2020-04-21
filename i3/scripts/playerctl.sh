@@ -101,21 +101,37 @@ function sendNotification {
   
 }
 
-case $1 in
-	play-pause)
-		playerctl -p "$player" play-pause
-		sendNotification
-	;;
-	stop)
-		playerctl -p "$player" stop
-		sendNotification
-	;;
-	next)
-		playerctl -p "$player" next
-		sendNotification
-	;;
-	previous)
-		playerctl -p "$player" previous
-		sendNotification
-	;;
-esac
+function info() {
+	artist=`getArtist`
+	title=`getTitle`
+	album=`getAlbum`
+	if [ $moreInfo = true ]; then
+		printf "$title ($artist) [$album]"
+	else
+		printf "$title ($artist)"
+	fi
+}
+
+if [ $(playerctl -l) != "No players were found" ]; then
+	case $1 in
+		play-pause)
+			playerctl -p "$player" play-pause
+			sendNotification
+		;;
+		stop)
+			playerctl -p "$player" stop
+			sendNotification
+		;;
+		next)
+			playerctl -p "$player" next
+			sendNotification
+		;;
+		previous)
+			playerctl -p "$player" previous
+			sendNotification
+		;;
+		info)
+			info
+		;;
+	esac
+fi
