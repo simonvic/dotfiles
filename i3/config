@@ -23,10 +23,10 @@
 #Numlock enable
 exec numlockx
 
-# Lockscreen
-exec light-locker
-#exec xset s 1800
-#exec xss-lock -l -- betterlockscreen -s dim
+# === Lockscreen
+# Dim screen after 10 minutes and suspend after 15 minutes
+exec xset s 600 300 
+exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOME/.config/i3/scripts/lockscreen.sh --suspend
 
 # Restore redshift state
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
@@ -79,7 +79,7 @@ bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
 # === Lock the screen
-bindsym $mod+l exec light-locker-command -l
+bindsym $mod+l exec $HOME/.config/i3/scripts/lockscreen.sh --lock
 
 # Adjust volume 
 # -Ctrl is used to control the microphone
