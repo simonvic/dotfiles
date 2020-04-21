@@ -17,13 +17,15 @@
 textColor=ffffffAA
 font="LatoLight"
 
-#Backgrounds available: image, blur
-backgroundType=image
+#Backgrounds available: image, blur (i3lock-color blur method), blurAndDim (uses scrot and imagemagick, slower)
+backgroundType=blurAndDim
 image=$HOME/Pictures/Wallpapers/mountain3.png
 blurStrength=5
+blur2Strength=0x10
+dimStrength=60%
 
 # Available options: circle, bars
-indicatorType=circle
+indicatorType=bars
 indicatorPos=960:740
 timeString=%H:%M:%S
 timePos=960:540
@@ -34,7 +36,7 @@ dateSize=20
 verifyText=Verifying...
 wrongText=Wrong!
 noInputText=...
-inputTypeColor=f0544cff
+inputTypeColor=f0544cAA
 inputDeleteColor=ff1010ff
 greeterSize=40
 
@@ -107,6 +109,10 @@ args="--pass-media-keys --redraw-thread --force-clock \
 		;;
 		blur)
 			background="--blur=$blurStrength"
+		;;
+		blurAndDim)
+			scrot -q 1 -o /tmp/lockscreenScreenshot.png &&convert /tmp/lockscreenScreenshot.png -blur $blur2Strength -fill black -colorize $dimStrength /tmp/lockscreenScreenshot.png
+			background="-i /tmp/lockscreenScreenshot.png"
 		;;
 		*)
 			background="--color=333333"
