@@ -91,6 +91,8 @@ hide_duplicates_count = no
 #geometry = "250x50-40+40"
 geometry = "500x30-710+40"
 
+# Round the corners
+corner_radius = 5
 
 # Shrink window if it's smaller than the width.  Will be ignored if
 # width is 0.
