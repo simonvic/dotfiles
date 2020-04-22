@@ -2,16 +2,16 @@
 Editing...
 
 ## Lockscreen (i3lock)
-![barblur](https://imgur.com/oznujft.gif)
-![circleblur](https://imgur.com/PKti9sL.gif)
-![image](https://imgur.com/HYrDvCw.gif)
+![barblur](Preview/lockscreen_bars_blur.gif)
+![circleblur](Preview/lockscreen_circle_blur.gif)
+![image](Preview/lockscreen_image.gif)
 
 ## Application launcher (Rofi)
-![Rofi](https://imgur.com/HEbS86f.gif)
+![Rofi](Preview/rofi.gif)
 
 ## Polybar with auto-hide wrapper
-![polybar](https://imgur.com/Rcerd9f.gif)
-![images](screenshots of bars.gif)
+![polybar](Preview/polybar background.gif)
+![images](https://screenshotsofbars.gif)
 
 
 ## Notifications and more (Dunst)
