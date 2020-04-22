@@ -11,17 +11,15 @@ Editing...
 
 ## Polybar with auto-hide wrapper
 ![polybar](Preview/polybar background.gif)
-![images](https://screenshotsofbars.gif)
-
 
 ## Notifications and more (Dunst)
-# Playerctl control + custom Spotify notification
+### Playerctl control + custom Spotify notification
 ![playerctl](https://imgur.com/CXvSvrk.gif)
-# Speaker and microphone control
+### Speaker and microphone control
 ![volume](https://imgur.com/qwqZkWd.gif)
-# Brightness and Redshift control
+### Brightness and Redshift control
 ![screen](https://imgur.com/5nRhvXl.gif)
-# App notifications
+### App notifications
 ![notifications](https://imgur.com/Xpre5zb.gif)
 
 * Modules in main polybar: 
