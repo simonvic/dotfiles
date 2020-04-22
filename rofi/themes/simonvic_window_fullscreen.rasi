@@ -21,7 +21,7 @@
 configuration {
 	display-drun: "§";
 	display-run: "$";
-	window-format: "{w} {c}\t{t}";
+	window-format: "{w} {t}\t{c}";
 	display-window: "缾";
 	display-ssh: "~#";
 	show-icons: true;
@@ -66,7 +66,7 @@ window {
 	children: [mainbox];
 	fullscreen: true;
 	transparency: "real";
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.3);
 	
 }
 
@@ -121,7 +121,7 @@ scrollbar{
 
 element {
 	children: [element-icon, element-text];
-	orientation: vertical;
+	orientation: horizontal;
 	background-color: rgba(0,0,0,0.2);
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
