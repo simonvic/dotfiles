@@ -20,8 +20,9 @@
 
 configuration {
 	display-drun: "§";
+	drun-display-format: "{name}\n[<span weight='light' size='x-small'><i>({generic})</i></span>]";
 	display-run: "$";
-	window-format: "{w} {c}\t{t}";
+	window-format: "{w} {t}\t{c}";
 	display-window: "缾";
 	display-ssh: "~#";
 	show-icons: true;
@@ -37,6 +38,7 @@ configuration {
 	margin: 1%;
 	background-color: red;
 	*/
+
 	
 	text-color: @foreground;
 	accent: #F0544C;
@@ -70,7 +72,7 @@ window {
 	anchor: south;
 	y-offset: 25%;
 	transparency: "real";
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
@@ -124,7 +126,7 @@ scrollbar{
 
 element {
 	children: [element-icon, element-text];
-	orientation: vertical;
+	orientation: horizontal;
 	background-color: rgba(0,0,0,0.2);
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
