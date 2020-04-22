@@ -66,7 +66,7 @@ window {
 	children: [mainbox];
 	fullscreen: true;
 	transparency: "real";
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
