@@ -70,7 +70,7 @@ window {
 	anchor: north;
 	y-offset: -25%;
 	transparency: "real";
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
