@@ -2,7 +2,9 @@
 Editing...
 
 ## Lockscreen (i3lock)
-![Lockscreen](https://imgur.com/5YAc9th.gif)
+![barblur](https://imgur.com/oznujft.gif)
+![circleblur](https://imgur.com/PKti9sL.gif)
+![image](https://imgur.com/HYrDvCw.gif)
 
 ## Application launcher (Rofi)
 ![Rofi](https://imgur.com/HEbS86f.gif)
