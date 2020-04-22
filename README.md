@@ -1,31 +1,40 @@
 # Configs for simonvic personal style 
+Editing...
 
-## Overview with cool and useless stuff
-![Overview with useless but cool stuff](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-22-03.png)
+## Lockscreen (i3lock)
+![Lockscreen](https://imgur.com/5YAc9th.gif)
 
-## Firefox with drop-down terminal
-![Real](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-28-40.png)
+## Application launcher (Rofi)
+![Rofi](https://imgur.com/HEbS86f.gif)
 
-## Minimal Polybar, Dunst notification, Dunst volume & brightness bar
-![top](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2018-05-45.png)
-![gif](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/2020-03-15_18-38-39_1.gif)
+## Polybar with auto-hide wrapper
+![polybar](https://imgur.com/Rcerd9f.gif)
+![images](screenshots of bars.gif)
 
-## Rofi
-![rofi](https://raw.githubusercontent.com/simonvic/dotfiles/master/Preview/Screenshot%20from%202020-03-15%2017-29-44.png)
 
-## Polybar and Dunst in action
-https://streamable.com/uosn5
+## Notifications and more (Dunst)
+# Playerctl control + custom Spotify notification
+![playerctl](https://imgur.com/CXvSvrk.gif)
+# Speaker and microphone control
+![volume](https://imgur.com/qwqZkWd.gif)
+# Brightness and Redshift control
+![screen](https://imgur.com/5nRhvXl.gif)
+# App notifications
+![notifications](https://imgur.com/Xpre5zb.gif)
+
 * Modules in main polybar: 
   * i3
   * l.date / extended date
   * net information (WiFI/Eth with down/up speed)
   * Redshift switch and temperature regolation
+  * Brigthness
   * Volume
   * Battery
-* Module in "extended" polybar: 
-  * i3
+* Module in secondary polybar: 
+  * window title
   * Net information (WiFi/eth with SSID/localIP and down/up speed)
   * Redshift switch and temperature regolation with temperature in K
+  * Brightness bar
   * Volume bar 
   * Brightness bar
   * Battery 
@@ -33,3 +42,12 @@ https://streamable.com/uosn5
      * Reboot
      * Shutdown
      * Sleep
+* Module in tertiary polybar: 
+  * Keyboard (layout, caps lock, num locks etc)
+  * AUR packages update
+  * Disk space
+  * RAM
+  * CPU
+  * Fan speed
+  * Temperature
+  * Sliding todo list
