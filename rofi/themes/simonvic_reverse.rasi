@@ -21,6 +21,7 @@
 configuration {
 	display-drun: "§";
 	drun-display-format: "{name}";
+	window-format: "{w} {t}\t{c}";
 	display-run: "$";
 	display-window: "缾";
 	display-ssh: "~#";
@@ -59,6 +60,7 @@ configuration {
 	selected-urgent-background: #9D596B;
 	selected-urgent-foreground: @foreground;
 	
+	
 	foreground: #EEEEEE;
 }
 
@@ -70,7 +72,7 @@ window {
 	anchor: south;
 	y-offset: 25%;
 	transparency: "real";
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
@@ -106,7 +108,7 @@ listview {
 	orientation: vertical;
 	background-color: transparent;
 	columns: 4;
-	fixed-columns: true;
+	fixed-columns: false;
 	lines: 5;
 	fixed-height: false;
 	spacing: 1%;
