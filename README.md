@@ -10,7 +10,7 @@ Editing...
 ![Rofi](Preview/rofi.gif)
 
 ## Polybar with auto-hide wrapper
-![polybar](Preview/polybar background.gif)
+![polybar](Preview/polybar_background.gif)
 
 ## Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
