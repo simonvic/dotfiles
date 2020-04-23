@@ -39,7 +39,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ### Brightness and Redshift control
 ![screen](https://imgur.com/5nRhvXl.gif)
 ### App notifications
-![notifications](https://imgur.com/Xpre5zb.gif)
+![notifications](https://imgur.com/P7xiD1S.gif)
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
