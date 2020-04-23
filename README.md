@@ -1,13 +1,32 @@
-# Configs for simonvic personal full-keyboard driven rice 
+# simonvic personal full-keyboard driven rice/workflow 
 WIP... Editing...
 
-# Keybindings
-[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
+## Getting started
+Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have a ful overview of what my workflow can offer
 
+## Requirements
+Main requirements:
+* i3-gaps : the tiling window manager with gaps
+* i3lock : Used to lock the screen
+* Polybar : show bars with various information 
+* Dunst : notifications daemon
+* Rofi : application launcher
+
+Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation) for a more in-depth explanation
+
+## Keybindings
+[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
+ 
 ## Lockscreen (i3lock)
 ![circleblur](Preview/lockscreen_circle_blur.gif)
+
+<details>
+ <summary> Other themes preview </summary>
+ 
 ![barblur](Preview/lockscreen_bars_blur.gif)
 ![image](Preview/lockscreen_image.gif)
+
+</details>
 
 ## Application launcher (Rofi)
 ![Rofi](Preview/rofi.gif)
@@ -54,13 +73,3 @@ WIP... Editing...
   * Fan speed
   * Temperature
   * Sliding todo list
-  
-
-
-
-
-
-
-
-
-
