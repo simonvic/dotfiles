@@ -1,9 +1,12 @@
-# Configs for simonvic personal style 
-Editing...
+# Configs for simonvic personal full-keyboard driven rice 
+WIP... Editing...
+
+# Keybindings
+[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
 
 ## Lockscreen (i3lock)
-![barblur](Preview/lockscreen_bars_blur.gif)
 ![circleblur](Preview/lockscreen_circle_blur.gif)
+![barblur](Preview/lockscreen_bars_blur.gif)
 ![image](Preview/lockscreen_image.gif)
 
 ## Application launcher (Rofi)
@@ -52,9 +55,6 @@ Editing...
   * Temperature
   * Sliding todo list
   
-# Keybindings
-[add visualization here] (https://image)
-[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
 
 
 
