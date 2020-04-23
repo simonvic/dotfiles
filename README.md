@@ -6,7 +6,7 @@ Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have
 ## Requirements
 Main requirements:
 * i3-gaps : the tiling window manager with gaps
-* i3lock : Used to lock the screen
+* i3lock-color : Used to lock the screen
 * Polybar : show bars with various information 
 * Dunst : notifications daemon
 * Rofi : application launcher
