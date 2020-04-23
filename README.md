@@ -12,7 +12,7 @@ Main requirements:
 * Rofi : application launcher
 * more...
 
-Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation) for a more in-depth explanation
+Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
 
 ## Keybindings
 [Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
