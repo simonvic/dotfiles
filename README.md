@@ -51,3 +51,25 @@ Editing...
   * Fan speed
   * Temperature
   * Sliding todo list
+  
+# Keybindings
+* i3
+	* Default modifier key (*mod*) : WindowsKey("Mod4")
+	* https://i3wm.org/docs/userguide.html#_default_keybindings
+* Scripts
+	* Lock the screen : *mod*+**l**
+* Polybar
+	* Toggle first bar : *mod*+**p**
+	* Toggle second bar : *mod*+****Shift***+**p**
+	* Toggle third bar : *mod*+***Ctrl***+**p**
+	* Hide all bar : *mod*+***Ctrl***+***Shift***+**p**
+	* Toggle try icons : *mod*+**o**
+
+
+
+
+
+
+
+
+
