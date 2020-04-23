@@ -13,9 +13,6 @@ Main requirements:
 * more...
 
 Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
-
-## Keybindings
-[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
  
 ## Lockscreen (i3lock-color)
 ![circleblur](Preview/lockscreen_circle_blur.gif)
@@ -43,3 +40,9 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ![screen](https://imgur.com/5nRhvXl.gif)
 ### App notifications
 ![notifications](https://imgur.com/Xpre5zb.gif)
+
+## Keybindings
+My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
+A brief about keybinding of some of my scripts.
+[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
+![keys](https://imgur.com/s3N2HC9.gif)
