@@ -1,4 +1,5 @@
 # simonvic personal full-keyboard driven rice/workflow 
+![version](https://img.shields.io/badge/version-1.3-blue)
 
 ## Getting started
 Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have a ful overview of what my workflow can offer
