@@ -17,7 +17,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ## Keybindings
 [Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings)
  
-## Lockscreen (i3lock)
+## Lockscreen (i3lock-color)
 ![circleblur](Preview/lockscreen_circle_blur.gif)
 
 <details>
