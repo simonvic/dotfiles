@@ -1,3 +1,4 @@
+#!/bin/zsh 
  ###########################################
 # dev
 #	Made by
@@ -16,6 +17,19 @@
 todoFile=~/Documents/Programming/scripts/todo/todo.txt
 doneSymbol=
 todoSymbol=
+
+# Notification settings
+
+icon=" "
+
+#	Default urgency level [Available: low, normal, critical]
+urgency=normal
+
+#	For how much milliseconds the notification will stay visible
+timeout=10000
+
+#	Unique dunst notification id
+uid=2597
 
 printHeader() {
 echo "
@@ -47,13 +61,29 @@ Options
 "
 }
 
+sendNotification() {
+	body=$(cat $todoFile | grep $todoSymbol | tail +12)
+	summary="$(cat $todoFile | grep $doneSymbol | wc -l ) done | $(cat $todoFile | grep $todoSymbol | wc -l ) still to do"
+  case $(dunstify -a "TO-DO" -A "edit,Edit the todo list" -A "debug,M SIEEEENT?" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body") in
+		edit)
+			xdg-open $todoFile
+		;;
+		debug)
+			echo "tttt apppoooooo"
+		;;
+		*)
+			echo "no choise"
+		;;
+	esac
+}
+
 if [ -z "$1" ]
 then
 	printHeader;
 	thingsUndone=`grep -c -e  $todoFile`;
 	    	if [ $thingsUndone -ge 1 ]
 	    	then
-  		    	cat $todoFile | grep 
+  		    	cat $todoFile | grep $todoSymbol
   		   else
   		   	echo "Nothing to do! NICE! (this is pure utopia)"
   		   fi
@@ -75,7 +105,7 @@ else
 	    ;;
 	    done)
 	    	printHeader;
-	    	cat $todoFile | grep 
+	    	cat $todoFile | grep $doneSymbol
 	    ;;
 	    help)
 	    	printHeader;
@@ -91,13 +121,16 @@ else
 	    	fi
 	    ;;
 	    do)
-	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
+	    	sed -i "s/$todoSymbol \[$2\]/$doneSymbol \[$2\]/g" $todoFile
 	    ;;
 	    undo)
-	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
+	    	sed -i "s/$doneSymbol \[$2\]/$todoSymbol \[$2\]/g" $todoFile
 	    ;;
 	    edit)
 	    	xdg-open $todoFile
+	    ;;
+	    notification)
+	    	sendNotification
 	    ;;
 	esac
 fi
