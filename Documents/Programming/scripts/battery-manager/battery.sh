@@ -68,7 +68,7 @@ function monitor {
 		title="$capacity %"
 		body="Battery fully charged"
 		urgency=low
-		icon=battery-100-charging
+		icon=battery-full-charging
 		sendNotification
 		echo true > $isFullyCharged
 	elif [ "$status" = "Discharging" ]; then
@@ -107,11 +107,23 @@ function monitor {
 
 
 function plugin {
-	echo "plugin"
+	capacity=`getCapacity`
+	title="$capacity %"
+	body="AC plugged"
+	urgency=low
+	timeout=1500
+	icon=battery-100-charging
+	sendNotification
 }
 
-function plugout {
-	echo "plugout"
+function unplug {
+	capacity=`getCapacity`
+	title="$capacity %"
+	body="AC unplugged"
+	urgency=normal
+	timeout=1500
+	icon=battery-low
+	sendNotification
 }
 
 function current {
@@ -134,8 +146,8 @@ case $1 in
 	plugin)
 		plugin
 	;;
-	plugout)
- 		plugout
+	unplug)
+ 		unplug
 	;;
 	current)
 		current
