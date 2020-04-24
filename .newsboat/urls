@@ -1,0 +1,23 @@
+|------------------ARCH---------------------------------| 			Arch
+https://www.archlinux.org/feeds/news/ 						Arch
+https://www.archlinux.org/feeds/packages/					Arch
+
+|------------------TWITTER------------------------------| 			Twitter
+https://twitrss.me/twitter_user_to_rss/?user=DayZ 				Twitter DayZ Games
+https://twitrss.me/twitter_user_to_rss/?user=GluonHQ				Twitter JavaFX Java Programming
+
+|------------------GAMES--------------------------------| 			Games
+https://leonick.se/rsi-feed/ 							Games "Star Citizen"
+
+|------------------YOUTUBE------------------------------| 			Youtube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZNgSvIEWfru963tQZOAVJg 	Youtube DayZ
+https://www.youtube.com/feeds/videos.xml?channel_id=UCtfKuU7DNZgOSpRn1ksB6jw 	YouTube DayZ
+
+|-----------------------REDDIT--------------------------|			Reddit
+https://www.reddit.com/r/dayz.rss 						Reddit Games DayZ
+https://www.reddit.com/r/starcitizen.rss 					Reddit Games "Star Citizen"
+
+|-----------------------OTHER---------------------------|
+http://rss.slashdot.org/slashdot/Slashdot 					Other
+https://store.steampowered.com/feeds/news.xml					Other Games
+https://news.xbox.com/en-us/feed/						Other Xbox
