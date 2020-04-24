@@ -164,7 +164,7 @@ separator_color = auto
 startup_notification = false
 
 # dmenu path.
-dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_window
+dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_dunstActions
 
 # Browser for opening urls in context menu.
 browser = /usr/bin/firefox --new-tab
@@ -305,5 +305,9 @@ timeout = 16
 
 [playerctl]
 	appname = playerctl
+	format = "%b"
+	
+[simonvic.TODO]
+	appname = simonvic.TODO
 	format = "%b"
 		

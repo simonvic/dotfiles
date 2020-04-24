@@ -20,7 +20,6 @@
 
 configuration {
 	display-drun: "§";
-	drun-display-format: "{name}";
 	display-run: "$";
 	display-window: "缾";
 	display-ssh: "~#";
@@ -65,16 +64,16 @@ configuration {
 window {
 	children: [mainbox];
 	fullscreen: false;
-	width: 40%;
-	location: center;
-	anchor: north;
-	y-offset: -25%;
+	width: 30%;
+	location: south;
+	anchor: south;
+	y-offset: 1%;
 	transparency: "real";
 	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
-	children: [inputbar, listview];
+	children: [listview];
 	background-color: rgba(0,0,0,0.1);
 	spacing: 0;
 }
@@ -88,13 +87,13 @@ inputbar {
 }
 
 prompt{
-	font: "NotoSans Regular 16";
+	font: "WorkSans Regular 16";
 	background-color: transparent;
 	padding: 5px;
 }
 
 entry{
-	font: "NotoSans Regular 16";
+	font: "WorkSans Regular 16";
 	background-color: transparent;
 	border: 0 0 2px 0 solid;
 	border-color: @accent;
@@ -105,9 +104,9 @@ listview {
 	children: [element];
 	orientation: vertical;
 	background-color: transparent;
-	columns: 4;
+	columns: 1;
 	fixed-columns: true;
-	lines: 5;
+	lines: 10;
 	fixed-height: false;
 	spacing: 1%;
 	padding: 2% 2%;
@@ -122,7 +121,7 @@ scrollbar{
 
 
 element {
-	children: [element-icon, element-text];
+	children: [element-text];
 	orientation: vertical;
 	background-color: rgba(0,0,0,0.2);
   border-radius: 10px;
@@ -130,7 +129,7 @@ element {
 }
 
 element-text{
-	font: "NotoSans Regular 11";
+	font: "WorkSans Regular 11";
 	padding: 0% 0% 0% 0%;
 }
 

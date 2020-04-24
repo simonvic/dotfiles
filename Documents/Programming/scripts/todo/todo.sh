@@ -61,18 +61,30 @@ Options
 "
 }
 
+function buildBar {
+	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
+}
+
 sendNotification() {
-	body=$(cat $todoFile | grep $todoSymbol | tail +12)
-	summary="$(cat $todoFile | grep $doneSymbol | wc -l ) done | $(cat $todoFile | grep $todoSymbol | wc -l ) still to do"
-  case $(dunstify -a "TO-DO" -A "edit,Edit the todo list" -A "debug,M SIEEEENT?" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body") in
+	doneNum=$(cat $todoFile | grep $doneSymbol | wc -l )
+	totalNum=$(cat $todoFile | tail +12 | wc -l )
+	todoNum=$(($totalNum - $doneNum))
+	todoPercent=$(($doneNum * 100 / $totalNum))
+	summary="$doneNum done | $todoNum still to do | $todoPercent"
+	body+="\n$(cat $todoFile | grep $todoSymbol | tail +12)\n\n \
+		`buildBar 5 $todoPercent false` $todoPercent% \n \
+		$doneNum done | $todoNum still to do \n "
+		
+		
+  case $(dunstify -a "simonvic.TODO" -A "listAll,  List all" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body") in
 		edit)
-			xdg-open $todoFile
+			xdg-open $todoFile &
 		;;
-		debug)
-			echo "tttt apppoooooo"
+		listAll)
+			/usr/bin/rofi-sensible-terminal -e "cat $todoFile" --hold
 		;;
-		*)
-			echo "no choise"
+		todoHelp)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh help" --hold
 		;;
 	esac
 }
