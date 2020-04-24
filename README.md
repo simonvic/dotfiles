@@ -16,21 +16,21 @@ Main requirements:
 Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
  
 ## Lockscreen (i3lock-color)
-![circleblur](Preview/lockscreen_circle_blur.gif)
+![circleblur](https://imgur.com/OQW4jiW.gif)
 
 <details>
  <summary> Other themes preview </summary>
  
-![barblur](Preview/lockscreen_bars_blur.gif)
-![image](Preview/lockscreen_image.gif)
+![barblur](https://imgur.com/1mOjOP3.gif)
+![image](https://imgur.com/HYrDvCw.gif)
 
 </details>
 
 ## Application launcher (Rofi)
-![Rofi](Preview/rofi.gif)
+![Rofi](https://imgur.com/fgaA2Fr.gif)
 
 ## Polybar with auto-hide wrapper
-![polybar](Preview/polybar_background.gif)
+![polybar](https://imgur.com/3VfYMQX.gif)
 
 ## Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
