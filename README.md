@@ -16,34 +16,34 @@ Main requirements:
 Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
  
 ## Lockscreen (i3lock-color)
-![circleblur](Preview/lockscreen_circle_blur.gif)
+![circleblur](Pictures/Rice/1.3/Previews/lockscreen_blur_circle.gif)
 
 <details>
  <summary> Other themes preview </summary>
  
-![barblur](Preview/lockscreen_bars_blur.gif)
-![image](Preview/lockscreen_image.gif)
+![barblur](Pictures/Rice/1.3/Previews/lockscreen_blur_bars.gif)
+![image](Pictures/Rice/1.3/Previews/rofi_image_circle.gif)
 
 </details>
 
 ## Application launcher (Rofi)
-![Rofi](Preview/rofi.gif)
+![Rofi](Pictures/Rice/1.3/Previews/rofi.gif)
 
 ## Polybar with auto-hide wrapper
-![polybar](Preview/polybar_background.gif)
+![polybar](Pictures/Rice/1.3/Previews/polybar.gif)
 
 ## Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
-![playerctl](https://imgur.com/CXvSvrk.gif)
+![playerctl](Pictures/Rice/1.3/Previews/playerctl.gif)
 ### Speaker and microphone control
-![volume](https://imgur.com/qwqZkWd.gif)
+![volume](Pictures/Rice/1.3/Previews/volume.gif)
 ### Brightness and Redshift control
-![screen](https://imgur.com/5nRhvXl.gif)
+![screen](Pictures/Rice/1.3/Previews/brightness.gif)
 ### App notifications
-![notifications](https://imgur.com/P7xiD1S.gif)
+![notifications](Pictures/Rice/1.3/Previews/notifications.gif)
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
 A brief about keybinding of some of my scripts.
 [Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
-![keys](https://imgur.com/s3N2HC9.gif)
+![keys](Pictures/Rice/1.3/Previews/keybinding_volume_brightness.gif)
