@@ -57,7 +57,7 @@ font-2 = "WorkSans:size=10;10"
 
 modules-left = i3 
 modules-center = date
-modules-right = wlan eth redshift brightness pulseaudio battery secondary_bar_toggle
+modules-right = todo wlan eth redshift brightness pulseaudio battery secondary_bar_toggle
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -699,6 +699,11 @@ format = <label>
 label = %output%
 interval = 10
 
+[module/todo]
+type = custom/text
+content = ""
+content-padding = 4
+click-left = ~/Documents/Programming/scripts/todo/todo.sh notification
 
 #====GENERAL====================
 [settings]
