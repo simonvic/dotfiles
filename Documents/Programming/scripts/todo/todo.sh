@@ -26,7 +26,7 @@ icon=" "
 urgency=normal
 
 #	For how much milliseconds the notification will stay visible
-timeout=10000
+timeout=60000
 
 #	Unique dunst notification id
 uid=2597
