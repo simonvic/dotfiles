@@ -67,13 +67,13 @@ function buildBar {
 
 sendNotification() {
 	doneNum=$(cat $todoFile | grep $doneSymbol | wc -l )
-	totalNum=$(cat $todoFile | tail +12 | wc -l )
+	totalNum=$(cat $todoFile | wc -l )
 	todoNum=$(($totalNum - $doneNum))
 	todoPercent=$(($doneNum * 100 / $totalNum))
 	summary="$doneNum done | $todoNum still to do | $todoPercent"
-	body+="\n$(cat $todoFile | grep $todoSymbol | tail +12)\n\n \
+	body="<small>\n$(cat $todoFile | grep $todoSymbol )</small>\n\n \
 		`buildBar 5 $todoPercent false` $todoPercent% \n \
-		$doneNum done | $todoNum still to do \n "
+		<b>$todoSymbol $todoNum</b> still to do <b>│</b> <b>$doneSymbol $doneNum</b> done\n "
 		
 		
   case $(dunstify -a "simonvic.TODO" -A "listAll,  List all" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body") in
