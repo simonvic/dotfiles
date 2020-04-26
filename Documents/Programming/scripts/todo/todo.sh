@@ -22,6 +22,9 @@ deletedSymbol=﫧
 
 icon=" "
 
+# Max length of body in the notification
+maxLength=15
+
 #	Default urgency level [Available: low, normal, critical]
 urgency=normal
 
@@ -69,7 +72,7 @@ Options
 	edit	Edit manually the todo list
 	
 	#Other
-	notification	show todo list in a notification
+	notification	[done|todo|deleted]	Show todo list in a notification
 "
 }
 
@@ -148,21 +151,39 @@ function buildBar {
 }
 
 function sendNotification() {
-	doneCount=`getCount done`
-	todoCount=`getCount todo`
-	deletedCount=`getCount deleted`
+	doneCount=`getCount done $2`
+	todoCount=`getCount todo $2`
+	deletedCount=`getCount deleted $2`
 	totalCount=`getCount`
 	todoPercent=$((todoCount * 100 / doneCount))
 	
 	summary="$todoCount todo | $doneCount done | $deletedCount deleted"
-	body="
-<small>`list todo`</small>
-
+	
+	# Start building the body of notification
+	
+	# If the list is too big cut it
+	length=`getCount $1 $2`
+	if [ $length -ge $maxLength ]; then
+		body="
+<small>`list $1 $2 | head -$maxLength`
+... $(($length - $maxLength)) more
+</small>
+"
+	else
+		body="
+<small>`list $1 $2`</small>
+"
+	fi
+	
+	# Add bar and statistics	
+	body+="
 `buildBar 5 $todoPercent false` $todoPercent%
 <b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total
 "
-	
-	case $(dunstify -a "simonvic.TODO" -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body") in
+	# Old notification must be closed if still pending for user action, as -r isn't enought
+	# Just a temporary hack :(
+
+	case $(dunstify -C "$uid"  && dunstify -a "simonvic.TODO" -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" & ) in
 		edit)
 			editFile
 		;;
@@ -180,6 +201,9 @@ function sendNotification() {
 		;;
 		todoHelp)
 			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh help" --hold
+		;;
+		*)
+		# No choise
 		;;
 	esac
 }
@@ -211,7 +235,7 @@ case $1 in
 	;;
 # Other
 	notification)
-		sendNotification
+		sendNotification $2 $3
 	;;
 	help)
 		printHeader
