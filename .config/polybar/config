@@ -25,7 +25,7 @@ warning = #ed9111
 
 [bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
-enable-ipc = true
+enable-ipc = false
 
 override-redirect = false
 width = 100%
@@ -75,7 +75,7 @@ tray-detached = false
 
 inherit = bar/main
 ;monitor = ${env:MONITOR:eDP1}
-enable-ipc = true
+enable-ipc = false
 
 override-redirect = true 
 ;wm-restack = i3
@@ -121,7 +121,7 @@ cursor-scroll = ns-resize
 
 inherit = bar/main
 ;monitor = ${env:MONITOR:eDP1}
-enable-ipc = true
+enable-ipc = false
 
 override-redirect = true
 ;wm-restack = i3
@@ -132,54 +132,6 @@ width = 70%
 
 offset-y = 2%
 offset-x = 288
-
-radius = 10
-
-fixed-center = true
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-
-#TO-DO add conky? 
-modules-left = xkeyboard aur_updates filesystem memory cpu fan temperature
-modules-center = todo_list
-modules-right = 
-
-
-separator = "|"
-
-line-size = 2
-line-color = #333333
-
-border-size = 0
-border-color = #00000000
-
-padding-left = 2
-padding-right = 2
-
-module-margin = 2
-
-
-cursor-click = pointer
-cursor-scroll = ns-resize
-
-
-[bar/test]
-
-inherit = bar/main
-;monitor = ${env:MONITOR:eDP1}
-enable-ipc = true
-
-override-redirect = true
-;wm-restack = i3
-bottom = false
-
-height = 150
-width = 150
-
-offset-y = 2%
-offset-x = 1770
 
 radius = 10
 
@@ -710,6 +662,7 @@ content-padding = 4
 click-left = "~/Documents/Programming/scripts/todo/todo.sh notification todo &"
 click-right = "~/Documents/Programming/scripts/todo/todo.sh notification done &"
 click-middle = "~/Documents/Programming/scripts/todo/todo.sh notification deleted &"
+
 
 #====GENERAL====================
 [settings]
