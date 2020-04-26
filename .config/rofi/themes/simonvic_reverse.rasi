@@ -90,13 +90,13 @@ inputbar {
 }
 
 prompt{
-	font: "NotoSans Regular 16";
+	font: "WorkSans Regular 16";
 	background-color: transparent;
 	padding: 5px;
 }
 
 entry{
-	font: "NotoSans Regular 16";
+	font: "WorkSans Regular 16";
 	background-color: transparent;
 	border: 0 0 2px 0 solid;
 	border-color: @accent;
@@ -133,7 +133,7 @@ element {
 }
 
 element-text{
-	font: "NotoSans Regular 11";
+	font: "WorkSans Regular 11";
 	padding: 0% 0% 0% 0%;
 }
 
