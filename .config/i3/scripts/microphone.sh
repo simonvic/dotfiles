@@ -76,10 +76,12 @@ function sendNotification {
 
 case $1 in
 	up)
+		amixer sset Capture cap
 		amixer -D pulse sset Capture csvolume "$2"%+ > /dev/null
 		sendNotification
 	;;
 	down)
+		amixer sset Capture cap
 		amixer -D pulse sset Capture csvolume "$2"%- > /dev/null
 		sendNotification
 	;;
