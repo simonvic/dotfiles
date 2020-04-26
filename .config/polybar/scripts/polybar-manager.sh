@@ -132,6 +132,36 @@ function autoHide() {
 	xdotool behave $(cat ${BARS[$1]} | cut -d ":" -f1)	mouse-leave exec $HOME/.config/polybar/scripts/polybar-manager-autohide.sh $1
 }
 
+function drag() {
+	id=$(cat ${BARS[$1]} | cut -d ":" -f1)
+	while true; do
+		x=$(xdotool getmouselocation --shell | grep X | cut -d "=" -f2)
+		y=$(xdotool getmouselocation --shell | grep Y | cut -d "=" -f2)
+		width=$(xdotool getwindowgeometry --shell $id | grep WIDTH | cut -d "=" -f2 )
+		#height=$(xdotool getwindowgeometry --shell $id | grep HEIGHT | cut -d "=" -f2 )
+		xdotool windowmove $id $(($x-(width/2))) $y
+		#sleep 1
+	done
+}
+
+function resize() {
+	id=$(cat ${BARS[$1]} | cut -d ":" -f1)
+#	width=$(xdotool getwindowgeometry --shell $id | grep WIDTH | cut -d "=" -f2 )
+#	height=$(xdotool getwindowgeometry --shell $id | grep HEIGHT | cut -d "=" -f2 )
+	wx=$(xdotool getwindowgeometry --shell $id | grep X | cut -d "=" -f2 )
+	wy=$(xdotool getwindowgeometry --shell $id | grep Y | cut -d "=" -f2 )
+	while true; do
+		x=$(xdotool getmouselocation --shell | grep X | cut -d "=" -f2)
+		y=$(xdotool getmouselocation --shell | grep Y | cut -d "=" -f2)
+		
+
+		newWidth=$((x - wx ))
+		newHeight=$((y - wy))
+		echo "w:$newWidth | h:$newHeight"
+		xdotool windowsize $id $newWidth $newHeight
+	done
+}
+
 function printUsage() {
 	printf "
 -Usage
@@ -155,6 +185,8 @@ printf "
 	status <bar id>		Print status of the specified bar (useful to create a switch in a polybar itself)
 	toggleTray		Show and hide the tray (if present in any bar)
 [WIP]	autoHide <bar id>	Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
+[WIP]	drag <bar id>	Drag the polybar with the mouse
+[WIP]	resize <bar id>	Resize the polybar with the mouse
 	show <bar id>		Make the specified bar visible
 	hide <bar id>		Make the specified bar invisible
 "
@@ -182,5 +214,11 @@ else
 			show $2;;
 		hide)
 			hide $2;;
+		drag)
+			drag $2
+		;;
+		resize)
+			resize $2
+		;;
 	esac
 fi
