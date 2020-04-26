@@ -278,33 +278,33 @@ timeout = 16
 #
 # vim: ft=cfg
 
-[volume]
-	appname = Volume
+[simonvic.Volume]
+	appname = simonvic.Volume
 	msg_urgency = normal
 	format = "%b"	
 
-[volume-warning]
-	appname = Volume
+[simonvic.Volume-warning]
+	appname = simonvic.Volume
 	msg_urgency = critical
 	format = "%b"
 
-[microphone]
-	appname = Microphone
+[simonvic.Microphone]
+	appname = simonvic.Microphone
 	msg_urgency = normal
 	format = "%b"
 
-[microphone-warning]
-	appname = Microphone
+[simonvic.Microphone-warning]
+	appname = simonvic.Microphone
 	msg_urgency = critical
 	format = "%b"
 
-[brightness]
-	appname = Brightness
+[simonvic.Brightness]
+	appname = simonvic.Brightness
 	msg_urgency = normal
 	format = "%b"
 
-[playerctl]
-	appname = playerctl
+[simonvic.Playerctl]
+	appname = simonvic.Playerctl
 	format = "%b"
 	
 [simonvic.TODO]

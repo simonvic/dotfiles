@@ -37,6 +37,9 @@ timeout=1500
 #	Unique dunst notification id
 uid=2592
 
+# App name in dunst
+appName="simonvic.Microphone"
+
 function getVolume {
   amixer sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
 }
@@ -67,7 +70,7 @@ function sendNotification {
 	fi
 	
   # Send the notification
-  dunstify -a "Microphone" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body" 
+  dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body" 
 
 }
 
@@ -86,7 +89,7 @@ case $1 in
 			# Building the volume bar
 			body="`buildBar 5 100 true`\t<b>Muted</b>\t"
 			
-			dunstify -a "Microphone" -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
+			dunstify -a "$appName" -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
 		else
 			  sendNotification
 		fi		
