@@ -37,6 +37,9 @@ timeout=3000
 #	Unique dunst notification id
 uid=2596
 
+# App name in dunst
+appName="simonvic.Battery"
+
 isFullyCharged=/tmp/battery-status
 
 
@@ -54,7 +57,7 @@ function isFullyCharged {
 }
 
 function sendNotification {
-	/usr/bin/dunstify -a "Battery" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"	
+	/usr/bin/dunstify -a $appName -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"	
  	if [ $playSound = true ]; then
  		paplay $sound -s /run/user/1000/pulse/native &
  	fi

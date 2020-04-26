@@ -51,6 +51,9 @@ source $redshiftState
 #	Unique dunst notification id
 uid=2594
 
+# App name in dunst
+appName="simonvic.Brightness"
+
 #####################################################################
 
 
@@ -111,7 +114,7 @@ function sendNotification {
 	fi
   
   # Send the notification
-  dunstify -a "Brightness" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$brightness%" "$body"
+  dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$brightness%" "$body"
   
 }
 

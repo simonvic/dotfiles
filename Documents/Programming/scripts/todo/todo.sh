@@ -1,4 +1,3 @@
-#!/bin/zsh 
  ###########################################
 #	Made by
 #       _                              _        
@@ -33,6 +32,9 @@ timeout=60000
 
 #	Unique dunst notification id
 uid=2597
+
+# App name in dunst
+appName="simonvic.TODO"
 
 ########################################
 
@@ -183,7 +185,7 @@ function sendNotification() {
 	# Old notification must be closed if still pending for user action, as -r isn't enought
 	# Just a temporary hack :(
 
-	case $(dunstify -C "$uid"  && dunstify -a "simonvic.TODO" -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" & ) in
+	case $(dunstify -C "$uid"  && dunstify -a $appName -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" & ) in
 		edit)
 			editFile
 		;;

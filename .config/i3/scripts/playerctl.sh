@@ -40,6 +40,9 @@ timeout=5000
 #	Unique dunst notification id
 uid=2595
 
+# App name in dunst
+appName="simonvic.Playerctl"
+
 
 function getTitle {
 	playerctl -p "$player" metadata title
@@ -97,7 +100,7 @@ function sendNotification {
 	body=`buildBody`
 	
   # Send the notification
-  dunstify -a "playerctl" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
+  dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
   
 }
 
