@@ -122,7 +122,10 @@ bindsym XF86AudioNext exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh
 bindsym XF86AudioPrev exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh previous
 
 # ToDo script
-bindsym $mod+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification
+bindsym $mod+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification todo
+bindsym $mod+Ctrl+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification done
+bindsym $mod+Shift+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification deleted
+bindsym $mod+Shift+Ctrl+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification
 
 # Calculator
 bindsym XF86Calculator exec --no-startup-id gnome-calculator

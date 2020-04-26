@@ -703,7 +703,9 @@ interval = 10
 type = custom/text
 content = ""
 content-padding = 4
-click-left = ~/Documents/Programming/scripts/todo/todo.sh notification
+click-left = "~/Documents/Programming/scripts/todo/todo.sh notification todo &"
+click-right = "~/Documents/Programming/scripts/todo/todo.sh notification done &"
+click-middle = "~/Documents/Programming/scripts/todo/todo.sh notification deleted &"
 
 #====GENERAL====================
 [settings]
