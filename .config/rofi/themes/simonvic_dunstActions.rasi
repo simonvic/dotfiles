@@ -65,9 +65,10 @@ window {
 	children: [mainbox];
 	fullscreen: false;
 	width: 30%;
-	location: south;
-	anchor: south;
-	y-offset: 1%;
+	location: north;
+	anchor: north west;
+	x-offset: 260px;
+	y-offset: 4%;
 	transparency: "real";
 	background-color: rgba(0,0,0,0.3);
 }
