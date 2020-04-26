@@ -20,7 +20,8 @@ foreground = #FFFFFF
 foreground-alt = #555
 primary = #FF3737
 secondary = #e60053
-alert = #bd2c40
+alert = #edd311
+warning = #ed9111
 
 [bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -466,8 +467,11 @@ format-full-prefix-foreground = ${colors.foreground}
 ;format-full-underline = ${self.format-charging-underline}
 
 ramp-capacity-0 = ""
+ramp-capacity-0-foreground = ${colors.primary}
 ramp-capacity-1 = ""
+ramp-capacity-1-foreground = ${colors.warning}
 ramp-capacity-2 = ""
+ramp-capacity-2-foreground = ${colors.alert}
 ramp-capacity-3 = ""
 ramp-capacity-4 = ""
 ramp-capacity-5 = ""
