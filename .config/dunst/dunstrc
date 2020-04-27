@@ -307,6 +307,10 @@ timeout = 16
 	appname = simonvic.Playerctl
 	format = "%b"
 	
+[simonvic.Battery]
+	appname = simonvic.Battery
+	format = "%b"
+	
 [simonvic.TODO]
 	appname = simonvic.TODO
 	format = "%b"
