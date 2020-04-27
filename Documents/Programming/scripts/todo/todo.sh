@@ -1,5 +1,5 @@
+#!/bin/zsh 
  ###########################################
-# dev
 #	Made by
 #       _                              _        
 #      (_)                            (_)       
@@ -16,6 +16,28 @@
 todoFile=~/Documents/Programming/scripts/todo/todo.txt
 doneSymbol=
 todoSymbol=
+deletedSymbol=﫧
+
+# Notification settings
+
+icon=" "
+
+# Max length of body in the notification
+maxLength=15
+
+#	Default urgency level [Available: low, normal, critical]
+urgency=normal
+
+#	For how much milliseconds the notification will stay visible
+timeout=60000
+
+#	Unique dunst notification id
+uid=2597
+
+# App name in dunst
+appName="simonvic.TODO"
+
+########################################
 
 printHeader() {
 echo "
@@ -38,67 +60,192 @@ Usage
 
 Options
 	help	show this help
-	list	[filter]	List things to do with a filter
-	done		List things done
+		
+	# Query commands
+	list	[done|todo|deleted]	[name]	List with filters
+		done		List things done
+		todo		List things still to do
+		deleted	List things cancelled
+	
+	# Edit commands
 	new	<name>		Add a new thing to do with name <name>
 	do	<id>		Mark it done
 	undo	<id>		Mark it undone
+	delete	<id>	Mark it deleted
 	edit	Edit manually the todo list
+	
+	#Other
+	notification	[done|todo|deleted]	Show todo list in a notification
 "
 }
 
-if [ -z "$1" ]
-then
-	printHeader;
-	thingsUndone=`grep -c -e  $todoFile`;
-	    	if [ $thingsUndone -ge 1 ]
-	    	then
-  		    	cat $todoFile | grep 
-  		   else
-  		   	echo "Nothing to do! NICE! (this is pure utopia)"
-  		   fi
-	
-else
-	case $1 in 
-		list)
-			printHeader;
-			words=`grep -c -e  $todoFile`;
-	    	if [ $words -ge 1 ]
-	    	then
-	    		if [ -z "$2" ]
-	    		then
-	    			cat $todoFile
-	    		else
-	    			cat $todoFile | grep $2
-	    		fi
-	    	fi
-	    ;;
-	    done)
-	    	printHeader;
-	    	cat $todoFile | grep 
-	    ;;
-	    help)
-	    	printHeader;
-	    	printUsage;
-	    ;;
-	    new)
-	    	if [ -z "$2" ]
-	    	then
-	    		printUsage;	    	
-	    	else
-	    		newID=$((`tail -n 1 $todoFile | cut -d "[" -f2 | cut -d "]" -f1` + 1)) 
-	    		echo " [$newID] $2" >> $todoFile
-	    	fi
-	    ;;
-	    do)
-	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
-	    ;;
-	    undo)
-	    	sed -i "s/ \[$2\]/ \[$2\]/g" $todoFile
-	    ;;
-	    edit)
-	    	xdg-open $todoFile
-	    ;;
+function getCount() {
+	case $1 in
+		done)
+			grep -e "$doneSymbol" $todoFile | grep "$2" | wc -l
+		;;
+		todo)
+			grep -e "$todoSymbol" $todoFile | grep "$2" | wc -l
+		;;
+		deleted)
+			grep -e "$deletedSymbol" $todoFile | grep "$2" | wc -l
+		;;
+		*)
+			grep -e "$1" $todoFile | wc -l
+		;;
 	esac
-fi
+}
 
+function list() {
+	case $1 in
+		done)
+			grep -e "$doneSymbol" $todoFile | grep "$2"
+		;;
+		todo)
+			grep -e "$todoSymbol" $todoFile | grep "$2"
+		;;
+		deleted)
+			grep -e "$deletedSymbol" $todoFile | grep "$2"
+		;;
+		*)
+			grep -e "$1" $todoFile
+		;;
+	esac
+}
+
+function addNew() {
+	if [ -z "$1" ]; then
+		printUsage;	    	
+	else
+		newID=$((`tail -n 1 $todoFile | cut -d "[" -f2 | cut -d "]" -f1` + 1)) 
+		echo "$todoSymbol [$newID] $1" >> $todoFile
+	fi
+}
+
+
+function mark() {
+	if [ -z "$2" ]; then
+		printUsage
+	else
+		case $1 in
+			done)
+				sed -i "s/^\($deletedSymbol\|$todoSymbol\) \[$2\]/$doneSymbol \[$2\]/g" $todoFile
+			;;
+			todo)
+				sed -i "s/^\($deletedSymbol\|$doneSymbol\) \[$2\]/$todoSymbol \[$2\]/g" $todoFile
+			;;
+			deleted)
+				sed -i "s/^\($todoSymbol\|$doneSymbol\) \[$2\]/$deletedSymbol \[$2\]/g" $todoFile
+			;;
+			*)
+				printUsage
+			;;
+		esac
+	fi
+}
+
+function editFile() {
+	xdg-open $todoFile &
+}
+
+
+function buildBar {
+	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
+}
+
+function sendNotification() {
+	doneCount=`getCount done $2`
+	todoCount=`getCount todo $2`
+	deletedCount=`getCount deleted $2`
+	totalCount=`getCount`
+	todoPercent=$((todoCount * 100 / doneCount))
+	
+	summary="$todoCount todo | $doneCount done | $deletedCount deleted"
+	
+	# Start building the body of notification
+	
+	# If the list is too big cut it
+	length=`getCount $1 $2`
+	if [ $length -ge $maxLength ]; then
+		body="
+<small>`list $1 $2 | head -$maxLength`
+... $(($length - $maxLength)) more
+</small>
+"
+	else
+		body="
+<small>`list $1 $2`</small>
+"
+	fi
+	
+	# Add bar and statistics	
+	body+="
+`buildBar 5 $todoPercent false` $todoPercent%
+<b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total
+"
+	# Old notification must be closed if still pending for user action, as -r isn't enought
+	# Just a temporary hack :(
+
+	case $(dunstify -C "$uid"  && dunstify -a $appName -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" & ) in
+		edit)
+			editFile
+		;;
+		listAll)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list" --hold
+		;;
+		listDone)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list done" --hold
+		;;
+		listTodo)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list todo" --hold
+		;;
+		listDeleted)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list deleted" --hold
+		;;
+		todoHelp)
+			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh help" --hold
+		;;
+		*)
+		# No choise
+		;;
+	esac
+}
+
+case $1 in
+# Query
+	list)
+		printHeader
+		list $2 $3
+	;;
+	count)
+		getCount $2 $3
+	;;
+# Edit
+	new)
+		addNew $2
+	;;
+	do)
+		mark done $2
+	;;
+	undo)
+		mark todo $2
+	;;
+	delete)
+		mark deleted $2
+	;;
+	edit)
+		editFile
+	;;
+# Other
+	notification)
+		sendNotification $2 $3
+	;;
+	help)
+		printHeader
+		printUsage
+	;;
+	*)
+		printHeader
+		list todo
+	;;
+esac

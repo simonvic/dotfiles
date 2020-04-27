@@ -164,7 +164,7 @@ separator_color = auto
 startup_notification = false
 
 # dmenu path.
-dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_window
+dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_dunstActions
 
 # Browser for opening urls in context menu.
 browser = /usr/bin/firefox --new-tab
@@ -278,32 +278,40 @@ timeout = 16
 #
 # vim: ft=cfg
 
-[volume]
-	appname = Volume
+[simonvic.Volume]
+	appname = simonvic.Volume
 	msg_urgency = normal
 	format = "%b"	
 
-[volume-warning]
-	appname = Volume
+[simonvic.Volume-warning]
+	appname = simonvic.Volume
 	msg_urgency = critical
 	format = "%b"
 
-[microphone]
-	appname = Microphone
+[simonvic.Microphone]
+	appname = simonvic.Microphone
 	msg_urgency = normal
 	format = "%b"
 
-[microphone-warning]
-	appname = Microphone
+[simonvic.Microphone-warning]
+	appname = simonvic.Microphone
 	msg_urgency = critical
 	format = "%b"
 
-[brightness]
-	appname = Brightness
+[simonvic.Brightness]
+	appname = simonvic.Brightness
 	msg_urgency = normal
 	format = "%b"
 
-[playerctl]
-	appname = playerctl
+[simonvic.Playerctl]
+	appname = simonvic.Playerctl
+	format = "%b"
+	
+[simonvic.Battery]
+	appname = simonvic.Battery
+	format = "%b"
+	
+[simonvic.TODO]
+	appname = simonvic.TODO
 	format = "%b"
 		

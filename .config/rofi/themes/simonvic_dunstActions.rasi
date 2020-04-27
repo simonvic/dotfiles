@@ -1,0 +1,186 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+/*
+ * 	drun-display-format: "{icon} | {name} | {generic} | {exec} | {categories} | {comment}";
+ */
+
+configuration {
+	display-drun: "§";
+	display-run: "$";
+	display-window: "缾";
+	display-ssh: "~#";
+	show-icons: true;
+	sidebar-mode: false;
+}
+
+* {
+	/*
+	* DEBUG
+	
+	border: 1px solid;
+	border-color: blue;
+	margin: 1%;
+	background-color: red;
+	*/
+	
+	text-color: @foreground;
+	accent: #F0544C;
+	active-background: @background;
+	active-foreground: @foreground;
+	normal-background: @background;
+	normal-foreground: @foreground;
+	urgent-background: #9E2A5E;
+	urgent-foreground: @foreground;
+	alternate-active-background: @background;
+	alternate-active-foreground: @foreground;
+	alternate-normal-background: @background;
+	alternate-normal-foreground: @foreground;
+	alternate-urgent-background: @background;
+	alternate-urgent-foreground: @foreground;
+	selected-active-background: @accent;
+	selected-active-foreground: #FFFFFF;
+	selected-normal-background: @accent;
+	selected-normal-foreground: #FFFFFF;
+	selected-urgent-background: #9D596B;
+	selected-urgent-foreground: @foreground;
+	
+	foreground: #EEEEEE;
+}
+
+window {
+	children: [mainbox];
+	fullscreen: false;
+	width: 30%;
+	location: north;
+	anchor: north west;
+	x-offset: 260px;
+	y-offset: 4%;
+	transparency: "real";
+	background-color: rgba(0,0,0,0.3);
+}
+
+mainbox {
+	children: [listview];
+	background-color: rgba(0,0,0,0.1);
+	spacing: 0;
+}
+
+inputbar {
+	children: [prompt, entry];
+	background-color: rgba(0,0,0,0.2);
+	border-radius: 10px;
+	padding: 10;
+	margin: 1% 2%;
+}
+
+prompt{
+	font: "WorkSans Regular 16";
+	background-color: transparent;
+	padding: 5px;
+}
+
+entry{
+	font: "WorkSans Regular 16";
+	background-color: transparent;
+	border: 0 0 2px 0 solid;
+	border-color: @accent;
+	vertical-align: 1;
+}
+
+listview {
+	children: [element];
+	orientation: vertical;
+	background-color: transparent;
+	columns: 1;
+	fixed-columns: true;
+	lines: 10;
+	fixed-height: false;
+	spacing: 1%;
+	padding: 2% 2%;
+	scrollbar: true;
+}
+
+scrollbar{
+	background-color: rgba(0,0,0,0.2);
+	handle-width: 5px;
+	handle-color: @accent;
+}
+
+
+element {
+	children: [element-text];
+	orientation: vertical;
+	background-color: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+}
+
+element-text{
+	font: "WorkSans Regular 11";
+	padding: 0% 0% 0% 0%;
+}
+
+element-icon{
+	horizontal-align: 0;
+	size: 40;
+}
+
+element normal.normal {
+	background-color: @normal-background;
+	text-color: @normal-foreground;
+}
+
+element normal.urgent {
+	background-color: @urgent-background;
+	text-color: @urgent-foreground;
+}
+
+element normal.active {
+	background-color: @active-background;
+	text-color: @active-foreground;
+}
+
+element selected.normal {
+	background-color: @selected-normal-background;
+	text-color: @selected-normal-foreground;
+	border-color: @active-background;
+}
+
+element selected.urgent {
+	background-color: @selected-urgent-background;
+	text-color: @selected-urgent-foreground;
+}
+
+element selected.active {
+	background-color: @selected-active-background;
+	text-color: @selected-active-foreground;
+}
+
+element alternate.normal {
+	background-color: @normal-background;
+	text-color: @normal-foreground;
+}
+
+element alternate.urgent {
+	background-color: @urgent-background;
+	text-color: @urgent-foreground;
+}
+
+element alternate.active {
+	background-color: @active-background;
+	text-color: @active-foreground;
+}
