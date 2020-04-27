@@ -20,7 +20,6 @@
 
 configuration {
 	display-drun: "§";
-	drun-display-format: "{name}";
 	display-run: "$";
 	display-window: "缾";
 	display-ssh: "~#";
@@ -64,15 +63,19 @@ configuration {
 
 window {
 	children: [mainbox];
-	fullscreen: true;
+	fullscreen: false;
+	width: 30%;
+	location: north;
+	anchor: north west;
+	x-offset: 260px;
+	y-offset: 4%;
 	transparency: "real";
 	background-color: rgba(0,0,0,0.3);
 }
 
 mainbox {
-	children: [inputbar, listview];
+	children: [listview];
 	background-color: rgba(0,0,0,0.1);
-	padding: 25% 25% 10% 25%;
 	spacing: 0;
 }
 
@@ -102,9 +105,9 @@ listview {
 	children: [element];
 	orientation: vertical;
 	background-color: transparent;
-	columns: 4;
+	columns: 1;
 	fixed-columns: true;
-	lines: 5;
+	lines: 10;
 	fixed-height: false;
 	spacing: 1%;
 	padding: 2% 2%;
@@ -119,7 +122,7 @@ scrollbar{
 
 
 element {
-	children: [element-icon, element-text];
+	children: [element-text];
 	orientation: vertical;
 	background-color: rgba(0,0,0,0.2);
   border-radius: 10px;
@@ -127,7 +130,7 @@ element {
 }
 
 element-text{
-	font: "NotoSans Regular 11";
+	font: "WorkSans Regular 11";
 	padding: 0% 0% 0% 0%;
 }
 

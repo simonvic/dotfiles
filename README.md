@@ -1,5 +1,5 @@
 # simonvic personal full-keyboard driven rice/workflow 
-![version](https://img.shields.io/badge/version-1.3-blue)
+![version](https://img.shields.io/badge/version-1.3.1-red)
 
 ## Getting started
 Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have a ful overview of what my workflow can offer
@@ -32,7 +32,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ## Polybar with auto-hide wrapper
 ![polybar](Pictures/Rice/1.3/Previews/polybar.gif)
 
-## Notifications and more (Dunst)
+## TODO,Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
 ![playerctl](Pictures/Rice/1.3/Previews/playerctl.gif)
 ### Speaker and microphone control
@@ -41,6 +41,9 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ![screen](Pictures/Rice/1.3/Previews/brightness.gif)
 ### App notifications
 ![notifications](Pictures/Rice/1.3/Previews/notifications.gif)
+### ToDo popup with context action
+![todo](Pictures/Rice/1.3/Previews/todo.gif)
+![todoAction](Pictures/Rice/1.3/Previews/todoAction.gif)
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
