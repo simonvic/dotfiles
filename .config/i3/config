@@ -69,6 +69,9 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 
 # === Polybar
+# Available command: launch, toggle <id>, show <id>, hide <id>,showAll, hideAll, toggleTray
+# Use "polybar-manager.sh help" for a more details
+
 # Toggle my main bar polybars
 bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 0
 # Toggle my secondary bar polybars
