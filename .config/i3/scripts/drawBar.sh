@@ -7,7 +7,18 @@ midChar0="▆"
 midChar1="▅"
 midChar2="▃"
 midChar3="▁"
+midPoint=""
 emptyChar="░"
+
+
+# Line
+#fullChar="━"
+#midChar0="╾"
+#midChar1="╾"
+#midChar2="╾"
+#midChar3="╾"
+#midPoint=""
+#emptyChar="─"
 
 # Using braille
 #fullChar="⣿"
@@ -15,6 +26,7 @@ emptyChar="░"
 #midChar1="⡇"
 #midChar2="⠆"
 #midChar3="⠂"
+#midPoint=""
 #emptyChar="⠀"
 
 # TO-DO make colored warning bar
@@ -30,7 +42,7 @@ if [ $drawEmpty = false ]; then
 		midBar=$midChar3
 	fi
   emptyBar=$(seq -s $emptyChar $(( ((100-$length) / $steps ) +1 )) | sed 's/[0-9]//g')
-	finalBar="$bar$midBar$emptyBar"
+	finalBar="$bar$midBar$midPoint$emptyBar"
 elif [ $drawEmpty = true ]; then
 	finalBar="$(seq -s $emptyChar $(($length/$steps +1)) | sed 's/[0-9]//g')"
 fi
