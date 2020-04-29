@@ -158,7 +158,7 @@ function sendNotification() {
 	todoCount=`getCount todo $2`
 	deletedCount=`getCount deleted $2`
 	totalCount=`getCount`
-	todoPercent=$((todoCount * 100 / doneCount))
+	todoPercent=$((doneCount * 100 / (totalCount - deletedCount)))
 	
 	summary="$todoCount todo | $doneCount done | $deletedCount deleted"
 	
