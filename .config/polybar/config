@@ -293,7 +293,7 @@ interface = wlp3s0
 interval = 1.0
 
 format-connected = <ramp-signal>  <label-connected>
-label-connected= %signal%
+label-connected=
 ;label-connected = %downspeed% 祝%upspeed%
 
 format-disconnected = 睊
