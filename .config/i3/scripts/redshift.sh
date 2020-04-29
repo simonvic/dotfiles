@@ -13,4 +13,4 @@
 ###########################################
 
 export REDSHIFT_STATUS=on
-export REDSHIFT_TEMP=3000
+export REDSHIFT_TEMP=3400
