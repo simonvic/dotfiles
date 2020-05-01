@@ -15,10 +15,11 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-fugitive'
 
 Plugin 'Valloric/YouCompleteMe'
-
-Plugin 'doums/darcula'
+Plugin 'othree/csscomplete.vim'
 
 call vundle#end()
+
+
 " enable syntax and plugins (for netrw)
 syntax enable
 
@@ -55,7 +56,9 @@ let g:indentLine_conceallevel = 2
 " JAVA
 let g:syntastic_java_checkers = []
 
-" KEYBINDING
+" CSS
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
+
 
 
 " PERSONALIZATION
