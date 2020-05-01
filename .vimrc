@@ -17,6 +17,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'othree/csscomplete.vim'
 
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
 call vundle#end()
 
 
@@ -38,6 +40,7 @@ command! MakeTags !ctags -R .
 " FILE BROWSING:
 " Start nerdtree
 autocmd vimenter * NERDTree
+let g:NERDTreeBookmarksSort=0
 
 " Tweaks for browsing
 "let g:netrw_banner=0        " disable annoying banner
@@ -64,3 +67,13 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 " PERSONALIZATION
 set termguicolors
 let g:lightline = { 'colorscheme': 'darcula' }
+
+
+set cursorline
+augroup CursorLine
+    au!
+    au VimEnter * setlocal cursorline
+    au WinEnter * setlocal cursorline
+    au BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
