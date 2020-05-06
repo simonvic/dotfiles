@@ -1,20 +1,79 @@
+" Encoding
+set encoding=utf-8
+set fileencoding=utf-8
+
+set nowrap
 set nocompatible
-filetype plugin on
+filetype off
+
+" PLUGINS
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'othree/csscomplete.vim'
+
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+call vundle#end()
+
+
+" enable syntax and plugins (for netrw)
+syntax enable
+
+set number
+syntax on
+colorscheme darcula
+filetype plugin indent on
+
+" FINDING FILES
 set path+=**
 set wildmenu
 
-set nowrap
-set number
-syntax on
-colorscheme simonvic
+" TAG JUMPING
+command! MakeTags !ctags -R .
 
-set ts=2 sw=2 et
+" FILE BROWSING:
+" Start nerdtree
+autocmd vimenter * NERDTree
+let g:NERDTreeBookmarksSort=0
 
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
+" Tweaks for browsing
+"let g:netrw_banner=0        " disable annoying banner
+"let g:netrw_liststyle=3     " tree view
+"let g:netrw_list_hide=netrw_gitignore#Hide()
+"let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+set ts=4 sw=4 et
+      
+
+" INDENTATION:
+let g:indentLine_char = '│'
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
+
+" JAVA
+let g:syntastic_java_checkers = []
+
+" CSS
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=blue ctermbg=8
+
+" PERSONALIZATION
+set termguicolors
+let g:lightline = { 'colorscheme': 'darcula' }
+
+
+set cursorline
+augroup CursorLine
+    au!
+    au VimEnter * setlocal cursorline
+    au WinEnter * setlocal cursorline
+    au BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
