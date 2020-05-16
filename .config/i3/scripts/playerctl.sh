@@ -115,7 +115,7 @@ function info() {
 	fi
 }
 
-if [ $(playerctl -l) != "No players were found" ]; then
+if [ $(playerctl -l | head -n 1) != "No players were found" ]; then
 	case $1 in
 		play-pause)
 			playerctl -p "$player" play-pause
