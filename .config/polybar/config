@@ -128,10 +128,10 @@ override-redirect = true
 bottom = true
 
 height = 3%
-width = 70%
+width = 500
 
 offset-y = 2%
-offset-x = 288
+offset-x = 710
 
 radius = 10
 
@@ -142,8 +142,8 @@ foreground = ${colors.foreground}
 
 
 #TO-DO add conky? 
-modules-left = xkeyboard aur_updates filesystem memory cpu fan temperature
-modules-center = todo_list
+modules-left = 
+modules-center = xkeyboard filesystem memory cpu fan temperature
 modules-right = 
 
 
