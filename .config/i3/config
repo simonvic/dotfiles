@@ -36,7 +36,7 @@ exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
 #exec feh --bg-fill $HOME/Pictures/LogoRemakeFinal/4kBackground+ps.jpg
 
 # Picom
-exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 10 --config .config/picom/picom.conf
+exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 15 --config .config/picom/picom.conf
 
 # Run polybar
 exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
