@@ -121,6 +121,7 @@ alias feeds="xdg-open .newsboat/urls"
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias todo=~/Documents/Programming/scripts/todo/todo.sh 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias xo='xdg-open'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
