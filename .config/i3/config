@@ -157,6 +157,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_window_reverse
 bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic_reverse
 bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_reverse
+bindsym $mod+c 			exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme .config/rofi/themes/simonvic_calc
 
 
 # you can use the cursor keys:

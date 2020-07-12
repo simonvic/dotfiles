@@ -19,14 +19,7 @@
  */
 
 configuration {
-	display-drun: "§";
-	drun-display-format: "{name}\n[<span weight='light' size='x-small'><i>({generic})</i></span>]";
-	display-run: "$";
-	window-format: "{w} {t}\t{c}";
-	display-window: "缾";
-	display-ssh: "~#";
-	show-icons: true;
-	sidebar-mode: true;
+	show-icons: false;
 }
 
 * {
@@ -35,7 +28,7 @@ configuration {
 	
 	border: 1px solid;
 	border-color: blue;
-	margin: 1%;
+	margin: 5px;
 	background-color: red;
 	*/
 
@@ -76,10 +69,11 @@ window {
 }
 
 mainbox {
-	children: [listview, inputbar];
+	children: [listview, message, inputbar];
 	background-color: rgba(0,0,0,0.1);
 	spacing: 0;
 }
+
 
 inputbar {
 	children: [prompt, entry];
@@ -93,6 +87,17 @@ prompt{
 	font: "WorkSans Regular 16";
 	background-color: transparent;
 	padding: 5px;
+}
+
+textbox {
+	background-color: rgba(0,0,0,0.2);
+	margin: 0% 2%;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+message {
+	background-color: transparent;
 }
 
 entry{
@@ -111,7 +116,7 @@ listview {
 	fixed-columns: true;
 	lines: 5;
 	fixed-height: false;
-	spacing: 1%;
+	spacing: 0;
 	padding: 2% 2%;
 	scrollbar: true;
 	reverse: true;
@@ -121,13 +126,14 @@ scrollbar{
 	background-color: rgba(0,0,0,0.2);
 	handle-width: 5px;
 	handle-color: @accent;
+	margin: 0px 10px;
 }
 
 
 element {
 	children: [element-icon, element-text];
 	orientation: horizontal;
-	background-color: rgba(0,0,0,0);
+	background-color: transparent;
   border-radius: 10px;
   padding: 10px 10px 10px 10px;
 }
