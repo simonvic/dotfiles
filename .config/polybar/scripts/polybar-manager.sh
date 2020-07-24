@@ -13,6 +13,9 @@
 
 ###########################################
 
+visibleIcon=" 蘒 "
+invisibleIcon=" 﨡 "
+
 TRAY=/tmp/polybar_tray_id
 
 BARS[0]=/tmp/polybar_window_id_main
@@ -104,9 +107,9 @@ function toggle() {
 function status() {
 	status=$(cat ${BARS[$1]} | cut -d ":" -f2)
 	if [ $status = "visible" ]; then
-		echo " 蘒 "
+		echo $visibleIcon
 	elif [ $status = "invisible" ]; then
-		echo " 﨡 "
+		echo $invisibleIcon
 	fi
 }
 
