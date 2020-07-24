@@ -141,3 +141,4 @@ esac
 [[ $lock ]] && lock && { [[ $suspend ]] && systemctl suspend; }
 
 exit 0
+
