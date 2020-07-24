@@ -24,7 +24,6 @@
 exec numlockx
 
 # Lockscreen
-#exec light-locker
 exec xset s 600 300 
 exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOME/.config/i3/scripts/lockscreen.sh --suspend
 
@@ -32,7 +31,7 @@ exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOM
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always feh --bg-fill --randomize $HOME/Pictures/Wallpapers/*
+exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
 # [WIP] Set the Bing wallpaper of the day as your background
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 
