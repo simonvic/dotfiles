@@ -183,7 +183,7 @@ max_icon_size = 60
 # Set to 0 to disable icon upscaling. (default)
 # If icon_position is set to off, this setting is ignored.
 # (default: 0)
-min_icon_size = 30
+min_icon_size = 10
 
 # Paths to default icons.
 icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
@@ -217,21 +217,21 @@ context = mod4+n
 # Otherwise the "#" and following would be interpreted as a comment.
 frame_color = "#33333355"
 foreground = "#888a85"
-background = "#1913114D"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 8
 
 [urgency_normal]
 frame_color = "#5B823455"
 foreground = "#CACACA"
-background = "#1913114D"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 8
 
 [urgency_critical]
 frame_color = "#B7472A55"
 foreground = "#B7472A"
-background = "#1913114D"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 16
 
