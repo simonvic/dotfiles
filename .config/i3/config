@@ -39,7 +39,7 @@ exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
 exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 15 --config .config/picom/picom.conf
 
 # Run polybar
-exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
+exec --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
 # [WIP] Enable autohide for the selected bar 
 # exec_always $HOME/.config/polybar/scripts/polybar-manager.sh autohide 0
 
