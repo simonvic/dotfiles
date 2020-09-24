@@ -47,3 +47,4 @@ bind-key left quit
 auto-reload yes
 browser "/bin/newsboat-browser.sh"
 max-items 500
+reload-threads 100
