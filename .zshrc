@@ -123,6 +123,7 @@ alias sBrightnessctl=~/.config/i3/scripts/brightness.sh
 alias sMicrophonectl=~/.config/i3/scripts/microphone.sh
 alias sPlayerctl=~/.config/i3/scripts/playerctl.sh
 alias sVolumectl=~/.config/i3/scripts/bluetooth.sh
+alias sPolybarctl=~/.config/polybar/scripts/polybar-manager.sh
 alias feeds="xdg-open .newsboat/urls"
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias todo=~/Documents/Programming/scripts/todo/todo.sh 
