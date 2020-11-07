@@ -25,7 +25,7 @@ warning = #ed9111
 
 [bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
-enable-ipc = false
+enable-ipc = true
 
 override-redirect = false
 width = 100%
@@ -75,7 +75,7 @@ tray-detached = false
 
 inherit = bar/main
 ;monitor = ${env:MONITOR:eDP1}
-enable-ipc = false
+enable-ipc = true
 
 override-redirect = true 
 ;wm-restack = i3
@@ -121,7 +121,7 @@ cursor-scroll = ns-resize
 
 inherit = bar/main
 ;monitor = ${env:MONITOR:eDP1}
-enable-ipc = false
+enable-ipc = true
 
 override-redirect = true
 ;wm-restack = i3
