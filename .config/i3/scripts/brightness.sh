@@ -70,6 +70,14 @@ function setBrightness {
 	xbacklight -set $1
 }
 
+function changeBrightness(){
+  if [ -z $2 ]; then
+		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
+	else
+		xbacklight $1 $2 -steps $fade_steps -time $fade_time
+	fi
+}
+
 function toggleRedshift() {
 	if [ "$REDSHIFT_STATUS" = on ]; then
 		sed -i "s/REDSHIFT_STATUS=on/REDSHIFT_STATUS=off/g" $redshiftState
@@ -173,29 +181,32 @@ function screensaver() {
 	wait
 }
 
+function updatePolybar() {
+	polybar-msg hook brightness 1
+	polybar-msg hook redshift 1
+	polybar-msg hook brightness-extended 1
+	polybar-msg hook redshift-extended 1
+}
+
 case $1 in
     increase)
-    	if [ -z $2 ]; then
-    		xbacklight -inc $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
-    	else
-				xbacklight -inc $2 -steps $fade_steps -time $fade_time
-			fi
+    	changeBrightness -inc $2
+			updatePolybar
 			sendNotification
 			;;
     decrease)
-    	if [ -z $2 ]; then
-    		xbacklight -dec $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
-    	else
-				xbacklight -dec $2 -steps $fade_steps -time $fade_time
-			fi
+    	changeBrightness -dec $2
+			updatePolybar
 			sendNotification
 			;;
 		set)
 			setBrightness "$2 -step $fade_fps -time $fade_time"
+			updatePolybar
 			sendNotification
 			;;
 		screensaver)
 			screensaver
+			updatePolybar
 			;;
 		print)
 			printBrightness $2
@@ -204,6 +215,7 @@ case $1 in
 			case $2 in
 				toggle)
 					toggleRedshift
+					updatePolybar
 					sendNotification
 				;;
 				increase)
@@ -212,6 +224,7 @@ case $1 in
 					else
 						changeTemp $((REDSHIFT_TEMP+$3))
 					fi
+					updatePolybar
 					sendNotification
 					;;
 				decrease)
@@ -220,6 +233,7 @@ case $1 in
 					else
 						changeTemp $((REDSHIFT_TEMP-$3))
 					fi
+					updatePolybar
 					sendNotification
 					;;
 				print)
