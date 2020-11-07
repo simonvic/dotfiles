@@ -39,7 +39,7 @@ exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
 exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 15 --config .config/picom/picom.conf
 
 # Run polybar
-exec --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
+exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
 # [WIP] Enable autohide for the selected bar 
 # exec_always $HOME/.config/polybar/scripts/polybar-manager.sh autohide 0
 
@@ -73,15 +73,15 @@ bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 # Use "polybar-manager.sh help" for a more details
 
 # Toggle my main bar polybars
-bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 0
+bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle main
 # Toggle my secondary bar polybars
-bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 1
+bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle secondary
 # Toggle my tertiary bar
-bindsym $mod+Ctrl+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 2
+bindsym $mod+Ctrl+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle tertiary
 # Hide all bars
 bindsym $mod+Ctrl+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh hideAll
 # Toggle the tray
-bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
+#bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
 
 
 # === Lock the screen
