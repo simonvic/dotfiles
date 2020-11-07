@@ -117,11 +117,16 @@ plugins=(git)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias t="tree -h -F -D -L 1"
+alias xo='xdg-open'
+alias sBluetoothctl=~/.config/i3/scripts/bluetooth.sh
+alias sBrightnessctl=~/.config/i3/scripts/brightness.sh
+alias sMicrophonectl=~/.config/i3/scripts/microphone.sh
+alias sPlayerctl=~/.config/i3/scripts/playerctl.sh
+alias sVolumectl=~/.config/i3/scripts/bluetooth.sh
 alias feeds="xdg-open .newsboat/urls"
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias todo=~/Documents/Programming/scripts/todo/todo.sh 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias xo='xdg-open'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
