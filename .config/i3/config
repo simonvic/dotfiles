@@ -31,7 +31,7 @@ exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOM
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
+exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
 # [WIP] Set the Bing wallpaper of the day as your background
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 

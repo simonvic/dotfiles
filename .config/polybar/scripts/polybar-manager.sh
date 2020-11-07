@@ -13,6 +13,10 @@
 
 ###########################################
 
+
+visibleIcon=" 蘒 "
+invisibleIcon=" 﨡 "
+
 function launch() {
 	killPolybars
 
@@ -26,18 +30,19 @@ function launch() {
 
 function killPolybars() {
 	killall -q polybar
+	rm /tmp/polybar_ipc_*
 }
 
 function launchPolybar() {
 	if [ ! -z "$1" ]; then
-		polybar $1 >>/tmp/polybar_$1.log 2>&1 & disown
-		rm /tmp/polybar_ipc_$1
-		ln -sf /tmp/polybar_mqueue.$! /tmp/polybar_ipc_$1
+		polybar $1 &
+		ln -s /tmp/polybar_mqueue.$! /tmp/polybar_ipc_$1
 	fi
 }
 
 function showAll() {
 	polybar-msg cmd show
+	updateSwitches
 }
 
 function hideAll() {
@@ -45,19 +50,28 @@ function hideAll() {
 }
 
 function show() {
-	[ ! -z "$1" ] && echo cmd:show >/tmp/polybar_ipc_$1
+	[ ! -z "$1" ] && echo cmd:show >>/tmp/polybar_ipc_$1
 }
 
 function hide() {
-	[ ! -z "$1" ] && echo cmd:hide >/tmp/polybar_ipc_$1
+	[ ! -z "$1" ] && echo cmd:hide >>/tmp/polybar_ipc_$1
 }
 
 function toggle() {
-	[ ! -z "$1" ] && echo cmd:toggle >/tmp/polybar_ipc_$1
+	[ ! -z "$1" ] && echo cmd:toggle >>/tmp/polybar_ipc_$1
+}
+
+function updateSwitches(){
+	polybar-msg hook bar-switch-secondary 1
+	polybar-msg hook bar-switch-tertiary 1
 }
 
 function status() {
-	echo "-o"
+	case "$( xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5 )" in
+		IsViewable) echo "$visibleIcon" ;;
+		IsUnMapped) echo "$invisibleIcon" ;;
+		*) echo "$invisibleIcon";;
+	esac		
 }
 
 function toggleTray() {
@@ -83,12 +97,12 @@ function resize() {
 
 function printUsage() {
 	printf "
--Usage
+- Usage
 	polybar-manager.sh <options>
 	
--Available bar :
+- Available bar name:
 "
-	ls /tmp/ | grep polybar_ipc_
+	ls /tmp/ | grep polybar_ipc_ | cut -d "_" -f3
 	printf "
 
 -Options
@@ -97,7 +111,7 @@ function printUsage() {
 	toggle <bar name>		Show and hide the specified bar.
 	showAll			Make all polybars visible
 	hideAll			Make all polybars invisible
-[DEPRECATED]	status <bar name>		Print status of the specified bar (useful to create a switch in a polybar itself)
+	status <bar name>		Print status of the specified bar (useful to create a switch in a polybar itself)
 [DEPRECATED]	toggleTray		Show and hide the tray (if present in any bar)
 [WIP]	autoHide <bar id>	Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
 [WIP]	drag <bar id>	Drag the polybar with the mouse
@@ -116,12 +130,15 @@ else
 		;;
 	toggle)
 		toggle $2
+		updateSwitches
 		;;
 	showAll)
 		showAll
+		updateSwitches
 		;;
 	hideAll)
 		hideAll
+		updateSwitches
 		;;
 	status)
 		status $2
@@ -134,9 +151,11 @@ else
 		;;
 	show)
 		show $2
+		updateSwitches
 		;;
 	hide)
 		hide $2
+		updateSwitches
 		;;
 	drag)
 		drag $2
