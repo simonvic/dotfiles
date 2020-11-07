@@ -170,7 +170,7 @@ function printTemperature() {
 			body="$REDSHIFT_TEMP K"
 		fi
 	fi
-	echo "%{F$color}$suffix $body%{B- F-}"
+	echo "%{F$color}$suffix$body%{B- F-}"
 }
 
 function screensaver() {

@@ -80,7 +80,7 @@ padding-right = 2
 
 modules-left = i3 
 modules-center = date
-modules-right = wireless-network wired-network redshift brightness pulseaudio battery bar-switch-secondary
+modules-right = wireless-network wired-network bluetooth redshift brightness pulseaudio battery bar-switch-secondary
 module-margin-left = 1
 module-margin-right = 1
 separator =
@@ -567,6 +567,15 @@ scroll-down =  ~/.config/i3/scripts/brightness.sh redshift decrease
 [module/redshift-extended]
 inherit = module/redshift
 hook-0 = ~/.config/i3/scripts/brightness.sh redshift print extended
+
+[module/bluetooth]
+type = custom/ipc
+hook-0 = ~/.config/i3/scripts/bluetooth.sh print 
+initial = 1
+format = <output>
+format-foreground = ${colors.foreground}
+format-background = 
+click-left = ~/.config/i3/scripts/brightness.sh power toggle
 
 [module/todo_list]
 type = custom/script
