@@ -16,6 +16,8 @@
 
 visibleIcon=" 蘒 "
 invisibleIcon=" 﨡 "
+defaultPolybarName="*"
+defaultHookId=1
 
 function launch() {
 	killPolybars
@@ -26,6 +28,7 @@ function launch() {
 	
 	sleep 1
 	hide "secondary"
+	hide "tertiary"
 }
 
 function killPolybars() {
@@ -40,37 +43,28 @@ function launchPolybar() {
 	fi
 }
 
-function showAll() {
-	polybar-msg cmd show
-	updateSwitches
-}
-
-function hideAll() {
-	polybar-msg cmd hide
-}
-
 function show() {
-	[ ! -z "$1" ] && echo cmd:show >>/tmp/polybar_ipc_$1
+	ipc cmd show $1
 }
 
 function hide() {
-	[ ! -z "$1" ] && echo cmd:hide >>/tmp/polybar_ipc_$1
+	ipc cmd hide $1
 }
 
 function toggle() {
-	[ ! -z "$1" ] && echo cmd:toggle >>/tmp/polybar_ipc_$1
+	ipc cmd toggle $1
 }
 
 function updateSwitches(){
-	polybar-msg hook bar-switch-secondary 1
-	polybar-msg hook bar-switch-tertiary 1
+	ipc hook bar-switch-secondary
+	ipc hook bar-switch-tertiary
 }
 
 function status() {
 	case "$( xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5 )" in
 		IsViewable) echo "$visibleIcon" ;;
 		IsUnMapped) echo "$invisibleIcon" ;;
-		*) echo "$invisibleIcon";;
+		*) echo "unknwonState";;
 	esac		
 }
 
@@ -95,6 +89,37 @@ function resize() {
 	echo "Needs to be reimplemented"
 }
 
+function ipc(){
+	command=$1
+	payload=$2
+	if [ -z $1 ] && [ -z $2 ]; then
+		echo "Error, message malformed"
+		return 1;
+	fi
+	
+	case $command in
+	hook)
+		regex='^[0-9]+$'
+		if [ ! -z $3 ] && [[ $3 =~ $regex ]]; then
+			hookId=$3
+		else
+			hookId=$defaultHookId
+		fi
+		payload=module/$payload$hookId
+		polybarName=$4	
+	;;
+	cmd | action)
+		polybarName=$3
+	;;
+	esac;
+	
+	if [ -z $polybarName ]; then
+		polybarName=$defaultPolybarName
+	fi
+
+	echo $command:$payload | tee -a /tmp/polybar_ipc_$polybarName
+}
+
 function printUsage() {
 	printf "
 - Usage
@@ -108,16 +133,24 @@ function printUsage() {
 -Options
 	help			Show this help
 	launch			Launch all polybars defined
-	toggle <bar name>		Show and hide the specified bar.
-	showAll			Make all polybars visible
-	hideAll			Make all polybars invisible
+	show [bar name]		Make the specified bar visible, or leave empty to show all bars
+	hide [bar name]		Make the specified bar invisible, or leave empty to hide all bars
+	toggle [bar name]		Show and hide the specified bar, or leave empty to toggle all
 	status <bar name>		Print status of the specified bar (useful to create a switch in a polybar itself)
+	ipc <command=(action|cmd|hook)> <payload> [hook-id] [polybar-name]	Send an inter-process mesage
+	 - if using command=hook, use [hook-id] to specify the index (1-based) of the hook configured in the polybar config. Default: 1
+	 - use [polybar-name] to send the IPC message to the specified polybar. Default: all polybars
+	 Examples:
+	  $ ./polybar-manager.sh ipc action menu-open-1 myBar	# simulate the menu open on the 'myBar' bar 
+	  $ ./polybar-manager.sh ipc cmd show myOtherBar 	# show the 'myOtherBar' bar
+	  $ ./polybar-manager.sh ipc cmd hide 	# hide all bars
+	  $ ./polybar-manager.sh ipc hook myModule 	# call the first defined hook of 'myModule' in all bars
+	  $ ./polybar-manager.sh ipc hook myModule 2 	# call the second defined hook of 'myModule' in all bars
+	  $ ./polybar-manager.sh ipc hook myModule 2 myBar 	# call the first defined hook of 'myModule' in all bars 'myBar'
 [DEPRECATED]	toggleTray		Show and hide the tray (if present in any bar)
 [WIP]	autoHide <bar id>	Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
 [WIP]	drag <bar id>	Drag the polybar with the mouse
 [WIP]	resize <bar id>	Resize the polybar with the mouse
-	show <bar name>		Make the specified bar visible
-	hide <bar name>		Make the specified bar invisible
 "
 }
 
@@ -163,5 +196,8 @@ else
 	resize)
 		resize $2
 		;;
+	ipc)
+		ipc $2 $3 $4 $5
+	;;
 	esac
 fi
