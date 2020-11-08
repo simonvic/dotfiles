@@ -165,14 +165,6 @@ else
 		toggle $2
 		updateSwitches
 		;;
-	showAll)
-		showAll
-		updateSwitches
-		;;
-	hideAll)
-		hideAll
-		updateSwitches
-		;;
 	status)
 		status $2
 		;;
