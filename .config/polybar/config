@@ -575,7 +575,7 @@ initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
 format-background = 
-click-left = ~/.config/i3/scripts/brightness.sh power toggle
+click-left = ~/.config/i3/scripts/bluetooth.sh power toggle
 
 [module/todo_list]
 type = custom/script
