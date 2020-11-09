@@ -20,6 +20,14 @@ lowIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-low-symbo
 icon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-medium-symbolic.svg
 highIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-high-symbolic.svg
 
+# Labels for polybar
+brightnessLowLabel=""
+brightnessMediumLabel=""
+brightnessHighLabel=""
+brightnessMaxLabel=""
+redshiftOnLabel=""
+redshiftOffLabel= #""
+
 # Enable to play sound
 playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
@@ -132,13 +140,13 @@ function sendNotification {
 function printBrightness() {
 	brightness=`getBrightness`
 	if [ $brightness -le 20 ]; then
-		suffix=
+		suffix=$brightnessLowLabel
 	elif [ $brightness -le 40 ]; then
-		suffix=
+		suffix=$brightnessMediumLabel
 	elif [ $brightness -le 60 ]; then
-		suffix=
+		suffix=$brightnessHighLabel
 	elif [ $brightness -le 100 ]; then
-		suffix=
+		suffix=$brightnessMaxLabel
 	fi
 	
 	if [ "$1" = "extended" ]; then
@@ -165,9 +173,9 @@ function printTemperature() {
 #	fi
 	body=""
 	if [ $REDSHIFT_STATUS = off ]; then
-		suffix=盛
+		suffix=$redshiftOffLabel
 	else
-		suffix=
+		suffix=$redshiftOnLabel
 		body=""
 		if [ "$1" = "extended" ]; then
 			body="$REDSHIFT_TEMP K"
