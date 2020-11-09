@@ -20,6 +20,14 @@ lowIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-low-symbo
 icon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-medium-symbolic.svg
 highIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-high-symbolic.svg
 
+# Labels for polybar
+brightnessLowLabel=""
+brightnessMediumLabel=""
+brightnessHighLabel=""
+brightnessMaxLabel=""
+redshiftOnLabel=""
+redshiftOffLabel= #""
+
 # Enable to play sound
 playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
@@ -68,6 +76,14 @@ function getBrightness {
 
 function setBrightness {
 	xbacklight -set $1
+}
+
+function changeBrightness(){
+  if [ -z $2 ]; then
+		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
+	else
+		xbacklight $1 $2 -steps $fade_steps -time $fade_time
+	fi
 }
 
 function toggleRedshift() {
@@ -121,13 +137,13 @@ function sendNotification {
 function printBrightness() {
 	brightness=`getBrightness`
 	if [ $brightness -le 20 ]; then
-		suffix=
+		suffix=$brightnessLowLabel
 	elif [ $brightness -le 40 ]; then
-		suffix=
+		suffix=$brightnessMediumLabel
 	elif [ $brightness -le 60 ]; then
-		suffix=
+		suffix=$brightnessHighLabel
 	elif [ $brightness -le 100 ]; then
-		suffix=
+		suffix=$brightnessMaxLabel
 	fi
 	
 	if [ "$1" = "extended" ]; then
@@ -154,15 +170,15 @@ function printTemperature() {
 #	fi
 	body=""
 	if [ $REDSHIFT_STATUS = off ]; then
-		suffix=盛
+		suffix=$redshiftOffLabel
 	else
-		suffix=
+		suffix=$redshiftOnLabel
 		body=""
 		if [ "$1" = "extended" ]; then
 			body="$REDSHIFT_TEMP K"
 		fi
 	fi
-	echo "%{F$color}$suffix $body%{B- F-}"
+	echo "%{F$color}$suffix$body%{B- F-}"
 }
 
 function screensaver() {
@@ -173,29 +189,35 @@ function screensaver() {
 	wait
 }
 
+function updatePolybar() {
+	# the hooks must be called in this order, otherwise it doesn't work
+	# maybe because of polybar inheritance and FIFO policy?
+	#to-do investigate this
+	sPolybarctl ipc hook redshift
+	sPolybarctl ipc hook redshift-extended
+	sPolybarctl ipc hook brightness
+	sPolybarctl ipc hook brightness-extended
+}
+
 case $1 in
     increase)
-    	if [ -z $2 ]; then
-    		xbacklight -inc $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
-    	else
-				xbacklight -inc $2 -steps $fade_steps -time $fade_time
-			fi
+    	changeBrightness -inc $2
+			updatePolybar
 			sendNotification
 			;;
     decrease)
-    	if [ -z $2 ]; then
-    		xbacklight -dec $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
-    	else
-				xbacklight -dec $2 -steps $fade_steps -time $fade_time
-			fi
+    	changeBrightness -dec $2
+			updatePolybar
 			sendNotification
 			;;
 		set)
 			setBrightness "$2 -step $fade_fps -time $fade_time"
+			updatePolybar
 			sendNotification
 			;;
 		screensaver)
 			screensaver
+			updatePolybar
 			;;
 		print)
 			printBrightness $2
@@ -204,6 +226,7 @@ case $1 in
 			case $2 in
 				toggle)
 					toggleRedshift
+					updatePolybar
 					sendNotification
 				;;
 				increase)
@@ -212,6 +235,7 @@ case $1 in
 					else
 						changeTemp $((REDSHIFT_TEMP+$3))
 					fi
+					updatePolybar
 					sendNotification
 					;;
 				decrease)
@@ -220,6 +244,7 @@ case $1 in
 					else
 						changeTemp $((REDSHIFT_TEMP-$3))
 					fi
+					updatePolybar
 					sendNotification
 					;;
 				print)

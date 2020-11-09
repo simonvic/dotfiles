@@ -25,13 +25,13 @@ exec numlockx
 
 # Lockscreen
 exec xset s 600 300 
-exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOME/.config/i3/scripts/lockscreen.sh --suspend
+exec xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenctl --suspend
 
 # Restore redshift state
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
+exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
 # [WIP] Set the Bing wallpaper of the day as your background
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 
@@ -39,9 +39,9 @@ exec_always feh --bg-fill $HOME/Pictures/Wallpapers/desert2.jpg
 exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 15 --config .config/picom/picom.conf
 
 # Run polybar
-exec_always --no-startup-id $HOME/.config/polybar/scripts/polybar-manager.sh launch
+exec_always --no-startup-id sPolybarctl launch
 # [WIP] Enable autohide for the selected bar 
-# exec_always $HOME/.config/polybar/scripts/polybar-manager.sh autohide 0
+# exec_always sPolybarctl autohide main
 
 
 # Always mute microphone at startup, you know... FBI and stuff
@@ -69,66 +69,65 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 
 # === Polybar
-# Available command: launch, toggle <id>, show <id>, hide <id>,showAll, hideAll, toggleTray
-# Use "polybar-manager.sh help" for a more details
+# Use "sPolybarctl help" for a more details
 
 # Toggle my main bar polybars
-bindsym $mod+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 0
+bindsym $mod+p exec sPolybarctl toggle main
 # Toggle my secondary bar polybars
-bindsym $mod+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 1
+bindsym $mod+Shift+p exec sPolybarctl toggle secondary
 # Toggle my tertiary bar
-bindsym $mod+Ctrl+p exec $HOME/.config/polybar/scripts/polybar-manager.sh toggle 2
+bindsym $mod+Ctrl+p exec sPolybarctl toggle tertiary
 # Hide all bars
-bindsym $mod+Ctrl+Shift+p exec $HOME/.config/polybar/scripts/polybar-manager.sh hideAll
+bindsym $mod+Ctrl+Shift+p exec sPolybarctl hide
 # Toggle the tray
-bindsym $mod+o exec $HOME/.config/polybar/scripts/polybar-manager.sh toggleTray
+#bindsym $mod+o exec sPolybarctl toggleTray
 
 
 # === Lock the screen
-bindsym $mod+l exec $HOME/.config/i3/scripts/lockscreen.sh --lock
+bindsym $mod+l exec sLockscreenctl --lock
 
 # Adjust volume 
 # -Ctrl is used to control the microphone
 # -Shift is used to change values at higher rate
-bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh up 1
-bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh down 1
-bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh up 10
-bindsym Shift+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/volume.sh down 10
-bindsym XF86AudioMute exec --no-startup-id $HOME/.config/i3/scripts/volume.sh mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id sVolumectl up 1
+bindsym XF86AudioLowerVolume exec --no-startup-id sVolumectl down 1
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id sVolumectl up 10
+bindsym Shift+XF86AudioLowerVolume exec --no-startup-id sVolumectl down 10
+bindsym XF86AudioMute exec --no-startup-id sVolumectl mute
 
-bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh up 1
-bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh down 1
-bindsym Ctrl+Shift+XF86AudioRaiseVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh up 10
-bindsym Ctrl+Shift+XF86AudioLowerVolume exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh down 10
-bindsym Ctrl+XF86AudioMute exec --no-startup-id $HOME/.config/i3/scripts/microphone.sh mute
+bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id sMicrophonectl up 1
+bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id sMicrophonectl down 1
+bindsym Ctrl+Shift+XF86AudioRaiseVolume exec --no-startup-id sMicrophonectl up 10
+bindsym Ctrl+Shift+XF86AudioLowerVolume exec --no-startup-id sMicrophonectl down 10
+bindsym Ctrl+XF86AudioMute exec --no-startup-id sMicrophonectl mute
 
 # Sreen brightness/temperature controls
 # -Ctrl is used to control the temperature
 # -Shift is used to change values at higher rate
-bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh increase
-bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh decrease
-bindsym Shift+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh increase 10
-bindsym Shift+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh decrease 10
-bindsym XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh set 1
-bindsym Shift+XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh set 100
+bindsym XF86MonBrightnessUp exec --no-startup-id sBrightnessctl increase
+bindsym XF86MonBrightnessDown exec --no-startup-id sBrightnessctl decrease
+bindsym Shift+XF86MonBrightnessUp exec --no-startup-id sBrightnessctl increase 10
+bindsym Shift+XF86MonBrightnessDown exec --no-startup-id sBrightnessctl decrease 10
+bindsym XF86ScreenSaver exec --no-startup-id sBrightnessctl set 1
+bindsym Shift+XF86ScreenSaver exec --no-startup-id sBrightnessctl set 100
 
-bindsym Ctrl+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift increase
-bindsym Ctrl+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift decrease
-bindsym Ctrl+Shift+XF86MonBrightnessUp exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift increase 400
-bindsym Ctrl+Shift+XF86MonBrightnessDown exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift decrease 400
-bindsym Ctrl+XF86ScreenSaver exec --no-startup-id $HOME/.config/i3/scripts/brightness.sh redshift toggle
+bindsym Ctrl+XF86MonBrightnessUp exec --no-startup-id sBrightnessctl redshift increase
+bindsym Ctrl+XF86MonBrightnessDown exec --no-startup-id sBrightnessctl redshift decrease
+bindsym Ctrl+Shift+XF86MonBrightnessUp exec --no-startup-id sBrightnessctl redshift increase 400
+bindsym Ctrl+Shift+XF86MonBrightnessDown exec --no-startup-id sBrightnessctl redshift decrease 400
+bindsym Ctrl+XF86ScreenSaver exec --no-startup-id sBrightnessctl redshift toggle
 
 # Media player controls
-bindsym XF86AudioPlay exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh play-pause
-bindsym XF86AudioStop exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh stop
-bindsym XF86AudioNext exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh next
-bindsym XF86AudioPrev exec --no-startup-id $HOME/.config/i3/scripts/playerctl.sh previous
+bindsym XF86AudioPlay exec --no-startup-id sPlayerctl play-pause
+bindsym XF86AudioStop exec --no-startup-id sPlayerctl stop
+bindsym XF86AudioNext exec --no-startup-id sPlayerctl next
+bindsym XF86AudioPrev exec --no-startup-id sPlayerctl previous
 
 # ToDo script
-bindsym $mod+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification todo
-bindsym $mod+Ctrl+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification done
-bindsym $mod+Shift+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification deleted
-bindsym $mod+Shift+Ctrl+t exec $HOME/Documents/Programming/scripts/todo/todo.sh notification
+bindsym $mod+t exec sTodo notification todo
+bindsym $mod+Ctrl+t exec sTodo notification done
+bindsym $mod+Shift+t exec sTodo notification deleted
+bindsym $mod+Shift+Ctrl+t exec sTodo notification
 
 # Calculator
 bindsym XF86Calculator exec --no-startup-id gnome-calculator
@@ -381,7 +380,7 @@ focus_follows_mouse no
 
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #ff2740	#333333	$eeeeee	#666666	  #ff2740
+client.focused          #f0544c	#333333	$eeeeee	#666666	  #ff2740
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000

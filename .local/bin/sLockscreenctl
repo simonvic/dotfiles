@@ -30,9 +30,9 @@ indicatorPos=960:740
 timeString=%H:%M:%S
 timePos=960:540
 timeSize=150
-dateString="%A,%d %B"
-datePos=960:570
-dateSize=20
+dateString="%A, %d %B"
+datePos=960:620
+dateSize=30
 verifyText=Verifying...
 wrongText=Wrong!
 noInputText=...
@@ -71,7 +71,7 @@ barPosition=540
 
 lock() {
 	if [ $showSongAsGreeter = true ]; then
-		greeterText=$($HOME/.config/i3/scripts/playerctl.sh info)
+		greeterText=$(sPlayerctl info)
 	fi
 	
 	case "$indicatorType" in

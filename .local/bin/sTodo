@@ -191,19 +191,19 @@ function sendNotification() {
 			editFile
 		;;
 		listAll)
-			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list" --hold
+			/usr/bin/rofi-sensible-terminal -e "sTodo list" --hold
 		;;
 		listDone)
-			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list done" --hold
+			/usr/bin/rofi-sensible-terminal -e "sTodo list done" --hold
 		;;
 		listTodo)
-			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list todo" --hold
+			/usr/bin/rofi-sensible-terminal -e "sTodo list todo" --hold
 		;;
 		listDeleted)
-			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh list deleted" --hold
+			/usr/bin/rofi-sensible-terminal -e "sTodo list deleted" --hold
 		;;
 		todoHelp)
-			/usr/bin/rofi-sensible-terminal -e "$HOME/Documents/Programming/scripts/todo/todo.sh help" --hold
+			/usr/bin/rofi-sensible-terminal -e "sTodo help" --hold
 		;;
 		*)
 		# No choise

@@ -27,7 +27,7 @@ function prompt_begin {
 	#echo "·························································\n"
 	
 	#Starting block
-	echo "%{$bg[red]%}%{$fg[white]%} %{$reset_color%}"
+	echo "%{$fg[red]%}▍%{$reset_color%}"
 }
 
 function prompt_char {

@@ -53,6 +53,11 @@ indicate_hidden = yes
 # Possible values are "left", "center" and "right".
 alignment = left
 
+# Defines how the text and icon should be aligned vertically within the notification.
+# If icons are disabled, this option has no effect.
+# (values: [top/center/bottom], default: center)
+vertical_alignment = center
+
 # The frequency with wich text that is longer than the notification
 # window allows bounces back and forth.
 # This option conflicts with "word_wrap".
@@ -92,7 +97,7 @@ hide_duplicates_count = no
 geometry = "500x30-710+40"
 
 # Round the corners
-corner_radius = 5
+corner_radius = 10
 
 # Shrink window if it's smaller than the width.  Will be ignored if
 # width is 0.
@@ -101,7 +106,7 @@ shrink = no
 # The transparency of the window.  Range: [0; 100].
 # This option will only work if a compositing windowmanager is
 # present (e.g. xcompmgr, compiz, etc.).
-transparency = 30
+transparency = 0
 
 # Don't remove messages, if the user is idle (no mouse or keyboard input)
 # for longer than idle_threshold seconds.
@@ -173,6 +178,13 @@ browser = /usr/bin/firefox --new-tab
 icon_position = left
 max_icon_size = 60
 
+# Defines the minimum size in pixels for the icons. If the icon is larger than or equal to the specified value it won't be affected.
+# If it's smaller then it will be scaled up so that the smaller axis is equivalent to the specified size.
+# Set to 0 to disable icon upscaling. (default)
+# If icon_position is set to off, this setting is ignored.
+# (default: 0)
+min_icon_size = 10
+
 # Paths to default icons.
 icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
 
@@ -203,23 +215,23 @@ context = mod4+n
 [urgency_low]
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
-frame_color = "#333333"
-foreground = "#666666"
-background = "#191311"
+frame_color = "#33333355"
+foreground = "#888a85"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 8
 
 [urgency_normal]
-frame_color = "#5B8234"
+frame_color = "#5B823455"
 foreground = "#CACACA"
-background = "#191311"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 8
 
 [urgency_critical]
-frame_color = "#B7472A"
+frame_color = "#B7472A55"
 foreground = "#B7472A"
-background = "#191311"
+background = "#191311AA"
 #background = "#2B313C"
 timeout = 16
 

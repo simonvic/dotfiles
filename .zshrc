@@ -26,7 +26,7 @@ ZSH_THEME="simonvic-minimal"
 
 # STARTUP EXEC
 # neofetch --color_blocks off
-~/Documents/Programming/scripts/todo/todo.sh
+sTodo
 
 
 # Set list of themes to pick from when loading at random
@@ -117,11 +117,10 @@ plugins=(git)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias t="tree -h -F -D -L 1"
-alias feeds="xdg-open .newsboat/urls"
-alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
-alias todo=~/Documents/Programming/scripts/todo/todo.sh 
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias xo='xdg-open'
+alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
+alias todo='sTodo'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then

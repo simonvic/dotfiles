@@ -1,5 +1,5 @@
 # simonvic personal full-keyboard driven rice/workflow 
-![version](https://img.shields.io/badge/version-1.3.2-red)
+![version](https://img.shields.io/badge/version-2.0.0-red)
 
 ## Getting started
 Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have a ful overview of what my workflow can offer
@@ -16,37 +16,35 @@ Main requirements:
 Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
  
 ## Lockscreen (i3lock-color)
-![circleblur](Pictures/Rice/1.3/Previews/lockscreen_blur_circle.gif)
+![circleblur](https://imgur.com/X4KEcVR.gif)
 
 <details>
  <summary> Other themes preview </summary>
  
-![barblur](Pictures/Rice/1.3/Previews/lockscreen_blur_bars.gif)
-![image](Pictures/Rice/1.3/Previews/rofi_image_circle.gif)
+![barblur](https://imgur.com/AD6SStG.gif)
+![image](https://imgur.com/t9re5NI.gif)
 
 </details>
 
 ## Application launcher (Rofi)
-![Rofi](Pictures/Rice/1.3/Previews/rofi.gif)
+![Rofi](https://imgur.com/U2OKJvx.gif)
 
-## Polybar with auto-hide wrapper
-![polybar](Pictures/Rice/1.3/Previews/polybar.gif)
+## Polybar
+![polybar](https://imgur.com/BbjNiOo.gif)
 
 ## TODO,Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
-![playerctl](Pictures/Rice/1.3/Previews/playerctl.gif)
+![playerctl](https://i.imgur.com/0XehgiR.gif)
 ### Speaker and microphone control
-![volume](Pictures/Rice/1.3/Previews/volume.gif)
+![volume](https://imgur.com/NAcWdqa.gif)
 ### Brightness and Redshift control
-![screen](Pictures/Rice/1.3/Previews/brightness.gif)
+![screen](https://imgur.com/9UBUZQg.gif)
 ### App notifications
-![notifications](Pictures/Rice/1.3/Previews/notifications.gif)
+![notifications](https://imgur.com/dgIq5dr.gif)
 ### ToDo popup with context action
-![todo](Pictures/Rice/1.3/Previews/todo.gif)
-![todoAction](Pictures/Rice/1.3/Previews/todoAction.gif)
+![todo](https://imgur.com/8OWFgx8.gif)
+![todoAction](https://imgur.com/aYN9Ees.gif)
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
-A brief about keybinding of some of my scripts.
-[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
-![keys](Pictures/Rice/1.3/Previews/keybinding_volume_brightness.gif)
+[Check out the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
