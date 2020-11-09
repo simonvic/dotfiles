@@ -1,5 +1,5 @@
 # simonvic personal full-keyboard driven rice/workflow 
-![version](https://img.shields.io/badge/version-1.3.2-red)
+![version](https://img.shields.io/badge/version-2.0.0-red)
 
 ## Getting started
 Make sure to visit the [Wiki](https://github.com/simonvic/dotfiles/wiki) to have a ful overview of what my workflow can offer
@@ -29,7 +29,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 ## Application launcher (Rofi)
 ![Rofi](https://imgur.com/U2OKJvx.gif)
 
-## Polybar with auto-hide wrapper
+## Polybar
 ![polybar](https://imgur.com/BbjNiOo.gif)
 
 ## TODO,Notifications and more (Dunst)
@@ -47,5 +47,4 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
-A brief about keybinding of some of my scripts.
-[Check the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
+[Check out the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
