@@ -532,51 +532,51 @@ format-background =
 
 [module/bar-switch-secondary]
 inherit = module/bar-switch
-hook-0 = ~/.config/polybar/scripts/polybar-manager.sh status "secondary"
-click-left = ~/.config/polybar/scripts/polybar-manager.sh toggle "secondary"
+hook-0 = sPolybarctl status "secondary"
+click-left = sPolybarctl toggle "secondary"
 
 [module/bar-switch-tertiary]
 inherit = module/bar-switch
-hook-0 = ~/.config/polybar/scripts/polybar-manager.sh status "tertiary"
-click-left = ~/.config/polybar/scripts/polybar-manager.sh toggle "tertiary"
+hook-0 = sPolybarctl status "tertiary"
+click-left = sPolybarctl toggle "tertiary"
 
 [module/brightness]
 type = custom/ipc
-hook-0 =  ~/.config/i3/scripts/brightness.sh print   
+hook-0 =  sBrightnessctl print   
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
 format-background =
-scroll-up =  ~/.config/i3/scripts/brightness.sh increase 10
-scroll-down =  ~/.config/i3/scripts/brightness.sh decrease 10
+scroll-up =  sBrightnessctl increase 10
+scroll-down =  sBrightnessctl decrease 10
 
 [module/brightness-extended]
 inherit = module/brightness
-hook-0 = ~/.config/i3/scripts/brightness.sh print extended
+hook-0 = sBrightnessctl print extended
 
 [module/redshift]
 type = custom/ipc
-hook-0 = ~/.config/i3/scripts/brightness.sh redshift print 
+hook-0 = sBrightnessctl redshift print 
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
 format-background = 
-click-left = ~/.config/i3/scripts/brightness.sh redshift toggle
-scroll-up =  ~/.config/i3/scripts/brightness.sh redshift increase
-scroll-down =  ~/.config/i3/scripts/brightness.sh redshift decrease
+click-left = sBrightnessctl redshift toggle
+scroll-up =  sBrightnessctl redshift increase
+scroll-down =  sBrightnessctl redshift decrease
 
 [module/redshift-extended]
 inherit = module/redshift
-hook-0 = ~/.config/i3/scripts/brightness.sh redshift print extended
+hook-0 = sBrightnessctl redshift print extended
 
 [module/bluetooth]
 type = custom/ipc
-hook-0 = ~/.config/i3/scripts/bluetooth.sh print 
+hook-0 = sBluetoothctl print 
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
 format-background = 
-click-left = ~/.config/i3/scripts/bluetooth.sh power toggle
+click-left = sBluetoothctl power toggle
 
 [module/todo_list]
 type = custom/script

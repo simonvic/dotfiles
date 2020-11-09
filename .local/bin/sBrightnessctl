@@ -56,9 +56,6 @@ screensaver_fps=240
 redshiftState=~/.config/i3/scripts/redshift.sh
 source $redshiftState
 
-# Path to the polybar manager #to-do generalize this
-sPolybarctl=~/.config/polybar/scripts/polybar-manager.sh
-
 #	Unique dunst notification id
 uid=2594
 
@@ -196,10 +193,10 @@ function updatePolybar() {
 	# the hooks must be called in this order, otherwise it doesn't work
 	# maybe because of polybar inheritance and FIFO policy?
 	#to-do investigate this
-	$sPolybarctl ipc hook redshift
-	$sPolybarctl ipc hook redshift-extended
-	$sPolybarctl ipc hook brightness
-	$sPolybarctl ipc hook brightness-extended
+	sPolybarctl ipc hook redshift
+	sPolybarctl ipc hook redshift-extended
+	sPolybarctl ipc hook brightness
+	sPolybarctl ipc hook brightness-extended
 }
 
 case $1 in

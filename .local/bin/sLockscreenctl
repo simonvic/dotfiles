@@ -71,7 +71,7 @@ barPosition=540
 
 lock() {
 	if [ $showSongAsGreeter = true ]; then
-		greeterText=$($HOME/.config/i3/scripts/playerctl.sh info)
+		greeterText=$(sPlayerctl info)
 	fi
 	
 	case "$indicatorType" in

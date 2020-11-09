@@ -42,7 +42,7 @@ function getStatus(){
 }
 
 function updatePolybar(){
-	polybar-msg hook bluetooth 1
+	sPolybarctl ipc hook bluetooth
 }
 
 case $1 in
