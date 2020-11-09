@@ -26,7 +26,7 @@ ZSH_THEME="simonvic-minimal"
 
 # STARTUP EXEC
 # neofetch --color_blocks off
-~/Documents/Programming/scripts/todo/todo.sh
+sTodo
 
 
 # Set list of themes to pick from when loading at random
@@ -118,14 +118,8 @@ plugins=(git)
 
 alias t="tree -h -F -D -L 1"
 alias xo='xdg-open'
-alias sBluetoothctl=~/.config/i3/scripts/bluetooth.sh
-alias sBrightnessctl=~/.config/i3/scripts/brightness.sh
-alias sMicrophonectl=~/.config/i3/scripts/microphone.sh
-alias sPlayerctl=~/.config/i3/scripts/playerctl.sh
-alias sVolumectl=~/.config/i3/scripts/bluetooth.sh
-alias sPolybarctl=~/.config/polybar/scripts/polybar-manager.sh
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
-alias todo=~/Documents/Programming/scripts/todo/todo.sh 
+alias todo='sTodo'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
