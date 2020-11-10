@@ -399,4 +399,5 @@ title_align center
 # ======PER WINDOWS===================================
 # ======================================================== 
 for_window [class="sample.Main"] floating enable
+for_window [class="Apache NetBeans IDE "] floating enable
 

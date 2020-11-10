@@ -16,35 +16,40 @@ Main requirements:
 Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration) for a more in-depth explanation
  
 ## Lockscreen (i3lock-color)
-![circleblur](https://imgur.com/X4KEcVR.gif)
+<img src="https://imgur.com/X4KEcVR.gif" width="100%">
 
 <details>
  <summary> Other themes preview </summary>
  
-![barblur](https://imgur.com/AD6SStG.gif)
-![image](https://imgur.com/t9re5NI.gif)
+<img src="https://imgur.com/AD6SStG.gif" width="50%">
+<img src="https://imgur.com/t9re5NI.gif" width="50%">
 
 </details>
 
-## Application launcher (Rofi)
-![Rofi](https://imgur.com/U2OKJvx.gif)
+## Application launcher, window switcher and calculator (Rofi)
+<img src="https://imgur.com/U2OKJvx.gif" width="100%">
 
-## Polybar
-![polybar](https://imgur.com/BbjNiOo.gif)
+## Polybar minimal with easy-to-use wrapper (sPolybarctl)
+<img src="https://imgur.com/BbjNiOo.gif" width="100%">
 
 ## TODO,Notifications and more (Dunst)
 ### Playerctl control + custom Spotify notification
-![playerctl](https://i.imgur.com/0XehgiR.gif)
+<img src="https://imgur.com/0XehgiR.gif" width="100%">
+
 ### Speaker and microphone control
-![volume](https://imgur.com/NAcWdqa.gif)
+<img src="https://imgur.com/NAcWdqa.gif" width="100%">
+
 ### Brightness and Redshift control
-![screen](https://imgur.com/9UBUZQg.gif)
+<img src="https://imgur.com/9UBUZQg.gif" width="100%">
+
 ### App notifications
-![notifications](https://imgur.com/dgIq5dr.gif)
+<img src="https://imgur.com/dgIq5dr.gif" width="100%">
+
 ### ToDo popup with context action
-![todo](https://imgur.com/8OWFgx8.gif)
-![todoAction](https://imgur.com/aYN9Ees.gif)
+<img src="https://imgur.com/8OWFgx8.gif" width="50%">
+<img src="https://imgur.com/aYN9Ees.gif" width="100%">
 
 ## Keybindings
 My workflow is 100% keyboard-driven as I have everything at the tip of my fingers
 [Check out the wiki](https://github.com/simonvic/dotfiles/wiki/Keybindings) for more
+
