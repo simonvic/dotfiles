@@ -41,6 +41,8 @@ command! MakeTags !ctags -R .
 " Start nerdtree
 autocmd vimenter * NERDTree
 let g:NERDTreeBookmarksSort=0
+execute "set <M-1>=\e1"
+nnoremap <M-1> :NERDTreeToggle<CR>
 
 " Tweaks for browsing
 "let g:netrw_banner=0        " disable annoying banner
