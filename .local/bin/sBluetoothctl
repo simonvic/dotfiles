@@ -54,12 +54,15 @@ function printUsage() {
 	help 	Show this help
 	print 	Print the current status label
 	power <toggle|on|off> 	Switch on or off the bluetooth, or toggle between the states
+
+- Abbreviations
+	p = power
 "
 }
 
 case $1 in
     print)	printStatus ;;
-  	power)	power $2 && updatePolybar ;;
+  	power | p)	power $2 && updatePolybar ;;
   	help | *)	printUsage ;;
 esac
 

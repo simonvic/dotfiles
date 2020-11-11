@@ -86,22 +86,27 @@ function printUsage() {
 	up [amount] 	Increase speaker/headphone volume by [amount] if specified or the default value otherwise
 	down [amount] 	Decrease speaker/headphone volume by [amount] if specified or the default value otherwise
 	mute 	Toggle mute on/off for the speaker/headphone
+	
+- Abbreviations
+	u = up
+	d = down
+	m = mute	
 "
 }
 
 case $1 in
-	up)
+	up | u)
 		# Set the volume on (if it was muted)
 		amixer -D pulse set Master on > /dev/null
 		amixer -D pulse sset Master "$2"%+ > /dev/null
 		sendNotification
 	;;
-	down)
+	down | d)
 		amixer -D pulse set Master on > /dev/null
 		amixer -D pulse sset Master "$2"%- > /dev/null
 		sendNotification
 	;;
-	mute)
+	mute | m)
  	# Toggle mute
 		amixer -D pulse set Master toggle > /dev/null
 		if isMute ; then

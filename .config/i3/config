@@ -25,7 +25,7 @@ exec numlockx
 
 # Lockscreen
 exec xset s 600 300 
-exec xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenctl --suspend
+exec xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenctl suspend
 
 # Restore redshift state
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
@@ -84,7 +84,7 @@ bindsym $mod+Ctrl+Shift+p exec sPolybarctl hide
 
 
 # === Lock the screen
-bindsym $mod+l exec sLockscreenctl --lock
+bindsym $mod+l exec sLockscreenctl lock
 
 # Adjust volume 
 # -Ctrl is used to control the microphone

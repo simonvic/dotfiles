@@ -127,6 +127,13 @@ function printUsage() {
 	next 	Go to the next song
 	previous 	Go to the previous song
 	info 	Print info of the playing song
+	
+- Abbreviations
+	pp = play-pause
+	s = stop
+	n = next
+	p = previous
+	i = info	
 "
 }
 
@@ -134,23 +141,23 @@ if [ -z $1 ] || [ $1 == "help" ]; then
 	printUsage
 elif [ "$(playerctl -l | head -n 1)" != "No players were found" ]; then
 	case $1 in
-		play-pause)
+		play-pause | pp)
 			playerctl -p "$player" play-pause
 			sendNotification
 		;;
-		stop)
+		stop | s)
 			playerctl -p "$player" stop
 			sendNotification
 		;;
-		next)
+		next | n)
 			playerctl -p "$player" next
 			sendNotification
 		;;
-		previous)
+		previous | p)
 			playerctl -p "$player" previous
 			sendNotification
 		;;
-		info)
+		info | i)
 			info
 		;;
 	esac

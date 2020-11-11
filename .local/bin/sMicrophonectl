@@ -83,21 +83,26 @@ function printUsage() {
 	up [amount] 	Increase input volume by [amount] if specified or the default value otherwise
 	down [amount] 	Decrease input volume by [amount] if specified or the default value otherwise
 	mute 	Toggle mute on/off for the microphone
+
+- Abbreviations
+	u = up
+	d = down
+	m = mute	
 "
 }
 
 case $1 in
-	up)
+	up | u)
 		amixer sset Capture cap
 		amixer -D pulse sset Capture csvolume "$2"%+ > /dev/null
 		sendNotification
 	;;
-	down)
+	down | d)
 		amixer sset Capture cap
 		amixer -D pulse sset Capture csvolume "$2"%- > /dev/null
 		sendNotification
 	;;
-	mute)
+	mute | m)
 		amixer -D pulse sset Capture toggle > /dev/null
 		if isMute ; then
 			# Building the volume bar

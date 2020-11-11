@@ -131,27 +131,29 @@ function printUsage() {
 	sLockscreenctl <options>
 	
 - Options
-	--suspend 	Lock the screen and suspend
-	-s 	Equivalent to --suspend
-	--lock Lock the screen
-	-l Equivalent to --lock	
+	suspend 	Lock the screen and suspend
+	lock 	Lock the screen
+
+- Abbreviations
+	s = suspend
+	l = lock
 "
 }
 
 case "$1" in
-	-s | --suspend)
-		suspend=true
-		;&
+	suspend | s)
+		isSuspend=true
+	;&
 
-	-l | --lock)
-		lock=true
-		[[ $suspend ]] || extraArgs="$extraArgs -n"
-		;;
-	* | help) printUsage ;;
+	lock | l)
+		isLock=true
+		[[ $isSuspend ]] || extraArgs="$extraArgs -n"
+	;;
+	help | *) printUsage ;;
 esac
 
 # Activate lockscreen (and suspend if specified)
-[[ $lock ]] && lock && { [[ $suspend ]] && systemctl suspend; }
+[[ $isLock ]] && lock && { [[ $isSuspend ]] && systemctl suspend; }
 
 exit 0
 

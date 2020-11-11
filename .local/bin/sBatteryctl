@@ -188,13 +188,19 @@ function printUsage() {
 	plugin 	Show notification about plugging AC
 	unplug 	Show notification about unplugging AC
 	current 	Show current information on the battery
+	
+- Abbreviations
+	m = monitor
+	p = plugin
+	u = unplug
+	c = current
 "
 }
 
 case $1 in
-	monitor) monitor ;;
-	plugin) plugin ;;
-	unplug) unplug ;;
-	current) current ;;
+	monitor | m) monitor ;;
+	plugin | p) plugin ;;
+	unplug | u) unplug ;;
+	current | c) current ;;
 	help | *) printUsage ;;
 esac

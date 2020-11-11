@@ -215,21 +215,28 @@ function printUsage() {
 	redshift increase [amount] 	Increase the redshift temperature by [amount] if specified or the default value otherwise
 	redshift decrease [amount] 	Decrease the redshift temperature by [amount] if specified or the default value otherwise
 	redshift print 	Print the current redshift temperature (used in polybar)
+	
+- Abbreviations
+	i = increase
+	d = decrease
+	s = set	
+	r = redshift
+	t = toggle
 "
 }
 
 case $1 in
-    increase)
+    increase | i)
     	changeBrightness -inc $2
 			updatePolybar
 			sendNotification
 			;;
-    decrease)
+    decrease | d)
     	changeBrightness -dec $2
 			updatePolybar
 			sendNotification
 			;;
-		set)
+		set | s)
 			setBrightness "$2 -step $fade_fps -time $fade_time"
 			updatePolybar
 			sendNotification
@@ -241,14 +248,14 @@ case $1 in
 		print)
 			printBrightness $2
 			;;
-		redshift)
+		redshift | r)
 			case $2 in
-				toggle)
+				toggle | t)
 					toggleRedshift
 					updatePolybar
 					sendNotification
 				;;
-				increase)
+				increase | i)
 					if [ -z $3 ]; then
 						changeTemp $((REDSHIFT_TEMP+defaultTempChangeValue))
 					else
@@ -257,7 +264,7 @@ case $1 in
 					updatePolybar
 					sendNotification
 					;;
-				decrease)
+				decrease | d)
 					if [ -z $3 ]; then
 						changeTemp $((REDSHIFT_TEMP-defaultTempChangeValue))
 					else
