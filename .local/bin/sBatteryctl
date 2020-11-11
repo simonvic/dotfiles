@@ -177,22 +177,24 @@ $temp</small>
 	sendNotification
 }
 
+function printUsage() {
+	printf "
+- Usage
+	sBatteryctl <options>
+	
+-Options
+	help 	Show this help
+	monitor 	Monitor the state of the battery (used in a crontab)
+	plugin 	Show notification about plugging AC
+	unplug 	Show notification about unplugging AC
+	current 	Show current information on the battery
+"
+}
+
 case $1 in
-	monitor)
-		monitor
-	;;
-	plugin)
-		plugin
-	;;
-	unplug)
- 		unplug
-	;;
-	current)
-		current
-	;;
-	*)
-	echo "monitor
-plugin
-unplug
-current"
+	monitor) monitor ;;
+	plugin) plugin ;;
+	unplug) unplug ;;
+	current) current ;;
+	help | *) printUsage ;;
 esac

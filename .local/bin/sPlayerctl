@@ -115,7 +115,24 @@ function info() {
 	fi
 }
 
-if [ $(playerctl -l | head -n 1) != "No players were found" ]; then
+function printUsage() {
+	printf "
+- Usage
+	sPlayerctl <options>
+	
+- Options
+	help 	Show this help
+	play-pause 	Toggle between play and pause
+	stop 	Stop music
+	next 	Go to the next song
+	previous 	Go to the previous song
+	info 	Print info of the playing song
+"
+}
+
+if [ -z $1 ] || [ $1 == "help" ]; then 
+	printUsage
+elif [ "$(playerctl -l | head -n 1)" != "No players were found" ]; then
 	case $1 in
 		play-pause)
 			playerctl -p "$player" play-pause

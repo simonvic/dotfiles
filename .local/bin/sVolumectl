@@ -76,6 +76,19 @@ function sendNotification {
   dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body"
 }
 
+function printUsage() {
+	printf "
+- Usage
+	sVolumectl <options>
+	
+- Options
+	help 	Show this help
+	up [amount] 	Increase speaker/headphone volume by [amount] if specified or the default value otherwise
+	down [amount] 	Decrease speaker/headphone volume by [amount] if specified or the default value otherwise
+	mute 	Toggle mute on/off for the speaker/headphone
+"
+}
+
 case $1 in
 	up)
 		# Set the volume on (if it was muted)
@@ -99,4 +112,5 @@ case $1 in
 			  sendNotification
 		fi
 	;;
+	help | *) printUsage ;;
 esac

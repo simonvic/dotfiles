@@ -71,7 +71,19 @@ function sendNotification {
 	
   # Send the notification
   dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$volume" "$body" 
+}
 
+function printUsage() {
+	printf "
+- Usage
+	sMicrophonectl <options>
+	
+- Options
+	help 	Show this help
+	up [amount] 	Increase input volume by [amount] if specified or the default value otherwise
+	down [amount] 	Decrease input volume by [amount] if specified or the default value otherwise
+	mute 	Toggle mute on/off for the microphone
+"
 }
 
 case $1 in
@@ -96,4 +108,5 @@ case $1 in
 			  sendNotification
 		fi		
  	;;
+ 	help | *) printUsage ;;
 esac

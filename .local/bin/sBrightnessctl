@@ -199,6 +199,25 @@ function updatePolybar() {
 	sPolybarctl ipc hook brightness-extended
 }
 
+function printUsage() {
+	printf "
+- Usage
+	sBrightnessctl <options> [...]
+	
+- Options
+	help 	Show this help
+	increase [amount] 	Increase the brightness by [amount] if specified or the default value otherwise
+	decrease [amount] 	Decrease the brightness by [amount] if specified or the default value otherwise
+	set <value> 	Set the brightness to <value>
+	print 	Print current brightness label
+	screensaver 	Lower the brightness to the minimum
+	redshift toggle 	Toggle on/off redshift
+	redshift increase [amount] 	Increase the redshift temperature by [amount] if specified or the default value otherwise
+	redshift decrease [amount] 	Decrease the redshift temperature by [amount] if specified or the default value otherwise
+	redshift print 	Print the current redshift temperature (used in polybar)
+"
+}
+
 case $1 in
     increase)
     	changeBrightness -inc $2
@@ -252,4 +271,5 @@ case $1 in
 					;;
 			esac
 		;;
+		help | *) printUsage ;;
 esac

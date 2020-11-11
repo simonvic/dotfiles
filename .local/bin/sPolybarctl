@@ -123,7 +123,7 @@ function ipc(){
 function printUsage() {
 	printf "
 - Usage
-	polybar-manager.sh <options>
+	sPolybarctl <options>
 	
 - Available bar name:
 "
@@ -141,12 +141,12 @@ function printUsage() {
 	 - if using command=hook, use [hook-id] to specify the index (1-based) of the hook configured in the polybar config. Default: 1
 	 - use [polybar-name] to send the IPC message to the specified polybar. Default: all polybars
 	 Examples:
-	  $ ./polybar-manager.sh ipc action menu-open-1 myBar	# simulate the menu open on the 'myBar' bar 
-	  $ ./polybar-manager.sh ipc cmd show myOtherBar 	# show the 'myOtherBar' bar
-	  $ ./polybar-manager.sh ipc cmd hide 	# hide all bars
-	  $ ./polybar-manager.sh ipc hook myModule 	# call the first defined hook of 'myModule' in all bars
-	  $ ./polybar-manager.sh ipc hook myModule 2 	# call the second defined hook of 'myModule' in all bars
-	  $ ./polybar-manager.sh ipc hook myModule 2 myBar 	# call the first defined hook of 'myModule' in all bars 'myBar'
+	  $ sPolybarctl ipc action menu-open-1 myBar	# simulate the menu open on the 'myBar' bar 
+	  $ sPolybarctl ipc cmd show myOtherBar 	# show the 'myOtherBar' bar
+	  $ sPolybarctl ipc cmd hide 	# hide all bars
+	  $ sPolybarctl ipc hook myModule 	# call the first defined hook of 'myModule' in all bars
+	  $ sPolybarctl ipc hook myModule 2 	# call the second defined hook of 'myModule' in all bars
+	  $ sPolybarctl ipc hook myModule 2 myBar 	# call the first defined hook of 'myModule' in all bars 'myBar'
 [DEPRECATED]	toggleTray		Show and hide the tray (if present in any bar)
 [WIP]	autoHide <bar id>	Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
 [WIP]	drag <bar id>	Drag the polybar with the mouse
@@ -154,10 +154,7 @@ function printUsage() {
 "
 }
 
-if [ -z "$1" ] || [ $1 = "help" ]; then
-	printUsage
-else
-	case "$1" in
+case "$1" in
 	launch)
 		launch
 		;;
@@ -191,5 +188,6 @@ else
 	ipc)
 		ipc $2 $3 $4 $5
 	;;
-	esac
-fi
+	help | *)	printUsage ;;
+esac
+

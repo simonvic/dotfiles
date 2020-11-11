@@ -14,14 +14,14 @@
 
 ###########################################
 
-poweredOnIcon=""
-poweredOffIcon= #""
-conectedIcon=""
+poweredOnLabel=""
+poweredOffLabel= #""
+conectedLabel=""
 
 function printStatus(){	
 	case $(getStatus) in
-		no) echo $poweredOffIcon ;;
-		yes) echo $poweredOnIcon ;;
+		no) echo $poweredOffLabel ;;
+		yes) echo $poweredOnLabel ;;
 		*);;
 	esac;
 }
@@ -45,13 +45,22 @@ function updatePolybar(){
 	sPolybarctl ipc hook bluetooth
 }
 
+function printUsage() {
+	printf "
+- Usage
+	sBluetoothctl <options>
+	
+- Options
+	help 	Show this help
+	print 	Print the current status label
+	power <toggle|on|off> 	Switch on or off the bluetooth, or toggle between the states
+"
+}
+
 case $1 in
-    print)
-    	printStatus
-  	;;
-  	power)
-  		power $2 && updatePolybar
-  	;;
+    print)	printStatus ;;
+  	power)	power $2 && updatePolybar ;;
+  	help | *)	printUsage ;;
 esac
 
 

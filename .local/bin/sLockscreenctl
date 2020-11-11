@@ -125,6 +125,18 @@ args="--pass-media-keys --redraw-thread --force-clock \
 
 }
 
+function printUsage() {
+	printf "
+- Usage
+	sLockscreenctl <options>
+	
+- Options
+	--suspend 	Lock the screen and suspend
+	-s 	Equivalent to --suspend
+	--lock Lock the screen
+	-l Equivalent to --lock	
+"
+}
 
 case "$1" in
 	-s | --suspend)
@@ -135,6 +147,7 @@ case "$1" in
 		lock=true
 		[[ $suspend ]] || extraArgs="$extraArgs -n"
 		;;
+	* | help) printUsage ;;
 esac
 
 # Activate lockscreen (and suspend if specified)
