@@ -117,7 +117,9 @@ plugins=(git)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias t="tree -h -F -D -L 1"
-alias xo='xdg-open'
+xo() {
+	xdg-open $1 &!
+}
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias todo='sTodo'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
