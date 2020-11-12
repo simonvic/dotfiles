@@ -13,7 +13,7 @@
 
 ###########################################
 
-todoFile=~/Documents/Programming/scripts/todo/todo.txt
+todoFile=~/Documents/Productivity/Programming/scripts/todo/todo.txt
 doneSymbol=
 todoSymbol=
 deletedSymbol=﫧
