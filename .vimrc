@@ -39,7 +39,7 @@ command! MakeTags !ctags -R .
 
 " FILE BROWSING:
 " Start nerdtree
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 let g:NERDTreeBookmarksSort=0
 execute "set <M-1>=\e1"
 nnoremap <M-1> :NERDTreeToggle<CR>
