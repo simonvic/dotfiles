@@ -45,7 +45,7 @@ exec_always --no-startup-id sPolybarctl launch
 
 
 # Always mute microphone at startup, you know... FBI and stuff
-exec_always amixer sset Capture nocap
+exec amixer sset Capture nocap
 
 # Use Headset Mic as default input source
 exec_always amixer -c0 sset "Input Source" "Headset Mic" 
@@ -131,6 +131,12 @@ bindsym $mod+Shift+Ctrl+t exec sTodo notification
 
 # Calculator
 bindsym XF86Calculator exec --no-startup-id gnome-calculator
+
+# Screenshot
+# Select area
+bindsym --release $mod+Shift+s exec scrot -o '/tmp/clipboardScreenshot.png' -s -e 'xclip -selection clipboard -target image/png -i $f'
+# All screen
+bindsym --release $mod+Ctrl+Shift+s exec scrot -o '/tmp/clipboardScreenshot.png' -e 'xclip -selection clipboard -target image/png -i $f'
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
