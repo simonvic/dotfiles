@@ -306,7 +306,7 @@ title_align center
 hide_edge_borders smart_no_gaps
 
 # You can also use any non-zero value if you'd like to have a border
-for_window [class=".*"] border pixel 5
+for_window [class=".*"] border pixel 3
 
 focus_follows_mouse no
 
