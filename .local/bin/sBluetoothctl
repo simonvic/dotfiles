@@ -19,7 +19,7 @@ poweredOffLabel= #""
 conectedLabel=""
 
 function printStatus(){	
-	case $(getStatus) in
+	case $(isPowered) in
 		no) echo $poweredOffLabel ;;
 		yes) echo $poweredOnLabel ;;
 		*);;
@@ -28,7 +28,7 @@ function printStatus(){
 
 function power(){
 	if [ $1 == "toggle" ]; then
-		case $(getStatus) in
+		case $(isPowered) in
 			no) bluetoothctl power on ;;
 			yes) bluetoothctl power off ;;
 		esac;
@@ -37,7 +37,15 @@ function power(){
 	fi
 }
 
-function getStatus(){
+function connect(){
+	if [ $(isPowered) == "no" ]; then
+		power on	
+	fi
+	bluetoothctl connect $1
+	updatePolybar
+} 
+
+function isPowered(){
 	bluetoothctl show | grep "Powered" | cut -d " " -f2
 }
 
@@ -54,15 +62,18 @@ function printUsage() {
 	help 	Show this help
 	print 	Print the current status label
 	power <toggle|on|off> 	Switch on or off the bluetooth, or toggle between the states
+	connect <device> 	Power on bluetooth if necessary and connect to <device> (xx:xx:xx:xx:xx:xx)
 
 - Abbreviations
 	p = power
+	c = connect
 "
 }
 
 case $1 in
     print)	printStatus ;;
   	power | p)	power $2 && updatePolybar ;;
+  	connect | c) connect $2 ;;
   	help | *)	printUsage ;;
 esac
 
