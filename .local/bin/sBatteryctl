@@ -177,6 +177,23 @@ $temp</small>
 	sendNotification
 }
 
+function wakelock(){
+	if [ -z $1 ]; then
+		printUsage
+	else 
+		case $1 in
+			toggle | t) 
+				case $2 in
+					on) xset -dpms s off ;;
+					off) xset +dpms s on ;;
+					*) printUsage ;;
+				esac
+			;;
+			*) printUsage ;;
+		esac
+	fi
+}
+
 function printUsage() {
 	printf "
 - Usage
@@ -188,12 +205,15 @@ function printUsage() {
 	plugin 	Show notification about plugging AC
 	unplug 	Show notification about unplugging AC
 	current 	Show current information on the battery
+	wakelock toggle {on|off} 	Toggle on/off the wakelock
 	
 - Abbreviations
 	m = monitor
 	p = plugin
 	u = unplug
 	c = current
+	w = wakelock
+	t = toggle
 "
 }
 
@@ -202,5 +222,6 @@ case $1 in
 	plugin | p) plugin ;;
 	unplug | u) unplug ;;
 	current | c) current ;;
+	wakelock | w) wakelock $2 $3 ;;
 	help | *) printUsage ;;
 esac
