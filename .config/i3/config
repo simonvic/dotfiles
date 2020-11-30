@@ -121,8 +121,10 @@ bindsym XF86AudioPlay exec --no-startup-id sPlayerctl play-pause
 bindsym XF86AudioStop exec --no-startup-id sPlayerctl stop
 bindsym XF86AudioNext exec --no-startup-id sPlayerctl next
 bindsym XF86AudioPrev exec --no-startup-id sPlayerctl previous
+bindsym Ctrl+XF86AudioPlay exec --no-startup-id sPlayerctl select-player
+bindsym Ctrl+Shift+XF86AudioPlay exec --no-startup-id sPlayerctl select-player set auto
 
-# ======TODO MANDAGER=========================================== 
+# ======TODO MANAGER=========================================== 
 bindsym $mod+t exec sTodo notification todo
 bindsym $mod+Ctrl+t exec sTodo notification done
 bindsym $mod+Shift+t exec sTodo notification deleted

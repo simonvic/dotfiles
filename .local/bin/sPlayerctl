@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ###########################################
 #	Made by
@@ -14,12 +14,10 @@
 
 ###########################################
 
+# Where to store the selected player
+selectedPlayer="/tmp/sPlayerctl_selectedPlayer"
 
-#	Default player to control
-#	TO-DO make shortcut to change player on the fly
-player=spotify
-
-# Show more info abou author and song
+# Show more info about author and song
 moreInfo=false
 
 # [WIP] Show the song cover (spotify) as the notification icon
@@ -31,6 +29,9 @@ useSpotifyCache=false
 iconCachePath=$HOME/.cache/spotifyIcon
 spotifyCachePath=$HOME/.cache/spotify/Browser/Cache
 
+# Icon used when selecting the player
+selectPlayerIcon="/usr/share/icons/Vimix-Ruby/24/places/folder-music.svg"
+
 #	Default urgency level [Available: low, normal, critical]
 urgency=low
 
@@ -39,28 +40,35 @@ timeout=5000
 
 #	Unique dunst notification id
 uid=2595
+uid_selectPlayer=2598
 
 # App name in dunst
 appName="simonvic.Playerctl"
 
 
-function getTitle {
+function getSelectedPlayer(){
+	cat $selectedPlayer
+}
+# Player name to control (if no player selected, it controls the first it finds)
+player=`getSelectedPlayer`
+
+function getTitle() {
 	playerctl -p "$player" metadata title
 }
 
-function getArtist {
+function getArtist() {
 	playerctl -p "$player" metadata artist
 }
 
-function getAlbum {
+function getAlbum() {
 	playerctl -p "$player" metadata album
 }
 
-function getStatus {
+function getStatus() {
 	playerctl -p "$player" status
 }
 
-function fetchSpotifyIcon {
+function fetchSpotifyIcon() {
 	if [ $useSpotifyCache = true ]; then
 		for f in $(ls -r -d $spotifyCachePath/f*); do
 		echo $f
@@ -83,7 +91,7 @@ function buildBody() {
 	fi
 }
 
-function sendNotification {
+function sendNotification() {
 	if [ $songCover = false ]; then
 		status=`getStatus`
 		if [ $status = "Playing" ]; then
@@ -100,8 +108,9 @@ function sendNotification {
 	body=`buildBody`
 	
   # Send the notification
-  dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
-  
+	# dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
+	setPlayer $(dunstify -C "$uid"  && dunstify -a "$appName" $(buildPlayersDunstActions) -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body")
+	
 }
 
 function info() {
@@ -115,6 +124,48 @@ function info() {
 	fi
 }
 
+function selectPlayer(){
+	case $1 in
+		set) 
+			if [ -z $2 ]; then
+				printUsage
+			else
+				case $2 in
+					auto) echo "" > $selectedPlayer ;;
+					*) echo "$2" > $selectedPlayer ;;
+				esac
+			fi
+		;;
+		
+		*) sendNotificationSelectPlayer ;;
+	esac
+}
+
+function buildPlayersDunstActions(){
+	playerctl -l | awk '{ print "-A "$0"," $0 ; }'
+}
+
+function sendNotificationSelectPlayer(){
+	prevSelectedPlayer=$(getSelectedPlayer)
+	[ -z $prevSelectedPlayer ] && pastSelectionBody="Currently using <b>Auto</b> mode" || pastSelectionBody="Currently controlling <b>$prevSelectedPlayer</b>"
+	setPlayer $(dunstify -C "$uid_selectPlayer" && dunstify -a $appName -A "Auto,auto" $(buildPlayersDunstActions) -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Playerctl" "Select a player you wish to control. \n <small>$pastSelectionBody</small>")
+}
+
+function setPlayer(){
+	case $1 in
+		1 | 2 | 3) : ;;
+		auto) selectPlayer set auto ;;
+		*) selectPlayer set $1 ;;
+	esac
+}
+
+function sendNotificationPlayerSelected() {
+	selected=$(getSelectedPlayer)
+	[ -z $selected ] && body="Using automatic player mode" || body="You are now controlling <b>$selected</b>"
+	dunstify -a $appName -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Player select" "$body" 
+}
+
+
 function printUsage() {
 	printf "
 - Usage
@@ -127,38 +178,34 @@ function printUsage() {
 	next 	Go to the next song
 	previous 	Go to the previous song
 	info 	Print info of the playing song
+	select-player [set {auto|<player-name>}] 	Select what controller you whish to control. Use "auto" to automatic choose the first available player
 	
 - Abbreviations
 	pp = play-pause
 	s = stop
 	n = next
 	p = previous
-	i = info	
+	i = info
+	sp = select-player
 "
 }
 
-if [ -z $1 ] || [ $1 == "help" ]; then 
-	printUsage
-elif [ "$(playerctl -l | head -n 1)" != "No players were found" ]; then
-	case $1 in
-		play-pause | pp)
-			playerctl -p "$player" play-pause
-			sendNotification
-		;;
-		stop | s)
-			playerctl -p "$player" stop
-			sendNotification
-		;;
-		next | n)
-			playerctl -p "$player" next
-			sendNotification
-		;;
-		previous | p)
-			playerctl -p "$player" previous
-			sendNotification
-		;;
-		info | i)
-			info
-		;;
-	esac
-fi
+case $1 in
+	play-pause | pp)
+		playerctl -p "$player" play-pause && sendNotification
+	;;
+	stop | s)
+		playerctl -p "$player" stop && sendNotification
+	;;
+	next | n)
+		playerctl -p "$player" next && sendNotification
+	;;
+	previous | p)
+		playerctl -p "$player" previous && sendNotification
+	;;
+	info | i) info ;;
+	select-player | sp)
+		selectPlayer $2 $3 && sendNotificationPlayerSelected
+	;;
+	help | *) printUsage ;;
+esac
