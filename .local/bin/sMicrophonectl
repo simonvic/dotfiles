@@ -41,11 +41,11 @@ uid=2592
 appName="simonvic.Microphone"
 
 function getVolume {
-  amixer sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+  amixer -D pulse sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
 }
 
 function isMute {
-  amixer get Capture | grep '%' | grep -oE '[^ ]+$' | grep off
+  amixer -D pulse get Capture | grep '%' | grep -oE '[^ ]+$' | grep off
 }
 
 function buildBar {
