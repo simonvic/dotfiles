@@ -35,7 +35,7 @@ exec_always feh --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 
 # Picom
-exec_always --no-startup-id picom --experimental-backends --blur-method dual_kawase --blur-strength 15 --config .config/picom/picom.conf
+exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
 
 # Run polybar
 exec_always --no-startup-id sPolybarctl launch
@@ -290,7 +290,7 @@ font pango:WorkSans 8
 gaps inner 10
 gaps outer -5
 # Only enable gaps on a workspace when there is at least one container
-smart_gaps on
+# smart_gaps on
 
 # Only enable outer gaps when there is exactly one container
 # smart_gaps inverse_outer
@@ -305,10 +305,12 @@ title_align center
 # default_border normal 10
 
 # Hide edge borders only if there is one window with no gaps
-hide_edge_borders smart_no_gaps
+hide_edge_borders smart
 
 # You can also use any non-zero value if you'd like to have a border
 for_window [class=".*"] border pixel 3
+for_window [class="Xfce4-terminal"] border pixel 1
+
 
 focus_follows_mouse no
 
