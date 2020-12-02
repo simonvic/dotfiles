@@ -71,7 +71,7 @@ bindsym $mod+Shift+Return exec xfce4-terminal --drop-down
 # ======POLYBAR=========================================== 
 # Use "sPolybarctl help" for more details
 
-bindsym $mod+p exec sPolybarctl toggle main
+bindsym $mod+p exec sPolybarctl toggle main ; gaps $polybar_main_position all toggle $polybar_main_gap
 bindsym $mod+Shift+p exec sPolybarctl toggle secondary
 bindsym $mod+Ctrl+p exec sPolybarctl toggle tertiary
 
@@ -286,9 +286,17 @@ bindsym $mod+r mode "resize"
 font pango:WorkSans 8
 
 
+
+# ======POLYBAR===================================
+set $polybar_main_position top
+set $polybar_main_gap 35
+
 # ======GAPS===================================
-gaps inner 10
-gaps outer -5
+
+gaps inner 20
+gaps outer -10
+gaps top $polybar_main_gap
+
 # Only enable gaps on a workspace when there is at least one container
 # smart_gaps on
 
