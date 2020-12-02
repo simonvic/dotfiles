@@ -28,6 +28,7 @@ syntax enable
 set number
 syntax on
 colorscheme darcula
+" colorscheme darculaTransparent
 filetype plugin indent on
 
 " FINDING FILES
