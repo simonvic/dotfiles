@@ -82,6 +82,14 @@ bindsym $mod+Ctrl+Shift+p exec sPolybarctl hide
 #bindsym $mod+o exec sPolybarctl toggleTray
 
 
+# ======ZEN-MODE=========================================== 
+# [WIP]
+bindsym $mod+z gaps inner all toggle $gaps_inner ; gaps right all toggle $gaps_outer ; gaps bottom all toggle $gaps_outer ; gaps left all toggle $gaps_outer
+
+
+
+
+
 # ======LOCKSCREEN=========================================== 
 bindsym $mod+l exec sLockscreenctl lock
 
@@ -292,9 +300,11 @@ set $polybar_main_position top
 set $polybar_main_gap 35
 
 # ======GAPS===================================
+set $gaps_inner 20
+set $gaps_outer -10
 
-gaps inner 20
-gaps outer -10
+gaps outer $gaps_outer
+gaps inner $gaps_inner
 gaps top $polybar_main_gap
 
 # Only enable gaps on a workspace when there is at least one container
