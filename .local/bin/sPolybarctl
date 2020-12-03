@@ -26,7 +26,7 @@ function launch() {
 	launchPolybar "secondary"
 	launchPolybar "tertiary"
 	
-	sleep 1
+	sleep 2
 	hide "secondary"
 	hide "tertiary"
 }
@@ -64,7 +64,7 @@ function status() {
 	case "$( xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5 )" in
 		IsViewable) echo "$visibleIcon" ;;
 		IsUnMapped) echo "$invisibleIcon" ;;
-		*) echo "unknwonState";;
+		*) echo "$invisibleIcon";;
 	esac		
 }
 

@@ -537,7 +537,7 @@ type = custom/ipc
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
-format-background =
+# format-background =
 
 [module/bar-switch-secondary]
 inherit = module/bar-switch
@@ -555,7 +555,7 @@ hook-0 =  sBrightnessctl print
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
-format-background =
+# format-background =
 scroll-up =  sBrightnessctl increase 10
 scroll-down =  sBrightnessctl decrease 10
 
@@ -569,7 +569,7 @@ hook-0 = sBrightnessctl redshift print
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
-format-background = 
+# format-background = 
 click-left = sBrightnessctl redshift toggle
 scroll-up =  sBrightnessctl redshift increase
 scroll-down =  sBrightnessctl redshift decrease
@@ -584,7 +584,7 @@ hook-0 = sBluetoothctl print
 initial = 1
 format = <output>
 format-foreground = ${colors.foreground}
-format-background = 
+# format-background = 
 click-left = sBluetoothctl power toggle
 
 [module/todo_list]
@@ -602,7 +602,7 @@ initial = 1
 format-prefix = "  "
 format = <output>
 format-foreground = ${colors.foreground}
-format-background = 
+# format-background = 
 click-left = polybar-msg -p %pid% hook aur_updates 1
 
 [module/fan]
@@ -628,7 +628,6 @@ click-middle = sTodo notification deleted &
 [settings]
 throttle-output = 5
 throttle-output-for = 10
-throttle-input-for = 30
 screenchange-reload = false
 compositing-background = source
 compositing-foreground = over
@@ -637,14 +636,14 @@ compositing-underline = over
 compositing-border = over
 pseudo-transparency = false
 ;fallbacks
-format-foreground = 
-format-background = 
-format-underline =
-format-overline =
-format-spacing =
-format-padding =
-format-margin =
-format-offset =
+#format-foreground = 
+#format-background = 
+#format-underline =
+#format-overline =
+#format-spacing =
+#format-padding =
+#format-margin =
+#format-offset =
 
 [global/wm]
 margin-top = 0
