@@ -29,6 +29,17 @@ emptyChar="░"
 #midPoint=""
 #emptyChar="⠀"
 
+# Using rounded
+#prefix=""
+#fullChar="█"
+#midChar0="█"
+#midChar1="█"
+#midChar2="█"
+#midChar3="█"
+#midPoint=""
+#emptyChar="i"
+#suffix=""
+
 # TO-DO make colored warning bar
 if [ $drawEmpty = false ]; then
 	bar=$(seq -s $fullChar 0 $steps $length | sed 's/[0-9]//g') 
@@ -42,9 +53,9 @@ if [ $drawEmpty = false ]; then
 		midBar=$midChar3
 	fi
   emptyBar=$(seq -s $emptyChar $(( ((100-$length) / $steps ) +1 )) | sed 's/[0-9]//g')
-	finalBar="$bar$midBar$midPoint$emptyBar"
+	finalBar="$prefix$bar$midBar$midPoint$emptyBar$suffix"
 elif [ $drawEmpty = true ]; then
-	finalBar="$(seq -s $emptyChar $(($length/$steps +1)) | sed 's/[0-9]//g')"
+	finalBar="$prefix$(seq -s $emptyChar $(($length/$steps +1)) | sed 's/[0-9]//g')$suffix"
 fi
 
 echo $finalBar

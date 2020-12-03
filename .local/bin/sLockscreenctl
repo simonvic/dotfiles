@@ -26,23 +26,23 @@ dimStrength=60%
 
 # Available options: circle, bars
 indicatorType=circle
-indicatorPos=960:740
+indicatorPos=960:785
 timeString=%H:%M:%S
 timePos=960:540
 timeSize=150
 dateString="%A, %d %B"
 datePos=960:620
 dateSize=30
-verifyText=Verifying...
-wrongText=Wrong!
-noInputText=...
+verifyText="..."
+wrongText="!!!"
+noInputText="___"
 inputTypeColor=f0544cAA
 inputDeleteColor=ff1010ff
-greeterSize=40
+greeterSize=20
 
 # Show currently playing song in the lockscreen as the greeter
 showSongAsGreeter=true
-# Will be overridden if showSongAsGreeter is set to true
+# Show some text as greeter (Will be overridden if showSongAsGreeter is set to true)
 greeterText=""
 
 # Settings for the circle
