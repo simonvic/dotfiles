@@ -85,9 +85,9 @@ function fetchSpotifyIcon() {
 
 function buildBody() {
 	if [ $moreInfo = true ]; then
-		printf "<big><b>$title</b></big><small> ($artist)\n$album\n<i>$player</i></small>"
+		printf "<big><b>$title</b></big><small> $artist\n$album\n<i>$player</i></small>"
 	else
-		printf "<big><b>$title</b></big><small> ($artist)</small>"
+		printf "<big><b>$title</b></big><small> $artist</small>"
 	fi
 }
 
@@ -102,7 +102,7 @@ function sendNotification() {
 	else
 		fetchSpotifyIcon
 	fi
-	artist=`getArtist`
+    artist="($(`getArtist`))"
 	title=`getTitle`
 	album=`getAlbum`
 	body=`buildBody`
@@ -117,10 +117,12 @@ function info() {
 	artist=`getArtist`
 	title=`getTitle`
 	album=`getAlbum`
+    [ -z $artist ] && : || artist="($artist)"
 	if [ $moreInfo = true ]; then
-		printf "$title ($artist) [$album]"
+        [ -z $album ] && : || album="[$album]"
+		printf "$title $artist $album"
 	else
-		printf "$title ($artist)"
+		printf "$title $artist"
 	fi
 }
 
