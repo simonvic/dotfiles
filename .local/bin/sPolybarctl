@@ -141,7 +141,8 @@ function printUsage() {
 	 - if using command=hook, use [hook-id] to specify the index (1-based) of the hook configured in the polybar config. Default: 1
 	 - use [polybar-name] to send the IPC message to the specified polybar. Default: all polybars
 	 Examples:
-	  $ sPolybarctl ipc action menu-open-1 myBar	# simulate the menu open on the 'myBar' bar 
+	  $ sPolybarctl ipc action "#open.1" myBar	# simulate the menu open on the 'myBar' bar 
+  	  $ sPolybarctl ipc action "#date.toggle"	# simulate the toggle action on date modules on all bars
 	  $ sPolybarctl ipc cmd show myOtherBar 	# show the 'myOtherBar' bar
 	  $ sPolybarctl ipc cmd hide 	# hide all bars
 	  $ sPolybarctl ipc hook myModule 	# call the first defined hook of 'myModule' in all bars
