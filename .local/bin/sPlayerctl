@@ -109,7 +109,7 @@ function sendNotification() {
 	
   # Send the notification
 	# dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
-	setPlayer $(dunstify -C "$uid"  && dunstify -a "$appName" $(buildPlayersDunstActions) -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body")
+	setPlayer $(dunstify -C "$uid"  && dunstify -a "$appName" -A "auto,auto" $(buildPlayersDunstActions) -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body")
 	
 }
 
@@ -150,7 +150,7 @@ function buildPlayersDunstActions(){
 function sendNotificationSelectPlayer(){
 	prevSelectedPlayer=$(getSelectedPlayer)
 	[ -z $prevSelectedPlayer ] && pastSelectionBody="Currently using <b>Auto</b> mode" || pastSelectionBody="Currently controlling <b>$prevSelectedPlayer</b>"
-	setPlayer $(dunstify -C "$uid_selectPlayer" && dunstify -a $appName -A "Auto,auto" $(buildPlayersDunstActions) -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Playerctl" "Select a player you wish to control. \n <small>$pastSelectionBody</small>")
+	setPlayer $(dunstify -C "$uid_selectPlayer" && dunstify -a $appName -A "auto,auto" $(buildPlayersDunstActions) -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Playerctl" "Select a player you wish to control. \n <small>$pastSelectionBody</small>")
 }
 
 function setPlayer(){
