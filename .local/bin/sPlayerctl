@@ -103,7 +103,7 @@ function sendNotification() {
 		fetchSpotifyIcon
 	fi
     artist=`getArtist`
-    [ -z $artist ] && : || artist="($artist)"
+    [ -z "$artist" ] && : || artist="($artist)"
     
 	title=`getTitle`
 	album=`getAlbum`
@@ -119,9 +119,9 @@ function info() {
 	artist=`getArtist`
 	title=`getTitle`
 	album=`getAlbum`
-    [ -z $artist ] && : || artist="($artist)"
+    [ -z "$artist" ] && : || artist="($artist)"
 	if [ $moreInfo = true ]; then
-        [ -z $album ] && : || album="[$album]"
+        [ -z "$album" ] && : || album="[$album]"
 		printf "$title $artist $album"
 	else
 		printf "$title $artist"
