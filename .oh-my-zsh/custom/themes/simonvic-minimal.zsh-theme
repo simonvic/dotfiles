@@ -31,7 +31,7 @@ function prompt_begin {
 }
 
 function prompt_char {
-	if [ $UID -eq 0 ]; then echo "# "; else echo "§ "; fi
+	if [ $UID -eq 0 ]; then echo "# "; else echo "$ "; fi
 }
 
 PROMPT='$(prompt_begin)%{$fg[gray]%}<%{$fg[red]%}%~%{$reset_color%}%{$fg[gray]%}>$(git_prompt_info) %{$fg[red]%}$(prompt_char)%{$reset_color%}'
