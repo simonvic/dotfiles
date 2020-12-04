@@ -102,7 +102,9 @@ function sendNotification() {
 	else
 		fetchSpotifyIcon
 	fi
-    artist="($(`getArtist`))"
+    artist=`getArtist`
+    [ -z $artist ] && : || artist="($artist)"
+    
 	title=`getTitle`
 	album=`getAlbum`
 	body=`buildBody`
