@@ -73,13 +73,14 @@ listview {
 }
 
 element {
+	children: [element-icon, v-centered-element-text];
 	orientation: horizontal;
 	border-radius: 10px;
 	padding: 10px 10px 10px 10px;
 }
 
 element-text{
-	padding: 0% 0% 0% 0%;
+	padding: -0.1em 0% 0% 0%;
 }
 
 element-icon{
