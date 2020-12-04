@@ -169,7 +169,7 @@ separator_color = auto
 startup_notification = false
 
 # dmenu path.
-dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme .config/rofi/themes/simonvic_dunstActions
+dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme "glass/simonvic_dunstActions"
 
 # Browser for opening urls in context menu.
 browser = /usr/bin/firefox --new-tab

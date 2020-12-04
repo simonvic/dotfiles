@@ -1,0 +1,53 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+configuration{
+	show-icons: false;
+}
+
+@import "styles/minimal"
+
+window {
+	width: 30%;
+	location: north;
+	anchor: north west;
+	x-offset: 260px;
+	y-offset: 4%;
+}
+
+mainbox {
+	children: [listview];
+}
+
+listview {
+	children: [element];
+	columns: 1;
+	fixed-columns: true;
+	lines: 10;
+	fixed-height: false;
+	spacing: 1%;
+	padding: 2%;
+}
+
+
+element {
+	border-radius: 10px;
+	padding: 10px;
+}
+
+element-text {
+	font: @font-primary-small;
+}

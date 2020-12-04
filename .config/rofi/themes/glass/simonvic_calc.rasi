@@ -1,0 +1,85 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+configuration {
+	show-icons: false;
+}
+
+@import "styles/glass_calculator"
+
+
+
+window {
+	children: [mainbox];
+	width: 40%;
+	location: center;
+	anchor: south;
+	y-offset: 25%;
+}
+
+mainbox {
+	children: [listview, message, inputbar];
+	spacing: 0;
+}
+
+
+inputbar {
+	children: [prompt, entry];
+	border-radius: 10px;
+	padding: 10;
+	margin: 1% 2%;
+}
+
+prompt{
+	padding: 5px;
+}
+
+
+
+entry{
+	border: 0 0 2px 0 solid;
+	vertical-align: 1;
+	placeholder: "sqrt(69^2 + sqrt(4761) * sin(80085))+0.23225";
+}
+
+listview {
+	children: [element];
+	orientation: vertical;
+	columns: 1;
+	fixed-columns: true;
+	lines: 5;
+	fixed-height: false;
+	spacing: 0;
+	padding: 2% 2%;
+	scrollbar: true;
+	reverse: true;
+}
+
+scrollbar{
+	margin: 0px 10px;
+}
+
+
+element {
+	children: [element-icon, element-text];
+	orientation: horizontal;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+}
+
+element-text{
+}
+

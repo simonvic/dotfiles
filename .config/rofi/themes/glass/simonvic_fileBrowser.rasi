@@ -1,0 +1,71 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+@import "styles/glass_fileBrowser"
+
+
+window {
+	width: 40%;
+	location: center;
+	anchor: north;
+	y-offset: -25%;
+}
+
+mainbox {
+}
+
+inputbar {
+	border-radius: 10px;
+	padding: 10;
+	margin: 1% 2%;
+}
+
+prompt{
+	padding: 5px;
+}
+
+entry{
+	border: 0 0 2px 0 solid;
+	vertical-align: 1;
+}
+
+
+listview {
+	columns: 3;
+	fixed-columns: true;
+	lines: 5;
+	fixed-height: true;
+	spacing: 5px;
+	padding: 2% 2%;
+	scrollbar: true;
+}
+
+element {
+	orientation: horizontal;
+	border-radius: 10px;
+	padding: 2px;
+}
+
+element-icon{
+	size: 30px;
+}
+
+mode-switcher,
+textbox-num-sep,
+num-rows,
+num-filtered-rows {
+	enabled: false;
+}

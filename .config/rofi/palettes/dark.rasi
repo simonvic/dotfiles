@@ -1,0 +1,57 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+ 
+* {	
+	
+	color-primary-accent-dark: #CC443D;
+	color-primary-accent: #F0544C;
+	color-primary-accent-light: #F6645D;
+
+	color-primary-accent-semitransparent: #F0544Caa;
+	color-primary-accent-light-semitransparent: #F6645Daa;
+	
+	color-urgent: #8D0000;
+	color-urgent-light: #BF0000;
+	
+	color-background-xxxdark: #000000;
+	color-background-xxdark: #111111;
+	color-background-xdark: #222222;
+	color-background-dark: #252525;
+	color-background: #333333;
+	color-background-light: #353535;
+	
+	color-text-dark: #8A8A8A;
+	color-text: #DADADA;
+	color-text-light: #FAFAFA;
+	color-text-xlight: #FFFFFF;
+	
+	color-text-semitransparent: #DADADA55;
+	
+	color-controls-background-dark: #404040;
+	color-controls-background: #444444;
+	color-controls-background-light: #555555;
+	color-controls-background-xlight: #666666;
+	color-controls-background-xxlight: #808080;
+	color-controls-background-xxxlight: #B0B0B0;
+	color-controls-background-semitransparent: #444444aa;
+	
+	color-glass-xthin: rgba(0, 0, 0, 0.1);
+	color-glass-thin: rgba(0, 0, 0, 0.15);
+	color-glass: rgba(0, 0, 0, 0.2);
+	color-glass-thick: rgba(0, 0, 0, 0.3);
+	color-glass-xthick: rgba(0, 0, 0, 0.35);
+	
+}

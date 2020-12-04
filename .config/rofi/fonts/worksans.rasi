@@ -1,0 +1,22 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+*/
+ 
+*{
+	font-primary-large: "WorkSans Regular 20";	
+	font-primary: "WorkSans Regular 16";
+	font-primary-small: "WorkSans Regular 12";
+	font-primary-xsmall: "WorkSans Regular 8";
+}

@@ -147,14 +147,12 @@ bindsym --release $mod+Shift+s exec scrot -o '/tmp/clipboardScreenshot.png' -s -
 # All screen
 bindsym --release $mod+Ctrl+Shift+s exec scrot -o '/tmp/clipboardScreenshot.png' -e 'xclip -selection clipboard -target image/png -i $f'
 
-# ======ROFI=========================================== 
-# Themes available: 
-#		DRUN: 	simonvic, simonvic_reverse, simonvic_fullscreen, simonvic_fullscreen_reverse
-#		WINDOW:	simonvic_window, simonvic_window_reverse, simonvic_window_fullscreen, simonvic_window_fullscreen_reverse
-bindsym $mod+a 			exec rofi -show drun -theme .config/rofi/themes/simonvic_window_reverse
-bindsym $mod+Ctrl+a	exec rofi -show run -theme .config/rofi/themes/simonvic_reverse
-bindsym $mod+Tab		exec rofi -show window -theme .config/rofi/themes/simonvic_reverse
-bindsym $mod+c 			exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme .config/rofi/themes/simonvic_calc
+# ======ROFI===========================================
+bindsym $mod+a          exec rofi -show combi -combi-modi "drun#window" -modi "combi#drun" -theme $rofi_theme_drun
+bindsym $mod+Ctrl+a     exec rofi -show combi -theme $rofi_theme_combi
+bindsym $mod+Tab        exec rofi -modi "window#windowcd" -show window -theme $rofi_theme_windowSwitcher
+bindsym $mod+Shift+Tab  exec rofi -show "file-browser" -theme $rofi_theme_fileBrowser
+bindsym $mod+c          exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme $rofi_theme_calc
 
 # ======i3=========================================== 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -293,7 +291,12 @@ bindsym $mod+r mode "resize"
 # is used in the bar {} block below.
 font pango:WorkSans 8
 
-
+# ======ROFI THEMES===================================
+set $rofi_theme_drun            "glass/simonvic_reverse"
+set $rofi_theme_combi           "glass/simonvic_window_reverse"
+set $rofi_theme_windowSwitcher  "glass/simonvic_window_reverse"
+set $rofi_theme_fileBrowser     "glass/simonvic_fileBrowser_reverse"
+set $rofi_theme_calc            "glass/simonvic_calc"
 
 # ======POLYBAR===================================
 set $polybar_main_position top

@@ -1,10 +1,10 @@
 /**
  ###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#	   _							  _		
+#	  (_)							(_)	   
+#  ___  _  ____	___   ____   _   _  _   ____ 
+# /___)| ||	\  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___ 
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
@@ -13,14 +13,302 @@
 
 ###########################################
 */
+/*
+* DEBUG
+border: 1px solid;
+border-color: blue;
+margin: 1%;
+background-color: red;
+*/
  
 configuration {
+	
+	threads: 0;
+	modi: [combi, drun, file-browser, window, run, windowcd, ssh, calc, keys] ;
+	case-sensitive: false;
+	cycle: true;
+	filter: "";
+	scroll-method: 0;
+	normalize-match: false;
 	show-icons: true;
-	drun-display-format: "{name}";
+	icon-theme: "Vimix-ruby";
+	matching-negate-char: '!';
+	
 	sidebar-mode: false;
-	theme: "~/.config/rofi/themes/simonvic.rasi";
-	display-window: "缾";
-	display-run: "$";
+	fullscreen: false;
+		
+	drun-categories: [] ;
+	drun-display-format: "{name} [<span weight='light' size='small'><i>({exec})</i></span>]";
+	drun-show-actions: false;
+	
+	window-format: "{w} - {c}\n{t}";
+	window-thumbnail: false;
+	
+	display-drun: "$";
+	display-run: "#";
+	display-window: "";
+	display-windowcd: "缾";
 	display-ssh: "~#";
-	display-drun: "§";
+	display-combi: ">";
+	display-calc: "";
+	display-keys: "";
+	display-file-browser: "";
+	
 }
+
+* {
+	text-color: @color-text;
+	font: @font-primary;
+}
+
+window {
+	enabled: true;
+	children: [mainbox];
+	background-color: @window-background;
+}
+
+mainbox {
+	enabled: true;
+	children: [inputbar, message, listview, mode-switcher];
+	background-color: @mainbox-background;
+	spacing: 0;
+}
+
+inputbar {
+	enabled: true;
+	background-color: @inputbar-background;
+	children: [prompt,textbox-prompt-colon,entry,num-filtered-rows,textbox-num-sep,num-rows,case-indicator];
+}
+
+prompt{
+	enabled: true;
+	background-color: @prompt-background;
+}
+
+textbox-prompt-colon {
+	enabled: true;
+	margin: 0px 0.3000em 0.0000em 0.0000em ;
+	expand: false;
+	str: "";
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+
+num-filtered-rows {
+	enabled: true;
+	expand: false;
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+num-rows {
+	enabled: true;
+	expand:	 false;
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+textbox-num-sep {
+	enabled: true;
+	expand:	 false;
+	str:		"/";
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+
+entry{
+	enabled: true;
+	background-color: @entry-background;
+	border-color: @color-primary-accent;
+	placeholder-color: @color-placeholder;
+	placeholder: " Search...";
+}
+
+case-indicator {
+	enabled: true;
+	text-color: @color-placeholder;
+	background-color: @color-case-indicator;
+}
+
+message {
+	enabled: true;
+	children: [textbox];
+	background-color: @message-background;
+}
+
+textbox {
+	enabled: true;
+	background-color: @messageTextbox-background;
+	margin: 0% 2%;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+listview {
+	enabled: true;
+	children: [element];
+	background-color: @listView-background;
+	scrollbar: true;
+}
+
+scrollbar{
+	enabled: true;
+	padding: 0;
+	border: 0;
+	handle-width: 5px ;
+	handle-color: @scrollbar-handle-background;
+	background-color: @scrollbar-background;
+}
+
+element {
+	enabled: true;
+	children: [element-icon, element-text];
+	background-color: @element-background;
+}
+
+element-text{
+	enabled: true;
+	font: @font-primary-small;
+	padding: 0;
+}
+
+element-icon{
+	enabled: true;
+}
+
+element normal.normal {
+	enabled: true;
+	background-color: @element-normal-background;
+	text-color: @element-normal-foreground;
+}
+
+element normal.urgent {
+	background-color: @element-urgent-background;
+	text-color: @element-urgent-foreground;
+}
+
+element normal.active {
+	background-color: @element-active-background;
+	text-color: @element-active-foreground;
+}
+
+element selected.normal {
+	background-color: @element-selected-normal-background;
+	text-color: @element-selected-normal-foreground;
+	border-color: @element-active-background;
+}
+
+element selected.urgent {
+	background-color: @element-selected-urgent-background;
+	text-color: @element-selected-urgent-foreground;
+}
+
+element selected.active {
+	background-color: @element-selected-active-background;
+	text-color: @element-selected-active-foreground;
+}
+
+element alternate.normal {
+	background-color: @element-normal-background;
+	text-color: @element-normal-foreground;
+}
+
+element alternate.urgent {
+	background-color: @element-urgent-background;
+	text-color: @element-urgent-foreground;
+}
+
+element alternate.active {
+	background-color: @element-active-background;
+	text-color: @element-active-foreground;
+}
+
+mode-switcher {
+	enabled : true;
+	background-color: @modeSwitcher-background;
+}
+
+button {
+	background-color: @button-background;
+	margin: 5px;
+	border-radius: 5px;
+}
+
+button selected{
+	background-color: @button-selected-background;
+}
+
+sidebar {
+	enabled: true;
+}
+
+
+dummybox,
+dummybox-expansive,
+v-centered-element-text,
+v-centered-element-icon,
+h-centered-element-text,
+h-centered-element-icon,
+hv-centered-element-text,
+hv-centered-element-icon{
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	spacing: 0;
+}
+
+dummybox {
+	expand: false;
+}
+
+dummybox-expansive {
+	expand: true;
+}
+
+v-centered-element-text,
+v-centered-element-icon{
+	orientation: vertical;
+}
+
+h-centered-element-text,
+h-centered-element-icon{
+	orientation: horizontal;
+}
+
+v-centered-element-text,
+h-centered-element-text {
+	children: [dummybox-expansive, element-text, dummybox-expansive];
+}
+
+v-centered-element-icon,
+h-centered-element-icon {
+	children: [dummybox-expansive, element-icon, dummybox-expansive];
+}
+
+hv-centered-element-text{
+	orientation: horizontal;
+	children: [dummybox-expansive, v-centered-element-text, dummybox-expansive];
+}
+
+hv-centered-element-icon {
+	orientation: horizontal;
+	children: [dummybox-expansive, v-centered-element-icon, dummybox-expansive];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

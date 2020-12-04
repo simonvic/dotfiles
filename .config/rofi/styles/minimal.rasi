@@ -1,0 +1,65 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+@import "fonts/worksans"
+@import "palettes/dark"
+
+* {
+	
+	window-background: @color-background;
+	
+	mainbox-background: @color-background;
+	
+	inputbar-background: @color-background;
+	prompt-background: @color-background;
+	entry-background: @color-background;
+	color-placeholder: @color-text-semitransparent;
+	caseIndicator-background: @color-background;
+	color-textbox-num: transparent;
+	color-case-indicator: transparent;
+	
+	message-background: transparent;
+	messageTextbox-background: @color-controls-background;
+	
+	listView-background: @color-background;
+	scrollbar-background: @color-background-dark;
+	scrollbar-handle-background: @color-controls-background-light;
+	
+	element-background: @color-controls-background;
+	element-active-background: @color-controls-background;
+	element-active-foreground: @color-primary-accent;
+	element-normal-background: @color-controls-background;
+	element-normal-foreground: @color-text;
+	element-urgent-background: @color-urgent;
+	element-urgent-foreground: @color-text;
+	element-alternate-active-background: @color-controls-background;
+	element-alternate-active-foreground: @color-text;
+	element-alternate-normal-background: @color-controls-background;
+	element-alternate-normal-foreground: @color-text;
+	element-alternate-urgent-background: @color-controls-background;
+	element-alternate-urgent-foreground: @color-text;
+	element-selected-active-background: @color-primary-accent-light-semitransparent;
+	element-selected-active-foreground: @color-text-light;
+	element-selected-normal-background: @color-primary-accent-semitransparent;
+	element-selected-normal-foreground: @color-text-xlight;
+	element-selected-urgent-background: @color-urgent-light;
+	element-selected-urgent-foreground: @color-text-xlight;
+	
+	modeSwitcher-background: @color-background;
+	
+	button-background: @color-controls-background;
+	button-selected-background: @color-controls-background-light;
+}

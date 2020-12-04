@@ -1,0 +1,76 @@
+/**
+ ###########################################
+#	Made by
+#       _                              _        
+#      (_)                            (_)       
+#  ___  _  ____    ___   ____   _   _  _   ____ 
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+
+###########################################
+ */
+
+
+configuration{
+	window-thumbnail: true;
+}
+
+@import "styles/minimal"
+
+window {
+	width: 40%;
+	location: center;
+	anchor: north;
+	y-offset: -25%;
+}
+
+mainbox {
+}
+
+inputbar {
+	border-radius: 10px;
+	padding: 10;
+	margin: 1% 2%;
+}
+
+prompt{
+	padding: 5px;
+}
+
+entry{
+	border: 0 0 2px 0 solid;
+	vertical-align: 1;
+}
+
+listview {
+	columns: 3;
+	fixed-columns: true;
+	lines: 2;
+	fixed-height: false;
+	spacing: 1%;
+	padding: 2% 2%;
+	scrollbar: true;
+}
+
+scrollbar{
+}
+
+
+element {
+	children: [element-text, element-icon];
+	orientation: vertical;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+element-text{
+}
+
+element-icon{
+	size: 200px;
+	padding: 10px;
+}
