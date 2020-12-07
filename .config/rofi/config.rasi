@@ -234,6 +234,12 @@ sidebar {
 	enabled: true;
 }
 
+error-message {
+	padding: 10px;
+	background-color: #33333300;
+}
+
+
 
 dummybox,
 dummybox-expansive,
