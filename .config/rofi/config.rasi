@@ -26,6 +26,7 @@ configuration {
 	show-icons: true;
 	icon-theme: "Vimix-ruby";
 	matching-negate-char: '!';
+	show-match: false;
 	
 	sidebar-mode: false;
 	fullscreen: false;

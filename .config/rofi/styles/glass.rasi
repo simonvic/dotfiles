@@ -19,7 +19,7 @@
 
 * {
 	
-	window-background: @color-glass;
+	window-background: @color-glass-xthick;
 	
 	mainbox-background: transparent;
 	
@@ -41,7 +41,7 @@
 	element-background: @color-glass-thin;
 	element-active-background: @color-glass-thin;
 	element-active-foreground: @color-primary-accent;
-	element-normal-background: @color-glass-thin;
+	element-normal-background: transparent;
 	element-normal-foreground: @color-text;
 	element-urgent-background: @color-urgent;
 	element-urgent-foreground: @color-text;
