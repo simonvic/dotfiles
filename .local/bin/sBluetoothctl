@@ -37,12 +37,21 @@ function power(){
 	fi
 }
 
+function findDeviceUUID() {
+	bluetoothctl devices | grep -i $1 | awk -F ' ' '{print $2}'
+}
+
+
 function connect(){
-	if [ $(isPowered) == "no" ]; then
-		power on	
+	if [ ! -z $1 ]; then
+		if [ $(isPowered) == "no" ]; then
+			power on
+		fi
+		bluetoothctl connect `findDeviceUUID $1`
+		updatePolybar
+	else
+		printUsage
 	fi
-	bluetoothctl connect $1
-	updatePolybar
 } 
 
 function isPowered(){
@@ -62,7 +71,7 @@ function printUsage() {
 	help 	Show this help
 	print 	Print the current status label
 	power <toggle|on|off> 	Switch on or off the bluetooth, or toggle between the states
-	connect <device> 	Power on bluetooth if necessary and connect to <device> (xx:xx:xx:xx:xx:xx)
+	connect <device UUID|device Name> 	Power on bluetooth if necessary and connect to <device UUID> (xx:xx:xx:xx:xx:xx) or <device Name> (i.e. 'Galaxy buds')
 
 - Abbreviations
 	p = power
