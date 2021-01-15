@@ -193,10 +193,10 @@ function updatePolybar() {
 	# the hooks must be called in this order, otherwise it doesn't work
 	# maybe because of polybar inheritance and FIFO policy?
 	#to-do investigate this
-	sPolybarctl ipc hook redshift
-	sPolybarctl ipc hook redshift-extended
-	sPolybarctl ipc hook brightness
-	sPolybarctl ipc hook brightness-extended
+	sPolybarctl ipc hook redshift > /dev/null
+	sPolybarctl ipc hook redshift-extended > /dev/null
+	sPolybarctl ipc hook brightness > /dev/null
+	sPolybarctl ipc hook brightness-extended > /dev/null
 }
 
 function printUsage() {

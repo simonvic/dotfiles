@@ -59,7 +59,7 @@ function isPowered(){
 }
 
 function updatePolybar(){
-	sPolybarctl ipc hook bluetooth
+	sPolybarctl ipc hook bluetooth > /dev/null
 }
 
 function printUsage() {

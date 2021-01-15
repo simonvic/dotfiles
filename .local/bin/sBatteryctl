@@ -205,7 +205,7 @@ function printUsage() {
 	plugin 	Show notification about plugging AC
 	unplug 	Show notification about unplugging AC
 	current 	Show current information on the battery
-	wakelock toggle {on|off} 	Toggle on/off the wakelock
+	wakelock toggle <on|off> 	Toggle on/off the wakelock
 	
 - Abbreviations
 	m = monitor
