@@ -151,7 +151,7 @@ override-redirect = true
 # wm-restack = 
 bottom = true
 height = 3%
-width = 800
+width = 850
 offset-y = 2%
 offset-x = 560
 radius = 10
@@ -397,16 +397,16 @@ ramp-free-7 = █
 type = internal/pulseaudio
 use-ui-max = true
 interval = 5
-format-volume = <ramp-volume>  <label-volume>
+format-volume = <ramp-volume>
 label-volume = %percentage%%
 label-volume-foreground = ${colors.foreground}
-label-muted = "婢  muted"
+label-muted = "婢 "
 label-muted-foreground = ${colors.primary}
-ramp-volume-0 = "奄" 
-ramp-volume-1 = "奔"
-ramp-volume-2 = "奔"
-ramp-volume-3 = "墳"
-ramp-volume-4 = "墳"
+ramp-volume-0 = "奄 " 
+ramp-volume-1 = "奔 "
+ramp-volume-2 = "奔 "
+ramp-volume-3 = "墳 "
+ramp-volume-4 = "墳 "
 
 
 [module/pulseaudio-extended]
