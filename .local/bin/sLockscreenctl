@@ -69,6 +69,8 @@ barStep=1
 barPeriodicStep=10
 barPosition=540
 
+tempScreenshotFile=/tmp/simonvic/sLockscreenctl/tempScreenshot.png
+
 ########################################################################
 
 lock() {
@@ -114,8 +116,8 @@ lock() {
 		background="--blur=$blurStrength"
 		;;
 	blurAndDim)
-		scrot -z -q 1 -o /tmp/lockscreenScreenshot.png && convert /tmp/lockscreenScreenshot.png -blur $blur2Strength -fill black -colorize $dimStrength /tmp/lockscreenScreenshot.png
-		background="-i /tmp/lockscreenScreenshot.png"
+		takeScreenshot
+		background="-i $tempScreenshotFile"
 		;;
 	*)
 		background="--color=333333"
@@ -125,6 +127,17 @@ lock() {
 	echo ${dateString[@]}
 	pgrep i3lock || i3lock $args --datestr="%A,%d %B" --greetertext="$greeterText" $background $extraArgs
 
+}
+
+function takeScreenshot() {
+	if [ ! -e $tempScreenshotFile ]; then
+		createTempScreenshotFolder
+	fi
+	scrot -z -q 1 -o $tempScreenshotFile && convert $tempScreenshotFile -blur $blur2Strength -fill black -colorize $dimStrength $tempScreenshotFile
+}
+
+function createTempScreenshotFolder() {
+	mkdir -p $(echo $tempScreenshotFile | rev | cut -d"/" -f2- | rev)
 }
 
 function printUsage() {

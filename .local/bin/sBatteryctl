@@ -86,8 +86,7 @@ function isFullyCharged() {
 }
 
 function createBatteryStatusFile() {
-	folderPath=$(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
-	mkdir -p $folderPath
+	mkdir -p $(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
 	echo "false" >$batteryStatus
 }
 

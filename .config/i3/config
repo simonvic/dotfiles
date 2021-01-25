@@ -142,9 +142,9 @@ bindsym XF86Calculator                   exec --no-startup-id gnome-calculator
 
 # ======SCREENSHOTS=========================================== 
 # Select area
-bindsym --release $mod+Shift+s           exec scrot -o '/tmp/clipboardScreenshot.png' -s -e 'xclip -selection clipboard -target image/png -i $f'
+bindsym --release $mod+Shift+s           exec $HOME/.config/i3/scripts/clipboardScreenshot.sh selection
 # All screen
-bindsym --release $mod+Ctrl+Shift+s      exec scrot -o '/tmp/clipboardScreenshot.png' -e 'xclip -selection clipboard -target image/png -i $f'
+bindsym --release $mod+Ctrl+Shift+s      exec $HOME/.config/i3/scripts/clipboardScreenshot.sh
 
 # ======ROFI===========================================
 bindsym $mod+a                           exec rofi -show combi -combi-modi "drun#window" -modi "combi#drun" -theme $rofi_theme_drun

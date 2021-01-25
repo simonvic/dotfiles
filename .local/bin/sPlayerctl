@@ -15,7 +15,7 @@
 ###########################################
 
 # Where to store the selected player
-selectedPlayer="/tmp/sPlayerctl_selectedPlayer"
+selectedPlayer="/tmp/simonvic/sPlayerctl/selectedPlayer"
 
 # Show more info about author and song
 moreInfo=false
@@ -46,8 +46,17 @@ uid_selectPlayer=2598
 appName="simonvic.Playerctl"
 
 function getSelectedPlayer() {
+	if [ ! -e $selectedPlayer ]; then
+		createSelectedPlayerFile
+	fi
 	cat $selectedPlayer
 }
+
+function createSelectedPlayerFile() {
+	mkdir -p $(echo $selectedPlayer | rev | cut -d"/" -f2- | rev)
+	echo "" >$selectedPlayer
+}
+
 # Player name to control (if no player selected, it controls the first it finds)
 player=$(getSelectedPlayer)
 
