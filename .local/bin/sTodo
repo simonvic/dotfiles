@@ -13,7 +13,7 @@
 
 ###########################################
 
-todoFile=~/Documents/Productivity/Programming/scripts/todo/todo.txt
+todoFile=$HOME/Documents/Productivity/Programming/scripts/todo/todo.txt
 doneSymbol=
 todoSymbol=
 deletedSymbol=﫧
@@ -209,6 +209,17 @@ $(buildBar 5 $todoPercent false) $todoPercent%
 	esac
 }
 
+function createTodoFile() {
+	folderPath=$(echo $todoFile | rev | cut -d"/" -f2- | rev)
+	mkdir -p $folderPath
+	echo " [0] Check out https://github.com/simonvic/dotfiles" >$todoFile
+	echo " [1] Give a star to https://github.com/simonvic/dotfiles" >>$todoFile
+}
+
+if [ ! -e $todoFile ]; then
+	createTodoFile
+fi
+
 case $1 in
 # Query
 list)
@@ -218,7 +229,7 @@ list)
 count)
 	getCount $2 $3
 	;;
-	# Edit
+# Edit
 new)
 	addNew $2
 	;;
@@ -234,7 +245,7 @@ delete)
 edit)
 	editFile
 	;;
-	# Other
+# Other
 notification)
 	sendNotification $2 $3
 	;;
