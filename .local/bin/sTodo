@@ -216,6 +216,7 @@ function createTodoFile() {
 	echo " [1] Give a star to https://github.com/simonvic/dotfiles" >>$todoFile
 }
 
+# Create the todo file if it's not present
 if [ ! -e $todoFile ]; then
 	createTodoFile
 fi

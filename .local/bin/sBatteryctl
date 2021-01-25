@@ -78,12 +78,11 @@ function getTime() {
 }
 
 function isFullyCharged() {
-	if [ -e $batteryStatus ]; then
-		cat $batteryStatus
-	else
+	if [ ! -e $batteryStatus ]; then
 		createBatteryStatusFile
-		cat $batteryStatus
 	fi
+	cat $batteryStatus
+
 }
 
 function createBatteryStatusFile() {
