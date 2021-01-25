@@ -40,6 +40,8 @@ inputTypeColor=f0544cAA
 inputDeleteColor=ff1010ff
 greeterSize=20
 
+# Stop all players on suspend
+stopAllPlayersOnSuspend=true
 # Show currently playing song in the lockscreen as the greeter
 showSongAsGreeter=true
 # Show some text as greeter (Will be overridden if showSongAsGreeter is set to true)
@@ -153,6 +155,14 @@ help | *) printUsage ;;
 esac
 
 # Activate lockscreen (and suspend if specified)
-[[ $isLock ]] && lock && { [[ $isSuspend ]] && systemctl suspend; }
+if [[ $isLock ]]; then
+	lock
+	if [[ $isSuspend ]]; then
+		if [ $stopAllPlayersOnSuspend = true ]; then
+			sPlayerctl stop all
+		fi
+		systemctl suspend
+	fi
+fi
 
 exit 0

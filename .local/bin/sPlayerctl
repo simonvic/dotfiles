@@ -194,16 +194,32 @@ function printUsage() {
 }
 
 case $1 in
-play-pause | pp)    playerctl -p "$player" play-pause && sendNotification ;;
+play-pause | pp)
+	playerctl -p "$player" play-pause && sendNotification
+	;;
 stop | s)
 	case $2 in
-	all | a)  playerctl -a stop ;;
-	*)        playerctl -p "$player" stop && sendNotification ;;
+	all | a)
+		playerctl -a stop
+		;;
+	*)
+		playerctl -p "$player" stop && sendNotification
+		;;
 	esac
 	;;
-next | n)           playerctl -p "$player" next && sendNotification ;;
-previous | p)       playerctl -p "$player" previous && sendNotification ;;
-info | i)           info ;;
-select-player | sp) selectPlayer $2 $3 && sendNotificationPlayerSelected ;;
-help | *)           printUsage ;;
+next | n)
+	playerctl -p "$player" next && sendNotification
+	;;
+previous | p)
+	playerctl -p "$player" previous && sendNotification
+	;;
+info | i)
+	info
+	;;
+select-player | sp)
+	selectPlayer $2 $3 && sendNotificationPlayerSelected
+	;;
+help | *)
+	printUsage
+	;;
 esac
