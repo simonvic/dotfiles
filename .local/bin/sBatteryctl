@@ -44,7 +44,7 @@ uid=2596
 # App name in dunst
 appName="simonvic.Battery"
 
-isFullyCharged=/tmp/battery-status
+batteryStatus=/tmp/simonvic/sBatteryctl/isFullyCharged
 
 
 function getStatus {
@@ -82,7 +82,18 @@ function getTime {
 }
 
 function isFullyCharged {
-	cat $isFullyCharged
+	if [ -e $batteryStatus ]; then
+		cat $batteryStatus
+	else
+		createBatteryStatusFile
+		cat $batteryStatus
+	fi
+}
+
+function createBatteryStatusFile {
+	folderPath=$(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
+	mkdir -p $folderPath
+	echo "false" >$batteryStatus
 }
 
 function sendNotification {
@@ -105,7 +116,7 @@ function monitor {
 		urgency=low
 		icon=battery-full-charging
 		sendNotification
-		echo true > $isFullyCharged
+		echo true > $batteryStatus
 	elif [ "$status" = "Discharging" ]; then
 		if [ "$capacity" -le 10 ]; then
 				body="Battery is at a critical level"
@@ -123,7 +134,7 @@ function monitor {
 				icon=battery-060
 				sendNotification
 			fi
-		echo false > $isFullyCharged
+		echo false > $batteryStatus
 	elif [ "$status" = "Charging" ]; then
 		if [ "$capacity" -eq 80 ]; then
 				title="$capacity %"
@@ -133,7 +144,7 @@ function monitor {
 				icon=battery-100-charging
 				sendNotification
 		fi
-		echo false > $isFullyCharged
+		echo false > $batteryStatus
 	fi
 }
 
