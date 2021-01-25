@@ -125,6 +125,7 @@ bindsym Ctrl+XF86ScreenSaver             exec --no-startup-id sBrightnessctl red
 # ======MEDIA PLAYER CONTROLS=========================================== 
 bindsym XF86AudioPlay                    exec --no-startup-id sPlayerctl play-pause
 bindsym XF86AudioStop                    exec --no-startup-id sPlayerctl stop
+bindsym Shift+XF86AudioStop              exec --no-startup-id sPlayerctl stop all
 bindsym XF86AudioNext                    exec --no-startup-id sPlayerctl next
 bindsym XF86AudioPrev                    exec --no-startup-id sPlayerctl previous
 bindsym Ctrl+XF86AudioPlay               exec --no-startup-id sPlayerctl select-player
