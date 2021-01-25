@@ -176,7 +176,7 @@ function printUsage() {
 - Options
 	help                                       # Show this help
 	play-pause                                 # Toggle between play and pause
-	stop                                       # Stop music
+	stop [all]                                 # Stop music
 	next                                       # Go to the next song
 	previous                                   # Go to the previous song
 	info                                       # Print info of the playing song
@@ -189,25 +189,21 @@ function printUsage() {
 	p = previous
 	i = info
 	sp = select-player
+	a = all
 "
 }
 
 case $1 in
-play-pause | pp)
-	playerctl -p "$player" play-pause && sendNotification
-	;;
+play-pause | pp)    playerctl -p "$player" play-pause && sendNotification ;;
 stop | s)
-	playerctl -p "$player" stop && sendNotification
+	case $2 in
+	all | a)  playerctl -a stop ;;
+	*)        playerctl -p "$player" stop && sendNotification ;;
+	esac
 	;;
-next | n)
-	playerctl -p "$player" next && sendNotification
-	;;
-previous | p)
-	playerctl -p "$player" previous && sendNotification
-	;;
-info | i) info ;;
-select-player | sp)
-	selectPlayer $2 $3 && sendNotificationPlayerSelected
-	;;
-help | *) printUsage ;;
+next | n)           playerctl -p "$player" next && sendNotification ;;
+previous | p)       playerctl -p "$player" previous && sendNotification ;;
+info | i)           info ;;
+select-player | sp) selectPlayer $2 $3 && sendNotificationPlayerSelected ;;
+help | *)           printUsage ;;
 esac
