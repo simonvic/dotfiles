@@ -2,11 +2,11 @@
 
 ###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
 #	Check updates and give a look at my dotfiles here:
@@ -73,10 +73,10 @@ lock() {
 	if [ $showSongAsGreeter = true ]; then
 		greeterText=$(sPlayerctl info)
 	fi
-	
+
 	case "$indicatorType" in
-		circle)
-args="--pass-media-keys --redraw-thread --force-clock \
+	circle)
+		args="--pass-media-keys --redraw-thread --force-clock \
 --indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
 --veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
 --radius=$radius --ring-width=$ringWidth \
@@ -87,8 +87,8 @@ args="--pass-media-keys --redraw-thread --force-clock \
 --datecolor=$textColor --datestr=$dateString  --date-font=$font --datesize=$dateSize \
 --greetertext=$greeterText --greetercolor=$textColor --greeter-font=$font --greetersize=$greeterSize"
 		;;
-		bars)
-args="--pass-media-keys --redraw-thread --force-clock \
+	bars)
+		args="--pass-media-keys --redraw-thread --force-clock \
 --bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-width=$barWidth --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-position=$barPosition \
 --indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
 --veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
@@ -99,27 +99,27 @@ args="--pass-media-keys --redraw-thread --force-clock \
 --datecolor=$textColor --datestr=$dateString  --date-font=$font --datesize=$dateSize \
 --greetertext=$greeterText --greetercolor=$textColor --greeter-font=$font --greetersize=$greeterSize"
 		;;
-		*)
-			args=""
+	*)
+		args=""
 		;;
 	esac
-	
+
 	case "$backgroundType" in
-		image)
-			background="-i $image"
+	image)
+		background="-i $image"
 		;;
-		blur)
-			background="--blur=$blurStrength"
+	blur)
+		background="--blur=$blurStrength"
 		;;
-		blurAndDim)
-			scrot -z -q 1 -o /tmp/lockscreenScreenshot.png && convert /tmp/lockscreenScreenshot.png -blur $blur2Strength -fill black -colorize $dimStrength /tmp/lockscreenScreenshot.png
-			background="-i /tmp/lockscreenScreenshot.png"
+	blurAndDim)
+		scrot -z -q 1 -o /tmp/lockscreenScreenshot.png && convert /tmp/lockscreenScreenshot.png -blur $blur2Strength -fill black -colorize $dimStrength /tmp/lockscreenScreenshot.png
+		background="-i /tmp/lockscreenScreenshot.png"
 		;;
-		*)
-			background="--color=333333"
+	*)
+		background="--color=333333"
 		;;
-	esac	
-	
+	esac
+
 	echo ${dateString[@]}
 	pgrep i3lock || i3lock $args --datestr="%A,%d %B" --greetertext="$greeterText" $background $extraArgs
 
@@ -131,8 +131,8 @@ function printUsage() {
 	sLockscreenctl <options>
 	
 - Options
-	suspend 	Lock the screen and suspend
-	lock 	Lock the screen
+	suspend   # Lock the screen and suspend
+	lock      # Lock the screen
 
 - Abbreviations
 	s = suspend
@@ -141,19 +141,18 @@ function printUsage() {
 }
 
 case "$1" in
-	suspend | s)
-		isSuspend=true
+suspend | s)
+	isSuspend=true
 	;&
 
-	lock | l)
-		isLock=true
-		[[ $isSuspend ]] || extraArgs="$extraArgs -n"
+lock | l)
+	isLock=true
+	[[ $isSuspend ]] || extraArgs="$extraArgs -n"
 	;;
-	help | *) printUsage ;;
+help | *) printUsage ;;
 esac
 
 # Activate lockscreen (and suspend if specified)
 [[ $isLock ]] && lock && { [[ $isSuspend ]] && systemctl suspend; }
 
 exit 0
-

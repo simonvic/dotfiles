@@ -1,11 +1,11 @@
-#!/bin/zsh 
- ###########################################
+#!/bin/zsh
+###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
 #	Check updates and give a look at my dotfiles here:
@@ -40,7 +40,7 @@ appName="simonvic.TODO"
 ########################################
 
 printHeader() {
-echo "
+	echo "
 ··················································
 ··················································
 ████████╗ ██████╗       ██████╗  ██████╗ 
@@ -59,86 +59,85 @@ Usage
 	todo [options]
 
 Options
-	help	show this help
+	help   show this help
 		
 	# Query commands
-	list	[done|todo|deleted]	[name]	List with filters
-		done		List things done
-		todo		List things still to do
-		deleted	List things cancelled
+	list [done|todo|deleted] [name]    # List with filters
+		done                              # List things done
+		todo                              # List things still to do
+		deleted                           # List things cancelled
 	
 	# Edit commands
-	new	<name>		Add a new thing to do with name <name>
-	do	<id>		Mark it done
-	undo	<id>		Mark it undone
-	delete	<id>	Mark it deleted
-	edit	Edit manually the todo list
+	new <name>                         # Add a new thing to do with name <name>
+	do <id>                            # Mark it done
+	undo <id>                          # Mark it undone
+	delete <id>                        # Mark it deleted
+	edit                               # Edit manually the todo list
 	
 	#Other
-	notification	[done|todo|deleted]	Show todo list in a notification
+	notification [done|todo|deleted]   # Show todo list in a notification
 "
 }
 
 function getCount() {
 	case $1 in
-		done)
-			grep -e "$doneSymbol" $todoFile | grep "$2" | wc -l
+	done)
+		grep -e "$doneSymbol" $todoFile | grep "$2" | wc -l
 		;;
-		todo)
-			grep -e "$todoSymbol" $todoFile | grep "$2" | wc -l
+	todo)
+		grep -e "$todoSymbol" $todoFile | grep "$2" | wc -l
 		;;
-		deleted)
-			grep -e "$deletedSymbol" $todoFile | grep "$2" | wc -l
+	deleted)
+		grep -e "$deletedSymbol" $todoFile | grep "$2" | wc -l
 		;;
-		*)
-			grep -e "$1" $todoFile | wc -l
+	*)
+		grep -e "$1" $todoFile | wc -l
 		;;
 	esac
 }
 
 function list() {
 	case $1 in
-		done)
-			grep -e "$doneSymbol" $todoFile | grep "$2"
+	done)
+		grep -e "$doneSymbol" $todoFile | grep "$2"
 		;;
-		todo)
-			grep -e "$todoSymbol" $todoFile | grep "$2"
+	todo)
+		grep -e "$todoSymbol" $todoFile | grep "$2"
 		;;
-		deleted)
-			grep -e "$deletedSymbol" $todoFile | grep "$2"
+	deleted)
+		grep -e "$deletedSymbol" $todoFile | grep "$2"
 		;;
-		*)
-			grep -e "$1" $todoFile
+	*)
+		grep -e "$1" $todoFile
 		;;
 	esac
 }
 
 function addNew() {
 	if [ -z "$1" ]; then
-		printUsage;	    	
+		printUsage
 	else
-		newID=$((`tail -n 1 $todoFile | cut -d "[" -f2 | cut -d "]" -f1` + 1)) 
-		echo "$todoSymbol [$newID] $1" >> $todoFile
+		newID=$(($(tail -n 1 $todoFile | cut -d "[" -f2 | cut -d "]" -f1) + 1))
+		echo "$todoSymbol [$newID] $1" >>$todoFile
 	fi
 }
-
 
 function mark() {
 	if [ -z "$2" ]; then
 		printUsage
 	else
 		case $1 in
-			done)
-				sed -i "s/^\($deletedSymbol\|$todoSymbol\) \[$2\]/$doneSymbol \[$2\]/g" $todoFile
+		done)
+			sed -i "s/^\($deletedSymbol\|$todoSymbol\) \[$2\]/$doneSymbol \[$2\]/g" $todoFile
 			;;
-			todo)
-				sed -i "s/^\($deletedSymbol\|$doneSymbol\) \[$2\]/$todoSymbol \[$2\]/g" $todoFile
+		todo)
+			sed -i "s/^\($deletedSymbol\|$doneSymbol\) \[$2\]/$todoSymbol \[$2\]/g" $todoFile
 			;;
-			deleted)
-				sed -i "s/^\($todoSymbol\|$doneSymbol\) \[$2\]/$deletedSymbol \[$2\]/g" $todoFile
+		deleted)
+			sed -i "s/^\($todoSymbol\|$doneSymbol\) \[$2\]/$deletedSymbol \[$2\]/g" $todoFile
 			;;
-			*)
-				printUsage
+		*)
+			printUsage
 			;;
 		esac
 	fi
@@ -148,64 +147,63 @@ function editFile() {
 	xdg-open $todoFile &
 }
 
-
-function buildBar {
+function buildBar() {
 	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
 }
 
 function sendNotification() {
-	doneCount=`getCount done $2`
-	todoCount=`getCount todo $2`
-	deletedCount=`getCount deleted $2`
-	totalCount=`getCount`
+	doneCount=$(getCount done $2)
+	todoCount=$(getCount todo $2)
+	deletedCount=$(getCount deleted $2)
+	totalCount=$(getCount)
 	todoPercent=$((doneCount * 100 / (totalCount - deletedCount)))
-	
+
 	summary="$todoCount todo | $doneCount done | $deletedCount deleted"
-	
+
 	# Start building the body of notification
-	
+
 	# If the list is too big cut it
-	length=`getCount $1 $2`
+	length=$(getCount $1 $2)
 	if [ $length -ge $maxLength ]; then
 		body="
-<small>`list $1 $2 | head -$maxLength`
+<small>$(list $1 $2 | head -$maxLength)
 ... $(($length - $maxLength)) more
 </small>
 "
 	else
 		body="
-<small>`list $1 $2`</small>
+<small>$(list $1 $2)</small>
 "
 	fi
-	
-	# Add bar and statistics	
+
+	# Add bar and statistics
 	body+="
-`buildBar 5 $todoPercent false` $todoPercent%
+$(buildBar 5 $todoPercent false) $todoPercent%
 <b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total
 "
 	# Old notification must be closed if still pending for user action, as -r isn't enought
 	# Just a temporary hack :(
 
-	case $(dunstify -C "$uid"  && dunstify -a $appName -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" & ) in
-		edit)
-			editFile
+	case $(dunstify -C "$uid" && dunstify -a $appName -A "listAll,  List all" -A "listDone,  List done" -A "listTodo,  List to do" -A "listDeleted,  List deleted" -A "todoHelp,  TODO help" -A "edit,  Edit the todo list" -i "$icon" -r "$uid" -t "$timeout" -u "$urgency" "$summary" "$body" &) in
+	edit)
+		editFile
 		;;
-		listAll)
-			/usr/bin/rofi-sensible-terminal -e "sTodo list" --hold
+	listAll)
+		/usr/bin/rofi-sensible-terminal -e "sTodo list" --hold
 		;;
-		listDone)
-			/usr/bin/rofi-sensible-terminal -e "sTodo list done" --hold
+	listDone)
+		/usr/bin/rofi-sensible-terminal -e "sTodo list done" --hold
 		;;
-		listTodo)
-			/usr/bin/rofi-sensible-terminal -e "sTodo list todo" --hold
+	listTodo)
+		/usr/bin/rofi-sensible-terminal -e "sTodo list todo" --hold
 		;;
-		listDeleted)
-			/usr/bin/rofi-sensible-terminal -e "sTodo list deleted" --hold
+	listDeleted)
+		/usr/bin/rofi-sensible-terminal -e "sTodo list deleted" --hold
 		;;
-		todoHelp)
-			/usr/bin/rofi-sensible-terminal -e "sTodo help" --hold
+	todoHelp)
+		/usr/bin/rofi-sensible-terminal -e "sTodo help" --hold
 		;;
-		*)
+	*)
 		# No choise
 		;;
 	esac
@@ -213,39 +211,39 @@ function sendNotification() {
 
 case $1 in
 # Query
-	list)
-		printHeader
-		list $2 $3
+list)
+	printHeader
+	list $2 $3
 	;;
-	count)
-		getCount $2 $3
+count)
+	getCount $2 $3
 	;;
-# Edit
-	new)
-		addNew $2
+	# Edit
+new)
+	addNew $2
 	;;
-	do)
-		mark done $2
+do)
+	mark done $2
 	;;
-	undo)
-		mark todo $2
+undo)
+	mark todo $2
 	;;
-	delete)
-		mark deleted $2
+delete)
+	mark deleted $2
 	;;
-	edit)
-		editFile
+edit)
+	editFile
 	;;
-# Other
-	notification)
-		sendNotification $2 $3
+	# Other
+notification)
+	sendNotification $2 $3
 	;;
-	help)
-		printHeader
-		printUsage
+help)
+	printHeader
+	printUsage
 	;;
-	*)
-		printHeader
-		list todo
+*)
+	printHeader
+	list todo
 	;;
 esac

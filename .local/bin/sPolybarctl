@@ -13,7 +13,6 @@
 
 ###########################################
 
-
 visibleIcon=" 蘒 "
 invisibleIcon=" 﨡 "
 defaultPolybarName="*"
@@ -25,7 +24,7 @@ function launch() {
 	launchPolybar "main"
 	launchPolybar "secondary"
 	launchPolybar "tertiary"
-	
+
 	sleep 2
 	hide "secondary"
 	hide "tertiary"
@@ -55,17 +54,17 @@ function toggle() {
 	ipc cmd toggle $1
 }
 
-function updateSwitches(){
+function updateSwitches() {
 	ipc hook bar-switch-secondary
 	ipc hook bar-switch-tertiary
 }
 
 function status() {
-	case "$( xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5 )" in
-		IsViewable) echo "$visibleIcon" ;;
-		IsUnMapped) echo "$invisibleIcon" ;;
-		*) echo "$invisibleIcon";;
-	esac		
+	case "$(xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5)" in
+	IsViewable) echo "$visibleIcon" ;;
+	IsUnMapped) echo "$invisibleIcon" ;;
+	*) echo "$invisibleIcon" ;;
+	esac
 }
 
 function toggleTray() {
@@ -89,14 +88,14 @@ function resize() {
 	echo "Needs to be reimplemented"
 }
 
-function ipc(){
+function ipc() {
 	command=$1
 	payload=$2
 	if [ -z $1 ] && [ -z $2 ]; then
 		echo "Error, message malformed"
-		return 1;
+		return 1
 	fi
-	
+
 	case $command in
 	hook)
 		regex='^[0-9]+$'
@@ -106,13 +105,13 @@ function ipc(){
 			hookId=$defaultHookId
 		fi
 		payload=module/$payload$hookId
-		polybarName=$4	
-	;;
+		polybarName=$4
+		;;
 	cmd | action)
 		polybarName=$3
-	;;
-	esac;
-	
+		;;
+	esac
+
 	if [ -z $polybarName ]; then
 		polybarName=$defaultPolybarName
 	fi
@@ -131,27 +130,31 @@ function printUsage() {
 	printf "
 
 -Options
-	help			Show this help
-	launch			Launch all polybars defined
-	show [bar name]		Make the specified bar visible, or leave empty to show all bars
-	hide [bar name]		Make the specified bar invisible, or leave empty to hide all bars
-	toggle [bar name]		Show and hide the specified bar, or leave empty to toggle all
-	status <bar name>		Print status of the specified bar (useful to create a switch in a polybar itself)
-	ipc <command=(action|cmd|hook)> <payload> [hook-id] [polybar-name]	Send an inter-process mesage
+	help                     # Show this help
+	launch                   # Launch all polybars defined
+	show [bar name]          # Make the specified bar visible, or leave empty to show all bars
+	hide [bar name]          # Make the specified bar invisible, or leave empty to hide all bars
+	toggle [bar name]        # Show and hide the specified bar, or leave empty to toggle all
+	status <bar name>        # Print status of the specified bar (useful to create a switch in a polybar itself)
+
+	ipc <command=(action|cmd|hook)> <payload> [hook-id] [polybar-name]    # Send an inter-process mesage
 	 - if using command=hook, use [hook-id] to specify the index (1-based) of the hook configured in the polybar config. Default: 1
 	 - use [polybar-name] to send the IPC message to the specified polybar. Default: all polybars
+	 
 	 Examples:
-	  $ sPolybarctl ipc action "#open.1" myBar	# simulate the menu open on the 'myBar' bar 
-  	  $ sPolybarctl ipc action "#date.toggle"	# simulate the toggle action on date modules on all bars
-	  $ sPolybarctl ipc cmd show myOtherBar 	# show the 'myOtherBar' bar
-	  $ sPolybarctl ipc cmd hide 	# hide all bars
-	  $ sPolybarctl ipc hook myModule 	# call the first defined hook of 'myModule' in all bars
-	  $ sPolybarctl ipc hook myModule 2 	# call the second defined hook of 'myModule' in all bars
-	  $ sPolybarctl ipc hook myModule 2 myBar 	# call the first defined hook of 'myModule' in all bars 'myBar'
-[DEPRECATED]	toggleTray		Show and hide the tray (if present in any bar)
-[WIP]	autoHide <bar id>	Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
-[WIP]	drag <bar id>	Drag the polybar with the mouse
-[WIP]	resize <bar id>	Resize the polybar with the mouse
+	  $ sPolybarctl ipc action \"#open.1\" myBar     # simulate the menu open on the 'myBar' bar 
+	  $ sPolybarctl ipc action \"#date.toggle\"      # simulate the toggle action on date modules on all bars
+	  $ sPolybarctl ipc cmd show myOtherBar        # show the 'myOtherBar' bar
+	  $ sPolybarctl ipc cmd hide                   # hide all bars
+	  $ sPolybarctl ipc hook myModule              # call the first defined hook of 'myModule' in all bars
+	  $ sPolybarctl ipc hook myModule 2            # call the second defined hook of 'myModule' in all bars
+	  $ sPolybarctl ipc hook myModule 2 myBar      # call the first defined hook of 'myModule' in all bars 'myBar'
+	  
+	  
+	[DEPRECATED] toggleTray  # Show and hide the tray (if present in any bar)
+	[WIP] autoHide <bar id>  # Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
+	[WIP] drag <bar id>      # Drag the polybar with the mouse
+	[WIP] resize <bar id>    # Resize the polybar with the mouse
 
 - Abbreviations
 	l = launch
@@ -165,39 +168,38 @@ function printUsage() {
 }
 
 case "$1" in
-	launch | l)
-		launch
-		;;
-	toggle | t)
-		toggle $2
-		updateSwitches
-		;;
-	status)
-		status $2
-		;;
-	toggleTray)
-		toggleTray
-		;;
-	autoHide)
-		autoHide $2
-		;;
-	show | s)
-		show $2
-		updateSwitches
-		;;
-	hide | h)
-		hide $2
-		updateSwitches
-		;;
-	drag | d)
-		drag $2
-		;;
-	resize | r)
-		resize $2
-		;;
-	ipc | i)
-		ipc $2 $3 $4 $5
+launch | l)
+	launch
 	;;
-	help | *)	printUsage ;;
+toggle | t)
+	toggle $2
+	updateSwitches
+	;;
+status)
+	status $2
+	;;
+toggleTray)
+	toggleTray
+	;;
+autoHide)
+	autoHide $2
+	;;
+show | s)
+	show $2
+	updateSwitches
+	;;
+hide | h)
+	hide $2
+	updateSwitches
+	;;
+drag | d)
+	drag $2
+	;;
+resize | r)
+	resize $2
+	;;
+ipc | i)
+	ipc $2 $3 $4 $5
+	;;
+help | *) printUsage ;;
 esac
-

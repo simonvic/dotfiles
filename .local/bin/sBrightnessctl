@@ -2,18 +2,17 @@
 
 ###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
 
 ###########################################
-
 
 #	Default icons
 lowIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-low-symbolic.svg
@@ -64,22 +63,16 @@ appName="simonvic.Brightness"
 
 #####################################################################
 
-
-
-
-
-
-
-function getBrightness {
+function getBrightness() {
 	xbacklight -get
 }
 
-function setBrightness {
+function setBrightness() {
 	xbacklight -set $1
 }
 
-function changeBrightness(){
-  if [ -z $2 ]; then
+function changeBrightness() {
+	if [ -z $2 ]; then
 		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
 	else
 		xbacklight $1 $2 -steps $fade_steps -time $fade_time
@@ -99,27 +92,27 @@ function toggleRedshift() {
 }
 
 function changeTemp() {
-  if [ "$1" -gt 1000 ] && [ "$1" -lt 25000 ]; then
-    sed -i "s/REDSHIFT_TEMP=$REDSHIFT_TEMP/REDSHIFT_TEMP=$1/g" $redshiftState
-    redshift -P -O $1
-    REDSHIFT_TEMP=$1
-  fi
+	if [ "$1" -gt 1000 ] && [ "$1" -lt 25000 ]; then
+		sed -i "s/REDSHIFT_TEMP=$REDSHIFT_TEMP/REDSHIFT_TEMP=$1/g" $redshiftState
+		redshift -P -O $1
+		REDSHIFT_TEMP=$1
+	fi
 }
 
-function buildBar {
+function buildBar() {
 	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
 }
 
-function sendNotification {
-	brightness=`getBrightness`	
- 	# Building the volume bar
+function sendNotification() {
+	brightness=$(getBrightness)
+	# Building the volume bar
 	if [ "$REDSHIFT_STATUS" = "on" ]; then
-		body="`buildBar 5 $brightness false` <b>$brightness% $REDSHIFT_TEMP\k</b>"    	
+		body="$(buildBar 5 $brightness false) <b>$brightness% $REDSHIFT_TEMP\k</b>"
 	else
-		body="`buildBar 5 $brightness false` <b>$brightness%</b>"
+		body="$(buildBar 5 $brightness false) <b>$brightness%</b>"
 	fi
-  
-  if [ $brightness -ge 60 ]; then
+
+	if [ $brightness -ge 60 ]; then
 		icon=$highIcon
 	elif [ $brightness -le 30 ]; then
 		icon=$lowIcon
@@ -128,14 +121,14 @@ function sendNotification {
 	if [ $playSound = true ]; then
 		paplay $sound &
 	fi
-  
-  # Send the notification
-  dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$brightness%" "$body"
-  
+
+	# Send the notification
+	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$brightness%" "$body"
+
 }
 
 function printBrightness() {
-	brightness=`getBrightness`
+	brightness=$(getBrightness)
 	if [ $brightness -le 20 ]; then
 		suffix=$brightnessLowLabel
 	elif [ $brightness -le 40 ]; then
@@ -145,29 +138,29 @@ function printBrightness() {
 	elif [ $brightness -le 100 ]; then
 		suffix=$brightnessMaxLabel
 	fi
-	
+
 	if [ "$1" = "extended" ]; then
-		bar="$(seq -s '─' 0 $((brightness/10 -1 )) | sed 's/[0-9]//g')│"
-		emptyBar="$(seq -s '─' 0 $((10 - brightness/10)) | sed 's/[0-9]//g')"
+		bar="$(seq -s '─' 0 $((brightness / 10 - 1)) | sed 's/[0-9]//g')│"
+		emptyBar="$(seq -s '─' 0 $((10 - brightness / 10)) | sed 's/[0-9]//g')"
 		body=$brightness%$bar$emptyBar
 	fi
 	echo "%{F$color}$suffix  $body%{B- F-}"
-	
+
 }
 
 function printTemperature() {
-# Cool but, is it necessary?
-#	if [ $REDSHIFT_TEMP -le 2000 ]; then
-#		color="#eb6234"
-#	elif [ $REDSHIFT_TEMP -le 3000 ]; then
-#		color="#eb9334"
-#	elif [ $REDSHIFT_TEMP -le 5000 ]; then
-#		color="#e2eb34"
-#	elif [ $REDSHIFT_TEMP -le 10000 ]; then
-#		color="#34ebdb"
-#	elif [ $REDSHIFT_TEMP -le 25000 ]; then
-#		color="#0000FF"
-#	fi
+	# Cool but, is it necessary?
+	#	if [ $REDSHIFT_TEMP -le 2000 ]; then
+	#		color="#eb6234"
+	#	elif [ $REDSHIFT_TEMP -le 3000 ]; then
+	#		color="#eb9334"
+	#	elif [ $REDSHIFT_TEMP -le 5000 ]; then
+	#		color="#e2eb34"
+	#	elif [ $REDSHIFT_TEMP -le 10000 ]; then
+	#		color="#34ebdb"
+	#	elif [ $REDSHIFT_TEMP -le 25000 ]; then
+	#		color="#0000FF"
+	#	fi
 	body=""
 	if [ $REDSHIFT_STATUS = off ]; then
 		suffix=$redshiftOffLabel
@@ -193,10 +186,10 @@ function updatePolybar() {
 	# the hooks must be called in this order, otherwise it doesn't work
 	# maybe because of polybar inheritance and FIFO policy?
 	#to-do investigate this
-	sPolybarctl ipc hook redshift > /dev/null
-	sPolybarctl ipc hook redshift-extended > /dev/null
-	sPolybarctl ipc hook brightness > /dev/null
-	sPolybarctl ipc hook brightness-extended > /dev/null
+	sPolybarctl ipc hook redshift >/dev/null
+	sPolybarctl ipc hook redshift-extended >/dev/null
+	sPolybarctl ipc hook brightness >/dev/null
+	sPolybarctl ipc hook brightness-extended >/dev/null
 }
 
 function printUsage() {
@@ -205,78 +198,78 @@ function printUsage() {
 	sBrightnessctl <options> [...]
 	
 - Options
-	help 	Show this help
-	increase [amount] 	Increase the brightness by [amount] if specified or the default value otherwise
-	decrease [amount] 	Decrease the brightness by [amount] if specified or the default value otherwise
-	set <value> 	Set the brightness to <value>
-	print 	Print current brightness label
-	screensaver 	Lower the brightness to the minimum
-	redshift toggle 	Toggle on/off redshift
-	redshift increase [amount] 	Increase the redshift temperature by [amount] if specified or the default value otherwise
-	redshift decrease [amount] 	Decrease the redshift temperature by [amount] if specified or the default value otherwise
-	redshift print 	Print the current redshift temperature (used in polybar)
+	help                         # Show this help
+	increase [amount]            # Increase the brightness by [amount] if specified or the default value otherwise
+	decrease [amount]            # Decrease the brightness by [amount] if specified or the default value otherwise
+	set <value>                  # Set the brightness to <value>
+	print                        # Print current brightness label
+	screensaver                  # Lower the brightness to the minimum
+	redshift toggle              # Toggle on/off redshift
+	redshift increase [amount]   # Increase the redshift temperature by [amount] if specified or the default value otherwise
+	redshift decrease [amount]   # Decrease the redshift temperature by [amount] if specified or the default value otherwise
+	redshift print               # Print the current redshift temperature (used in polybar)
 	
 - Abbreviations
 	i = increase
 	d = decrease
-	s = set	
+	s = set
 	r = redshift
 	t = toggle
 "
 }
 
 case $1 in
-    increase | i)
-    	changeBrightness -inc $2
-			updatePolybar
-			sendNotification
-			;;
-    decrease | d)
-    	changeBrightness -dec $2
-			updatePolybar
-			sendNotification
-			;;
-		set | s)
-			setBrightness "$2 -step $fade_fps -time $fade_time"
-			updatePolybar
-			sendNotification
-			;;
-		screensaver)
-			screensaver
-			updatePolybar
-			;;
-		print)
-			printBrightness $2
-			;;
-		redshift | r)
-			case $2 in
-				toggle | t)
-					toggleRedshift
-					updatePolybar
-					sendNotification
-				;;
-				increase | i)
-					if [ -z $3 ]; then
-						changeTemp $((REDSHIFT_TEMP+defaultTempChangeValue))
-					else
-						changeTemp $((REDSHIFT_TEMP+$3))
-					fi
-					updatePolybar
-					sendNotification
-					;;
-				decrease | d)
-					if [ -z $3 ]; then
-						changeTemp $((REDSHIFT_TEMP-defaultTempChangeValue))
-					else
-						changeTemp $((REDSHIFT_TEMP-$3))
-					fi
-					updatePolybar
-					sendNotification
-					;;
-				print)
-					printTemperature $3
-					;;
-			esac
+increase | i)
+	changeBrightness -inc $2
+	updatePolybar
+	sendNotification
+	;;
+decrease | d)
+	changeBrightness -dec $2
+	updatePolybar
+	sendNotification
+	;;
+set | s)
+	setBrightness "$2 -step $fade_fps -time $fade_time"
+	updatePolybar
+	sendNotification
+	;;
+screensaver)
+	screensaver
+	updatePolybar
+	;;
+print)
+	printBrightness $2
+	;;
+redshift | r)
+	case $2 in
+	toggle | t)
+		toggleRedshift
+		updatePolybar
+		sendNotification
 		;;
-		help | *) printUsage ;;
+	increase | i)
+		if [ -z $3 ]; then
+			changeTemp $((REDSHIFT_TEMP + defaultTempChangeValue))
+		else
+			changeTemp $((REDSHIFT_TEMP + $3))
+		fi
+		updatePolybar
+		sendNotification
+		;;
+	decrease | d)
+		if [ -z $3 ]; then
+			changeTemp $((REDSHIFT_TEMP - defaultTempChangeValue))
+		else
+			changeTemp $((REDSHIFT_TEMP - $3))
+		fi
+		updatePolybar
+		sendNotification
+		;;
+	print)
+		printTemperature $3
+		;;
+	esac
+	;;
+help | *) printUsage ;;
 esac

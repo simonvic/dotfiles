@@ -2,11 +2,11 @@
 
 ###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
 #	Check updates and give a look at my dotfiles here:
@@ -18,20 +18,20 @@ poweredOnLabel=""
 poweredOffLabel= #""
 conectedLabel=""
 
-function printStatus(){	
+function printStatus() {
 	case $(isPowered) in
-		no) echo $poweredOffLabel ;;
-		yes) echo $poweredOnLabel ;;
-		*);;
-	esac;
+	no) echo $poweredOffLabel ;;
+	yes) echo $poweredOnLabel ;;
+	*) ;;
+	esac
 }
 
-function power(){
+function power() {
 	if [ $1 == "toggle" ]; then
 		case $(isPowered) in
-			no) bluetoothctl power on ;;
-			yes) bluetoothctl power off ;;
-		esac;
+		no) bluetoothctl power on ;;
+		yes) bluetoothctl power off ;;
+		esac
 	else
 		bluetoothctl power $1
 	fi
@@ -41,25 +41,24 @@ function findDeviceUUID() {
 	bluetoothctl devices | grep -i $1 | awk -F ' ' '{print $2}'
 }
 
-
-function connect(){
+function connect() {
 	if [ ! -z $1 ]; then
 		if [ $(isPowered) == "no" ]; then
 			power on
 		fi
-		bluetoothctl connect `findDeviceUUID $1`
+		bluetoothctl connect $(findDeviceUUID $1)
 		updatePolybar
 	else
 		printUsage
 	fi
-} 
+}
 
-function isPowered(){
+function isPowered() {
 	bluetoothctl show | grep "Powered" | cut -d " " -f2
 }
 
-function updatePolybar(){
-	sPolybarctl ipc hook bluetooth > /dev/null
+function updatePolybar() {
+	sPolybarctl ipc hook bluetooth >/dev/null
 }
 
 function printUsage() {
@@ -68,10 +67,10 @@ function printUsage() {
 	sBluetoothctl <options>
 	
 - Options
-	help 	Show this help
-	print 	Print the current status label
-	power <toggle|on|off> 	Switch on or off the bluetooth, or toggle between the states
-	connect <device UUID|device Name> 	Power on bluetooth if necessary and connect to <device UUID> (xx:xx:xx:xx:xx:xx) or <device Name> (i.e. 'Galaxy buds')
+	help                                # Show this help
+	print                               # Print the current status label
+	power <toggle|on|off>               # Switch on or off the bluetooth, or toggle between the states
+	connect <device UUID|device Name>   # Power on bluetooth if necessary and connect to <device UUID> (xx:xx:xx:xx:xx:xx) or <device Name> (i.e. 'Galaxy buds')
 
 - Abbreviations
 	p = power
@@ -80,10 +79,8 @@ function printUsage() {
 }
 
 case $1 in
-    print)	printStatus ;;
-  	power | p)	power $2 && updatePolybar ;;
-  	connect | c) connect $2 ;;
-  	help | *)	printUsage ;;
+print) printStatus ;;
+power | p) power $2 && updatePolybar ;;
+connect | c) connect $2 ;;
+help | *) printUsage ;;
 esac
-
-
