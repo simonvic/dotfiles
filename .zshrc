@@ -120,9 +120,6 @@ alias t="tree -h -F -D -L 1"
 xo() {
 	xdg-open $1 &!
 }
-alias Cp=xclip-copyfile
-alias Xp=xclip-cutfile
-alias Vp=xclip-pastefile
 alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
 alias todo='sTodo'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
