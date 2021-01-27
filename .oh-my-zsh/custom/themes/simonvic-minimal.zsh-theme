@@ -1,10 +1,10 @@
 ###########################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
 
 #	Check updates and give a look at my dotfiles here:
@@ -22,18 +22,23 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ✓%{$reset_color%}"
 #ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ♥%{$reset_color%}"
 #ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ♡%{$reset_color%}"
 
-function prompt_begin {
+function prompt_begin() {
 	#separator
 	#echo "·························································\n"
-	
+
 	#Starting block
 	echo "%{$fg[red]%}▍%{$reset_color%}"
 }
 
-function prompt_char {
-	if [ $UID -eq 0 ]; then echo "# "; else echo "$ "; fi
+function prompt_char() {
+	if [[ -n $SSH_CONNECTION ]]; then
+		echo "~# "
+	elif [ $UID -eq 0 ]; then
+		echo "# "
+	else
+		echo "$ "
+	fi
 }
 
 PROMPT='$(prompt_begin)%{$fg[gray]%}<%{$fg[red]%}%~%{$reset_color%}%{$fg[gray]%}>$(git_prompt_info) %{$fg[red]%}$(prompt_char)%{$reset_color%}'
 RPROMPT='$FG[059][%*]%(?,$FG[022][R-$?],$FG[130][R-$?])$FG[024][!%!]%{$reset_color%}'
-
