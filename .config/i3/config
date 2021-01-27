@@ -76,7 +76,7 @@ bindsym $mod+Shift+p                     exec sPolybarctl toggle secondary
 bindsym $mod+Ctrl+p                      exec sPolybarctl toggle tertiary
 
 # Hide all bars
-bindsym $mod+Ctrl+Shift+p                exec sPolybarctl hide
+bindsym $mod+Ctrl+Shift+p                exec sPolybarctl hide ; gaps $polybar_main_position all set 0
 
 # Toggle the tray
 #bindsym $mod+o exec sPolybarctl toggleTray
