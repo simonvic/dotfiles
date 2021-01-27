@@ -7,6 +7,7 @@
         <img src="https://img.shields.io/badge/version-v2.4.0-F0544C?style=for-the-badge">
         <img src="https://img.shields.io/github/v/tag/simonvic/dotfiles?color=F0544C&label=latest%20stable%20release&style=for-the-badge">
         <br>
+        <br>
         <img src="https://img.shields.io/github/last-commit/simonvic/dotfiles/dev?color=F0544C&logoColor=F0544C&style=flat-square">
         <img src="https://img.shields.io/github/commits-since/simonvic/dotfiles/latest/dev?color=F0544C&logoColor=F0544C&style=flat-square">
         <br>
@@ -176,8 +177,9 @@ Check out my [default keybindings](https://github.com/simonvic/dotfiles/wiki/Key
 
 ---
 
-<h3 align="center" >Buy me a coffee</h3>
+<h3 align="center" >Buy me a coffee :)</h3>
 <p align="center">
+    <img width="40px" src="https://i.imgur.com/e3kk9J4.png">
     <a href = "https://paypal.me/simonvic">
         <img src="https://img.shields.io/badge/Paypal-donate-F0544C?style=for-the-badge&logo=paypal&logoColor=F0544C">
     </a>
