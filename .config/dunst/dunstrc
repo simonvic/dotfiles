@@ -94,7 +94,7 @@ hide_duplicates_count = no
 # The width can be negative.  In this case the actual width is the
 # screen width minus the width defined in within the geometry option.
 #geometry = "250x50-40+40"
-geometry = "500x30-710+45"
+geometry = "500x30-710+55"
 
 # Round the corners
 corner_radius = 0
