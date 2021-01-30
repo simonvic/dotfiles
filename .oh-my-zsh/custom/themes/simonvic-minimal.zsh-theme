@@ -12,33 +12,142 @@
 
 ###########################################
 
-ZSH_THEME_GIT_PROMPT_PREFIX=" «%{$fg[yellow]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}»"
-ZSH_THEME_GIT_PROMPT_DIRTY="$FG[130] ✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[cyan]%} ±%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[cyan]%} ▴%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[magenta]%} ▾%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ✓%{$reset_color%}"
-#ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ♥%{$reset_color%}"
-#ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%} ♡%{$reset_color%}"
+# NOTE: GitInfo and GitStatus may impact the performance
+# Beginning of line
+PROMPT='$(lineStart)$(buildDirectory) $(buildGitInfo)$(newLineIfNecessary)$(buildPromptChar)'
+# Ending of line
+RPROMPT='$(buildGitStatus)$(buildTime)$(buildReturnCode)'
 
-function prompt_begin() {
-	#separator
-	#echo "·························································\n"
+# The minimum characters count to be left available before going to new line
+# useful when showing full directory path
+ZSH_S_MINIMUM_FREE_INPUT_CHARS=50
 
-	#Starting block
-	echo "%{$fg[red]%}▍%{$reset_color%}"
+# Colors can be defined with a string (e.g. red, blue, yellow)
+# or with a numeric value (e.g. 000, 001, 002)
+# Use spectrum_ls or spectrum_bls for a list of available numeric values
+ZSH_S_COLOR_ACCENT='red'
+ZSH_S_COLOR_DIRECTORY='red'
+ZSH_S_COLOR_USERNAME='red'
+ZSH_S_COLOR_PROMPT_CHAR='red'
+ZSH_S_COLOR_DATETIME='242'
+ZSH_S_COLOR_DECORATIONS='245'
+ZSH_S_COLOR_GIT_INFO='229'
+ZSH_S_COLOR_GIT_STATUS='229'
+ZSH_S_COLOR_RETURN_TRUE='115'
+ZSH_S_COLOR_RETURN_FALSE='136'
+
+# Show a character at the beginning of each line.
+# Useful when typing long commands and not loose track of where it begins
+ZSH_S_PROMPT_LINE_START='┃'
+ZSH_S_PROMPT_NEWLINE_START='┣ '
+
+# Directory
+ZSH_S_DIRECTORY_PREFIX="<"
+ZSH_S_DIRECTORY_SUFFIX=">"
+
+# %0/       Returns the entire directory structure.
+# %1/       Returns the current directory.
+# %2/       Returns the current directory and its parent directory.
+# %number/  In general, %number/ returns the directory structure to number levels deep.
+# %~        Show "~" when the current directory is the home
+# %number~  Same as above but show "~" when the current directory is the home
+ZSH_S_DIRECTORY_FORMAT="%~"
+
+# Prefix and suffix of username
+ZSH_S_USERNAME_PREFIX="<"
+ZSH_S_USERNAME_SUFFIX=">"
+
+# Char to be shown at the start of the command
+ZSH_S_PROMPT_CHAR_ROOT='# '
+ZSH_S_PROMPT_CHAR_USER='$ '
+ZSH_S_PROMPT_CHAR_SSH_PREFIX=':'
+
+# DateTime
+ZSH_S_DATETIME_PREFIX="["
+ZSH_S_DATETIME_SUFFIX="]"
+# strftime format
+ZSH_S_DATETIME_FORMAT="%H:%M:%S"
+
+# Return code
+ZSH_S_RETURN_PREFIX="[R-"
+ZSH_S_RETURN_SUFFIX="]"
+
+# Git info
+ZSH_THEME_GIT_PROMPT_PREFIX="%F{$ZSH_S_COLOR_DECORATIONS}«%F{$ZSH_S_COLOR_GIT_INFO}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%F{$ZSH_S_COLOR_DECORATIONS}»%f "
+ZSH_THEME_GIT_PROMPT_CLEAN="%F{green} ✓%f"
+ZSH_THEME_GIT_PROMPT_DIRTY="%F{130} ×%f"
+
+# Git status
+ZSH_S_GIT_STATUS_PREFIX="["
+ZSH_S_GIT_STATUS_SUFFIX=" ]"
+ZSH_THEME_GIT_PROMPT_UNTRACKED=" ·⃕"
+ZSH_THEME_GIT_PROMPT_ADDED=" +⃗"
+ZSH_THEME_GIT_PROMPT_DELETED=" -⃗"
+ZSH_THEME_GIT_PROMPT_AHEAD=" ↦" #TODO $(git_commits_ahead)
+ZSH_THEME_GIT_PROMPT_BEHIND=" ↤" #TODO $(git_commits_behind)
+ZSH_THEME_GIT_PROMPT_MODIFIED=" ~⃗"
+ZSH_THEME_GIT_PROMPT_RENAMED=" α⃗"
+ZSH_THEME_GIT_PROMPT_STASHED=" ↴⃞"
+ZSH_THEME_GIT_PROMPT_UNMERGED=" ⇉"
+ZSH_THEME_GIT_PROMPT_DIVERGED=" ➘⃗"
+
+# =================================================================================
+
+# Print the ZSH_S_PROMPT_LINE_START
+function lineStart() {
+	echo "%F{$ZSH_S_COLOR_ACCENT}$ZSH_S_PROMPT_LINE_START%f"
 }
 
-function prompt_char() {
-	if [[ -n $SSH_CONNECTION ]]; then
-		echo "~# "
-	elif [ $UID -eq 0 ]; then
-		echo "# "
-	else
-		echo "$ "
+# If ZSH_S_MINIMUM_FREE_INPUT_CHARS are not available on the line, a new line will begin
+# and ZSH_S_PROMPT_NEWLINE_START will be printed
+function newLineIfNecessary() {
+	echo "%-$ZSH_S_MINIMUM_FREE_INPUT_CHARS(l..\n%F{$ZSH_S_COLOR_ACCENT}$ZSH_S_PROMPT_NEWLINE_START%f)"
+}
+
+# Print the current working directory following ZSH_S_DIRECTORY_FORMAT format.
+# The directory path will be preceded by ZSH_S_DIRECTORY_PREFIX and followed by ZSH_S_DIRECTORY_SUFFIX
+function buildDirectory() {
+	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DIRECTORY_PREFIX%F{$ZSH_S_COLOR_DIRECTORY}$ZSH_S_DIRECTORY_FORMAT%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DIRECTORY_SUFFIX%f"
+}
+
+# Print the name of the user preceded by ZSH_S_USERNAME_PREFIX and followed by ZSH_S_USERNAME_SUFFIX
+function buildUsername() {
+	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_USERNAME_PREFIX%F{$ZSH_S_COLOR_USERNAME}%n%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_USERNAME_SUFFIX%f"
+}
+
+# Get the prompt char to display based on current user
+# and whether it is an ssh connection
+function buildPromptChar() {
+	local promptChar=""
+	[[ -n $SSH_CONNECTION ]] && promptChar="$ZSH_S_PROMPT_CHAR_SSH_PREFIX"
+
+	promptChar=$promptChar"%(!,$ZSH_S_PROMPT_CHAR_ROOT,$ZSH_S_PROMPT_CHAR_USER)"
+
+	echo "%F{$ZSH_S_COLOR_PROMPT_CHAR}$promptChar%f"
+}
+
+# Print the current datetime following ZSH_S_DATETIME_FORMAT format.
+# The datetime will be preceded by ZSH_S_DATETIME_PREFIX and followed by ZSH_S_DATETIME_SUFFIX
+function buildTime() {
+	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DATETIME_PREFIX%F{$ZSH_S_COLOR_DATETIME}%D{$ZSH_S_DATETIME_FORMAT}%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DATETIME_SUFFIX%f"
+}
+
+function buildGitInfo() {
+	echo "$(git_prompt_info)" #TODO finish this
+}
+
+# Print GitStatus preceded by ZSH_S_GIT_STATUS_PREFIX and followed by ZSH_S_GIT_STATUS_SUFFIX
+function buildGitStatus() {
+	local gitStatus=$(git_prompt_status)
+	if [ ! -z $gitStatus ]; then
+		echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_PREFIX%F{$ZSH_S_COLOR_GIT_STATUS}$gitStatus%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_SUFFIX%f"
 	fi
 }
 
-PROMPT='$(prompt_begin)%{$fg[gray]%}<%{$fg[red]%}%~%{$reset_color%}%{$fg[gray]%}>$(git_prompt_info) %{$fg[red]%}$(prompt_char)%{$reset_color%}'
-RPROMPT='$FG[059][%*]%(?,$FG[022][R-$?],$FG[130][R-$?])$FG[024][!%!]%{$reset_color%}'
+# Print the return code of last executed command preceded by ZSH_S_RETURN_PREFIX and followed by ZSH_S_RETURN_SUFFIX
+# NOTE: you could also set returnColor to "%F{%?}" so it will print a different color for each return code
+function buildReturnCode() {
+	local returnColor="%(?,%F{$ZSH_S_COLOR_RETURN_TRUE},%F{$ZSH_S_COLOR_RETURN_FALSE})"
+	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_PREFIX$returnColor%?%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_SUFFIX%f"
+}
