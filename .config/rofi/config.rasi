@@ -42,7 +42,7 @@ configuration {
 	display-run: "#";
 	display-window: "";
 	display-windowcd: "缾";
-	display-ssh: "~#";
+	display-ssh: ":$";
 	display-combi: ">";
 	display-calc: "";
 	display-keys: "";
