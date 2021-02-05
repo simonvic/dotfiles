@@ -18,24 +18,19 @@
 ### EXAMPLE of my crontab:
 ### 	* * * * * DISPLAY=':0' DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus' $HOME/.local/bin/sBatteryctl monitor
 
-# Show more info in notification
-moreInfo=true
+# Icon folder
+iconFolder=/usr/share/icons/Vimix-Ruby/24/panel
 
-#	Default icon
-icon=battery-medium
-
-#	Default urgency level [Available: low, normal, critical]
-urgency=normal
+# Choose whether the wakelock command will change DPMS and/or screensaver
+wakelockUsesDPMS=true
+wakelockUsesScreensaver=true
 
 # Enable to play sound
 playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
 sound=/usr/share/sounds/freedesktop/stereo/message.oga
 
-#	For how much milliseconds the notification will stay visible
-timeout=3000
-
-#	Unique dunst notification id
+# Unique dunst notification id
 uid=2596
 
 # App name in dunst
@@ -43,159 +38,319 @@ appName="simonvic.Battery"
 
 batteryStatus=/tmp/simonvic/sBatteryctl/isFullyCharged
 
-function getStatus() {
+########################################################################
+
+# Get current battery status (i.e. Charging, Discharging, Not Charging)
+function getChargeStatus() {
 	acpi -b | awk -F '[,:%]' '{print $2}' | cut -d ' ' -f2,3
 }
 
-function getCapacity() {
-	acpi -b | awk -F '[,:%]' '{print $3}' | cut -d ' ' -f2
+# Get current battery charge value in %
+function getChargeValue() {
+	acpi -b | awk -F '[,%]' '{print $2}' | cut -d ' ' -f2
 }
 
-function getTemp() {
-	case $tempUnit in
-	celsius)
-		tempUnit=""
-		unit="°C"
-		;;
-	fahrenheit)
-		tempUnit="-f"
-		unit="°F"
-		;;
-	kelvin)
-		tempUnit="-k"
-		unit="K"
-		;;
-	*)
-		tempUnit=""
-		unit="°C"
-		;;
-	esac
-	echo "$(acpi -t | awk -F " " '{print $4}') $unit"
-}
-
+# Get time to fully charge/discharge
 function getTime() {
 	acpi -b | awk -F ", " '{print $3}'
 }
 
+# Get current battery temperature in Celsius, Fahrenheit or Kelvin
+function getTemp() {
+	local unit=""
+	local unitLabel=""
+	case $1 in
+	fahrenheit | f)
+		unit="-f"
+		unitLabel="°F"
+		;;
+	kelvin | k)
+		unit="-k"
+		unitLabel="K"
+		;;
+	celsius | c | *)
+		unit=""
+		unitLabel="°C"
+		;;
+	esac
+	echo "$(acpi -t $unit | awk -F ', ' '{print $2}' | cut -d ' ' -f1) $unitLabel"
+}
+
+# Get if the battery is fully charged or not (and create file if it doesn't exists)
 function isFullyCharged() {
 	if [ ! -e $batteryStatus ]; then
 		createBatteryStatusFile
 	fi
 	cat $batteryStatus
-
 }
 
+function setBatteryStatus() {
+	if [ ! -e $batteryStatus ]; then
+		createBatteryStatusFile
+	fi
+	echo $1 >$batteryStatus
+}
+
+# Create the battery status file (and its parent directories)
 function createBatteryStatusFile() {
 	mkdir -p $(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
 	echo "false" >$batteryStatus
 }
 
-function sendNotification() {
-	/usr/bin/dunstify -a $appName -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
-	if [ $playSound = true ]; then
-		paplay $sound -s /run/user/1000/pulse/native &
-	fi
-}
-
+# Used in a crontab repeating every minute.
+#
+# It monitors the battery and send a notification when necessary
+#
+# By default it will show a notification when battery:
+# 	- is fully charged (shown only once)
+# 	- is charging and reached 80%
+# 	- is discharging and reached 50%
+# 	- is discharging and reached 20%
+# 	- is discharging and reached 10% (shown every minute)
 function monitor() {
-	status=$(getStatus)
-	capacity=$(getCapacity)
-	temp=$(getTemp)
-	time=$(getTime)
+	local chargeValue=$(getChargeValue)
+	local chargeStatus=$(getChargeStatus)
+	local temp=$(getTemp)
+	local time=$(getTime)
 
-	title="$capacity %"
+	local title="$chargeValue %"
+	local body=""
+	local urgency=normal
+	local timeout=3000
+	local icon=$(getIcon $chargeValue "$chargeStatus")
 
-	if [ $(isFullyCharged) != "true" -a "$status" = "Not charging" -a "$capacity" -eq 100 ]; then
-		body="Battery fully charged"
-		urgency=low
-		icon=battery-full-charging
-		sendNotification
-		echo true >$batteryStatus
-	elif [ "$status" = "Discharging" ]; then
-		if [ "$capacity" -le 10 ]; then
-			body="Battery is at a critical level"
-			urgency=critical
-			icon=battery-caution
-			sendNotification
-		elif [ "$capacity" -eq 20 ]; then
+	local shouldSendNotification=false
+	local isFull=false
+
+	# if it's not charging
+	if [ "$chargeStatus" == "Not charging" ]; then
+
+		# if it's fully charged
+		if [ $chargeValue -eq 100 ]; then
+			isFull=true
+			#send notification only once
+			if [ $(isFullyCharged) == false ]; then
+				body="Battery fully charged"
+				urgency=low
+				shouldSendNotification=true
+			fi
+		fi
+
+	# if it's charging
+	elif [ "$chargeStatus" == "Charging" ]; then
+
+		# reached 80%
+		if [ $chargeValue -eq 80 ]; then
+			body="IT'S OVER HEIGHTTHOUSAND !!!"
+			urgency=low
+			timeout=2000
+			shouldSendNotification=true
+		fi
+
+	# if it's discharging (AC unplugged)
+	elif [ "$chargeStatus" == "Discharging" ]; then
+
+		# reached 50%
+		if [ $chargeValue -eq 50 ]; then
+			body="Battery is at <b>$chargeValue %</b>"
+			urgency=low
+			timeout=2000
+			shouldSendNotification=true
+
+		# reached 20%
+		elif [ $chargeValue -eq 20 ]; then
 			body="Battery will need to be charged soon"
 			urgency=normal
-			icon=battery-low
-			sendNotification
-		elif [ "$capacity" -eq 50 ]; then
-			body="Battery is <b>$capacity%</b>"
-			urgency=low
-			icon=battery-060
-			sendNotification
+			timeout=3000
+			shouldSendNotification=true
+
+		# is less than 10%
+		elif [ $chargeValue -le 10 ]; then
+			body="Battery is at a critically low level !"
+			urgency=critical
+			timeout=4000
+			shouldSendNotification=true
+
 		fi
-		echo false >$batteryStatus
-	elif [ "$status" = "Charging" ]; then
-		if [ "$capacity" -eq 80 ]; then
-			title="$capacity %"
-			body="IT'S OVER HEIGHTTHOUSAND"
-			urgency=low
-			timeout=1500
-			icon=battery-100-charging
-			sendNotification
-		fi
-		echo false >$batteryStatus
+
 	fi
+
+	if [ $shouldSendNotification == true ]; then
+		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
+	fi
+
+	setBatteryStatus $isFull
 }
 
+# Show a notification regarding plugging in the battery charger
 function plugin() {
-	capacity=$(getCapacity)
-	title="$capacity %"
-	body="AC plugged"
-	urgency=low
-	timeout=1500
-	icon=battery-000-charging
-	sendNotification
+	local title="$(getChargeValue) %"
+	local body="AC plugged"
+	local urgency=low
+	local timeout=1500
+	local icon="$iconFolder/battery-000-charging.svg"
+
+	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
+# Show a notification regarding unplugging in the battery charger
 function unplug() {
-	capacity=$(getCapacity)
-	title="$capacity %"
-	body="AC unplugged"
-	urgency=normal
-	timeout=1500
-	icon=battery-000
-	sendNotification
+	local title="$(getChargeValue) %"
+	local body="<b>AC unplugged</b>"
+	local urgency=normal
+	local timeout=1500
+	local icon="$iconFolder/battery-000.svg"
+
+	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
+# Show a notification regarding current stats of the battery
 function current() {
-	status=$(getStatus)
-	capacity=$(getCapacity)
-	temp=$(getTemp)
-	time=$(getTime)
+	local chargeValue=$(getChargeValue)
+	local chargeStatus=$(getChargeStatus)
+	local temp=$(getTemp)
+	local time=$(getTime)
 
-	if [ "$status" = "Discharging" ]; then
-		icon=battery-000
-	elif [ "$status" = "Charging" ]; then
-		icon=battery-000-charging
-	fi
-	title="$capacity %"
-	body="<b>$status</b>
+	local title="$chargeValue %"
+	local body="\
+<b>$chargeStatus</b>
 <small>$time
 $temp</small>
 "
-	sendNotification
+	local urgency=normal
+	local timeout=3000
+	local icon=$(getIcon $chargeValue "$chargeStatus")
+
+	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
+# Manage the wakelock
 function wakelock() {
 	if [ -z $1 ]; then
 		printUsage
 	else
 		case $1 in
-		toggle | t)
-			case $2 in
-			on) xset -dpms s off ;;
-			off) xset +dpms s on ;;
-			*) printUsage ;;
-			esac
-			;;
+		toggle | t) setWakelock $2 ;;
+		#TODO add settings for dpms and screensaver
 		*) printUsage ;;
 		esac
 	fi
+}
+
+function isDPMSEnabled() {
+	[[ $(xset q | grep "DPMS is Enabled") ]] && echo true || echo false
+}
+
+function isScreensaverEnabled() {
+	[[ $(xset -q | grep "timeout" | cut -d ' ' -f5) != 0 ]] && echo true || echo false
+}
+
+# Set the wakelock status.
+#
+# Setting to "on" will disable DPMS (only if wakelockUsesDPMS == true)
+# and the Screensaver (only if wakeLockUsesScreensaver == true)
+#
+# Setting to "of" will enable DPMS (only if wakelockUsesDPMS == true)
+# and the Screensaver (only if wakeLockUsesScreensaver == true)
+#
+# If neither "on" nor "off" is specified it will be toggled between enabled/disabled
+# for DPMS and Screensaver
+function setWakelock() {
+	local title="sBatteryctl | Wakelock"
+	local body=""
+	local urgency=normal
+	local timeout=3500
+	local icon="$iconFolder"
+	local wakelockStatus=""
+
+	case $1 in
+	on)
+		[[ $wakelockUsesDPMS == true ]] && xset -dpms
+		[[ $wakelockUsesScreensaver == true ]] && xset s off
+		wakelockStatus="on"
+		icon="$icon/caffeine-cup-full.svg"
+		;;
+	off)
+		[[ $wakelockUsesDPMS == true ]] && xset +dpms
+		[[ $wakelockUsesScreensaver == true ]] && xset s on
+		wakelockStatus="off"
+		icon="$icon/caffeine-cup-empty.svg"
+		;;
+	*)
+		if [ $wakelockUsesDPMS == true ]; then
+			if [ $(isDPMSEnabled) == true ]; then
+				xset -dpms
+				wakelockStatus="on"
+			else
+				xset +dpms
+				wakelockStatus="off"
+			fi
+		fi
+
+		if [ $wakelockUsesScreensaver == true ]; then
+			if [ $(isScreensaverEnabled) == true ]; then
+				xset s off
+				wakelockStatus="on"
+			else
+				xset s on
+				wakelockStatus="off"
+			fi
+		fi
+		icon="$icon/caffeine-cup-full.svg"
+		;;
+	esac
+
+	if [ $wakelockUsesScreensaver == true ] || [ $wakelockUsesDPMS == true ]; then
+		body="\
+Wakelock is <b>$wakelockStatus</b>		
+DPMS: <b>$(isDPMSEnabled)</b>
+Screensaver: <b>$(isScreensaverEnabled)</b>"
+		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
+	fi
+}
+
+function sendNotification() {
+	/usr/bin/dunstify -a "$appName" -i "$1" -t "$2" -r "$uid" -u "$3" "$4" "$5"
+	if [ $playSound = true ]; then
+		paplay $sound -s /run/user/1000/pulse/native &
+	fi
+}
+
+# Get the icon file name based on current battery charge value and status
+function getIcon() {
+	local iconFileName="battery-"
+	if [ $1 -ge 100 ]; then
+		iconFileName=$iconFileName"100"
+	elif [ $1 -ge 80 ]; then
+		iconFileName=$iconFileName"080"
+	elif [ $1 -ge 60 ]; then
+		iconFileName=$iconFileName"060"
+	elif [ $1 -ge 40 ]; then
+		iconFileName=$iconFileName"040"
+	elif [ $1 -ge 20 ]; then
+		iconFileName=$iconFileName"020"
+	elif [ $1 -ge 0 ]; then
+		iconFileName=$iconFileName"000"
+	else
+		iconFileName="battery-missing"
+	fi
+
+	case $2 in
+	"Charging")
+		iconFileName=$iconFileName"-charging"
+		;;
+	"Discharging")
+		:
+		;;
+	"Not charging")
+		iconFileName="battery-full-charged"
+		;;
+	*)
+		iconFileName="battery-missing"
+		;;
+	esac
+
+	echo "$iconFolder/$iconFileName.svg"
 }
 
 function printUsage() {
@@ -209,7 +364,7 @@ function printUsage() {
 	plugin                      # Show notification about plugging AC
 	unplug                      # Show notification about unplugging AC
 	current                     # Show current information on the battery
-	wakelock toggle <on|off>    # Toggle on/off the wakelock
+	wakelock toggle [on|off]    # Toggle on/off the wakelock
 	
 - Abbreviations
 	m = monitor
