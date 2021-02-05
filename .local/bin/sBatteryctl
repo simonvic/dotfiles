@@ -268,13 +268,11 @@ function setWakelock() {
 		[[ $wakelockUsesDPMS == true ]] && xset -dpms
 		[[ $wakelockUsesScreensaver == true ]] && xset s off
 		wakelockStatus="on"
-		icon="$icon/caffeine-cup-full.svg"
 		;;
 	off)
 		[[ $wakelockUsesDPMS == true ]] && xset +dpms
 		[[ $wakelockUsesScreensaver == true ]] && xset s on
 		wakelockStatus="off"
-		icon="$icon/caffeine-cup-empty.svg"
 		;;
 	*)
 		if [ $wakelockUsesDPMS == true ]; then
@@ -296,11 +294,11 @@ function setWakelock() {
 				wakelockStatus="off"
 			fi
 		fi
-		icon="$icon/caffeine-cup-full.svg"
 		;;
 	esac
 
 	if [ $wakelockUsesScreensaver == true ] || [ $wakelockUsesDPMS == true ]; then
+		[[ "$wakelockStatus" == "on" ]] && icon="$icon/caffeine-cup-full.svg" || icon="$icon/caffeine-cup-empty.svg"
 		body="\
 Wakelock is <b>$wakelockStatus</b>		
 DPMS: <b>$(isDPMSEnabled)</b>
