@@ -32,7 +32,7 @@ urgency=normal
 timeout=60000
 
 #	Unique dunst notification id
-uid=2597
+uid=6908
 
 # App name in dunst
 appName="simonvic.TODO"

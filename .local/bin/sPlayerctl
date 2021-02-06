@@ -39,8 +39,8 @@ urgency=low
 timeout=5000
 
 #	Unique dunst notification id
-uid=2595
-uid_selectPlayer=2598
+uid=6905
+uid_selectPlayer=6906
 
 # App name in dunst
 appName="simonvic.Playerctl"

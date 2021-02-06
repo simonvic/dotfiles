@@ -34,7 +34,7 @@ warningLevel=60
 timeout=1500
 
 #	Unique dunst notification id
-uid=2593
+uid=6909
 
 # App name in dunst
 appName="simonvic.Volume"

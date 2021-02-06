@@ -31,7 +31,7 @@ playSound=true
 sound=/usr/share/sounds/freedesktop/stereo/message.oga
 
 # Unique dunst notification id
-uid=2596
+uid=6900
 
 # App name in dunst
 appName="simonvic.Battery"
@@ -303,6 +303,7 @@ function setWakelock() {
 Wakelock is <b>$wakelockStatus</b>		
 DPMS: <b>$(isDPMSEnabled)</b>
 Screensaver: <b>$(isScreensaverEnabled)</b>"
+
 		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 	fi
 }

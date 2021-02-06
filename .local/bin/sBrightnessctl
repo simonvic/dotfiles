@@ -56,7 +56,7 @@ redshiftState=~/.config/i3/scripts/redshift.sh
 source $redshiftState
 
 #	Unique dunst notification id
-uid=2594
+uid=6903
 
 # App name in dunst
 appName="simonvic.Brightness"
