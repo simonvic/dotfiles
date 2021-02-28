@@ -31,7 +31,7 @@ playSound=true
 sound=/usr/share/sounds/freedesktop/stereo/message.oga
 
 # Unique dunst notification id
-uid=6900
+uid=6901
 
 # App name in dunst
 appName="simonvic.Battery"
