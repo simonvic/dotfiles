@@ -62,7 +62,7 @@ separatorColor=f0544cff
 # 0 = down, 1 = up, 2 = both
 barDirection=2
 barMaxHeight=100
-barWidth=25
+barCount=25
 barBaseWidth=1
 barBaseColor=00000000
 barStep=1
@@ -93,7 +93,7 @@ lock() {
 		;;
 	bars)
 		args="--pass-media-keys --redraw-thread --force-clock \
---bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-width=$barWidth --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-position=$barPosition \
+--bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-position=$barPosition \
 --indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
 --veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
 --insidecolor=$insideColor --insidevercolor=$insideVerifyingColor --insidewrongcolor=$insideWrongColor --ringcolor=$ringColor --ringvercolor=$ringVerifyingColor --ringwrongcolor=$ringWrongColor --line-uses-ring \
