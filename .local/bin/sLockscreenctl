@@ -81,27 +81,27 @@ lock() {
 	case "$indicatorType" in
 	circle)
 		args="--pass-media-keys --redraw-thread --force-clock \
---indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
---veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
+--ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
+--verif-text=$verifyText --wrong-text=$wrongText --noinput-text=$noInputText \
 --radius=$radius --ring-width=$ringWidth \
---insidecolor=$insideColor --insidevercolor=$insideVerifyingColor --insidewrongcolor=$insideWrongColor --ringcolor=$ringColor --ringvercolor=$ringVerifyingColor --ringwrongcolor=$ringWrongColor --line-uses-ring \
---keyhlcolor=$inputTypeColor --bshlcolor=$inputDeleteColor --separatorcolor=$separatorColor \
---verifcolor=$textColor --wrongcolor=$textColor \
---timecolor=$textColor --timestr=$timeString --time-font=$font --timesize=$timeSize \
---datecolor=$textColor --datestr=$dateString  --date-font=$font --datesize=$dateSize \
---greetertext=$greeterText --greetercolor=$textColor --greeter-font=$font --greetersize=$greeterSize"
+--inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor --ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor --line-uses-ring \
+--keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
+--verif-color=$textColor --wrong-color=$textColor \
+--time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
+--date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
+--greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font --greeter-size=$greeterSize"
 		;;
 	bars)
 		args="--pass-media-keys --redraw-thread --force-clock \
 --bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-position=$barPosition \
 --indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
 --veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
---insidecolor=$insideColor --insidevercolor=$insideVerifyingColor --insidewrongcolor=$insideWrongColor --ringcolor=$ringColor --ringvercolor=$ringVerifyingColor --ringwrongcolor=$ringWrongColor --line-uses-ring \
---keyhlcolor=$inputTypeColor --bshlcolor=$inputDeleteColor --separatorcolor=$separatorColor \
---verifcolor=$textColor --wrongcolor=$textColor \
---timecolor=$textColor --timestr=$timeString --time-font=$font --timesize=$timeSize \
---datecolor=$textColor --datestr=$dateString  --date-font=$font --datesize=$dateSize \
---greetertext=$greeterText --greetercolor=$textColor --greeter-font=$font --greetersize=$greeterSize"
+--inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor --ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor --line-uses-ring \
+--keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
+--verif-color=$textColor --wrong-color=$textColor \
+--time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
+--date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
+--greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font --greeter-size=$greeterSize"
 		;;
 	*)
 		args=""
@@ -125,7 +125,7 @@ lock() {
 	esac
 
 	echo ${dateString[@]}
-	pgrep i3lock || i3lock $args --datestr="%A,%d %B" --greetertext="$greeterText" $background $extraArgs
+	pgrep i3lock || i3lock $args --date-str="%A,%d %B" --greeter-text="$greeterText" $background $extraArgs
 
 }
 
