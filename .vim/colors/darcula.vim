@@ -174,7 +174,7 @@ hi CtrlPMatch term=reverse ctermfg=188 ctermbg=24 guifg=#a9b7c6 guibg=#214283 gu
 hi pythonOperator ctermfg=172 ctermbg=NONE cterm=NONE guifg=#c57825 guibg=NONE gui=bold
 
 " Popup Highlighing.
-hi Pmenu ctermfg=NONE ctermbg=238 cterm=NONE guifg=NONE guibg=#323232 gui=NONE
+hi Pmenu ctermfg=NONE ctermbg=238 cterm=NONE guifg=NONE guibg=#444444 gui=NONE
 hi PmenuSel ctermfg=188 ctermbg=24 term=reverse guifg=NONE guibg=#214283 gui=NONE
 hi PmenuSbar  ctermfg=NONE ctermbg=24 guifg=NONE guibg=#8e9292
 hi PmenuThumb ctermfg=59 ctermbg=NONE guifg=NONE guibg=NONE
