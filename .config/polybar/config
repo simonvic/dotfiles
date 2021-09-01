@@ -38,7 +38,7 @@ enable-ipc = true
 font-0 = "Lato:size=12:style=Regular;3"
 font-1 = "FontAwesome:size=14:style=Regular;3"
 font-2 = "WorkSans:size=12;3"
-font-3 = "Iosevka Nerd Font:size=14;3"
+font-3 = "Sauce Code Pro Nerd Font:size=14;3"
 font-4 = "material\-wifi:size=14:style=Regular;3"
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -89,7 +89,7 @@ padding-right = 2
 
 modules-left = i3 
 modules-center = date
-modules-right = wireless-network wired-network bluetooth redshift brightness pulseaudio battery bar-switch-secondary
+modules-right = wakelock bluetooth wireless-network wired-network redshift brightness pulseaudio battery bar-switch-secondary
 module-margin-left = 1
 module-margin-right = 1
 separator =
@@ -135,7 +135,7 @@ padding-left = 2
 padding-right = 2
 modules-left = xwindow
 modules-center =
-modules-right =  wireless-network-extended wired-network redshift-extended brightness-extended pulseaudio-extended battery-extended powermenu bar-switch-secondary
+modules-right =  wakelock wireless-network-extended wired-network redshift-extended brightness-extended pulseaudio-extended battery-extended powermenu bar-switch-secondary
 module-margin-left = 10
 module-margin-right = 1
 separator =
@@ -597,13 +597,14 @@ label = %output:0:100: ...%
 
 [module/aur_updates]
 type = custom/ipc
-hook-0 = ~/.config/polybar/scripts/aur_updates.sh
+hook-0 = "~/.config/polybar/scripts/aur_updates.sh"
 initial = 1
 format-prefix = "  "
 format = <output>
 format-foreground = ${colors.foreground}
 # format-background = 
-click-left = polybar-msg -p %pid% hook aur_updates 1
+click-left = i3-sensible-terminal -e "auracle outdated" --hold
+click-right = polybar-msg -p %pid% hook aur_updates 1
 
 [module/fan]
 type = custom/script
@@ -620,6 +621,27 @@ content-padding = 4
 click-left = sTodo notification todo &
 click-right = sTodo notification done &
 click-middle = sTodo notification deleted &
+
+[module/earbuds]
+type = custom/script
+interval = 8
+label = %output%
+exec = ~/.config/polybar/scripts/earbuds.sh
+
+[module/earbuds-extended]
+type = custom/script
+interval = 8
+label = %output%
+exec = ~/.config/polybar/scripts/earbuds.sh verbose
+
+[module/wakelock]
+type = custom/ipc
+hook-0 = ~/.config/polybar/scripts/wakelock.sh
+initial = 1
+format = <output>
+format-foreground = ${colors.foreground}
+# format-background = 
+click-right = sBatteryctl wakelock toggle
 
 
 ###########################################

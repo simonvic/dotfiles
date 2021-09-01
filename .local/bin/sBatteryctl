@@ -37,6 +37,7 @@ uid=6901
 appName="simonvic.Battery"
 
 batteryStatus=/tmp/simonvic/sBatteryctl/isFullyCharged
+WAKELOCK_STATUS_PATH=/tmp/simonvic/sBatteryctl/wakelockStatus
 
 ########################################################################
 
@@ -231,6 +232,7 @@ function wakelock() {
 	else
 		case $1 in
 		toggle | t) setWakelock $2 ;;
+		status | s) echo $(getWakelockStatus) ;;
 		#TODO add settings for dpms and screensaver
 		*) printUsage ;;
 		esac
@@ -243,6 +245,30 @@ function isDPMSEnabled() {
 
 function isScreensaverEnabled() {
 	[[ $(xset -q | grep "timeout" | cut -d ' ' -f5) != 0 ]] && echo true || echo false
+}
+
+function updateWakelockStatus() {
+	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
+		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
+	fi
+	if [[ ! -z "$1" ]]; then
+		echo "$1" >$WAKELOCK_STATUS_PATH
+	else
+		echo "off" >$WAKELOCK_STATUS_PATH
+	fi
+
+}
+
+function getWakelockStatus() {
+	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
+		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
+		echo "off" >$WAKELOCK_STATUS_PATH
+	fi
+	cat $WAKELOCK_STATUS_PATH
+}
+
+function updatePolybar() {
+	sPolybarctl ipc hook wakelock >/dev/null
 }
 
 # Set the wakelock status.
@@ -304,6 +330,8 @@ Wakelock is <b>$wakelockStatus</b>
 DPMS: <b>$(isDPMSEnabled)</b>
 Screensaver: <b>$(isScreensaverEnabled)</b>"
 
+		updateWakelockStatus "$wakelockStatus"
+		updatePolybar
 		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 	fi
 }
@@ -364,6 +392,7 @@ function printUsage() {
 	unplug                      # Show notification about unplugging AC
 	current                     # Show current information on the battery
 	wakelock toggle [on|off]    # Toggle on/off the wakelock
+	wakelock status             # Print current wakelock status
 	
 - Abbreviations
 	m = monitor
@@ -372,6 +401,7 @@ function printUsage() {
 	c = current
 	w = wakelock
 	t = toggle
+	s = status
 "
 }
 

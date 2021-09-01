@@ -1,1 +1,1 @@
-echo $(auracle outdated | wc -l)
+echo "$(auracle outdated | wc -l)"
