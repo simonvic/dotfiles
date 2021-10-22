@@ -153,6 +153,11 @@ bindsym $mod+Tab                         exec rofi -modi "window#windowcd" -show
 bindsym $mod+Shift+Tab                   exec rofi -show "filebrowser" -theme-str '@import $rofi_theme_fileBrowser' -no-default-config
 bindsym $mod+c                           exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme-str '@import $rofi_theme_calc' -no-default-config
 
+# ====== DUNST (notifications) ===========================================
+bindsym $mod+n                           exec dunstctl action
+bindsym $mod+Shift+n                     exec dunstctl history-pop
+bindsym $mod+Ctrl+n                      exec dunstctl close
+bindsym $mod+Ctrl+Shift+n                exec dunstctl close-all
 
 # ======i3=========================================== 
 # Use Mouse+$mod to drag floating windows to their wanted position
