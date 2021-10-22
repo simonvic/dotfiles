@@ -17,7 +17,7 @@
 configuration {
 	
 	threads: 0;
-	modi: [combi, drun, file-browser, window, run, windowcd, ssh, calc, keys] ;
+	modi: [combi, drun, filebrowser, window, run, windowcd, ssh, calc, keys] ;
 	case-sensitive: false;
 	cycle: true;
 	filter: "";
@@ -26,10 +26,8 @@ configuration {
 	show-icons: true;
 	icon-theme: "Vimix-ruby";
 	matching-negate-char: '!';
-	show-match: false;
-	
+
 	sidebar-mode: false;
-	fullscreen: false;
 		
 	drun-categories: [] ;
 	drun-display-format: "{name} [<span weight='light' size='small'><i>({exec})</i></span>]";
@@ -47,7 +45,19 @@ configuration {
 	display-calc: "";
 	display-keys: "";
 	display-file-browser: "";
-	
+
+	filebrowser {
+		directory: ".";
+		sorting-method: "name";
+		directories-first: true;
+   }
+
+/*
+	timeout {
+		delay:  15;
+		action: "kb-cancel";
+	}
+*/
 }
 
 * {
@@ -166,6 +176,12 @@ element-text{
 
 element-icon{
 	enabled: true;
+}
+
+element-text,
+element-icon {
+	background-color: transparent;
+	text-color: inherit;
 }
 
 element normal.normal {

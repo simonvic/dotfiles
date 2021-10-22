@@ -147,11 +147,11 @@ bindsym --release $mod+Shift+s           exec $HOME/.config/i3/scripts/clipboard
 bindsym --release $mod+Ctrl+Shift+s      exec $HOME/.config/i3/scripts/clipboardScreenshot.sh
 
 # ======ROFI===========================================
-bindsym $mod+a                           exec rofi -show combi -combi-modi "drun#window" -modi "combi#drun" -theme $rofi_theme_drun
-bindsym $mod+Ctrl+a                      exec rofi -show combi -theme $rofi_theme_combi
-bindsym $mod+Tab                         exec rofi -modi "window#windowcd" -show window -theme $rofi_theme_windowSwitcher
-bindsym $mod+Shift+Tab                   exec rofi -show "file-browser" -theme $rofi_theme_fileBrowser
-bindsym $mod+c                           exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme $rofi_theme_calc
+bindsym $mod+a                           exec rofi -show combi -combi-modi "drun#window" -modi "combi#drun" -theme-str '@import $rofi_theme_drun' -no-default-config
+bindsym $mod+Ctrl+a                      exec rofi -show combi -theme-str '@import $rofi_theme_combi' -no-default-config
+bindsym $mod+Tab                         exec rofi -modi "window#windowcd" -show window -theme-str '@import $rofi_theme_windowSwitcher' -no-default-config
+bindsym $mod+Shift+Tab                   exec rofi -show "filebrowser" -theme-str '@import $rofi_theme_fileBrowser' -no-default-config
+bindsym $mod+c                           exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme-str '@import $rofi_theme_calc' -no-default-config
 
 
 # ======i3=========================================== 
