@@ -20,7 +20,7 @@
 	## GEOMETRY
 	width = (0, 500)
 	height = 300
-	origin = top-right
+	origin = top-center
 	offset = 0x55
 	scale = 0
 	notification_limit = 0
