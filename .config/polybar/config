@@ -35,11 +35,11 @@ border-radius = 5
 
 [bar/base]
 enable-ipc = true
-font-0 = "Lato:size=12:style=Regular;3"
-font-1 = "FontAwesome:size=14:style=Regular;3"
-font-2 = "WorkSans:size=12;3"
-font-3 = "Sauce Code Pro Nerd Font:size=14;3"
-font-4 = "material\-wifi:size=14:style=Regular;3"
+font-0 = "Lato:size=12:style=Regular;5"
+font-1 = "FontAwesome:size=14:style=Regular;5"
+font-2 = "WorkSans:size=12;5"
+font-3 = "Sauce Code Pro Nerd Font:size=14;5"
+font-4 = "material\-wifi:size=14:style=Regular;5"
 cursor-click = pointer
 cursor-scroll = ns-resize
 dim-value = 1.0
