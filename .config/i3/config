@@ -23,8 +23,8 @@
 exec numlockx
 
 # Lockscreen
-exec xset s 600 300 
-exec xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenctl suspend
+exec xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenctl lock
+exec xset s 300 300 
 
 # Restore redshift state
 exec $HOME/.config/i3/scripts/restoreRedshift.sh

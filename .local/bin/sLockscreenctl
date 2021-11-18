@@ -124,7 +124,6 @@ lock() {
 		;;
 	esac
 
-	echo ${dateString[@]}
 	pgrep i3lock || i3lock $args --date-str="%A,%d %B" --greeter-text="$greeterText" $background $extraArgs
 
 }
