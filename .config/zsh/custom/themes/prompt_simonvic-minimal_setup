@@ -12,11 +12,6 @@
 
 ###########################################
 
-# NOTE: GitInfo and GitStatus may impact the performance
-# Beginning of line
-PROMPT='$(lineStart)$(buildDirectory) $(buildGitInfo)$(newLineIfNecessary)$(buildPromptChar)'
-# Ending of line
-RPROMPT='$(buildGitStatus)$(buildTime)$(buildReturnCode)'
 
 # The minimum characters count to be left available before going to new line
 # useful when showing full directory path
@@ -73,24 +68,25 @@ ZSH_S_RETURN_PREFIX="[R-"
 ZSH_S_RETURN_SUFFIX="]"
 
 # Git info
-ZSH_THEME_GIT_PROMPT_PREFIX="%F{$ZSH_S_COLOR_DECORATIONS}«%F{$ZSH_S_COLOR_GIT_INFO}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%F{$ZSH_S_COLOR_DECORATIONS}»%f "
-ZSH_THEME_GIT_PROMPT_CLEAN="%F{green} ✓%f"
-ZSH_THEME_GIT_PROMPT_DIRTY="%F{130} ×%f"
+ZSH_S_GIT_PROMPT_PREFIX="%F{$ZSH_S_COLOR_DECORATIONS}«%F{$ZSH_S_COLOR_GIT_INFO}"
+ZSH_S_GIT_PROMPT_SUFFIX="%F{$ZSH_S_COLOR_DECORATIONS}»%f "
+ZSH_S_GIT_PROMPT_CLEAN="%F{green} ✓%f"
+ZSH_S_GIT_PROMPT_DIRTY="%F{130} ×%f"
+ZSH_S_GIT_INFO_FORMAT="$ZSH_S_GIT_PROMPT_PREFIX%b$ZSH_S_GIT_PROMPT_SUFFIX"
 
 # Git status
 ZSH_S_GIT_STATUS_PREFIX="["
 ZSH_S_GIT_STATUS_SUFFIX=" ]"
-ZSH_THEME_GIT_PROMPT_UNTRACKED=" ·⃕"
-ZSH_THEME_GIT_PROMPT_ADDED=" +⃗"
-ZSH_THEME_GIT_PROMPT_DELETED=" -⃗"
-ZSH_THEME_GIT_PROMPT_AHEAD=" ↦" #TODO $(git_commits_ahead)
-ZSH_THEME_GIT_PROMPT_BEHIND=" ↤" #TODO $(git_commits_behind)
-ZSH_THEME_GIT_PROMPT_MODIFIED=" ~⃗"
-ZSH_THEME_GIT_PROMPT_RENAMED=" α⃗"
-ZSH_THEME_GIT_PROMPT_STASHED=" ↴⃞"
-ZSH_THEME_GIT_PROMPT_UNMERGED=" ⇉"
-ZSH_THEME_GIT_PROMPT_DIVERGED=" ➘⃗"
+ZSH_S_GIT_PROMPT_UNTRACKED=" ·⃕"
+ZSH_S_GIT_PROMPT_ADDED=" +⃗"
+ZSH_S_GIT_PROMPT_DELETED=" -⃗"
+ZSH_S_GIT_PROMPT_AHEAD=" ↦"
+ZSH_S_GIT_PROMPT_BEHIND=" ↤"
+ZSH_S_GIT_PROMPT_MODIFIED=" ~⃗"
+ZSH_S_GIT_PROMPT_RENAMED=" α⃗"
+ZSH_S_GIT_PROMPT_STASHED=" ↴⃞"
+ZSH_S_GIT_PROMPT_UNMERGED=" ⇉"
+ZSH_S_GIT_PROMPT_DIVERGED=" ➘⃗"
 
 # =================================================================================
 
@@ -134,12 +130,12 @@ function buildTime() {
 }
 
 function buildGitInfo() {
-	echo "$(git_prompt_info)" #TODO finish this
+	echo '${vcs_info_msg_0_}'
 }
 
 # Print GitStatus preceded by ZSH_S_GIT_STATUS_PREFIX and followed by ZSH_S_GIT_STATUS_SUFFIX
 function buildGitStatus() {
-	local gitStatus=$(git_prompt_status)
+	#local gitStatus=$(git_prompt_status)
 	if [ ! -z $gitStatus ]; then
 		echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_PREFIX%F{$ZSH_S_COLOR_GIT_STATUS}$gitStatus%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_SUFFIX%f"
 	fi
@@ -151,3 +147,77 @@ function buildReturnCode() {
 	local returnColor="%(?,%F{$ZSH_S_COLOR_RETURN_TRUE},%F{$ZSH_S_COLOR_RETURN_FALSE})"
 	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_PREFIX$returnColor%?%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_SUFFIX%f"
 }
+
+
+zstyle ':vcs_info:git*' formats "$ZSH_S_GIT_INFO_FORMAT"
+
+
+
+# NOTE: GitInfo and GitStatus may impact the performance
+# Beginning of line
+PS1="$(lineStart)$(buildDirectory) $(buildGitInfo)$(newLineIfNecessary)$(buildPromptChar)"
+
+# Ending of line
+RPS1="$(buildGitStatus)$(buildTime)$(buildReturnCode)"
+
+
+##
+# Cleanup
+unset -v \
+	ZSH_S_MINIMUM_FREE_INPUT_CHARS \
+	ZSH_S_COLOR_ACCENT \
+	ZSH_S_COLOR_DIRECTORY \
+	ZSH_S_COLOR_USERNAME \
+	ZSH_S_COLOR_PROMPT_CHAR \
+	ZSH_S_COLOR_DATETIME \
+	ZSH_S_COLOR_DECORATIONS \
+	ZSH_S_COLOR_GIT_INFO \
+	ZSH_S_COLOR_GIT_STATUS \
+	ZSH_S_COLOR_RETURN_TRUE \
+	ZSH_S_COLOR_RETURN_FALSE \
+	ZSH_S_PROMPT_LINE_START \
+	ZSH_S_PROMPT_NEWLINE_START \
+	ZSH_S_DIRECTORY_PREFIX \
+	ZSH_S_DIRECTORY_SUFFIX \
+	ZSH_S_DIRECTORY_FORMAT \
+	ZSH_S_USERNAME_PREFIX \
+	ZSH_S_USERNAME_SUFFIX \
+	ZSH_S_PROMPT_CHAR_ROOT \
+	ZSH_S_PROMPT_CHAR_USER \
+	ZSH_S_PROMPT_CHAR_SSH_PREFIX \
+	ZSH_S_DATETIME_PREFIX \
+	ZSH_S_DATETIME_SUFFIX \
+	ZSH_S_DATETIME_FORMAT \
+	ZSH_S_RETURN_PREFIX \
+	ZSH_S_RETURN_SUFFIX \
+	ZSH_S_GIT_INFO_FORMAT \
+	ZSH_S_GIT_PROMPT_PREFIX \
+	ZSH_S_GIT_PROMPT_SUFFIX \
+	ZSH_S_GIT_PROMPT_CLEAN \
+	ZSH_S_GIT_PROMPT_DIRTY \
+	ZSH_S_GIT_STATUS_PREFIX \
+	ZSH_S_GIT_STATUS_SUFFIX \
+	ZSH_S_GIT_PROMPT_UNTRACKED \
+	ZSH_S_GIT_PROMPT_ADDED \
+	ZSH_S_GIT_PROMPT_DELETED \
+	ZSH_S_GIT_PROMPT_AHEAD \
+	ZSH_S_GIT_PROMPT_BEHIND \
+	ZSH_S_GIT_PROMPT_MODIFIED \
+	ZSH_S_GIT_PROMPT_RENAMED \
+	ZSH_S_GIT_PROMPT_STASHED \
+	ZSH_S_GIT_PROMPT_DIVERGED \
+	ZSH_S_GIT_PROMPT_UNMERGED
+
+unset -f lineStart \
+	newLineIfNecessary \
+	buildDirectory \
+	buildUsername \
+	buildPromptChar \
+	buildTime \
+	buildGitInfo \
+	buildGitStatus \
+	buildReturnCode
+
+#function prompt_simonvic-minimal_help() {
+#}
+
