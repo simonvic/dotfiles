@@ -109,8 +109,8 @@ zstyle :compinstall filename '$HOME/.zshrc'
 
 
 autoload -Uz compinit
-compinit
-
+# .zcompdump custom location
+compinit -d ~/.local/share/zsh/.zcompdump
 
 
 ######################################
