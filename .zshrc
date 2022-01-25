@@ -105,6 +105,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' max-errors 2
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*' special-dirs true
 zstyle :compinstall filename '$HOME/.zshrc'
 
 
