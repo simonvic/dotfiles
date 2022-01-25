@@ -93,9 +93,9 @@ lock() {
 		;;
 	bars)
 		args="--pass-media-keys --redraw-thread --force-clock \
---bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-position=$barPosition \
---indpos=$indicatorPos --timepos=$timePos --datepos=$datePos \
---veriftext=$verifyText --wrongtext=$wrongText --noinputtext=$noInputText \
+--bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-pos=$barPosition \
+--ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
+--verif-text=$verifyText --wrong-text=$wrongText --noinput-text=$noInputText \
 --inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor --ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor --line-uses-ring \
 --keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
 --verif-color=$textColor --wrong-color=$textColor \
