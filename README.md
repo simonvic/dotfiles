@@ -4,7 +4,7 @@
 
 #
 <p align="center">
-        <img src="https://img.shields.io/badge/version-v2.5.1-F0544C?style=for-the-badge">
+        <img src="https://img.shields.io/badge/version-v2.6.0-F0544C?style=for-the-badge">
         <img src="https://img.shields.io/github/v/tag/simonvic/dotfiles?color=F0544C&label=latest%20stable%20release&style=for-the-badge">
         <br>
         <br>
