@@ -44,11 +44,10 @@ exec_always --no-startup-id sPolybarctl launch
 
 
 # Always mute microphone at startup, you know... FBI and stuff
-exec amixer sset Capture nocap
+exec pactl set-source-mute @DEFAULT_SOURCE@ true
 
 # Use Headset Mic as default input source
-exec_always amixer -c0 sset "Input Source" "Headset Mic" 
-
+exec pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
 
 
 # ======================================================== 
@@ -94,17 +93,17 @@ bindsym $mod+l                           exec sLockscreenctl lock
 # ======SPEAKER AND MICROPHONE=========================================== 
 # -Ctrl is used to control the microphone
 # -Shift is used to change values at higher rate
-bindsym XF86AudioRaiseVolume             exec --no-startup-id sVolumectl up 1
-bindsym XF86AudioLowerVolume             exec --no-startup-id sVolumectl down 1
-bindsym Shift+XF86AudioRaiseVolume       exec --no-startup-id sVolumectl up 10
-bindsym Shift+XF86AudioLowerVolume       exec --no-startup-id sVolumectl down 10
-bindsym XF86AudioMute                    exec --no-startup-id sVolumectl mute
+bindsym XF86AudioRaiseVolume             exec --no-startup-id sVolumectl increase 1
+bindsym XF86AudioLowerVolume             exec --no-startup-id sVolumectl decrease 1
+bindsym Shift+XF86AudioRaiseVolume       exec --no-startup-id sVolumectl increase 10
+bindsym Shift+XF86AudioLowerVolume       exec --no-startup-id sVolumectl decrease 10
+bindsym XF86AudioMute                    exec --no-startup-id sVolumectl mute toggle
 
-bindsym Ctrl+XF86AudioRaiseVolume        exec --no-startup-id sMicrophonectl up 1
-bindsym Ctrl+XF86AudioLowerVolume        exec --no-startup-id sMicrophonectl down 1
-bindsym Ctrl+Shift+XF86AudioRaiseVolume  exec --no-startup-id sMicrophonectl up 10
-bindsym Ctrl+Shift+XF86AudioLowerVolume  exec --no-startup-id sMicrophonectl down 10
-bindsym Ctrl+XF86AudioMute               exec --no-startup-id sMicrophonectl mute
+bindsym Ctrl+XF86AudioRaiseVolume        exec --no-startup-id sMicrophonectl increase 1
+bindsym Ctrl+XF86AudioLowerVolume        exec --no-startup-id sMicrophonectl decrease 1
+bindsym Ctrl+Shift+XF86AudioRaiseVolume  exec --no-startup-id sMicrophonectl increase 10
+bindsym Ctrl+Shift+XF86AudioLowerVolume  exec --no-startup-id sMicrophonectl decrease 10
+bindsym Ctrl+XF86AudioMute               exec --no-startup-id sMicrophonectl mute toggle
 
 # ======BRIGHTNESS AND REDSHIFT=========================================== 
 # -Ctrl is used to control the temperature

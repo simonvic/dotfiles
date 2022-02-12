@@ -13,6 +13,9 @@
 
 ###########################################
 
+# Max limit of the volume
+maxVolume=100
+
 #	Default icon
 mutedIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-muted.svg
 lowIcon=/usr/share/icons/Vimix-Ruby/22/panel/audio-volume-low.svg
@@ -24,27 +27,49 @@ playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
 sound=/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 
-#	Default urgency level [Available: low, normal, critical]
+# Default urgency level [Available: low, normal, critical]
 urgency=normal
 
-#	At which level the volume is considered too high
+# At which level the volume is considered too high
 warningLevel=60
 
-#	For how much milliseconds the notification will stay visible
+# For how much milliseconds the notification will stay visible
 timeout=1500
 
-#	Unique dunst notification id
+# Unique dunst notification id
 uid=6909
 
 # App name in dunst
 appName="simonvic.Volume"
 
 function getVolume() {
-	amixer -D pulse get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+	pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | cut -d '/' -f 2 | sed 's|%||'
 }
 
 function isMute() {
-	amixer -D pulse get Master | grep '%' | grep -oE '[^ ]+$' | grep off >/dev/null
+	[[ $(pactl get-sink-mute @DEFAULT_SINK@) == "Mute: yes" ]] && echo true || echo false
+}
+
+function setMute() {
+	pactl set-sink-mute @DEFAULT_SINK@ "$1"
+}
+
+function increaseVolume() {
+	setMute false
+	local increaseAmount=$1
+	local currentVolume=$(getVolume)
+	[[ $((currentVolume + increaseAmount)) -gt $maxVolume ]] \
+		&& setVolume "$maxVolume%" \
+		|| setVolume "+$increaseAmount%"
+}
+
+function decreaseVolume() {
+	setMute false
+	setVolume "-$1%"
+}
+
+function setVolume() {
+	pactl set-sink-volume @DEFAULT_SINK@ "$1"
 }
 
 function buildBar() {
@@ -52,7 +77,7 @@ function buildBar() {
 }
 
 function sendNotification() {
-	volume=$(getVolume)
+	local volume=$(getVolume)
 
 	# Building the volume bar
 	body="$(buildBar 5 $volume false)\t<b>$volume%</b>\t"
@@ -78,34 +103,31 @@ function printUsage() {
 	sVolumectl <options>
 	
 - Options
-	help            # Show this help
-	up [amount]     # Increase speaker/headphone volume by [amount] if specified or the default value otherwise
-	down [amount]   # Decrease speaker/headphone volume by [amount] if specified or the default value otherwise
-	mute            # Toggle mute on/off for the speaker/headphone
+	help                     # Show this help
+	increase [amount]        # Increase speaker/headphone volume by [amount] if specified or the default value otherwise
+	decrease [amount]        # Decrease speaker/headphone volume by [amount] if specified or the default value otherwise
+	mute [true|false|toggle] # Set mute status for the speakers/headphones
 	
 - Abbreviations
-	u = up
-	d = down
+	i = increase
+	d = decrease
 	m = mute
 "
 }
 
 case $1 in
-up | u)
+increase | i)
 	# Set the volume on (if it was muted)
-	amixer -D pulse set Master on >/dev/null
-	amixer -D pulse sset Master "$2"%+ >/dev/null
+	increaseVolume "$2"
 	sendNotification
 	;;
-down | d)
-	amixer -D pulse set Master on >/dev/null
-	amixer -D pulse sset Master "$2"%- >/dev/null
+decrease | d)
+	decreaseVolume "$2"
 	sendNotification
 	;;
 mute | m)
-	# Toggle mute
-	amixer -D pulse set Master toggle >/dev/null
-	if isMute; then
+	setMute "$2"
+	if $(isMute); then
 		# Building the volume bar
 		body="$(buildBar 5 100 true)\t<b>Muted</b>\t"
 		dunstify -a $appName -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"

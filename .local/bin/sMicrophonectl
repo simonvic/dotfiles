@@ -13,6 +13,9 @@
 
 ###########################################
 
+# Max limit of mic capture level
+maxVolume=100
+
 #	Default icon
 mutedIcon=/usr/share/icons/Vimix-Ruby/22/panel/microphone-sensitivity-muted.svg
 lowIcon=/usr/share/icons/Vimix-Ruby/22/panel/microphone-sensitivity-low.svg
@@ -24,27 +27,49 @@ playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
 sound=/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 
-#	Default urgency level [Available: low, normal, critical]
+# Default urgency level [Available: low, normal, critical]
 urgency=normal
 
-#	At which level you are controlling the boost and not intput volume anymore
+# At which level you are controlling the boost and not intput volume anymore
 warningLevel=60
 
-#	For how much milliseconds the notification will stay visible
+# For how much milliseconds the notification will stay visible
 timeout=1500
 
-#	Unique dunst notification id
+# Unique dunst notification id
 uid=6904
 
 # App name in dunst
 appName="simonvic.Microphone"
 
 function getVolume() {
-	amixer -D pulse sget Capture csvolume | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+	pactl get-source-volume @DEFAULT_SOURCE@ | head -n1 | cut -d '/' -f 2 | sed 's|%||'
 }
 
 function isMute() {
-	amixer -D pulse get Capture | grep '%' | grep -oE '[^ ]+$' | grep off
+	[[ $(pactl get-source-mute @DEFAULT_SOURCE@) == "Mute: yes" ]] && echo true || echo false
+}
+
+function setMute() {
+	pactl set-source-mute @DEFAULT_SOURCE@ "$1"
+}
+
+function increaseVolume() {
+	setMute false
+	local increaseAmount=$1
+	local currentVolume=$(getVolume)
+	[[ $((currentVolume + increaseAmount)) -gt $maxVolume ]] \
+		&& setVolume "$maxVolume%" \
+		|| setVolume "+$increaseAmount%"
+}
+
+function decreaseVolume() {
+	setMute false
+	setVolume "-$1%"
+}
+
+function setVolume() {
+	pactl set-source-volume @DEFAULT_SOURCE@ "$1"
 }
 
 function buildBar() {
@@ -52,7 +77,7 @@ function buildBar() {
 }
 
 function sendNotification() {
-	volume=$(getVolume)
+	local volume=$(getVolume)
 
 	# Building the volume bar
 	body="$(buildBar 5 $volume false)\t<b>$volume%</b>\t"
@@ -78,35 +103,32 @@ function printUsage() {
 	sMicrophonectl <options>
 	
 - Options
-	help            # Show this help
-	up [amount]     # Increase input volume by [amount] if specified or the default value otherwise
-	down [amount]   # Decrease input volume by [amount] if specified or the default value otherwise
-	mute            # Toggle mute on/off for the microphone
+	help                     # Show this help
+	increase [amount]        # Increase input volume by [amount] if specified or the default value otherwise
+	decrease [amount]        # Decrease input volume by [amount] if specified or the default value otherwise
+	mute [true|false|toggle] # Set mute status for the microphone
 
 - Abbreviations
-	u = up
-	d = down
+	i = increase
+	d = decrease
 	m = mute
 "
 }
 
 case $1 in
-up | u)
-	amixer sset Capture cap
-	amixer -D pulse sset Capture csvolume "$2"%+ >/dev/null
+increase | i)
+	increaseVolume "$2"
 	sendNotification
 	;;
-down | d)
-	amixer sset Capture cap
-	amixer -D pulse sset Capture csvolume "$2"%- >/dev/null
+decrease | d)
+	decreaseVolume "$2"
 	sendNotification
 	;;
 mute | m)
-	amixer -D pulse sset Capture toggle >/dev/null
-	if isMute; then
+	setMute "$2"
+	if $(isMute); then
 		# Building the volume bar
 		body="$(buildBar 5 100 true)\t<b>Muted</b>\t"
-
 		dunstify -a "$appName" -i $mutedIcon -t "$timeout" -r "$uid" -u "$urgency" "Muted" "$body"
 	else
 		sendNotification
