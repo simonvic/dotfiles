@@ -17,7 +17,7 @@
 configuration {
 	
 	threads: 0;
-	modi: [combi, drun, filebrowser, window, run, windowcd, ssh, calc, keys] ;
+	modi: [combi, drun, filebrowser, window, run, windowcd, ssh, keys] ;
 	case-sensitive: false;
 	cycle: true;
 	filter: "";
