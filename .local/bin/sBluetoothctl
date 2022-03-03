@@ -16,35 +16,70 @@
 
 poweredOnLabel=""
 poweredOffLabel= #""
-conectedLabel=""
+connectedLabel=""
 
-function printStatus() {
-	case $(isPowered) in
-	no) echo $poweredOffLabel ;;
-	yes) echo $poweredOnLabel ;;
-	*) ;;
-	esac
+##
+#	Get if bluetooth is powered on
+#	@return true|false
+function isPowered() {
+	[[ ! -z $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
 }
 
+##
+#	Get if connected to a bluetooth device
+#	@return true|false
+function isConnected() {
+	[[ ! -z $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
+}
+
+##
+#	Print status label for polybar
+#	@return label
+function printStatus() {
+	if $(isPowered); then
+		if $(isConnected); then
+			echo "$connectedLabel"
+		else
+			echo "$poweredOnLabel"
+		fi
+	else
+		echo "$poweredOffLabel"
+	fi
+
+}
+
+##
+#	Change bluetooth power
+#	@param toggle,on or off
 function power() {
 	if [ $1 == "toggle" ]; then
-		case $(isPowered) in
-		no) bluetoothctl power on ;;
-		yes) bluetoothctl power off ;;
-		esac
+		if $(isPowered); then
+			bluetoothctl power off
+		else
+			bluetoothctl power on
+		fi
 	else
 		bluetoothctl power $1
 	fi
 	updatePolybar
 }
 
+
+##
+#	Find the device UUID given a name
+#	@param device name
+#	@return device UUID
 function findDeviceUUID() {
 	bluetoothctl devices | grep -i $1 | awk -F ' ' '{print $2}'
 }
 
+
+##
+#	Connect to a device
+#	@param device name
 function connect() {
 	if [ ! -z $1 ]; then
-		if [ $(isPowered) == "no" ]; then
+		if ! $(isPowered); then
 			power on
 		fi
 		bluetoothctl connect $(findDeviceUUID $1)
@@ -54,10 +89,8 @@ function connect() {
 	fi
 }
 
-function isPowered() {
-	bluetoothctl show | grep "Powered" | cut -d " " -f2
-}
-
+##
+#	Update all polybar modules of bluetooth
 function updatePolybar() {
 	sPolybarctl ipc hook bluetooth >/dev/null
 	sPolybarctl ipc hook earbuds >/dev/null
@@ -83,7 +116,7 @@ function printUsage() {
 
 case $1 in
 print) printStatus ;;
-power | p) power $2 && updatePolybar ;;
+power | p) power $2 ;;
 connect | c) connect $2 ;;
 help | *) printUsage ;;
 esac
