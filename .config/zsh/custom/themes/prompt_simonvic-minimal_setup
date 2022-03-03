@@ -158,7 +158,7 @@ zstyle ':vcs_info:git*' formats "$ZSH_S_GIT_INFO_FORMAT"
 PS1="$(lineStart)$(buildDirectory) $(buildGitInfo)$(newLineIfNecessary)$(buildPromptChar)"
 
 # Ending of line
-RPS1="$(buildGitStatus)$(buildTime)$(buildReturnCode)"
+RPS1="$(buildGitStatus)$(buildReturnCode)$(buildTime)"
 
 
 ##
