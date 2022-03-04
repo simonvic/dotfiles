@@ -15,25 +15,27 @@
 ###########################################
 
 #	Default icons
-lowIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-low-symbolic.svg
-icon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-medium-symbolic.svg
-highIcon=/usr/share/icons/Vimix-Ruby/symbolic/status/display-brightness-high-symbolic.svg
+lowIcon="display-brightness-low-symbolic"
+mediumIcon="display-brightness-medium-symbolic"
+highIcon="display-brightness-high-symbolic"
 
 # Labels for polybar
-brightnessLowLabel=""
-brightnessMediumLabel=""
-brightnessHighLabel=""
-brightnessMaxLabel=""
-redshiftOnLabel=""
+brightnessLowLabel="  "
+brightnessMediumLabel="  "
+brightnessHighLabel="  "
+brightnessMaxLabel="  "
+redshiftOnLabel=" "
 redshiftOffLabel= #""
 
 # Enable to play sound
 playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
-sound=/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+sound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
-#	Default urgency level [Available: low, normal, critical]
-urgency=normal
+# Notification body format
+# where two %s are for ASCII bar and right text
+notificationBodyFormat="%s<tt><b>%6s</b></tt>"
+notificationBodyFormatRedshift="%s<tt><b>%12s</b></tt>"
 
 #	For how much milliseconds the notification will stay visible
 timeout=1500
@@ -63,14 +65,24 @@ appName="simonvic.Brightness"
 
 #####################################################################
 
+##
+#	Get brightness level
+#	@return brightness [0 - 100]
 function getBrightness() {
 	xbacklight -get
 }
 
+##
+#	Set brightness level
+#	@param brightness [0 - 100]
 function setBrightness() {
 	xbacklight -set $1
 }
 
+##
+#	Change brightness level
+#	@param -inc | -dec
+#	@param amount
 function changeBrightness() {
 	if [ -z $2 ]; then
 		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
@@ -79,6 +91,23 @@ function changeBrightness() {
 	fi
 }
 
+
+##
+#	Get if redshift is on
+#	@return true|false
+function isRedshiftOn() {
+	[[ $REDSHIFT_STATUS = on ]] && echo true || echo false
+}
+
+##
+#	Get redshift temperature
+#	@return temperature in kelvin
+function getRedshiftTemperature() {
+	echo $REDSHIFT_TEMP
+}
+
+##
+#	Toggle Redshift status
 function toggleRedshift() {
 	if [ "$REDSHIFT_STATUS" = on ]; then
 		sed -i "s/REDSHIFT_STATUS=on/REDSHIFT_STATUS=off/g" $redshiftState
@@ -91,6 +120,9 @@ function toggleRedshift() {
 	fi
 }
 
+##
+#	Change redshift temperature
+#	@param temperature [1000 - 25000]
 function changeTemp() {
 	if [ "$1" -gt 1000 ] && [ "$1" -lt 25000 ]; then
 		sed -i "s/REDSHIFT_TEMP=$REDSHIFT_TEMP/REDSHIFT_TEMP=$1/g" $redshiftState
@@ -99,36 +131,59 @@ function changeTemp() {
 	fi
 }
 
+##
+#	Build ASCII bar
+#	@param steps
+#	@param length
+#	@param draw as empty true|false
 function buildBar() {
 	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
 }
 
-function sendNotification() {
-	brightness=$(getBrightness)
-	# Building the volume bar
-	if [ "$REDSHIFT_STATUS" = "on" ]; then
-		body="$(buildBar 5 $brightness false) <b>$brightness% $REDSHIFT_TEMP\k</b>"
-	else
-		body="$(buildBar 5 $brightness false) <b>$brightness%</b>"
-	fi
 
-	if [ $brightness -ge 60 ]; then
+##
+#	Send notification
+function sendNotification() {
+	local body=""
+	local icon=""
+	local urgency=normal
+	local brightness=$(getBrightness)
+	local summary=""
+	local bodyFormat=""
+	local bar="$(buildBar 5 $brightness false)"
+	
+	if [ $brightness -ge 75 ]; then		
 		icon=$highIcon
-	elif [ $brightness -le 30 ]; then
+	elif [ $brightness -gt 25 ]; then
+		icon=$mediumIcon
+	else
 		icon=$lowIcon
 	fi
 
 	if [ $playSound = true ]; then
-		paplay $sound &
+		paplay "$sound" &
 	fi
 
-	# Send the notification
-	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$brightness%" "$body"
+	if [ $(isRedshiftOn) = true ]; then
+		summary="$brightness% $(getRedshiftTemperature)k"
+		bodyFormat=$notificationBodyFormatRedshift
+	else
+		summary="$brightness%"
+		bodyFormat=$notificationBodyFormat
+	fi
 
+	body=$(printf "$bodyFormat" "$bar" "$summary" )
+	# Send the notification
+	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body"
 }
 
+##
+#	Print brightness label for polybar module
+#	@param extended
 function printBrightness() {
-	brightness=$(getBrightness)
+	local brightness=$(getBrightness)
+	local suffix=""
+	local body=""
 	if [ $brightness -le 20 ]; then
 		suffix=$brightnessLowLabel
 	elif [ $brightness -le 40 ]; then
@@ -144,34 +199,25 @@ function printBrightness() {
 		emptyBar="$(seq -s '─' 0 $((10 - brightness / 10)) | sed 's/[0-9]//g')"
 		body=$brightness%$bar$emptyBar
 	fi
-	echo "%{F$color}$suffix  $body%{B- F-}"
+	echo "$suffix$body"
 
 }
 
+##
+#	Print redshift label for polybar module
+#	@param extended
 function printTemperature() {
-	# Cool but, is it necessary?
-	#	if [ $REDSHIFT_TEMP -le 2000 ]; then
-	#		color="#eb6234"
-	#	elif [ $REDSHIFT_TEMP -le 3000 ]; then
-	#		color="#eb9334"
-	#	elif [ $REDSHIFT_TEMP -le 5000 ]; then
-	#		color="#e2eb34"
-	#	elif [ $REDSHIFT_TEMP -le 10000 ]; then
-	#		color="#34ebdb"
-	#	elif [ $REDSHIFT_TEMP -le 25000 ]; then
-	#		color="#0000FF"
-	#	fi
-	body=""
+	local body=""
+	local suffix=""
 	if [ $REDSHIFT_STATUS = off ]; then
 		suffix=$redshiftOffLabel
 	else
 		suffix=$redshiftOnLabel
-		body=""
 		if [ "$1" = "extended" ]; then
 			body="$REDSHIFT_TEMP K"
 		fi
 	fi
-	echo "%{F$color}$suffix$body%{B- F-}"
+	echo "$suffix$body"
 }
 
 function screensaver() {
@@ -182,6 +228,8 @@ function screensaver() {
 	wait
 }
 
+##
+#	Update polybar modules
 function updatePolybar() {
 	# the hooks must be called in this order, otherwise it doesn't work
 	# maybe because of polybar inheritance and FIFO policy?

@@ -18,8 +18,6 @@
 ### EXAMPLE of my crontab:
 ### 	* * * * * DISPLAY=':0' DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus' $HOME/.local/bin/sBatteryctl monitor
 
-# Icon folder
-iconFolder=/usr/share/icons/Vimix-Ruby/24/panel
 
 # Choose whether the wakelock command will change DPMS and/or screensaver
 wakelockUsesDPMS=true
@@ -41,22 +39,31 @@ WAKELOCK_STATUS_PATH=/tmp/simonvic/sBatteryctl/wakelockStatus
 
 ########################################################################
 
-# Get current battery status (i.e. Charging, Discharging, Not Charging)
+##
+#	Get current battery charging status 
+#	@return charging status (i.e. Charging, Discharging, Not Charging)
 function getChargeStatus() {
 	acpi -b | awk -F '[,:%]' '{print $2}' | cut -d ' ' -f2,3
 }
 
-# Get current battery charge value in %
+##
+#	Get current battery charge value in percentage
+#	@return charge value
 function getChargeValue() {
 	acpi -b | awk -F '[,%]' '{print $2}' | cut -d ' ' -f2
 }
 
-# Get time to fully charge/discharge
+##
+#	Get time to fully charge/discharge
+#	@return time in format "HH:mm:ss remaining/to full charge"
 function getTime() {
 	acpi -b | awk -F ", " '{print $3}'
 }
 
-# Get current battery temperature in Celsius, Fahrenheit or Kelvin
+##
+#	Get current battery temperature in Celsius, Fahrenheit or Kelvin
+#	@param temperature unit (f)ahrenheit | (k)elvin | (c)elsius
+#	@return temperature + unit
 function getTemp() {
 	local unit=""
 	local unitLabel=""
@@ -77,7 +84,9 @@ function getTemp() {
 	echo "$(acpi -t $unit | awk -F ', ' '{print $2}' | cut -d ' ' -f1) $unitLabel"
 }
 
-# Get if the battery is fully charged or not (and create file if it doesn't exists)
+##
+#	Get if the battery is fully charged or not (and create file if it doesn't exists)
+#	@return true|false
 function isFullyCharged() {
 	if [ ! -e $batteryStatus ]; then
 		createBatteryStatusFile
@@ -85,6 +94,9 @@ function isFullyCharged() {
 	cat $batteryStatus
 }
 
+##
+#	Set battery fully charged or not
+#	@param true|false
 function setBatteryStatus() {
 	if [ ! -e $batteryStatus ]; then
 		createBatteryStatusFile
@@ -92,12 +104,14 @@ function setBatteryStatus() {
 	echo $1 >$batteryStatus
 }
 
-# Create the battery status file (and its parent directories)
+##
+#	Create the battery status file (and its parent directories)
 function createBatteryStatusFile() {
 	mkdir -p $(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
 	echo "false" >$batteryStatus
 }
 
+##
 # Used in a crontab repeating every minute.
 #
 # It monitors the battery and send a notification when necessary
@@ -118,7 +132,7 @@ function monitor() {
 	local body=""
 	local urgency=normal
 	local timeout=3000
-	local icon=$(getIcon $chargeValue "$chargeStatus")
+	local icon=$(getIcon "$chargeValue" "$chargeStatus")
 
 	local shouldSendNotification=false
 	local isFull=false
@@ -183,29 +197,32 @@ function monitor() {
 	setBatteryStatus $isFull
 }
 
-# Show a notification regarding plugging in the battery charger
+##
+#	Show a notification regarding plugging in the battery charger
 function plugin() {
 	local title="$(getChargeValue) %"
 	local body="AC plugged"
 	local urgency=low
 	local timeout=1500
-	local icon="$iconFolder/battery-000-charging.svg"
+	local icon="battery-000-charging"
 
 	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
-# Show a notification regarding unplugging in the battery charger
+##
+#	Show a notification regarding unplugging in the battery charger
 function unplug() {
 	local title="$(getChargeValue) %"
 	local body="<b>AC unplugged</b>"
 	local urgency=normal
 	local timeout=1500
-	local icon="$iconFolder/battery-000.svg"
+	local icon="battery-000"
 
 	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
-# Show a notification regarding current stats of the battery
+##
+#	Show a notification regarding current stats of the battery
 function current() {
 	local chargeValue=$(getChargeValue)
 	local chargeStatus=$(getChargeStatus)
@@ -220,12 +237,13 @@ $temp</small>
 "
 	local urgency=normal
 	local timeout=3000
-	local icon=$(getIcon $chargeValue "$chargeStatus")
+	local icon=$(getIcon "$chargeValue" "$chargeStatus")
 
 	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
 
-# Manage the wakelock
+##
+#	Manage the wakelock
 function wakelock() {
 	if [ -z $1 ]; then
 		printUsage
@@ -239,14 +257,23 @@ function wakelock() {
 	fi
 }
 
+##
+#	Get if DPMS is enabled
+#	@return true|false
 function isDPMSEnabled() {
 	[[ $(xset q | grep "DPMS is Enabled") ]] && echo true || echo false
 }
 
+##
+#	Get if screensaver is enabled
+#	@return true|false
 function isScreensaverEnabled() {
 	[[ $(xset -q | grep "timeout" | cut -d ' ' -f5) != 0 ]] && echo true || echo false
 }
 
+##
+#	Set wakelock status
+#	@param wakelock status
 function updateWakelockStatus() {
 	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
 		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
@@ -259,6 +286,9 @@ function updateWakelockStatus() {
 
 }
 
+##
+#	Get current wakelock status
+#	@return on|off
 function getWakelockStatus() {
 	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
 		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
@@ -267,26 +297,29 @@ function getWakelockStatus() {
 	cat $WAKELOCK_STATUS_PATH
 }
 
+##
+#	Update polybar modules of wakelock
 function updatePolybar() {
 	sPolybarctl ipc hook wakelock >/dev/null
 }
 
-# Set the wakelock status.
+##
+#	Set the wakelock status.
 #
-# Setting to "on" will disable DPMS (only if wakelockUsesDPMS == true)
-# and the Screensaver (only if wakeLockUsesScreensaver == true)
+#	Setting to "on" will disable DPMS (only if wakelockUsesDPMS == true)
+#	and the Screensaver (only if wakeLockUsesScreensaver == true)
 #
-# Setting to "of" will enable DPMS (only if wakelockUsesDPMS == true)
-# and the Screensaver (only if wakeLockUsesScreensaver == true)
+#	Setting to "of" will enable DPMS (only if wakelockUsesDPMS == true)
+#	and the Screensaver (only if wakeLockUsesScreensaver == true)
 #
-# If neither "on" nor "off" is specified it will be toggled between enabled/disabled
-# for DPMS and Screensaver
+#	If neither "on" nor "off" is specified it will be toggled between enabled/disabled
+#	for DPMS and Screensaver
 function setWakelock() {
 	local title="sBatteryctl | Wakelock"
 	local body=""
 	local urgency=normal
 	local timeout=3500
-	local icon="$iconFolder"
+	local icon=""
 	local wakelockStatus=""
 
 	case $1 in
@@ -324,7 +357,7 @@ function setWakelock() {
 	esac
 
 	if [ $wakelockUsesScreensaver == true ] || [ $wakelockUsesDPMS == true ]; then
-		[[ "$wakelockStatus" == "on" ]] && icon="$icon/caffeine-cup-full.svg" || icon="$icon/caffeine-cup-empty.svg"
+		[[ "$wakelockStatus" == "on" ]] && icon="caffeine-cup-full" || icon="caffeine-cup-empty"
 		body="\
 Wakelock is <b>$wakelockStatus</b>		
 DPMS: <b>$(isDPMSEnabled)</b>
@@ -336,6 +369,13 @@ Screensaver: <b>$(isScreensaverEnabled)</b>"
 	fi
 }
 
+##
+#	Send notification and play sound
+#	@param icon
+#	@param timeout
+#	@param urgency
+#	@param title
+#	@param body
 function sendNotification() {
 	/usr/bin/dunstify -a "$appName" -i "$1" -t "$2" -r "$uid" -u "$3" "$4" "$5"
 	if [ $playSound = true ]; then
@@ -343,7 +383,11 @@ function sendNotification() {
 	fi
 }
 
-# Get the icon file name based on current battery charge value and status
+##
+#	Get the icon file name based on current battery charge value and status
+#	@param charge value
+#	@param charge status
+#	@return icon file name
 function getIcon() {
 	local iconFileName="battery-"
 	if [ $1 -ge 100 ]; then
@@ -377,7 +421,7 @@ function getIcon() {
 		;;
 	esac
 
-	echo "$iconFolder/$iconFileName.svg"
+	echo "$iconFileName"
 }
 
 function printUsage() {

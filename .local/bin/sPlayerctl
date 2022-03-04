@@ -30,7 +30,9 @@ iconCachePath=$HOME/.cache/spotifyIcon
 spotifyCachePath=$HOME/.cache/spotify/Browser/Cache
 
 # Icon used when selecting the player
-selectPlayerIcon="/usr/share/icons/Vimix-Ruby/24/places/folder-music.svg"
+selectPlayerIcon="folder-music-symbolic"
+playingIcon="media-playback-start-symbolic"
+pausedIcon="media-playback-pause-symbolic"
 
 #	Default urgency level [Available: low, normal, critical]
 urgency=low
@@ -45,6 +47,10 @@ uid_selectPlayer=6906
 # App name in dunst
 appName="simonvic.Playerctl"
 
+
+##
+#	Get player name currently under control
+#	@return player name
 function getSelectedPlayer() {
 	if [ ! -e $selectedPlayer ]; then
 		createSelectedPlayerFile
@@ -52,6 +58,8 @@ function getSelectedPlayer() {
 	cat $selectedPlayer
 }
 
+##
+#	Create selected player file and its parent directories
 function createSelectedPlayerFile() {
 	mkdir -p $(echo $selectedPlayer | rev | cut -d"/" -f2- | rev)
 	echo "" >$selectedPlayer
@@ -91,6 +99,9 @@ function fetchSpotifyIcon() {
 	fi
 }
 
+##
+#	Build notification body
+#	@return notification body
 function buildBody() {
 	if [ $moreInfo = true ]; then
 		printf "<big><b>$title</b></big><small> $artist\n$album\n<i>$player</i></small>"
@@ -99,23 +110,25 @@ function buildBody() {
 	fi
 }
 
+##
+#	Send notification
 function sendNotification() {
 	if [ $songCover = false ]; then
 		status=$(getStatus)
 		if [ $status = "Playing" ]; then
-			icon=/usr/share/icons/Paper/scalable/actions/media-playback-start-symbolic.svg
+			icon=$playingIcon
 		elif [ $status = "Paused" ]; then
-			icon=/usr/share/icons/Paper/scalable/actions/media-playback-pause-symbolic.svg
+			icon=$pausedIcon
 		fi
 	else
 		fetchSpotifyIcon
 	fi
-	artist=$(getArtist)
-	[ -z "$artist" ] && : || artist="($artist)"
+	
+	local artist=$(getArtist)
+	[ ! -z "$artist" ] && artist="($artist)"
 
-	title=$(getTitle)
-	album=$(getAlbum)
-	body=$(buildBody)
+	local title=$(getTitle)
+	local body=$(buildBody)
 
 	# Send the notification
 	# dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
@@ -123,19 +136,25 @@ function sendNotification() {
 
 }
 
+##
+#	Get formatted song info
+#	@return info
 function info() {
-	artist=$(getArtist)
-	title=$(getTitle)
-	album=$(getAlbum)
-	[ -z "$artist" ] && : || artist="($artist)"
+	local artist=$(getArtist)
+	[ ! -z "$artist" ] && artist="($artist)"
+
+	local title=$(getTitle)
+	local album=$(getAlbum)
 	if [ $moreInfo = true ]; then
-		[ -z "$album" ] && : || album="[$album]"
+		[ ! -z "$album" ] && album="[$album]"
 		printf "$title $artist $album"
 	else
 		printf "$title $artist"
 	fi
 }
 
+##
+#	Select player to control
 function selectPlayer() {
 	case $1 in
 	set)

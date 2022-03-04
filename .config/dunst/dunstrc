@@ -42,7 +42,10 @@
 	icon_position = left
 	min_icon_size = 10
 	max_icon_size = 60
-	icon_path = /usr/share/icons/Paper/16x16/mimetypes/:/usr/share/icons/Paper/48x48/status/:/usr/share/icons/Paper/16x16/devices/:/usr/share/icons/Paper/48x48/notifications/:/usr/share/icons/Paper/48x48/emblems/
+	icon_size=22
+	icon_theme = "Vimix-Ruby-dark"
+	enable_recursive_icon_lookup = true
+	#icon_path = /usr/share/icons/Vimix-Ruby-dark/24/actions
 
 	progress_bar = true
 	progress_bar_height = 30
@@ -133,35 +136,44 @@
 	appname = simonvic.Volume
 	msg_urgency = normal
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Volume-warning]
 	appname = simonvic.Volume
 	msg_urgency = critical
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Microphone]
 	appname = simonvic.Microphone
 	msg_urgency = normal
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Microphone-warning]
 	appname = simonvic.Microphone
 	msg_urgency = critical
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Brightness]
 	appname = simonvic.Brightness
 	msg_urgency = normal
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Playerctl]
 	appname = simonvic.Playerctl
 	format = "%b"
+	icon_size = 24
 
 [simonvic.Battery]
 	appname = simonvic.Battery
 	format = "%b"
-
+	icon_size = 24
+	
 [simonvic.TODO]
 	appname = simonvic.TODO
 	format = "%b"
+	icon_size = 50
+	icon_position = top

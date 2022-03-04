@@ -20,7 +20,7 @@ deletedSymbol=﫧
 
 # Notification settings
 
-icon=" "
+icon=accessories-clipboard
 
 # Max length of body in the notification
 maxLength=15

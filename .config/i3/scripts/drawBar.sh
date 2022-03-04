@@ -52,7 +52,7 @@ if [ $drawEmpty = false ]; then
 	elif [ $(( ($length-1) % $steps )) -eq 0 ]; then
 		midBar=$midChar3
 	fi
-  emptyBar=$(seq -s $emptyChar $(( ((100-$length) / $steps ) +1 )) | sed 's/[0-9]//g')
+	emptyBar=$(seq -s $emptyChar $(( ((100-$length) / $steps ) +1 )) | sed 's/[0-9]//g')
 	finalBar="$prefix$bar$midBar$midPoint$emptyBar$suffix"
 elif [ $drawEmpty = true ]; then
 	finalBar="$prefix$(seq -s $emptyChar $(($length/$steps +1)) | sed 's/[0-9]//g')$suffix"

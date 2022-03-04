@@ -154,6 +154,9 @@ function printUsage() {
 "
 }
 
+isLock=false
+isSuspend=false
+
 case "$1" in
 suspend | s)
 	isSuspend=true
@@ -167,14 +170,12 @@ help | *) printUsage ;;
 esac
 
 # Activate lockscreen (and suspend if specified)
-if [[ $isLock ]]; then
+if [ $isLock = true ]; then
 	lock
-	if [[ $isSuspend ]]; then
+	if [ $isSuspend = true ]; then
 		if [ $stopAllPlayersOnSuspend = true ]; then
 			sPlayerctl stop all
 		fi
 		systemctl suspend
 	fi
 fi
-
-exit 0
