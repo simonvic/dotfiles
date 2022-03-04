@@ -92,9 +92,9 @@ function connect() {
 ##
 #	Update all polybar modules of bluetooth
 function updatePolybar() {
-	sPolybarctl ipc hook bluetooth >/dev/null
-	sPolybarctl ipc hook earbuds >/dev/null
-	sPolybarctl ipc hook earbuds-extended >/dev/null
+	sPolybarctl message "action bluetooth hook 0"
+	# sPolybarctl message "action earbuds hook 0"
+	# sPolybarctl message "action earbuds-extended hook 0"
 }
 
 function printUsage() {

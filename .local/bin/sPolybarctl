@@ -7,17 +7,21 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
 
 ###########################################
 
+
+LOGS_DIR_POLYBARS_PATH="/tmp/simonvic/sPolybarctl/logs"
+LOGS_DIR_MESSAGES_PATH="/tmp/simonvic/sPolybarctl/logs/msg"
+
 visibleIcon=" 蘒 "
 invisibleIcon=" 﨡 "
-defaultPolybarName="*"
-defaultHookId=1
 
+##
+#	Launch and hide the predefined polybars
 function launch() {
 	killPolybars
 
@@ -30,176 +34,145 @@ function launch() {
 	hide "tertiary"
 }
 
+##
+#	Kill all active polybars
 function killPolybars() {
-	killall -q polybar
-	rm /tmp/polybar_ipc_*
+	polybarMsg "cmd quit"
 }
 
+##
+#	Launch a polyabr
+#	@param polybar name
 function launchPolybar() {
 	if [ ! -z "$1" ]; then
-		polybar $1 &
-		ln -s /tmp/polybar_mqueue.$! /tmp/polybar_ipc_$1
+		polybar "$1" >> "$LOGS_DIR_POLYBARS_PATH/$1.log" 2>&1 &
 	fi
 }
 
+##
+#	Get the pid of a polybar
+#	@param polybar name
+#	@return pid of a polybar or nothing if 
+#		zero or more than one pid have been found
+function getPolybarPid() {
+	local pid=$(pgrep -f "polybar $1")
+	[[ $(echo "$pid" | wc -w) -eq 1 ]] && echo "$pid"
+}
+
+
+##
+#	Get pid argument for polybar-msg
+#	@param polybar name or empty
+#	@return "-p $pid" or empty
+function getPidArgument() {
+	if [[ ! -z "$1" ]]; then
+		local pid=$(getPolybarPid "$1")
+		if [[ ! -z "$pid" ]]; then
+			echo "-p $pid"
+		fi
+	fi
+}
+
+##
+#	Show a polybar
+#	@param polybar name or empty to show all polybars
 function show() {
-	ipc cmd show $1
+	polybarMsg "cmd show" "$1"
 }
 
+
+##
+#	Hide a polybar
+#	@param polybar name or empty to hide all polybars
 function hide() {
-	ipc cmd hide $1
+	polybarMsg "cmd hide" "$1"
 }
 
+
+##
+#	Toggle a polybar
+#	@param polybar name or empty to toggle all polybars
 function toggle() {
-	ipc cmd toggle $1
+	polybarMsg "cmd toggle" "$1"
 }
 
+##
+#	Update all bar-switches state of a polybar via a hook
+#	@param polybar name
 function updateSwitches() {
-	ipc hook bar-switch-secondary
-	ipc hook bar-switch-tertiary
+	polybarMsg "action bar-switch-$1 hook 0"
 }
 
 function status() {
 	case "$(xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5)" in
-	IsViewable) echo "$visibleIcon" ;;
-	IsUnMapped) echo "$invisibleIcon" ;;
-	*) echo "$invisibleIcon" ;;
+		IsViewable) echo "$visibleIcon" ;;
+		IsUnMapped) echo "$invisibleIcon" ;;
+		*) echo "$invisibleIcon" ;;
 	esac
 }
 
-function toggleTray() {
-	#to-do reimplement with pid
-	echo "Needs to be reimplemented"
-}
-
-function autoHide() {
-	#to-do reimplement with pid
-	#to-do add delay and stuff
-	echo "Needs to be reimplemented"
-}
-
-function drag() {
-	#to-do reimplement with pid
-	echo "Needs to be reimplemented"
-}
-
-function resize() {
-	#to-do reimplement with pid
-	echo "Needs to be reimplemented"
-}
-
-function ipc() {
-	command=$1
-	payload=$2
-	if [ -z $1 ] && [ -z $2 ]; then
-		echo "Error, message malformed"
-		return 1
-	fi
-
-	case $command in
-	hook)
-		regex='^[0-9]+$'
-		if [ ! -z $3 ] && [[ $3 =~ $regex ]]; then
-			hookId=$3
-		else
-			hookId=$defaultHookId
-		fi
-		payload=module/$payload$hookId
-		polybarName=$4
-		;;
-	cmd | action)
-		polybarName=$3
-		;;
-	esac
-
-	if [ -z $polybarName ]; then
-		polybarName=$defaultPolybarName
-	fi
-
-	echo $command:$payload | tee -a /tmp/polybar_ipc_$polybarName
+##
+#	Send a message (polybar-msg) to a polybar
+#	@param message for polybar-msg
+#	@param polybar name or empty to send msg to all polybar
+function polybarMsg() {
+	polybar-msg $(getPidArgument "$2") $1 >> "$LOGS_DIR_MESSAGES_PATH/polybar-msg.log" 2>&1
 }
 
 function printUsage() {
 	printf "
 - Usage
 	sPolybarctl <options>
-	
-- Available bar name:
-"
-	ls /tmp/ | grep polybar_ipc_ | cut -d "_" -f3
-	printf "
 
 -Options
-	help                     # Show this help
-	launch                   # Launch all polybars defined
-	show [bar name]          # Make the specified bar visible, or leave empty to show all bars
-	hide [bar name]          # Make the specified bar invisible, or leave empty to hide all bars
-	toggle [bar name]        # Show and hide the specified bar, or leave empty to toggle all
-	status <bar name>        # Print status of the specified bar (useful to create a switch in a polybar itself)
-
-	ipc <command=(action|cmd|hook)> <payload> [hook-id] [polybar-name]    # Send an inter-process mesage
-	 - if using command=hook, use [hook-id] to specify the index (1-based) of the hook configured in the polybar config. Default: 1
-	 - use [polybar-name] to send the IPC message to the specified polybar. Default: all polybars
-	 
-	 Examples:
-	  $ sPolybarctl ipc action \"#open.1\" myBar     # simulate the menu open on the 'myBar' bar 
-	  $ sPolybarctl ipc action \"#date.toggle\"      # simulate the toggle action on date modules on all bars
-	  $ sPolybarctl ipc cmd show myOtherBar        # show the 'myOtherBar' bar
-	  $ sPolybarctl ipc cmd hide                   # hide all bars
-	  $ sPolybarctl ipc hook myModule              # call the first defined hook of 'myModule' in all bars
-	  $ sPolybarctl ipc hook myModule 2            # call the second defined hook of 'myModule' in all bars
-	  $ sPolybarctl ipc hook myModule 2 myBar      # call the first defined hook of 'myModule' in all bars 'myBar'
-	  
-	  
-	[DEPRECATED] toggleTray  # Show and hide the tray (if present in any bar)
-	[WIP] autoHide <bar id>  # Enable auto-hide for the specified bar. Move the cursor to [position] to show the bar
-	[WIP] drag <bar id>      # Drag the polybar with the mouse
-	[WIP] resize <bar id>    # Resize the polybar with the mouse
+	help                           # Show this help
+	launch                         # Launch all polybars defined
+	show [bar name]                # Make the specified bar visible, or leave empty to show all bars
+	hide [bar name]                # Make the specified bar invisible, or leave empty to hide all bars
+	toggle [bar name]              # Show and hide the specified bar, or leave empty to toggle all
+	status <bar name>              # Print status of the specified bar (useful to create a switch in a polybar itself)
+	message <msg> [bar name]       # Send a message to the specified bar, or leave empty to send it to all bars
+	                               #     Refer to man polybar-msg for the message format
 
 - Abbreviations
 	l = launch
 	t = toggle
 	s = show 
 	h = hide
-	d = drag
-	r = resize
-	i = ipc
+	m = message
+
+- Active polybar names found:
 "
+	for polybarName in $(pgrep -a polybar | cut -d ' ' -f3); do
+		printf "\t- %s\n" "$polybarName"
+	done
+
 }
 
+mkdir -p "$LOGS_DIR_POLYBARS_PATH"
+mkdir -p "$LOGS_DIR_MESSAGES_PATH"
+
 case "$1" in
-launch | l)
-	launch
-	;;
-toggle | t)
-	toggle $2
-	updateSwitches
-	;;
-status)
-	status $2
-	;;
-toggleTray)
-	toggleTray
-	;;
-autoHide)
-	autoHide $2
-	;;
-show | s)
-	show $2
-	updateSwitches
-	;;
-hide | h)
-	hide $2
-	updateSwitches
-	;;
-drag | d)
-	drag $2
-	;;
-resize | r)
-	resize $2
-	;;
-ipc | i)
-	ipc $2 $3 $4 $5
-	;;
-help | *) printUsage ;;
+	launch | l)
+		launch
+		;;
+	toggle | t)
+		toggle "$2"
+		updateSwitches "$2"
+		;;
+	status)
+		status "$2"
+		;;
+	show | s)
+		show "$2"
+		updateSwitches "$2"
+		;;
+	hide | h)
+		hide "$2"
+		updateSwitches "$2"
+		;;
+	message | m)
+		polybarMsg "$2" "$3"
+		;;
+	help | *) printUsage ;;
 esac

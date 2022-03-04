@@ -300,7 +300,7 @@ function getWakelockStatus() {
 ##
 #	Update polybar modules of wakelock
 function updatePolybar() {
-	sPolybarctl ipc hook wakelock >/dev/null
+	sPolybarctl message "action wakelock hook 0"
 }
 
 ##

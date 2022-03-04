@@ -96,10 +96,10 @@ It can `launch` them, `show`, `hide` them or `toggle`. It also serves as a wrapp
 
 The main feature is that you can interact with polybars using their name, like so:
 ```shell-session
-$ sPolybarctl show myFirstBar            # make visible "myFirstBar"
-$ sPolybarctl toggle mySecondBar         # toggle visibility state for "mySecondBar"
-$ sPolybarctl hide                       # if no polybar name specified, the command will be issued to all polybars
-$ sPolybarctl ipc action "#date.toggle"  # simulate the toggle action on date modules
+$ sPolybarctl show myFirstBar                # make visible "myFirstBar"
+$ sPolybarctl toggle mySecondBar             # toggle visibility state for "mySecondBar"
+$ sPolybarctl hide                           # if no polybar name specified, the command will be issued to all polybars
+$ sPolybarctl message "action #date.toggle"  # simulate the toggle action on date modules
 ```
 
 <br>

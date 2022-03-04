@@ -231,13 +231,10 @@ function screensaver() {
 ##
 #	Update polybar modules
 function updatePolybar() {
-	# the hooks must be called in this order, otherwise it doesn't work
-	# maybe because of polybar inheritance and FIFO policy?
-	#to-do investigate this
-	sPolybarctl ipc hook redshift >/dev/null
-	sPolybarctl ipc hook redshift-extended >/dev/null
-	sPolybarctl ipc hook brightness >/dev/null
-	sPolybarctl ipc hook brightness-extended >/dev/null
+	sPolybarctl message "action redshift hook 0"
+	sPolybarctl message "action redshift-extended hook 0"
+	sPolybarctl message "action brightness hook 0"
+	sPolybarctl message "action brightness-extended hook 0"
 }
 
 function printUsage() {
