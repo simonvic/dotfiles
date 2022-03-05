@@ -31,7 +31,23 @@ sound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Notification body format
 # where two %s are for ASCII bar and right text
-notificationBodyFormat="%s<tt><b>%6s</b></tt>"
+notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
+
+# Length of the bar
+notificationBarLength=20
+
+# Step of the bar
+notificationBarStep=5
+
+# Semicolon separated list of characters for each step of the bar
+# DrawBar.sh --help to show some alternatives
+notificationBarChars="█;▆;▅;▃;▁;░"
+
+# Semicolon separated list of characters for the borders of the bar.
+# Monospaced font is recommended
+# Seven semicolon (;) means no border
+# DrawBar.sh --help to show some alternatives
+notificationBarBorders=";;;;;;;"
 
 # At which level you are controlling the boost and not intput volume anymore
 warningLevel=60
@@ -97,11 +113,14 @@ function setVolume() {
 
 ##
 #	Build ASCII bar
-#	@param steps
-#	@param length
-#	@param draw as empty true|false
+#	@param current volume
 function buildBar() {
-	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
+	DrawBar.sh                               \
+		--length $notificationBarLength      \
+		--step $notificationBarStep          \
+		--value $1                           \
+		--bar-chars "$notificationBarChars"  \
+		--borders "$notificationBarBorders"	
 }
 
 ##
@@ -116,16 +135,15 @@ function sendNotification() {
 
 	if [ $(isMute) = true ]; then
 		# Building the volume bar
-		bar=$(buildBar 5 100 true)
+		bar=$(buildBar 0)
 		icon=$mutedIcon
 		urgency=normal
 		summary="Muted"
 	else
 
 		local volume=$(getVolume)
-		bar=$(buildBar 5 $volume false)
 		summary="$volume%"
-
+		bar=$(buildBar $volume)
 		if [ $volume -ge $warningLevel ]; then
 			urgency=critical
 			icon=$warningIcon

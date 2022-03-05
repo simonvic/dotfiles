@@ -19,19 +19,34 @@ todoSymbol=
 deletedSymbol=﫧
 
 # Notification settings
-
 icon=accessories-clipboard
+
+# Length of the bar
+notificationBarLength=20
+
+# Step of the bar
+notificationBarStep=5
+
+# Semicolon separated list of characters for each step of the bar
+# DrawBar.sh --help to show some alternatives
+notificationBarChars="█;▆;▅;▃;▁;░"
+
+# Semicolon separated list of characters for the borders of the bar.
+# Monospaced font is recommended
+# Seven semicolon (;) means no border
+# DrawBar.sh --help to show some alternatives
+notificationBarBorders=";;;;;;;"
 
 # Max length of body in the notification
 maxLength=15
 
-#	Default urgency level [Available: low, normal, critical]
+# Default urgency level [Available: low, normal, critical]
 urgency=normal
 
-#	For how much milliseconds the notification will stay visible
+# For how much milliseconds the notification will stay visible
 timeout=60000
 
-#	Unique dunst notification id
+# Unique dunst notification id
 uid=6908
 
 # App name in dunst
@@ -148,7 +163,12 @@ function editFile() {
 }
 
 function buildBar() {
-	$HOME/.config/i3/scripts/drawBar.sh $1 $2 $3
+	DrawBar.sh                               \
+		--length $notificationBarLength      \
+		--step $notificationBarStep          \
+		--value $1                           \
+		--bar-chars "$notificationBarChars"  \
+		--borders "$notificationBarBorders"
 }
 
 function sendNotification() {
@@ -178,7 +198,7 @@ function sendNotification() {
 
 	# Add bar and statistics
 	body+="
-$(buildBar 5 $todoPercent false) $todoPercent%
+$(buildBar $todoPercent) $todoPercent%
 <b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total
 "
 	# Old notification must be closed if still pending for user action, as -r isn't enought
