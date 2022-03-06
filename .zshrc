@@ -15,6 +15,9 @@
 
 ######################################
 # HISTORY
+
+mkdir -p ~/.local/share/zsh
+
 HISTFILE=~/.local/share/zsh/.histfile
 HISTSIZE=1000
 SAVEHIST=10000
