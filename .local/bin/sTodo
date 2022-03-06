@@ -209,19 +209,19 @@ $(buildBar $todoPercent) $todoPercent%
 		editFile
 		;;
 	listAll)
-		/usr/bin/rofi-sensible-terminal -e "sTodo list" --hold
+		i3-sensible-terminal -e "sTodo list" --hold
 		;;
 	listDone)
-		/usr/bin/rofi-sensible-terminal -e "sTodo list done" --hold
+		i3-sensible-terminal -e "sTodo list done" --hold
 		;;
 	listTodo)
-		/usr/bin/rofi-sensible-terminal -e "sTodo list todo" --hold
+		i3-sensible-terminal -e "sTodo list todo" --hold
 		;;
 	listDeleted)
-		/usr/bin/rofi-sensible-terminal -e "sTodo list deleted" --hold
+		i3-sensible-terminal -e "sTodo list deleted" --hold
 		;;
 	todoHelp)
-		/usr/bin/rofi-sensible-terminal -e "sTodo help" --hold
+		i3-sensible-terminal -e "sTodo help" --hold
 		;;
 	*)
 		# No choise
