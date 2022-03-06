@@ -141,7 +141,6 @@ function t() { tree -h -F -D -L ${1:-1} }
 alias ls="ls --color=auto"
 alias l="ls -al --human-readable"
 alias grep="grep --color"
-alias Cp="xargs echo -n | xclip -selection clipboard"
-alias themes='bash -c  "$(wget -qO- https://git.io/vQgMr)"'
+alias Cp="xclip -r -selection clipboard"
 alias todo='sTodo'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
