@@ -137,7 +137,7 @@ bindsym $mod+Shift+t                     exec sTodo notification deleted
 bindsym $mod+Shift+Ctrl+t                exec sTodo notification
 
 # ======CALCULATOR=========================================== 
-bindsym XF86Calculator                   exec --no-startup-id gnome-calculator
+bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme-str '@import $rofi_theme_calc' -no-default-config
 
 # ======SCREENSHOTS=========================================== 
 # Select area
@@ -150,7 +150,6 @@ bindsym $mod+a                           exec rofi -show combi -combi-modi "drun
 bindsym $mod+Ctrl+a                      exec rofi -show combi -theme-str '@import $rofi_theme_combi' -no-default-config
 bindsym $mod+Tab                         exec rofi -modi "window#windowcd" -show window -theme-str '@import $rofi_theme_windowSwitcher' -no-default-config
 bindsym $mod+Shift+Tab                   exec rofi -show "filebrowser" -theme-str '@import $rofi_theme_fileBrowser' -no-default-config
-bindsym $mod+c                           exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme-str '@import $rofi_theme_calc' -no-default-config
 
 # ====== DUNST (notifications) ===========================================
 bindsym $mod+n                           exec dunstctl action
