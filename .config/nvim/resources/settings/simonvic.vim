@@ -18,6 +18,7 @@ set cursorline
 set number
 set termguicolors
 colorscheme darcula
+highlight Comment gui=italic
 
 " hide tilde on end of buffer
 hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg

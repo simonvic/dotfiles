@@ -22,18 +22,48 @@ nnoremap <A-DOWN>          <C-w>j
 nnoremap <A-UP>            <C-w>k
 nnoremap <A-RIGHT>         <C-w>l
 
-" move current window to left/down/up/right
-nnoremap <A-S-LEFT>        <C-W>H
-nnoremap <A-S-DOWN>        <C-W>J
-nnoremap <A-S-UP>          <C-W>K
-nnoremap <A-S-RIGHT>       <C-W>L
+inoremap <A-LEFT>          <ESC><C-w>hi
+inoremap <A-DOWN>          <ESC><C-w>ji
+inoremap <A-UP>            <ESC><C-w>ki
+inoremap <A-RIGHT>         <ESC><C-w>li
 
-" misc
+" move current window to left/down/up/right
+nnoremap <A-S-LEFT>        <C-w>H
+nnoremap <A-S-DOWN>        <C-w>J
+nnoremap <A-S-UP>          <C-w>K
+nnoremap <A-S-RIGHT>       <C-w>L
+
+inoremap <A-S-LEFT>        <ESC><C-w>Hi
+inoremap <A-S-DOWN>        <ESC><C-w>Ji
+inoremap <A-S-UP>          <ESC><C-w>Ki
+inoremap <A-S-RIGHT>       <ESC><C-w>Li
+
+" completition
 inoremap <C-space>         <C-n>
+
+" Delete rear/front word
 inoremap <C-H>             <C-w>
 inoremap <C-DEL>           <C-o>dw
 
+" Home goes to first character
+inoremap <HOME>            <ESC>^i
+nnoremap <HOME>            ^
 
+" duplicate line down
+nnoremap <C-S-DOWN>        mayyp`a<DOWN>
+inoremap <C-S-DOWN>        <ESC>mayyp`a<DOWN>a
+
+" duplicate line up
+nnoremap <C-S-UP>          mayyP`a<UP>
+inoremap <C-S-UP>          <ESC>mayyP`a<UP>a
+
+" reindent file
+nnoremap <C-A-l>           magg=G`azz
+inoremap <C-A-l>           <ESC>magg=G`azza
+
+" reformat file
+" nnoremap <C-L>           
+" inoremap <C-L>           
 
 """"""""""""""""""""""""""""""""""""""""""""""
 "" WINDOWS
@@ -54,7 +84,7 @@ map <A-C-PageDown>         <Cmd>BufferLineMovePrev<CR>
 " NvimTree
 map <A-1>                  <Cmd>NvimTreeFocus<CR>
 tmap <A-1>                 <Cmd>NvimTreeFocus<CR>
-imap <A-1>                 <Cmd>NvimTreeFocus<CR>
+imap <A-1>                 <Cmd>NvimTreeFocus<CR><ESC>
 map <A-2>                  <Cmd>NvimTreeClose<CR>
 imap <A-2>                 <Cmd>NvimTreeClose<CR>
 
