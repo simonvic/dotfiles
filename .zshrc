@@ -1,4 +1,4 @@
- ###########################################
+###########################################
 #	Made by
 #       _                              _        
 #      (_)                            (_)       
@@ -19,7 +19,7 @@
 mkdir -p ~/.local/share/zsh
 
 HISTFILE=~/.local/share/zsh/.histfile
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=10000
 setopt \
 	BEEP \
