@@ -22,3 +22,10 @@ highlight Comment gui=italic
 
 " hide tilde on end of buffer
 hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+
+set listchars=eol:¬,tab:>\ ,trail:~,extends:>,precedes:<,space:⋅
+set list
+
+" make listhchars visible only when selected
+hi NonText ctermfg=bg guifg=bg
+
