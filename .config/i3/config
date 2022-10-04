@@ -30,7 +30,7 @@ exec xset s 300 300
 exec $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
-exec_always feh --no-fehbg --bg-fill $HOME/Pictures/Wallpapers/mountain3.jpg
+exec_always feh --no-fehbg --bg-fill .config/i3/desktop_wallpaper
 # [WIP] Set the Bing wallpaper of the day as your background
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 
