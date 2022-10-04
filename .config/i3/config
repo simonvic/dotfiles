@@ -294,11 +294,13 @@ set $rofi_theme_calc            "glass/simonvic_calc"
 
 # ======POLYBAR===================================
 set $polybar_main_position top
-set $polybar_main_gap 35
+
+# polybar gap = desired gap + gaps_outer (e.g. 55 = 45 + 10)
+set $polybar_main_gap 55
 
 # ======GAPS===================================
 set $gaps_inner 20
-set $gaps_outer -10
+set $gaps_outer 10
 
 gaps outer $gaps_outer
 gaps inner $gaps_inner
