@@ -35,7 +35,7 @@ exec_always feh --no-fehbg --bg-fill .config/i3/desktop_wallpaper
 # exec_always $HOME/.config/i3/scripts/bingWallpaper.sh
 
 # Picom
-exec_always --no-startup-id picom --experimental-backends --config .config/picom/picom.conf
+exec_always --no-startup-id picom
 
 # Run polybar
 exec_always --no-startup-id sPolybarctl launch
