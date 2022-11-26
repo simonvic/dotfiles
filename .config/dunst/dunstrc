@@ -21,7 +21,7 @@
 	width = (0, 500)
 	height = 300
 	origin = top-center
-	offset = 0x55
+	offset = 0x65
 	scale = 0
 	notification_limit = 0
 	corner_radius = 0
@@ -42,7 +42,7 @@
 
 	icon_position = left
 	min_icon_size = 10
-	max_icon_size = 60
+	max_icon_size = 32
 	icon_theme = "Vimix-Ruby-dark"
 	enable_recursive_icon_lookup = true
 	#icon_path = /usr/share/icons/Vimix-Ruby-dark/24/actions
