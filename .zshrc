@@ -143,4 +143,4 @@ alias l="ls -al --human-readable"
 alias grep="grep --color"
 alias Cp="xclip -r -selection clipboard"
 alias todo='sTodo'
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=${XDG_DATA_HOME:-$HOME/.local/share}/.dotfiles/ --work-tree=$HOME'
