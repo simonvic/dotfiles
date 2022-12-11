@@ -41,7 +41,7 @@
 	text_icon_padding = 0
 
 	icon_position = left
-	min_icon_size = 10
+	min_icon_size = 16
 	max_icon_size = 32
 	icon_theme = "Vimix-Ruby-dark"
 	enable_recursive_icon_lookup = true
@@ -90,7 +90,7 @@
 	#####################################################
 	## ADVANCED
 
-	dmenu = /usr/bin/rofi -dmenu -p "Open URL" -theme-str '@import "glass/simonvic_dunstActions"' -no-default-config
+	dmenu = /usr/bin/rofi -dmenu -p "/" -theme-str '@import "glass/simonvic_dunstActions"' -no-default-config
 	browser = /usr/bin/firefox --new-tab
 	always_run_script = true
 	title = Dunst
@@ -181,6 +181,12 @@
 	
 [simonvic.TODO]
 	appname = simonvic.TODO
+	format = "%b"
+	min_icon_size = 24
+	max_icon_size = 24
+
+[simonvic.WiFi]
+	appname = simonvic.WiFi
 	format = "%b"
 	min_icon_size = 24
 	max_icon_size = 24
