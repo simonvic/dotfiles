@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###########################################
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -8,11 +8,11 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
-
-###########################################
+#
+###############################################################################
 
 ### Call this script in a crontab (preferably every minute)
 ### EXAMPLE of my crontab:
@@ -23,21 +23,20 @@
 wakelockUsesDPMS=true
 wakelockUsesScreensaver=true
 
-# Enable to play sound
-playSound=true
 # Sound to play (usually located in /usr/share/sounds/)
-sound=/usr/share/sounds/freedesktop/stereo/message.oga
-
-# Unique dunst notification id
-uid=6901
-
-# App name in dunst
-appName="simonvic.Battery"
+notificationSound=/usr/share/sounds/freedesktop/stereo/message.oga
+notificationUID=6901
+notificationAppName="simonvic.Battery"
 
 batteryStatus=/tmp/simonvic/sBatteryctl/isFullyCharged
-WAKELOCK_STATUS_PATH=/tmp/simonvic/sBatteryctl/wakelockStatus
+wakelockStatusPath=/tmp/simonvic/sBatteryctl/wakelockStatus
 
-########################################################################
+###############################################################################
+
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
 
 ##
 #	Get current battery charging status 
@@ -88,27 +87,23 @@ function getTemp() {
 #	Get if the battery is fully charged or not (and create file if it doesn't exists)
 #	@return true|false
 function isFullyCharged() {
-	if [ ! -e $batteryStatus ]; then
-		createBatteryStatusFile
-	fi
-	cat $batteryStatus
+	[[ ! -e "$batteryStatus" ]] && createBatteryStatusFile
+	cat "$batteryStatus"
 }
 
 ##
 #	Set battery fully charged or not
 #	@param true|false
 function setBatteryStatus() {
-	if [ ! -e $batteryStatus ]; then
-		createBatteryStatusFile
-	fi
-	echo $1 >$batteryStatus
+	[[ ! -e "$batteryStatus" ]] && createBatteryStatusFile
+	echo "$1" > "$batteryStatus"
 }
 
 ##
 #	Create the battery status file (and its parent directories)
 function createBatteryStatusFile() {
-	mkdir -p $(echo $batteryStatus | rev | cut -d"/" -f2- | rev)
-	echo "false" >$batteryStatus
+	mkdir -p "${batteryStatus%/*}"
+	echo "false" > "$batteryStatus"
 }
 
 ##
@@ -138,13 +133,13 @@ function monitor() {
 	local isFull=false
 
 	# if it's not charging
-	if [ "$chargeStatus" == "Not charging" ]; then
+	if [[ "$chargeStatus" == "Not charging" ]]; then
 
 		# if it's fully charged
-		if [ $chargeValue -eq 100 ]; then
+		if [[ $chargeValue == 100 ]]; then
 			isFull=true
 			#send notification only once
-			if [ $(isFullyCharged) == false ]; then
+			if [[ $(isFullyCharged) == false ]]; then
 				body="Battery fully charged"
 				urgency=low
 				shouldSendNotification=true
@@ -152,10 +147,10 @@ function monitor() {
 		fi
 
 	# if it's charging
-	elif [ "$chargeStatus" == "Charging" ]; then
+	elif [[ "$chargeStatus" == "Charging" ]]; then
 
 		# reached 80%
-		if [ $chargeValue -eq 80 ]; then
+		if [[ $chargeValue == 80 ]]; then
 			body="IT'S OVER HEIGHTTHOUSAND !!!"
 			urgency=low
 			timeout=2000
@@ -163,24 +158,24 @@ function monitor() {
 		fi
 
 	# if it's discharging (AC unplugged)
-	elif [ "$chargeStatus" == "Discharging" ]; then
+	elif [[ "$chargeStatus" == "Discharging" ]]; then
 
 		# reached 50%
-		if [ $chargeValue -eq 50 ]; then
+		if [[ $chargeValue == 50 ]]; then
 			body="Battery is at <b>$chargeValue %</b>"
 			urgency=low
 			timeout=2000
 			shouldSendNotification=true
 
 		# reached 20%
-		elif [ $chargeValue -eq 20 ]; then
+		elif [[ $chargeValue == 20 ]]; then
 			body="Battery will need to be charged soon"
 			urgency=normal
 			timeout=3000
 			shouldSendNotification=true
 
 		# is less than 10%
-		elif [ $chargeValue -le 10 ]; then
+		elif [[ $chargeValue -le 10 ]]; then
 			body="Battery is at a critically low level !"
 			urgency=critical
 			timeout=4000
@@ -190,7 +185,7 @@ function monitor() {
 
 	fi
 
-	if [ $shouldSendNotification == true ]; then
+	if [[ $shouldSendNotification == true ]]; then
 		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 	fi
 
@@ -245,14 +240,14 @@ $temp</small>
 ##
 #	Manage the wakelock
 function wakelock() {
-	if [ -z $1 ]; then
+	if [[ -z $1 ]]; then
 		printUsage
 	else
 		case $1 in
-		toggle | t) setWakelock $2 ;;
-		status | s) echo $(getWakelockStatus) ;;
-		#TODO add settings for dpms and screensaver
-		*) printUsage ;;
+			toggle | t) setWakelock $2 ;;
+			status | s) echo $(getWakelockStatus) ;;
+			#TODO add settings for dpms and screensaver
+			*) printUsage ;;
 		esac
 	fi
 }
@@ -275,13 +270,11 @@ function isScreensaverEnabled() {
 #	Set wakelock status
 #	@param wakelock status
 function updateWakelockStatus() {
-	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
-		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
-	fi
-	if [[ ! -z "$1" ]]; then
-		echo "$1" >$WAKELOCK_STATUS_PATH
+	[[ ! -e "$wakelockStatusPath" ]] && mkdir -p "${wakelockStatusPath%/*}"
+	if [[ -n "$1" ]]; then
+		echo "$1" > "$wakelockStatusPath"
 	else
-		echo "off" >$WAKELOCK_STATUS_PATH
+		echo "off" > "$wakelockStatusPath"
 	fi
 
 }
@@ -290,11 +283,11 @@ function updateWakelockStatus() {
 #	Get current wakelock status
 #	@return on|off
 function getWakelockStatus() {
-	if [ ! -e $WAKELOCK_STATUS_PATH ]; then
-		mkdir -p $(echo $WAKELOCK_STATUS_PATH | rev | cut -d"/" -f2- | rev)
-		echo "off" >$WAKELOCK_STATUS_PATH
+	if [[ ! -e "$wakelockStatusPath" ]]; then
+		mkdir -p "${wakelockStatusPath%/*}"
+		echo "off" > "$wakelockStatusPath"
 	fi
-	cat $WAKELOCK_STATUS_PATH
+	cat "$wakelockStatusPath"
 }
 
 ##
@@ -334,8 +327,8 @@ function setWakelock() {
 		wakelockStatus="off"
 		;;
 	*)
-		if [ $wakelockUsesDPMS == true ]; then
-			if [ $(isDPMSEnabled) == true ]; then
+		if [[ $wakelockUsesDPMS == true ]]; then
+			if [[ $(isDPMSEnabled) == true ]]; then
 				xset -dpms
 				wakelockStatus="on"
 			else
@@ -344,8 +337,8 @@ function setWakelock() {
 			fi
 		fi
 
-		if [ $wakelockUsesScreensaver == true ]; then
-			if [ $(isScreensaverEnabled) == true ]; then
+		if [[ $wakelockUsesScreensaver == true ]]; then
+			if [[ $(isScreensaverEnabled) == true ]]; then
 				xset s off
 				wakelockStatus="on"
 			else
@@ -356,7 +349,7 @@ function setWakelock() {
 		;;
 	esac
 
-	if [ $wakelockUsesScreensaver == true ] || [ $wakelockUsesDPMS == true ]; then
+	if [[ $wakelockUsesScreensaver == true ]] || [[ $wakelockUsesDPMS == true ]]; then
 		[[ "$wakelockStatus" == "on" ]] && icon="caffeine-cup-full" || icon="caffeine-cup-empty"
 		body="\
 Wakelock is <b>$wakelockStatus</b>		
@@ -377,10 +370,14 @@ Screensaver: <b>$(isScreensaverEnabled)</b>"
 #	@param title
 #	@param body
 function sendNotification() {
-	/usr/bin/dunstify -a "$appName" -i "$1" -t "$2" -r "$uid" -u "$3" "$4" "$5"
-	if [ $playSound = true ]; then
-		paplay $sound -s /run/user/1000/pulse/native &
-	fi
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "$1" \
+		--expire-time "$2" \
+		--urgency "$3" \
+		"$4" "$5"
 }
 
 ##
@@ -390,42 +387,34 @@ function sendNotification() {
 #	@return icon file name
 function getIcon() {
 	local iconFileName="battery-"
-	if [ $1 -ge 100 ]; then
+	if [[ $1 -ge 100 ]]; then
 		iconFileName=$iconFileName"100"
-	elif [ $1 -ge 80 ]; then
+	elif [[ $1 -ge 80 ]]; then
 		iconFileName=$iconFileName"080"
-	elif [ $1 -ge 60 ]; then
+	elif [[ $1 -ge 60 ]]; then
 		iconFileName=$iconFileName"060"
-	elif [ $1 -ge 40 ]; then
+	elif [[ $1 -ge 40 ]]; then
 		iconFileName=$iconFileName"040"
-	elif [ $1 -ge 20 ]; then
+	elif [[ $1 -ge 20 ]]; then
 		iconFileName=$iconFileName"020"
-	elif [ $1 -ge 0 ]; then
+	elif [[ $1 -ge 0 ]]; then
 		iconFileName=$iconFileName"000"
 	else
 		iconFileName="battery-missing"
 	fi
 
 	case $2 in
-	"Charging")
-		iconFileName=$iconFileName"-charging"
-		;;
-	"Discharging")
-		:
-		;;
-	"Not charging")
-		iconFileName="battery-full-charged"
-		;;
-	*)
-		iconFileName="battery-missing"
-		;;
+	"Charging") iconFileName=$iconFileName"-charging" ;;
+	"Discharging") : ;;
+	"Not charging") iconFileName="battery-full-charged" ;;
+	*) iconFileName="battery-missing" ;;
 	esac
 
 	echo "$iconFileName"
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sBatteryctl <options>
 	

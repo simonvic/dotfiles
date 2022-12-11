@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###########################################
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -8,16 +8,31 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
+notificationUID=6903
+notificationAppName="simonvic.Brightness"
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+notificationTimeoutMS=1500
 
-#	Default icons
-lowIcon="display-brightness-low-symbolic"
-mediumIcon="display-brightness-medium-symbolic"
-highIcon="display-brightness-high-symbolic"
+# Default icons
+notificationLowIcon="display-brightness-low-symbolic"
+notificationMediumIcon="display-brightness-medium-symbolic"
+notificationHighIcon="display-brightness-high-symbolic"
+
+# Notification body format
+# where two %s are for ASCII bar and right text
+notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
+notificationBodyFormatRedshift="<tt>%s<small><b>%12s</b></small></tt>"
+
+notificationBarLength=20
+notificationBarStep=5
+notificationBarChars="█;▆;▅;▃;▁;░"
+notificationBarBorders=";;;;;;;"
 
 # Labels for polybar
 brightnessLowLabel="  "
@@ -26,35 +41,6 @@ brightnessHighLabel="  "
 brightnessMaxLabel="  "
 redshiftOnLabel=" "
 redshiftOffLabel= #""
-
-# Enable to play sound
-playSound=true
-# Sound to play (usually located in /usr/share/sounds/)
-sound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-
-# Notification body format
-# where two %s are for ASCII bar and right text
-notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
-notificationBodyFormatRedshift="<tt>%s<small><b>%12s</b></small></tt>"
-
-# Length of the bar
-notificationBarLength=20
-
-# Step of the bar
-notificationBarStep=5
-
-# Semicolon separated list of characters for each step of the bar
-# DrawBar.sh --help to show some alternatives
-notificationBarChars="█;▆;▅;▃;▁;░"
-
-# Semicolon separated list of characters for the borders of the bar.
-# Monospaced font is recommended
-# Seven semicolon (;) means no border
-# DrawBar.sh --help to show some alternatives
-notificationBarBorders=";;;;;;;"
-
-#	For how much milliseconds the notification will stay visible
-timeout=1500
 
 # Default values
 defaultBrightnessChangeValue=1
@@ -73,13 +59,13 @@ screensaver_fps=240
 redshiftState=~/.config/i3/scripts/redshift.sh
 source $redshiftState
 
-#	Unique dunst notification id
-uid=6903
 
-# App name in dunst
-appName="simonvic.Brightness"
+###############################################################################
 
-#####################################################################
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
 
 ##
 #	Get brightness level
@@ -100,7 +86,7 @@ function setBrightness() {
 #	@param -inc | -dec
 #	@param amount
 function changeBrightness() {
-	if [ -z $2 ]; then
+	if [[ -z $2 ]]; then
 		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
 	else
 		xbacklight $1 $2 -steps $fade_steps -time $fade_time
@@ -112,7 +98,7 @@ function changeBrightness() {
 #	Get if redshift is on
 #	@return true|false
 function isRedshiftOn() {
-	[[ $REDSHIFT_STATUS = on ]] && echo true || echo false
+	[[ $REDSHIFT_STATUS == on ]] && echo true || echo false
 }
 
 ##
@@ -125,11 +111,11 @@ function getRedshiftTemperature() {
 ##
 #	Toggle Redshift status
 function toggleRedshift() {
-	if [ "$REDSHIFT_STATUS" = on ]; then
+	if [[ "$REDSHIFT_STATUS" == on ]]; then
 		sed -i "s/REDSHIFT_STATUS=on/REDSHIFT_STATUS=off/g" $redshiftState
 		redshift -x
 		REDSHIFT_STATUS=off
-	elif [ "$REDSHIFT_STATUS" = off ]; then
+	elif [[ "$REDSHIFT_STATUS" == off ]]; then
 		sed -i "s/REDSHIFT_STATUS=off/REDSHIFT_STATUS=on/g" $redshiftState
 		redshift -O "$REDSHIFT_TEMP"
 		REDSHIFT_STATUS=on
@@ -140,7 +126,7 @@ function toggleRedshift() {
 #	Change redshift temperature
 #	@param temperature [1000 - 25000]
 function changeTemp() {
-	if [ "$1" -gt 1000 ] && [ "$1" -lt 25000 ]; then
+	if [[ "$1" -gt 1000 ]] && [[ "$1" -lt 25000 ]]; then
 		sed -i "s/REDSHIFT_TEMP=$REDSHIFT_TEMP/REDSHIFT_TEMP=$1/g" $redshiftState
 		redshift -P -O $1
 		REDSHIFT_TEMP=$1
@@ -171,19 +157,16 @@ function sendNotification() {
 	local bodyFormat=""
 	local bar="$(buildBar $brightness)"
 	
-	if [ $brightness -ge 75 ]; then		
-		icon=$highIcon
-	elif [ $brightness -gt 25 ]; then
-		icon=$mediumIcon
+	if [[ $brightness -ge 75 ]]; then		
+		icon=$notificationHighIcon
+	elif [[ $brightness -gt 25 ]]; then
+		icon=$notificationMediumIcon
 	else
-		icon=$lowIcon
+		icon=$notificationLowIcon
 	fi
 
-	if [ $playSound = true ]; then
-		paplay "$sound" &
-	fi
-
-	if [ $(isRedshiftOn) = true ]; then
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	if $(isRedshiftOn); then
 		summary="$brightness% $(getRedshiftTemperature)k"
 		bodyFormat=$notificationBodyFormatRedshift
 	else
@@ -193,7 +176,14 @@ function sendNotification() {
 
 	body=$(printf "$bodyFormat" "$bar" "$summary" )
 	# Send the notification
-	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body"
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "$icon" \
+		--expire-time "$notificationTimeoutMS" \
+		--urgency "$urgency" \
+		"$summary" "$body"
+
 }
 
 ##
@@ -203,17 +193,17 @@ function printBrightness() {
 	local brightness=$(getBrightness)
 	local suffix=""
 	local body=""
-	if [ $brightness -le 20 ]; then
+	if [[ $brightness -le 20 ]]; then
 		suffix=$brightnessLowLabel
-	elif [ $brightness -le 40 ]; then
+	elif [[ $brightness -le 40 ]]; then
 		suffix=$brightnessMediumLabel
-	elif [ $brightness -le 60 ]; then
+	elif [[ $brightness -le 60 ]]; then
 		suffix=$brightnessHighLabel
-	elif [ $brightness -le 100 ]; then
+	elif [[ $brightness -le 100 ]]; then
 		suffix=$brightnessMaxLabel
 	fi
 
-	if [ "$1" = "extended" ]; then
+	if [[ "$1" == "extended" ]]; then
 		bar="$(seq -s '─' 0 $((brightness / 10 - 1)) | sed 's/[0-9]//g')│"
 		emptyBar="$(seq -s '─' 0 $((10 - brightness / 10)) | sed 's/[0-9]//g')"
 		body=$brightness%$bar$emptyBar
@@ -228,11 +218,11 @@ function printBrightness() {
 function printTemperature() {
 	local body=""
 	local suffix=""
-	if [ $REDSHIFT_STATUS = off ]; then
+	if [[ $REDSHIFT_STATUS == off ]]; then
 		suffix=$redshiftOffLabel
 	else
 		suffix=$redshiftOnLabel
-		if [ "$1" = "extended" ]; then
+		if [[ "$1" = "extended" ]]; then
 			body="$REDSHIFT_TEMP K"
 		fi
 	fi
@@ -257,7 +247,7 @@ function updatePolybar() {
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sBrightnessctl <options> [...]
 	
@@ -313,7 +303,7 @@ redshift | r)
 		sendNotification
 		;;
 	increase | i)
-		if [ -z $3 ]; then
+		if [[ -z $3 ]]; then
 			changeTemp $((REDSHIFT_TEMP + defaultTempChangeValue))
 		else
 			changeTemp $((REDSHIFT_TEMP + $3))
@@ -322,7 +312,7 @@ redshift | r)
 		sendNotification
 		;;
 	decrease | d)
-		if [ -z $3 ]; then
+		if [[ -z $3 ]]; then
 			changeTemp $((REDSHIFT_TEMP - defaultTempChangeValue))
 		else
 			changeTemp $((REDSHIFT_TEMP - $3))

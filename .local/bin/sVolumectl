@@ -1,5 +1,6 @@
 #!/bin/bash
-###########################################
+
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -7,48 +8,38 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
+notificationUID=6909
+notificationAppName="simonvic.Volume"
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+notificationTimeoutMS=1500
 
-# Max limit of the volume
-maxVolume=100
+# Default icon
+notificationMutedIcon=audio-volume-muted-symbolic
+notificationLowIcon=audio-volume-low-symbolic
+notificationMediumIcon=audio-volume-medium-symbolic
+notificationHighIcon=audio-volume-high-symbolic
+notificationWarningIcon=audio-volume-high-symbolic
+notificationOveramplifiedIcon=audio-volume-overamplified-symbolic
 
-#	Default icon
-mutedIcon=audio-volume-muted-symbolic
-lowIcon=audio-volume-low-symbolic
-mediumIcon=audio-volume-medium-symbolic
-highIcon=audio-volume-high-symbolic
-warningIcon=audio-volume-high-symbolic
-overamplifiedIcon=audio-volume-overamplified-symbolic
-
-
-# Enable to play sound
-playSound=true
-# Sound to play (usually located in /usr/share/sounds/)
-sound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Notification body format
 # where two %s are for ASCII bar and right text
 notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
 
-# Length of the bar
 notificationBarLength=20
-
-# Step of the bar
 notificationBarStep=5
-
-# Semicolon separated list of characters for each step of the bar
-# DrawBar.sh --help to show some alternatives
 notificationBarChars="█;▆;▅;▃;▁;░"
-
-# Semicolon separated list of characters for the borders of the bar.
-# Monospaced font is recommended
-# Seven semicolon (;) means no border
-# DrawBar.sh --help to show some alternatives
 notificationBarBorders=";;;;;;;"
+
+# Max limit of the volume
+maxVolume=100
 
 # At which level the volume is considered too high
 warningLevel=60
@@ -56,14 +47,12 @@ warningLevel=60
 # At which level the volume is considered overamplified
 overamplifiedLevel=100
 
-# For how much milliseconds the notification will stay visible
-timeout=1500
+###############################################################################
 
-# Unique dunst notification id
-uid=6909
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
 
-# App name in dunst
-appName="simonvic.Volume"
+###############################################################################
 
 
 ##
@@ -94,9 +83,11 @@ function increaseVolume() {
 	setMute false
 	local increaseAmount=$1
 	local currentVolume=$(getVolume)
-	[[ $((currentVolume + increaseAmount)) -gt $maxVolume ]] \
-		&& setVolume "$maxVolume%" \
-		|| setVolume "+$increaseAmount%"
+	if [[ $((currentVolume + increaseAmount)) -gt $maxVolume ]]; then
+		setVolume "$maxVolume%"
+	else
+		setVolume "+$increaseAmount%"
+	fi
 }
 
 ##
@@ -121,7 +112,7 @@ function buildBar() {
 	DrawBar.sh                               \
 		--length $notificationBarLength      \
 		--step $notificationBarStep          \
-		--value $1                           \
+		--value "$1"                         \
 		--bar-chars "$notificationBarChars"  \
 		--borders "$notificationBarBorders"	
 }
@@ -137,48 +128,50 @@ function sendNotification() {
 	local icon=""
 	local urgency=""
 
-	if [ $(isMute) = true ]; then
+	if [[ $(isMute) == true ]]; then
 		# Building the volume bar
 		bar=$(buildBar 0)
-		icon=$mutedIcon
+		icon=$notificationMutedIcon
 		urgency=normal
 		summary="Muted"
 	else
 
 		local volume=$(getVolume)
-		bar=$(buildBar $volume)
+		bar=$(buildBar "$volume")
 		summary="$volume%"
 
-		if [ $volume -ge $overamplifiedLevel ]; then
+		if [[ $volume -ge $overamplifiedLevel ]]; then
 			urgency=critical
-			icon=$overamplifiedIcon
-		elif [ $volume -ge $warningLevel ]; then
+			icon=$notificationOveramplifiedIcon
+		elif [[ $volume -ge $warningLevel ]]; then
 			urgency=critical
-			icon=$warningIcon
-		elif [ $volume -gt 50 ]; then
+			icon=$notificationWarningIcon
+		elif [[ $volume -gt 50 ]]; then
 			urgency=normal
-			icon=$highIcon
-		elif [ $volume -gt 20 ]; then
+			icon=$notificationHighIcon
+		elif [[ $volume -gt 20 ]]; then
 			urgency=normal
-			icon=$mediumIcon
-		elif [ $volume -le 20 ]; then
+			icon=$notificationMediumIcon
+		elif [[ $volume -le 20 ]]; then
 			urgency=normal
-			icon=$lowIcon
+			icon=$notificationLowIcon
 		fi
 
 	fi
 
-	if [ $playSound = true ]; then
-		paplay "$sound" &
-	fi
-	
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
-	# Send the notification
-	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body"
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "$icon" \
+		--expire-time "$notificationTimeoutMS" \
+		--urgency "$urgency" \
+		"$summary" "$body"
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sVolumectl <options>
 	
@@ -198,22 +191,9 @@ function printUsage() {
 }
 
 case $1 in
-set | s)
-	setVolume "$2%"
-	sendNotification
-	;;
-increase | i)
-	# Set the volume on (if it was muted)
-	increaseVolume "$2"
-	sendNotification
-	;;
-decrease | d)
-	decreaseVolume "$2"
-	sendNotification
-	;;
-mute | m)
-	setMute "$2"
-	sendNotification
-	;;
-help | *) printUsage ;;
+	set | s) setVolume "$2%" && sendNotification ;;
+	increase | i) increaseVolume "$2" && sendNotification ;;
+	decrease | d) decreaseVolume "$2" && sendNotification ;;
+	mute | m) setMute "$2" && sendNotification ;;
+	help | *) printUsage ;;
 esac

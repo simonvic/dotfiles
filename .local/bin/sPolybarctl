@@ -1,5 +1,6 @@
 #!/bin/bash
-###########################################
+
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -10,15 +11,22 @@
 #
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
 
-
-LOGS_DIR_POLYBARS_PATH="/tmp/simonvic/sPolybarctl/logs"
-LOGS_DIR_MESSAGES_PATH="/tmp/simonvic/sPolybarctl/logs/msg"
+polybarLogsDir="/tmp/simonvic/sPolybarctl/logs"
+messagesLogsDir="/tmp/simonvic/sPolybarctl/logs/msg"
 
 visibleIcon=" 蘒 "
 invisibleIcon=" 﨡 "
+
+###############################################################################
+
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
 
 ##
 #	Launch and hide the predefined polybars
@@ -44,8 +52,8 @@ function killPolybars() {
 #	Launch a polyabr
 #	@param polybar name
 function launchPolybar() {
-	if [ ! -z "$1" ]; then
-		polybar "$1" >> "$LOGS_DIR_POLYBARS_PATH/$1.log" 2>&1 &
+	if [[ -n "$1" ]]; then
+		polybar "$1" >> "$polybarLogsDir/$1.log" 2>&1 &
 	fi
 }
 
@@ -65,9 +73,9 @@ function getPolybarPid() {
 #	@param polybar name or empty
 #	@return "-p $pid" or empty
 function getPidArgument() {
-	if [[ ! -z "$1" ]]; then
+	if [[ -n "$1" ]]; then
 		local pid=$(getPolybarPid "$1")
-		if [[ ! -z "$pid" ]]; then
+		if [[ -n "$pid" ]]; then
 			echo "-p $pid"
 		fi
 	fi
@@ -116,11 +124,11 @@ function status() {
 #	@param message for polybar-msg
 #	@param polybar name or empty to send msg to all polybar
 function polybarMsg() {
-	polybar-msg $(getPidArgument "$2") $1 >> "$LOGS_DIR_MESSAGES_PATH/polybar-msg.log" 2>&1
+	polybar-msg $(getPidArgument "$2") $1 >> "$messagesLogsDir/polybar-msg.log" 2>&1
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sPolybarctl <options>
 
@@ -149,20 +157,16 @@ function printUsage() {
 
 }
 
-mkdir -p "$LOGS_DIR_POLYBARS_PATH"
-mkdir -p "$LOGS_DIR_MESSAGES_PATH"
+mkdir -p "$polybarLogsDir"
+mkdir -p "$messagesLogsDir"
 
 case "$1" in
-	launch | l)
-		launch
-		;;
+	launch | l) launch ;;
 	toggle | t)
 		toggle "$2"
 		updateSwitches "$2"
 		;;
-	status)
-		status "$2"
-		;;
+	status) status "$2" ;;
 	show | s)
 		show "$2"
 		updateSwitches "$2"
@@ -171,8 +175,6 @@ case "$1" in
 		hide "$2"
 		updateSwitches "$2"
 		;;
-	message | m)
-		polybarMsg "$2" "$3"
-		;;
+	message | m) polybarMsg "$2" "$3" ;;
 	help | *) printUsage ;;
 esac

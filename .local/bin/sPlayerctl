@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###########################################
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -8,132 +8,200 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
-
-# Where to store the selected player
-selectedPlayer="/tmp/simonvic/sPlayerctl/selectedPlayer"
-
-# Show more info about author and song
-moreInfo=false
-
-# [WIP] Show the song cover (spotify) as the notification icon
-# Sometimes you might not be able to see the image, set useSpotifyCache to false
-# to directly download the image (it might take more time to show the notification)
-songCover=false
-useSpotifyCache=false
-
-iconCachePath=$HOME/.cache/spotifyIcon
-spotifyCachePath=$HOME/.cache/spotify/Browser/Cache
+notificationUID=6905
+notificationSelectPlayerUID=6906
+notificationAppName="simonvic.Playerctl"
+notificationSound=""
+notificationUrgency=low
+notificationTimeoutMS=2000
 
 # Icon used when selecting the player
-selectPlayerIcon="folder-music-symbolic"
-playingIcon="media-playback-start-symbolic"
-pausedIcon="media-playback-pause-symbolic"
+notificationSelectPlayerIcon="folder-music-symbolic"
+notificationPlayingIcon="media-playback-start-symbolic"
+notificationPausedIcon="media-playback-pause-symbolic"
 
-#	Default urgency level [Available: low, normal, critical]
-urgency=low
+# Where to store the selected player
+selectedPlayerFile="/tmp/simonvic/sPlayerctl/selectedPlayer"
 
-#	For how much milliseconds the notification will stay visible
-timeout=5000
+# reserved name for automatic player mode
+autoPlayer="__auto__"
 
-#	Unique dunst notification id
-uid=6905
-uid_selectPlayer=6906
+###############################################################################
 
-# App name in dunst
-appName="simonvic.Playerctl"
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
 
 
 ##
 #	Get player name currently under control
 #	@return player name
 function getSelectedPlayer() {
-	if [ ! -e $selectedPlayer ]; then
-		createSelectedPlayerFile
+	if [[ ! -e "$selectedPlayerFile" ]]; then
+		mkdir -p "${selectedPlayerFile%/*}"
+		echo "" | tee "$selectedPlayerFile"
+	else
+		cat "$selectedPlayerFile"
 	fi
-	cat $selectedPlayer
-}
-
-##
-#	Create selected player file and its parent directories
-function createSelectedPlayerFile() {
-	mkdir -p $(echo $selectedPlayer | rev | cut -d"/" -f2- | rev)
-	echo "" >$selectedPlayer
 }
 
 # Player name to control (if no player selected, it controls the first it finds)
 player=$(getSelectedPlayer)
 
-function getTitle() {
-	playerctl -p "$player" metadata title
-}
-
-function getArtist() {
-	playerctl -p "$player" metadata artist
-}
-
-function getAlbum() {
-	playerctl -p "$player" metadata album
-}
-
-function getStatus() {
-	playerctl -p "$player" status
-}
-
-function fetchSpotifyIcon() {
-	if [ $useSpotifyCache = true ]; then
-		for f in $(ls -r -d $spotifyCachePath/f*); do
-			echo $f
-			if [ $(file $f -b --extension) = "jpeg/jpg/jpe/jfif" ]; then
-				icon=$f
-				break
-			fi
-		done
-	else
-		wget $(playerctl metadata mpris:artUrl | sed s/open.spotify.com/i.scdn.co/g) -O $iconCachePath
-		icon=$iconCachePath
-	fi
-}
+function getTitle() { playerctl -p "$player" metadata title; }
+function getArtist() { playerctl -p "$player" metadata artist; }
+function getAlbum() { playerctl -p "$player" metadata album; }
+function getStatus() { playerctl -p "$player" status; }
 
 ##
-#	Build notification body
-#	@return notification body
-function buildBody() {
-	if [ $moreInfo = true ]; then
-		printf "<big><b>$title</b></big><small> $artist\n$album\n<i>$player</i></small>"
-	else
-		printf "<big><b>$title</b></big><small> $artist</small>"
-	fi
-}
-
-##
-#	Send notification
+# Send notification
+# @param summary
+# @param body
+# @param icon
+# @param expire timeout (default: notificationTimeoutMS)
+# @param notification UID (default: notificationUID)
 function sendNotification() {
-	if [ $songCover = false ]; then
-		status=$(getStatus)
-		if [ $status = "Playing" ]; then
-			icon=$playingIcon
-		elif [ $status = "Paused" ]; then
-			icon=$pausedIcon
-		fi
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "${5:-$notificationUID}" \
+		--icon "$3" \
+		--expire-time "${4:-$notificationTimeoutMS}" \
+		--urgency "$notificationUrgency" \
+		"$1" \
+		"$2"
+}
+
+##
+# Close the notification with the given id
+# @param notification id
+function closeNotification() {
+	# hacky way to close notification via notify-send instead of dunstctl
+	# send empty notification with 1ms expire time
+	notify-send --replace-id "$1" --expire-time "1" " "
+}
+
+##
+#	Select player to control
+function selectPlayer() {
+	case "$1" in
+		set)
+			if [[ -z "$2" ]]; then
+				printUsage
+			else
+				setPlayer "$2"
+			fi
+			;;
+		*) promptPlayerSelection ;;
+	esac
+}
+
+##
+# Show notification and rofi dmenu for player selection
+function promptPlayerSelection() {
+	local pastSelectionBody=""
+	if [[ -z "$player" ]]; then
+		pastSelectionBody="Currently using <b>Auto</b> mode"
 	else
-		fetchSpotifyIcon
+		pastSelectionBody="Currently controlling <b>$player</b>"
 	fi
-	
-	local artist=$(getArtist)
-	[ ! -z "$artist" ] && artist="($artist)"
 
+	sendNotification "sPlayerctl | Playerctl" \
+		"Select a player you wish to control.\n<small>$pastSelectionBody</small>" \
+		"$notificationSelectPlayerIcon" \
+		0 \
+		"$notificationSelectPlayerUID"
+
+	local selectedPlayer=$(printf "%s\n" "$autoPlayer" $(playerctl -l) | rofi \
+		-dmenu -p "/" \
+		-theme-str '@import "glass/simonvic_dunstActions"' -no-default-config \
+		-format "s")
+
+	if [[ -z "$selectedPlayer" ]]; then
+		closeNotification "$notificationSelectPlayerUID"
+	else
+		setPlayer "$selectedPlayer"
+		local body=""
+		if [[ "$selectedPlayer" == "$autoPlayer" ]]; then
+			body="Using automatic player mode"
+		else
+			body="You're now controlling <b>$selectedPlayer</b>"
+		fi
+		sendNotification "sPlayerctl | Player selected" \
+			"$body" \
+			"$notificationSelectPlayerIcon" \
+			"$notificationTimeoutMS" \
+			"$notificationSelectPlayerUID"
+	fi
+}
+
+##
+# Set controlled player
+# @param player name, or auto for automode
+function setPlayer() {
+	[[ ! -e "$selectedPlayerFile" ]] && mkdir -p "${selectedPlayerFile%/*}"
+	case "$1" in
+		"$autoPlayer") echo "" > "$selectedPlayerFile" ;;
+		*) echo "$1" > "$selectedPlayerFile" ;;
+	esac
+}
+
+##
+# Send default notification when interacting with a player
+# @param icon
+function sendDefaultNotification() {
 	local title=$(getTitle)
-	local body=$(buildBody)
+	sendNotification "$title" \
+		"<big>$title</big><small> $(getArtist)</small>" \
+		"$1"
+}
 
-	# Send the notification
-	# dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body"
-	setPlayer $(dunstify -C "$uid" && dunstify -a "$appName" -A "auto,auto" $(buildPlayersDunstActions) -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$title" "$body")
+function play() {
+	playerctl -p "$player" play
+	sendDefaultNotification "$notificationPlayingIcon"
+}
 
+function pause() {
+	case "$1" in
+		all | a) playerctl -a pause ;;
+		*) playerctl -p "$player" pause ;;
+	esac
+	sendDefaultNotification "$notificationPausedIcon"
+}
+
+function playPause() {
+	playerctl -p "$player" play-pause
+	case "$(getStatus)" in
+		"Playing") sendDefaultNotification "$notificationPlayingIcon" ;;
+		"Paused") sendDefaultNotification "$notificationPausedIcon" ;;
+	esac
+}
+
+##
+# @param all - stop all players (Default: only selected player)
+function stop() {
+	case "$1" in
+		all | a) playerctl -a stop ;;
+		*) playerctl -p "$player" stop ;;
+	esac
+	sendDefaultNotification "$notificationPausedIcon"
+}
+
+function next() {
+	playerctl -p "$player" next
+	sendDefaultNotification "$notificationPlayingIcon"
+}
+
+function previous() {
+	playerctl -p "$player" previous
+	sendDefaultNotification "$notificationPlayingIcon"
 }
 
 ##
@@ -141,75 +209,26 @@ function sendNotification() {
 #	@return info
 function info() {
 	local artist=$(getArtist)
-	[ ! -z "$artist" ] && artist="($artist)"
-
-	local title=$(getTitle)
-	local album=$(getAlbum)
-	if [ $moreInfo = true ]; then
-		[ ! -z "$album" ] && album="[$album]"
-		printf "$title $artist $album"
-	else
-		printf "$title $artist"
-	fi
-}
-
-##
-#	Select player to control
-function selectPlayer() {
-	case $1 in
-	set)
-		if [ -z $2 ]; then
-			printUsage
-		else
-			case $2 in
-			auto) echo "" >$selectedPlayer ;;
-			*) echo "$2" >$selectedPlayer ;;
-			esac
-		fi
-		;;
-
-	*) sendNotificationSelectPlayer ;;
-	esac
-}
-
-function buildPlayersDunstActions() {
-	playerctl -l | awk '{ print "-A "$0"," $0 ; }'
-}
-
-function sendNotificationSelectPlayer() {
-	prevSelectedPlayer=$(getSelectedPlayer)
-	[ -z $prevSelectedPlayer ] && pastSelectionBody="Currently using <b>Auto</b> mode" || pastSelectionBody="Currently controlling <b>$prevSelectedPlayer</b>"
-	setPlayer $(dunstify -C "$uid_selectPlayer" && dunstify -a $appName -A "auto,auto" $(buildPlayersDunstActions) -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Playerctl" "Select a player you wish to control. \n <small>$pastSelectionBody</small>")
-}
-
-function setPlayer() {
-	case $1 in
-	1 | 2 | 3) : ;;
-	auto) selectPlayer set auto ;;
-	*) selectPlayer set $1 ;;
-	esac
-}
-
-function sendNotificationPlayerSelected() {
-	selected=$(getSelectedPlayer)
-	[ -z $selected ] && body="Using automatic player mode" || body="You are now controlling <b>$selected</b>"
-	dunstify -a $appName -r "$uid_selectPlayer" -i "$selectPlayerIcon" -t "$timeout" -u "$urgency" "sPlayerctl | Player select" "$body"
+	[[ -n "$artist" ]] && artist="($artist)"
+	printf "%s %s\n" "$(getTitle)" "$artist"
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sPlayerctl <options>
-	
+
 - Options
 	help                                       # Show this help
+	play                                       # Start the player
+	pause                                      # Pause the player
 	play-pause                                 # Toggle between play and pause
-	stop [all]                                 # Stop music
+	stop [all]                                 # Stop the player
 	next                                       # Go to the next song
 	previous                                   # Go to the previous song
 	info                                       # Print info of the playing song
-	select-player [set {auto|<player-name>}]   # Select what controller you whish to control. Use "auto" to automatic choose the first available player
-	
+	select-player [set {auto|<player-name>}]   # Select what controller you whish to control. Use 'auto' to automatic choose the first available player
+
 - Abbreviations
 	pp = play-pause
 	s = stop
@@ -221,33 +240,14 @@ function printUsage() {
 "
 }
 
-case $1 in
-play-pause | pp)
-	playerctl -p "$player" play-pause && sendNotification
-	;;
-stop | s)
-	case $2 in
-	all | a)
-		playerctl -a stop
-		;;
-	*)
-		playerctl -p "$player" stop && sendNotification
-		;;
-	esac
-	;;
-next | n)
-	playerctl -p "$player" next && sendNotification
-	;;
-previous | p)
-	playerctl -p "$player" previous && sendNotification
-	;;
-info | i)
-	info
-	;;
-select-player | sp)
-	selectPlayer $2 $3 && sendNotificationPlayerSelected
-	;;
-help | *)
-	printUsage
-	;;
+case "$1" in
+	play) play ;;
+	pause) pause "$2" ;;
+	play-pause | pp) playPause ;;
+	stop | s) stop "$2" ;;
+	next | n) next ;;
+	previous | p) previous ;;
+	info | i) info ;;
+	select-player | sp) selectPlayer "$2" "$3" ;;
+	help | *) printUsage ;;
 esac

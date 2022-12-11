@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###########################################
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -8,28 +8,35 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
-
-###########################################
+#
+###############################################################################
 
 poweredOnLabel=""
-poweredOffLabel= #""
+poweredOffLabel="" #""
 connectedLabel=""
+
+###############################################################################
+
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
 
 ##
 #	Get if bluetooth is powered on
 #	@return true|false
 function isPowered() {
-	[[ ! -z $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
+	[[ -n $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
 }
 
 ##
 #	Get if connected to a bluetooth device
 #	@return true|false
 function isConnected() {
-	[[ ! -z $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
+	[[ -n $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
 }
 
 ##
@@ -52,7 +59,7 @@ function printStatus() {
 #	Change bluetooth power
 #	@param toggle,on or off
 function power() {
-	if [ $1 == "toggle" ]; then
+	if [[ $1 == "toggle" ]]; then
 		if $(isPowered); then
 			bluetoothctl power off
 		else
@@ -78,7 +85,7 @@ function findDeviceUUID() {
 #	Connect to a device
 #	@param device name
 function connect() {
-	if [ ! -z $1 ]; then
+	if [[ -n $1 ]]; then
 		if ! $(isPowered); then
 			power on
 		fi
@@ -98,7 +105,7 @@ function updatePolybar() {
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sBluetoothctl <options>
 	

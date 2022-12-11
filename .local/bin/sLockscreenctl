@@ -1,6 +1,6 @@
 #!/bin/bash
 
-###########################################
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -8,55 +8,80 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
+# Consult the i3lock man page for a better explanation on some settings
 
-textColor=ffffffAA
-font="LatoLight"
-
-#Backgrounds available: image, blur (i3lock-color blur method), blurAndDim (uses scrot and imagemagick, slower)
-backgroundType=blurAndDim
-image=$HOME/Pictures/Wallpapers/mountain3.png
-blurStrength=5
-blur2Strength=0x10
-dimStrength=60%
-
-# Available options: circle, bars
-indicatorType=circle
-indicatorPos=960:785
-timeString=%H:%M:%S
-timePos=960:540
-timeSize=150
-dateString="%A, %d %B"
-datePos=960:620
-dateSize=30
-verifyText="..."
-wrongText="!!!"
-noInputText="___"
-inputTypeColor=f0544cAA
-inputDeleteColor=ff1010ff
-greeterSize=20
+#                                                                       OPTIONS
 
 # Stop all players on suspend
 stopAllPlayersOnSuspend=true
+
 # Show currently playing song in the lockscreen as the greeter
 showSongAsGreeter=true
-# Show some text as greeter (Will be overridden if showSongAsGreeter is set to true)
-greeterText=""
 
-# Settings for the circle
+#                                                                          TEXT
+# RRGGBBaa
+textColor=DADADAff
+font="LatoLight"
+verifyText="..."
+wrongText="!!!"
+noInputText="___"
+inputTypeColor="F0544Caa"
+inputDeleteColor="FF1010ff"
+
+#                                                                    BACKGROUND
+# Backgrounds available:
+# - color (rrggbbaa, transparency can be blurred with picom)
+# - image
+# - simpleBlur (i3lock-color blur method)
+# - magick (blur and dim, uses scrot and imagemagick)
+bgType=color
+bgColor="00000033"
+bgImage="$HOME/.config/i3/desktop_wallpaper"
+bgBlurSigma=16
+bgDim=40
+
+#                                                                     INDICATOR
+# Available options: ring, bars
+indicatorType=ring
+
+# x:y
+indicatorPos="w/2:h/2+250"
+
+#                                                                          TIME
+timeString="%H:%M:%S"
+# x:y
+timePos="ix:iy-250"
+timeSize=150
+
+#                                                                          DATE
+dateString="%A, %d %B"
+datePos="tx:ty+100"
+dateSize=30
+
+#                                                                       GREETER
+# Show some text as greeter
+# (Will be overridden if showSongAsGreeter is set to true)
+greeterText=""
+greeterPos="ix:iy+r+75"
+greeterSize=20
+
+#                                                                          RING
+# Settings for the ring
 radius=90
 ringWidth=15
-insideColor=00000000
-insideVerifyingColor=00000000
-insideWrongColor=00000000
-ringColor=00000055
-ringVerifyingColor=f0544c55
-ringWrongColor=f0544cff
-separatorColor=f0544cff
+insideColor="00000000"
+insideVerifyingColor="00000000"
+insideWrongColor="00000000"
+ringColor="00000055"
+ringVerifyingColor="F0544C55"
+ringWrongColor="F0544Cff"
+separatorColor="F0544Cff"
 
 # Settings for the bars
 # 0 = down, 1 = up, 2 = both
@@ -64,86 +89,79 @@ barDirection=2
 barMaxHeight=100
 barCount=25
 barBaseWidth=1
-barBaseColor=00000000
+barBaseColor="00000000"
 barStep=1
 barPeriodicStep=10
 barPosition=540
 
-tempScreenshotFile=/tmp/simonvic/sLockscreenctl/tempScreenshot.png
+# @NOTE: the filetype extension matters. (e.g. png(lossless), jpg(lossy))
+tempScreenshotFile=/tmp/simonvic/sLockscreenctl/tempScreenshot.jpg
 
-########################################################################
+###############################################################################
 
-lock() {
-	if [ $showSongAsGreeter = true ]; then
-		greeterText=$(sPlayerctl info)
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
+
+function lockscreen() {
+	# who wrote this shit? Me? ThAt's uNpOssiBlE
+	if [[ $showSongAsGreeter == true ]]; then
+		greeterText=$(sPlayerctl info 2> /dev/null )
 	fi
+	local args="\
+--pass-media-keys --pass-screen-keys --pass-power-keys --pass-volume-keys \
+--redraw-thread --force-clock \
+--keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
+--verif-color=$textColor --wrong-color=$textColor \
+--time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
+--ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
+--date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
+--inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor \
+--ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor \
+--greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font \
+--greeter-size=$greeterSize --greeter-pos=$greeterPos \
+--line-uses-ring"
 
 	case "$indicatorType" in
-	circle)
-		args="--pass-media-keys --redraw-thread --force-clock \
---ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
---verif-text=$verifyText --wrong-text=$wrongText --noinput-text=$noInputText \
---radius=$radius --ring-width=$ringWidth \
---inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor --ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor --line-uses-ring \
---keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
---verif-color=$textColor --wrong-color=$textColor \
---time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
---date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
---greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font --greeter-size=$greeterSize"
-		;;
-	bars)
-		args="--pass-media-keys --redraw-thread --force-clock \
---bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-pos=$barPosition \
---ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
---verif-text=$verifyText --wrong-text=$wrongText --noinput-text=$noInputText \
---inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor --ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor --line-uses-ring \
---keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
---verif-color=$textColor --wrong-color=$textColor \
---time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
---date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
---greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font --greeter-size=$greeterSize"
-		;;
-	*)
-		args=""
-		;;
+		ring) args="$args --radius=$radius --ring-width=$ringWidth" ;;
+		bars) args="$args \
+--bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight \
+--bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor \
+--bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-pos=$barPosition"
+			;;
+	esac
+	
+	local background=""
+	case "$bgType" in
+		color) background="--color=$bgColor" ;;
+		image) background="--image=$bgImage" ;;
+		simpleBlur) background="--blur=$bgBlurSigma" ;;
+		magick)
+			takeScreenshot
+			background="--image=$tempScreenshotFile"
+			;;
 	esac
 
-	case "$backgroundType" in
-	image)
-		background="-i $image"
-		;;
-	blur)
-		background="--blur=$blurStrength"
-		;;
-	blurAndDim)
-		takeScreenshot
-		background="-i $tempScreenshotFile"
-		;;
-	*)
-		background="--color=333333"
-		;;
-	esac
-
-	pgrep i3lock || i3lock $args --date-str="%A,%d %B" --greeter-text="$greeterText" $background $extraArgs
+	pgrep i3lock || i3lock $args --date-str="$dateString" \
+		--greeter-text="$greeterText" --verif-text="$verifyText" \
+		--wrong-text="$wrongText" --noinput-text="$noInputText" \
+		$background $extraArgs
 
 }
 
 function takeScreenshot() {
-	if [ ! -e $tempScreenshotFile ]; then
-		createTempScreenshotFolder
+	if [[ ! -e $tempScreenshotFile ]]; then
+		mkdir -p "${tempScreenshotFile%/*}"
 	fi
-	scrot -z -q 1 -o $tempScreenshotFile && convert $tempScreenshotFile -blur $blur2Strength -fill black -colorize $dimStrength $tempScreenshotFile
-}
-
-function createTempScreenshotFolder() {
-	mkdir -p $(echo $tempScreenshotFile | rev | cut -d"/" -f2- | rev)
+	scrot -z -o "$tempScreenshotFile" && convert -scale 10% -blur "0x$bgBlurSigma" -modulate "$bgDim" -resize 1000% "$tempScreenshotFile" "$tempScreenshotFile"
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sLockscreenctl <options>
-	
+
 - Options
 	suspend   # Lock the screen and suspend
 	lock      # Lock the screen
@@ -154,28 +172,14 @@ function printUsage() {
 "
 }
 
-isLock=false
-isSuspend=false
-
 case "$1" in
-suspend | s)
-	isSuspend=true
-	;&
-
-lock | l)
-	isLock=true
-	[[ $isSuspend ]] || extraArgs="$extraArgs -n"
-	;;
-help | *) printUsage ;;
-esac
-
-# Activate lockscreen (and suspend if specified)
-if [ $isLock = true ]; then
-	lock
-	if [ $isSuspend = true ]; then
-		if [ $stopAllPlayersOnSuspend = true ]; then
-			sPlayerctl stop all
+	s | suspend)
+		if [[ $stopAllPlayersOnSuspend == true ]]; then
+			sPlayerctl pause all 2> /dev/null
 		fi
+		lockscreen
 		systemctl suspend
-	fi
-fi
+		;;
+	l | lock) lockscreen ;;
+	help | *) printUsage ;;
+esac

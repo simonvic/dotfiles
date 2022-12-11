@@ -1,5 +1,6 @@
 #!/bin/bash
-###########################################
+
+###############################################################################
 #	Made by
 #       _                              _
 #      (_)                            (_)
@@ -7,60 +8,45 @@
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
 #|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
+#
+###############################################################################
 
-###########################################
+notificationUID=6904
+notificationAppName="simonvic.Microphone"
+notificationTimeoutMS=1500
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
-# Max limit of mic capture level
-maxVolume=100
-
-#	Default icon
-mutedIcon=microphone-sensitivity-muted-symbolic
-lowIcon=microphone-sensitivity-low-symbolic
-mediumIcon=microphone-sensitivity-medium-symbolic
-highIcon=microphone-sensitivity-high-symbolic
-warningIcon=microphone-sensitivity-high-symbolic
-
-# Enable to play sound
-playSound=true
-# Sound to play (usually located in /usr/share/sounds/)
-sound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
-
+# Default icon
+notificationMutedIcon=microphone-sensitivity-muted-symbolic
+notificationLowIcon=microphone-sensitivity-low-symbolic
+notificationMediumIcon=microphone-sensitivity-medium-symbolic
+notificationHighIcon=microphone-sensitivity-high-symbolic
+notificationWarningIcon=microphone-sensitivity-high-symbolic
 
 # Notification body format
 # where two %s are for ASCII bar and right text
 notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
 
-# Length of the bar
 notificationBarLength=20
-
-# Step of the bar
 notificationBarStep=5
-
-# Semicolon separated list of characters for each step of the bar
-# DrawBar.sh --help to show some alternatives
 notificationBarChars="█;▆;▅;▃;▁;░"
-
-# Semicolon separated list of characters for the borders of the bar.
-# Monospaced font is recommended
-# Seven semicolon (;) means no border
-# DrawBar.sh --help to show some alternatives
 notificationBarBorders=";;;;;;;"
+
+# Max limit of mic capture level
+maxVolume=100
 
 # At which level you are controlling the boost and not intput volume anymore
 warningLevel=60
 
-# For how much milliseconds the notification will stay visible
-timeout=1500
+###############################################################################
 
-# Unique dunst notification id
-uid=6904
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
 
-# App name in dunst
-appName="simonvic.Microphone"
-
+###############################################################################
 
 ##
 #	Get current microphone input level
@@ -126,52 +112,52 @@ function buildBar() {
 ##
 #	Send notification
 function sendNotification() {
-
 	local bar=""
 	local summary=""
 	local body=""
 	local icon=""
 	local urgency=""
 
-	if [ $(isMute) = true ]; then
+	if [[ $(isMute) == true ]]; then
 		# Building the volume bar
 		bar=$(buildBar 0)
-		icon=$mutedIcon
+		icon=$notificationMutedIcon
 		urgency=normal
 		summary="Muted"
 	else
-
 		local volume=$(getVolume)
 		summary="$volume%"
 		bar=$(buildBar $volume)
-		if [ $volume -ge $warningLevel ]; then
+		if [[ $volume -ge $warningLevel ]]; then
 			urgency=critical
-			icon=$warningIcon
-		elif [ $volume -gt 50 ]; then
+			icon=$notificationWarningIcon
+		elif [[ $volume -gt 50 ]]; then
 			urgency=normal
-			icon=$highIcon
-		elif [ $volume -gt 20 ]; then
+			icon=$notificationHighIcon
+		elif [[ $volume -gt 20 ]]; then
 			urgency=normal
-			icon=$mediumIcon
-		elif [ $volume -le 20 ]; then
+			icon=$notificationMediumIcon
+		elif [[ $volume -le 20 ]]; then
 			urgency=normal
-			icon=$lowIcon
+			icon=$notificationLowIcon
 		fi
 
 	fi
 
-	if [ $playSound = true ]; then
-		paplay "$sound" &
-	fi
-	
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
-	# Send the notification
-	dunstify -a "$appName" -i "$icon" -t "$timeout" -r "$uid" -u "$urgency" "$summary" "$body"
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "$icon" \
+		--expire-time "$notificationTimeoutMS" \
+		--urgency "$urgency" \
+		"$summary" "$body"
 }
 
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	sMicrophonectl <options>
 	
