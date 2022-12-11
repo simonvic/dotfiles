@@ -21,15 +21,15 @@ configuration{
 @import "styles/glass"
 
 window {
-	width: 30%;
+	width: 500px;
 	location: north;
 	anchor: north west;
 	x-offset: 260px;
-	y-offset: 55px;
+	y-offset: 65px;
 }
 
 mainbox {
-	children: [listview];
+	children: [listview,inputbar];
 }
 
 listview {
