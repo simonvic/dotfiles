@@ -1,0 +1,128 @@
+#!/bin/bash
+
+###############################################################################
+#	Made by
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+#
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+#
+###############################################################################
+
+notificationUID=6910
+notificationAppName="simonvic.WiFi"
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+notificationTimeoutMS=2000
+notificationUrgency=normal
+notificationDefaultIcon="network-wireless-symbolic"
+
+###############################################################################
+
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
+
+##
+# Scan for wifi signals
+# @return wifi signals
+function getSignals() {
+	nmcli -get-values ACTIVE,BARS,CHAN,SSID device wifi list
+}
+
+##
+# Get index of active wifi SSID
+# @param newline separated signals
+# @return active index
+function getActive() {
+	local count=0
+	local activeIdx=""
+	while read -r signal; do
+		if [[ ${signal%%:*} == "yes" ]]; then
+			activeIdx=$activeIdx,$count
+		fi
+		((count++))
+	done <<< $1
+	echo $activeIdx
+}
+
+##
+# Print pretty signals (meant for display in rofi)
+# @param newline separated signals
+# @return pretty output
+function prettifySignals() {
+	while read -r signal; do
+		local active=${signal%%:*}
+		signal=${signal#*:}
+
+		local bars=$(echo "${signal%%:*}" \
+        	| sed "s/\*\{4,4\}/▂▄▆█/g" \
+        	| sed "s/\*\{3,3\}/▂▄▆_/g" \
+        	| sed "s/\*\{2,2\}/▂▄__/g" \
+        	| sed "s/\*\{1,1\}/▂___/g" )
+
+		signal=${signal#*:}
+
+		local channel=${signal%%:*}
+		signal=${signal#*:}
+
+		local ssid=$signal
+		printf "%s %s\n" "$bars" "$ssid"
+	done <<< $1
+}
+
+##
+# Helper function for notifications
+# @param body
+# @param icon (default: $notificationDefaultIcon)
+# @param timeout (default: notificationTimeoutMS)
+function sendNotification() {
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "${2:-$notificationDefaultIcon}" \
+		--expire-time "${3:-$notificationTimeoutMS}" \
+		--urgency "$notificationUrgency" \
+		"WiFi" "$1"
+}
+
+###############################################################################
+
+sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
+
+signals=$(getSignals)
+active=$(getActive "$signals")
+
+sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
+selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
+	-format "i" \
+	-a "$active" \
+	-p "/" \
+	-theme-str '@import "glass/simonvic_dunstActions"' \
+	-no-default-config\
+)
+
+if [[ -z "$selectedIdx" ]]; then
+	# hacky way to close notification via notify-send
+	# replace current notification (id) with one that lasts 1ms
+	notify-send --replace-id "$notificationUID" --expire-time 1 " "
+	exit 0
+fi
+
+selectedSSID=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
+selectedSSID=${selectedSSID#*:}
+selectedSSID=${selectedSSID#*:}
+selectedSSID=${selectedSSID#*:}
+
+sendNotification "Connecting to <b>$selectedSSID</b> ..." "network-wireless-acquiring-symbolic" 0
+nmcli d w c "$selectedSSID"
+# use correct icon based on signal strength
+sendNotification "Connected to <b>$selectedSSID</b>" "network-wireless-signal-excellent-symbolic"
+
+
