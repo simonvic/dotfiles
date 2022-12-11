@@ -78,7 +78,7 @@ function draw() {
 }
 
 function printUsage() {
-	printf "
+	printf "%s\n" "
 - Usage
 	DrawBar.sh [options]
 	
