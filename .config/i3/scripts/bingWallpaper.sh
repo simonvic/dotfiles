@@ -35,7 +35,7 @@ url+="&n=1"
 # Url of the image to be downloaded
 imageURL=$bing$(wget --quiet -O - $url | awk -F'src="' '{print $2}' | cut -d '&' -f1)
 
-wget --quiet -O - $imageURL | feh --bg-fill --no-fehbg -
+wget --quiet -O - "$imageURL" | feh --bg-fill --no-fehbg -
 
 
 
