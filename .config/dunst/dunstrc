@@ -33,6 +33,8 @@
 	frame_color = "#N"
 	transparency = 0
 
+	background = "#00000055"
+
 	separator_height = 5
 	separator_color = auto
 
@@ -56,7 +58,7 @@
 
 	#####################################################
 	## TEXT
-	font = Work Sans Regular 12
+	font = sans 12
 	line_height = -1
 	markup = full
 
@@ -90,7 +92,7 @@
 	#####################################################
 	## ADVANCED
 
-	dmenu = /usr/bin/rofi -dmenu -p "/" -theme-str '@import "glass/simonvic_dunstActions"' -no-default-config
+	dmenu = /usr/bin/rofi -dmenu -p "/" -theme "simonvic/glass/notification_actions"
 	browser = /usr/bin/firefox --new-tab
 	always_run_script = true
 	title = Dunst
@@ -113,22 +115,16 @@
 [urgency_low]
 	frame_color = "#33333355"
 	foreground = "#888a85"
-	background = "#191311AA"
-	#background = "#2B313C"
 	timeout = 8
 
 [urgency_normal]
 	frame_color = "#5B823455"
 	foreground = "#CACACA"
-	background = "#191311AA"
-	#background = "#2B313C"
 	timeout = 8
 
 [urgency_critical]
 	frame_color = "#B7472A55"
 	foreground = "#B7472A"
-	background = "#191311AA"
-	#background = "#2B313C"
 	timeout = 16
 
 
