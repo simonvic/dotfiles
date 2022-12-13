@@ -1,0 +1,194 @@
+configuration {
+	drun-display-format: "{name}";
+}
+
+* {
+	/* border: 1px; */
+	/* border-color: red; */
+	text-color: @color-text;
+	font: @font-primary;
+}
+
+window {
+	children: [mainbox];
+	background-color: @window-background;
+	width: 800px;
+	location: center;
+	anchor: north;
+	y-offset: -25%;
+	transparency: "real";
+}
+
+mainbox {
+	children: [mode-switcher, inputbar, message, listview];
+	background-color: @mainbox-background;
+}
+
+inputbar {
+	children: [prompt,entry,num-filtered-rows,textbox-num-sep,num-rows,case-indicator];
+	background-color: @inputbar-background;
+	border-radius: 10px;
+	padding: 10;
+	margin: 1% 2%;
+}
+
+textbox {
+	background-color: @messageTextbox-background;
+	margin: 0% 2%;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+prompt {
+	background-color: @prompt-background;
+	padding: 5px;
+}
+
+message {
+	background-color: @message-background;
+}
+
+entry {
+	background-color: @entry-background;
+	border-color: @color-primary-accent;
+	placeholder-color: @color-placeholder;
+	placeholder: "Search...";
+	border: 0 0 2px 0 solid;
+	vertical-align: 0.5;
+}
+
+
+listview {
+	children: [element];
+	background-color: @listView-background;
+	columns: 4;
+	fixed-columns: false;
+	lines: 5;
+	fixed-height: false;
+	spacing: 1%;
+	padding: 2% 2%;
+	scrollbar: true;
+}
+
+scrollbar{
+	handle-color: @scrollbar-handle-background;
+	background-color: @scrollbar-background;
+	padding: 0;
+	border: 0;
+	handle-width: 5px;
+	margin: 0px 10px;
+}
+
+element {
+	children: [element-icon, element-text];
+	background-color: @element-background;
+	orientation: horizontal;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+}
+
+element-text {
+	background-color: transparent;
+	font: @font-primary-small;
+	padding: -0.1em 0% 0% 0%;
+	vertical-align: 0.5;
+}
+
+element-icon {
+	background-color: transparent;
+	size: 40px;
+}
+
+element normal.normal {
+	background-color: @element-normal-background;
+	text-color: @element-normal-foreground;
+}
+
+element normal.urgent {
+	background-color: @element-urgent-background;
+	text-color: @element-urgent-foreground;
+}
+
+element normal.active {
+	background-color: @element-active-background;
+	text-color: @element-active-foreground;
+}
+
+element selected.normal {
+	background-color: @element-selected-normal-background;
+	text-color: @element-selected-normal-foreground;
+	border-color: @element-active-background;
+}
+
+element selected.urgent {
+	background-color: @element-selected-urgent-background;
+	text-color: @element-selected-urgent-foreground;
+}
+
+element selected.active {
+	background-color: @element-selected-active-background;
+	text-color: @element-selected-active-foreground;
+}
+
+element alternate.normal {
+	background-color: @element-normal-background;
+	text-color: @element-normal-foreground;
+}
+
+element alternate.urgent {
+	background-color: @element-urgent-background;
+	text-color: @element-urgent-foreground;
+}
+
+element alternate.active {
+	background-color: @element-active-background;
+	text-color: @element-active-foreground;
+}
+
+textbox-num-sep,
+num-rows,
+num-filtered-rows {
+	expand: false;
+	vertical-align: 0.5;
+}
+
+mode-switcher {
+	/* enabled: false; */
+	background-color: @modeSwitcher-background;
+}
+
+num-filtered-rows {
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+
+num-rows {
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+
+textbox-num-sep {
+	str: "/";
+	text-color: @color-placeholder;
+   	background-color: @color-textbox-num;
+}
+
+case-indicator {
+	text-color: @color-placeholder;
+	background-color: @color-case-indicator;
+}
+
+button {
+	background-color: @button-background;
+	margin: 5px;
+	border-radius: 5px;
+}
+
+button selected{
+	background-color: @button-selected-background;
+}
+
+error-message {
+	padding: 10px;
+	background-color: #33333300;
+}

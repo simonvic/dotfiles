@@ -1,24 +1,7 @@
-/**
- ###########################################
-#	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-
-###########################################
- */
-
-@import "fonts/worksans"
+@import "fonts/sans"
 @import "palettes/dark"
 
-* {
-	
+* {	
 	window-background: @color-glass-xthick;
 	
 	mainbox-background: transparent;
@@ -63,3 +46,4 @@
 	button-background: @color-glass-thin;
 	button-selected-background: @color-glass-xthick;
 }
+

@@ -26,6 +26,8 @@ notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
 
+dmenu_theme="simonvic/glass/notification_actions"
+
 # Max length of body in the notification
 maxLength=15
 

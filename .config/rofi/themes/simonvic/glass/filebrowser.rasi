@@ -1,0 +1,12 @@
+@import "simonvic/glass/reversed"
+
+listview {
+	columns: 3;
+	fixed-columns: true;
+	lines: 5;
+	fixed-height: true;
+}
+
+element-icon{
+	size: 24px;
+}

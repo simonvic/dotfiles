@@ -26,6 +26,8 @@ notificationSelectPlayerIcon="folder-music-symbolic"
 notificationPlayingIcon="media-playback-start-symbolic"
 notificationPausedIcon="media-playback-pause-symbolic"
 
+dmenu_theme="simonvic/glass/notification_actions"
+
 # Where to store the selected player
 selectedPlayerFile="/tmp/simonvic/sPlayerctl/selectedPlayer"
 
@@ -120,8 +122,8 @@ function promptPlayerSelection() {
 		"$notificationSelectPlayerUID"
 
 	local selectedPlayer=$(printf "%s\n" "$autoPlayer" $(playerctl -l) | rofi \
-		-dmenu -p "/" \
-		-theme-str '@import "glass/simonvic_dunstActions"' -no-default-config \
+		-dmenu -p "" \
+		-theme "$dmenu_theme" \
 		-format "s")
 
 	if [[ -z "$selectedPlayer" ]]; then

@@ -1,0 +1,14 @@
+@import "simonvic/glass"
+
+window {
+	anchor: south;
+	y-offset: 25%;
+}
+
+mainbox {
+	children: [listview, message, inputbar, mode-switcher];
+}
+
+listview {
+	reverse: true;
+}

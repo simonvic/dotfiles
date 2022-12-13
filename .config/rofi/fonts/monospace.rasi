@@ -1,0 +1,6 @@
+* {
+	font-primary-large:  "monospace Regular 20";
+	font-primary:        "monospace Regular 16";
+	font-primary-small:  "monospace Regular 12";
+	font-primary-xsmall: "monospace Regular 8";
+}

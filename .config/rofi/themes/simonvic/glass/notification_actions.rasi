@@ -1,0 +1,26 @@
+@import "simonvic/glass"
+
+window {
+	width: 500px;
+	location: north;
+	anchor: north west;
+	x-offset: 260px;
+	y-offset: 65px;
+}
+
+listview {
+	columns: 1;
+	fixed-columns: true;
+	lines: 10;
+	fixed-height: false;
+	spacing: 10px;
+	padding: 10px;
+}
+
+element-icon {
+	enabled: false;
+}
+
+inputbar {
+	enabled: false;
+}

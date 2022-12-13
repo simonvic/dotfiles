@@ -1,0 +1,6 @@
+* {
+	font-primary-large:  "serif Regular 20";
+	font-primary:        "serif Regular 16";
+	font-primary-small:  "serif Regular 12";
+	font-primary-xsmall: "serif Regular 8";
+}

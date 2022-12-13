@@ -1,0 +1,31 @@
+@import "simonvic/glass/reversed"
+
+num-filtered-rows,
+textbox-num-sep,
+num-rows,
+case-indicator {
+	enabled: false;
+}
+
+entry {
+	placeholder: "sqrt(69^2 + sqrt(4761) * sin(80085))+0.23225";
+}
+
+listview {
+	orientation: vertical;
+	columns: 1;
+	fixed-columns: true;
+	lines: 5;
+	fixed-height: false;
+}
+
+element {
+	orientation: horizontal;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+}
+
+element-icon {
+	enabled: false;
+}
+

@@ -1,0 +1,6 @@
+* {
+	font-primary-large:  "sans Regular 20";
+	font-primary:        "sans Regular 16";
+	font-primary-small:  "sans Regular 12";
+	font-primary-xsmall: "sans Regular 8";
+}

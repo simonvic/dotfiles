@@ -1,0 +1,6 @@
+@import "styles/simonvic/glass"
+@import "simonvic/base"
+
+mode-switcher {
+	enabled: false;
+}

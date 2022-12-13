@@ -21,6 +21,8 @@ notificationTimeoutMS=2000
 notificationUrgency=normal
 notificationDefaultIcon="network-wireless-symbolic"
 
+dmenu_theme="simonvic/glass/notification_actions"
+
 ###############################################################################
 
 usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
@@ -104,8 +106,8 @@ selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
 	-format "i" \
 	-a "$active" \
 	-p "/" \
-	-theme-str '@import "glass/simonvic_dunstActions"' \
-	-no-default-config\
+	-theme "$dmenu_theme"
+	-no-default-config \
 )
 
 if [[ -z "$selectedIdx" ]]; then
