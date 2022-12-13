@@ -30,7 +30,7 @@ notificationBarBorders=";;;;;;;"
 maxLength=15
 
 # where to store todo file
-todoFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/todo/todo.txt
+todoFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/todo/todo.csv
 
 doneSymbol=
 todoSymbol=
@@ -119,10 +119,10 @@ function addNew() {
 }
 
 ##
-# @param id
 # @param status (done|todo|deleted)
+# @param id
 function mark() {
-	sed -i "s|^$1,\w\+,\(.\*\)|$1,$2,\1" "$todoFile"
+	sed -i "s/^$2,\w\+,\(.*\)/$2,$1,\1/g" "$todoFile"
 }
 
 function editFile() {
