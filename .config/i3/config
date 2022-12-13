@@ -18,7 +18,7 @@
 #                                                                       STARTUP
 
 # Numlock enable
-exec numlockx
+exec --no-startup-id numlockx
 
 # Lockscreen
 exec --no-startup-id xset s 300 300 
@@ -26,7 +26,7 @@ exec --no-startup-id xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenc
 # exec --no-startup-id xss-lock -n dim-screen.sh -l -- transfer-sleep-lock-i3lock.sh
 
 # Restore redshift state
-exec $HOME/.config/i3/scripts/restoreRedshift.sh
+exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
 
 # Use feh to set wallpaper
 exec_always --no-startup-id feh --no-fehbg --bg-fill .config/i3/desktop_wallpaper
@@ -43,18 +43,76 @@ exec_always --no-startup-id sPolybarctl launch
 
 
 # Always mute microphone at startup, you know... FBI and stuff
-exec pactl set-source-mute @DEFAULT_SOURCE@ true
+exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
 
 # Use Headset Mic as default input source
-exec pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
+exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
 
 
 ###############################################################################
-#                                                                       MOD-KEY
-set $mod Mod4
+#                                                                 LOOK AND FEEL
+
+#                                                                          FONT
+font pango:sans 8
+
+#                                                          APPLICATION LAUNCHER
+set $rofi_theme_drun            "simonvic/glass/reversed"
+set $rofi_theme_windowSwitcher  "simonvic/glass/windows"
+set $rofi_theme_fileBrowser     "simonvic/glass/filebrowser"
+set $rofi_theme_calculator      "simonvic/glass/calculator"
+
+#                                                                    STATUS BAR
+set $statusbar_main_position top
+
+# statusbar gap = desired gap + gaps_outer (e.g. 55 = 45 + 10)
+set $statusbar_main_gap 55
+
+#                                                                       WINDOWS
+set $gaps_inner 20
+set $gaps_outer 10
+
+gaps outer $gaps_outer
+gaps inner $gaps_inner
+gaps top $statusbar_main_gap
+
+# smart_gaps on
+# smart_gaps inverse_outer
+
+title_align center
+
+#                                                               WINDOWS BORDERS
+# default_border pixel 4
+hide_edge_borders smart
+for_window [class=".*"] border pixel 4
+# for_window [class="Xfce4-terminal"] border pixel 1
+
+
+#                                                                        COLORS
+set $color_primary       #F0544C
+set $color_background    #333333
+set $color_backgroundAlt #222222
+set $color_foreground    #DADADA
+set $color_foregroundAlt #FFFFFF
+set $color_indicator     #666666
+set $color_indicatorAlt  #444444
+set $color_urgent        #8d0000
+
+
+# <colorclass>          <border>             <background>      <text>               <indicator>         <child_border>
+client.focused          $color_primary       $color_background $color_foreground    $color_indicator    $color_primary
+client.focused_inactive $color_backgroundAlt $color_background $color_foreground    $color_indicatorAlt $color_background
+client.unfocused        $color_background    $color_background $color_foreground    $color_indicator    $color_backgroundAlt
+client.urgent           $color_background    $color_urgent     $color_foregroundAlt $color_urgent       $color_urgent
+client.placeholder      #000000              #0c0c0c           #ffffff              #000000             #0c0c0c
+client.background       $color_background 
+ 
+
 
 ###############################################################################
 #                                                                   KEYBINDINGS
+
+#                                                                       MOD-KEY
+set $mod Mod4
 
 #                                                                      TERMINAL
 # start a terminal
@@ -133,7 +191,7 @@ bindsym $mod+Shift+t                     exec --no-startup-id sTodo notification
 bindsym $mod+Shift+Ctrl+t                exec --no-startup-id sTodo notification
 
 #                                                                    CALCULATOR
-bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme-str '@import $rofi_theme_calc' -no-default-config
+bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme "$rofi_theme_calculator"
 
 #                                                                   SCREENSHOTS
 # Select area
@@ -142,10 +200,10 @@ bindsym --release $mod+Shift+s           exec --no-startup-id $HOME/.config/i3/s
 bindsym --release $mod+Ctrl+Shift+s      exec --no-startup-id $HOME/.config/i3/scripts/clipboardScreenshot.sh
 
 #                                                          APPLICATION LAUNCHER
-bindsym $mod+a                           exec rofi -show combi -combi-modi "drun#window" -modi "combi#drun" -theme-str '@import $rofi_theme_drun' -no-default-config
-bindsym $mod+Ctrl+a                      exec rofi -show combi -theme-str '@import $rofi_theme_combi' -no-default-config
-bindsym $mod+Tab                         exec rofi -modi "window#windowcd" -show window -theme-str '@import $rofi_theme_windowSwitcher' -no-default-config
-bindsym $mod+Shift+Tab                   exec rofi -show "filebrowser" -theme-str '@import $rofi_theme_fileBrowser' -no-default-config
+bindsym $mod+a                           exec rofi -show combi -combi-modes "drun#window" -theme "$rofi_theme_drun"
+bindsym $mod+Ctrl+a                      exec rofi -show drun -theme "$rofi_theme_drun"
+bindsym $mod+Tab                         exec rofi -show window -modi "window#windowcd" -theme "$rofi_theme_windowSwitcher"
+bindsym $mod+Shift+Tab                   exec rofi -show filebrowser -theme "$rofi_theme_fileBrowser"
 
 #                                                                 NOTIFICATIONS
 bindsym $mod+n                           exec --no-startup-id dunstctl context
@@ -235,65 +293,6 @@ mode "resize" {
 bindsym $mod+r                           mode "resize"
 
 ###############################################################################
-#                                                                 LOOK AND FEEL
-
-#                                                                          FONT
-font pango:WorkSans 8
-
-#                                                          APPLICATION LAUNCHER
-set $rofi_theme_drun            "glass/simonvic_reverse"
-set $rofi_theme_combi           "glass/simonvic_window_reverse"
-set $rofi_theme_windowSwitcher  "glass/simonvic_window_reverse"
-set $rofi_theme_fileBrowser     "glass/simonvic_fileBrowser_reverse"
-set $rofi_theme_calc            "glass/simonvic_calc"
-
-#                                                                    STATUS BAR
-set $statusbar_main_position top
-
-# statusbar gap = desired gap + gaps_outer (e.g. 55 = 45 + 10)
-set $statusbar_main_gap 55
-
-#                                                                       WINDOWS
-set $gaps_inner 20
-set $gaps_outer 10
-
-gaps outer $gaps_outer
-gaps inner $gaps_inner
-gaps top $statusbar_main_gap
-
-# smart_gaps on
-# smart_gaps inverse_outer
-
-title_align center
-
-#                                                               WINDOWS BORDERS
-# default_border normal 10
-hide_edge_borders smart
-for_window [class=".*"] border pixel 4
-# for_window [class="Xfce4-terminal"] border pixel 1
-
-
-#                                                                        COLORS
-set $color_primary #F0544C
-set $color_background #333333
-set $color_backgroundAlt #222222
-set $color_foreground #DADADA
-set $color_foregroundAlt #FFFFFF
-set $color_indicator #666666
-set $color_indicatorAlt #444444
-set $color_urgent #8d0000
-
-
-# <colorclass>          <border>             <background>      <text>               <indicator>         <child_border>
-client.focused          $color_primary       $color_background $color_foreground    $color_indicator    $color_primary
-client.focused_inactive $color_backgroundAlt $color_background $color_foreground    $color_indicatorAlt $color_background
-client.unfocused        $color_background    $color_background $color_foreground    $color_indicator    $color_backgroundAlt
-client.urgent           $color_background    $color_urgent     $color_foregroundAlt $color_urgent       $color_urgent
-client.placeholder      #000000              #0c0c0c           #ffffff              #000000             #0c0c0c
-client.background       $color_background 
- 
-
-###############################################################################
 #                                                                     BEHAVIOUR
 focus_follows_mouse no
 
@@ -301,3 +300,6 @@ focus_follows_mouse no
 #                                                                      SPECIFIC
 for_window [class="Apache NetBeans IDE "] floating enable
 
+###############################################################################
+#                                                                   USER-CONFIG
+include config.d/*.conf
