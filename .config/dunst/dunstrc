@@ -19,7 +19,7 @@
 	#####################################################
 	## GEOMETRY
 	width = (0, 500)
-	height = 300
+	height = 500
 	origin = top-center
 	offset = 0x65
 	scale = 0
@@ -114,12 +114,12 @@
 
 [urgency_low]
 	frame_color = "#33333355"
-	foreground = "#888a85"
+	foreground = "#AAAAAA"
 	timeout = 8
 
 [urgency_normal]
 	frame_color = "#5B823455"
-	foreground = "#CACACA"
+	foreground = "#DADADA"
 	timeout = 8
 
 [urgency_critical]
@@ -130,6 +130,7 @@
 
 [simonvic.Volume]
 	appname = simonvic.Volume
+	alignment = center
 	msg_urgency = normal
 	format = "%b"
 	min_icon_size = 24
@@ -137,6 +138,7 @@
 
 [simonvic.Volume-warning]
 	appname = simonvic.Volume
+	alignment = center
 	msg_urgency = critical
 	format = "%b"
 	min_icon_size = 24
@@ -144,6 +146,7 @@
 
 [simonvic.Microphone]
 	appname = simonvic.Microphone
+	alignment = center
 	msg_urgency = normal
 	format = "%b"
 	min_icon_size = 24
@@ -151,6 +154,7 @@
 
 [simonvic.Microphone-warning]
 	appname = simonvic.Microphone
+	alignment = center
 	msg_urgency = critical
 	format = "%b"
 	min_icon_size = 24
@@ -158,6 +162,7 @@
 
 [simonvic.Brightness]
 	appname = simonvic.Brightness
+	alignment = center
 	msg_urgency = normal
 	format = "%b"
 	min_icon_size = 24
@@ -176,6 +181,7 @@
 	max_icon_size = 24
 	
 [simonvic.TODO]
+	icon_position = top
 	appname = simonvic.TODO
 	format = "%b"
 	min_icon_size = 24
@@ -186,3 +192,10 @@
 	format = "%b"
 	min_icon_size = 24
 	max_icon_size = 24
+
+[simonvic.Screenshot]
+	appname = simonvic.Screenshot
+	icon_position = top
+	alignment = center
+	format = "%b"
+	max_icon_size = 400
