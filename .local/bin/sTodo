@@ -148,7 +148,6 @@ function sendNotification() {
 	local deletedCount=$(getCount deleted "$2")
 	local totalCount=$(getCount)
 	local todoPercent=$((doneCount * 100 / (totalCount - deletedCount)))
-	local summary="$todoCount todo | $doneCount done | $deletedCount deleted"
 	# If the list is too big cut it
 	local length=$(getCount "$1" "$2")
 	local list=$(list "$1" "$2" | head -$maxLength | prettifyList)
@@ -160,10 +159,11 @@ function sendNotification() {
 	body+="\n$(buildBar $todoPercent) $todoPercent%\n"
 	body+="<b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total"
 	
+
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	local choice=$(notify-send \
 		--app-name "$notificationAppName" \
-		--replace-id "$notificationUID" \
+		--hint "string:x-canonical-private-synchronous:$notificationAppName" \
 		--icon "$notificationIcon" \
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$notificationUrgency" \
@@ -173,8 +173,8 @@ function sendNotification() {
 		--action "listDeleted=  List deleted" \
 		--action "todoHelp= ? TODO help" \
 		--action "edit=  Edit the todo list" \
-		"$summary" "$body")
-	
+		"sTodo" "$body")
+
 	case "$choice" in
 		edit) editFile ;;
 		listAll) i3-sensible-terminal -e "sTodo list" --hold ;;
@@ -187,11 +187,11 @@ function sendNotification() {
 
 function createTodoFile() {
 	mkdir -p "${todoFile%/*}"
-	echo "0,todo,Check out https://github.com/simonvic/dotfiles" > $todoFile
+	echo "0,todo,Check out https://github.com/simonvic/dotfiles" >> $todoFile
 	echo "1,todo,Give a star to https://github.com/simonvic/dotfiles" >> $todoFile
 }
 
-[[ ! -e $todoFile ]] && createTodoFile
+[[ ! -e "$todoFile" ]] && createTodoFile
 
 case "$1" in
 	"list") list "$2" "$3" | prettifyList ;;
