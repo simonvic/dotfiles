@@ -195,9 +195,9 @@ bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-sho
 
 #                                                                   SCREENSHOTS
 # Select area
-bindsym --release $mod+Shift+s           exec --no-startup-id $HOME/.config/i3/scripts/clipboardScreenshot.sh selection
+bindsym --release $mod+Shift+s           exec --no-startup-id sScreenshot area
 # All screen
-bindsym --release $mod+Ctrl+Shift+s      exec --no-startup-id $HOME/.config/i3/scripts/clipboardScreenshot.sh
+bindsym --release $mod+Ctrl+Shift+s      exec --no-startup-id sScreenshot screen
 
 #                                                          APPLICATION LAUNCHER
 bindsym $mod+a                           exec rofi -show combi -combi-modes "drun#window" -theme "$rofi_theme_drun"

@@ -1,0 +1,104 @@
+#!/bin/bash
+
+###############################################################################
+#	Made by
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+#
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+#
+###############################################################################
+
+notificationAppName="simonvic.Screenshot"
+notificationSound=/usr/share/sounds/freedesktop/stereo/screen-capture.oga
+notificationUrgency=normal
+notificationTimeoutMS=2000
+
+tempScreenshotFile=/tmp/simonvic/sScreenshot/temp.png
+
+# True to automatically copy the screenshot to the clipboard
+autoCopy=true
+
+###############################################################################
+
+usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
+[[ -e "$usercfg" ]] && source "$usercfg"
+
+###############################################################################
+
+
+##
+#
+function copyScreenshot() {
+	xclip -selection clipboard -target image/png -i "$tempScreenshotFile"
+}
+
+##
+#	Send notification and play sound
+#	@param title
+#	@param body
+#	@param icon
+function sendNotification() {
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" &
+	local choice=$(notify-send \
+		--app-name "$notificationAppName" \
+		--hint "string:x-canonical-private-synchronous:$notificationAppName" \
+		--icon "$3" \
+		--expire-time "$notificationTimeoutMS" \
+		--urgency "$notificationUrgency" \
+		--action "delete=  Delete" \
+		--action "copy=  Copy" \
+		--action "open=  Open" \
+		"$1" "$2")
+
+	case "$choice" in
+		delete) trash "$tempScreenshotFile" ;;
+		copy) copyScreenshot ;;
+		open) xdg-open "$tempScreenshotFile" ;;
+	esac
+}
+
+
+##
+# @param capture mode (area|screen)
+function captureScreenshot() {
+	[[ ! -e $tempScreenshotFile ]] && mkdir -p "${tempScreenshotFile%/*}"
+	local mode=""
+	[[ "$1" == "area" ]] && mode="--select"
+	scrot --silent --overwrite "$tempScreenshotFile" $mode
+	[[ $? != 0 ]] && return
+	local body="$(file $tempScreenshotFile | cut -d, -f2)"
+	if [[ "$autoCopy" == true ]]; then
+		copyScreenshot
+		body+=" | Copied to clipboard"
+	fi
+	sendNotification "sScreenshot" "$body" "$tempScreenshotFile"
+}
+
+function printUsage() {
+	printf "%s\n" "
+- Usage
+	sScreenshot <options>
+
+-Options
+	help       # Show this help
+	screen     # Capture the whole screen
+	area       # Capture a selected area
+
+- Abbreviations
+	s = screen
+	a = area
+"
+}
+
+case "$1" in
+	area | a) captureScreenshot area ;;
+	screen | s) captureScreenshot screen ;;
+	help | *) printUsage ;;
+esac
+	
