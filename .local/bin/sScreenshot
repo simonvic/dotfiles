@@ -67,7 +67,7 @@ function sendNotification() {
 ##
 # @param capture mode (area|screen)
 function captureScreenshot() {
-	[[ ! -e $tempScreenshotFile ]] && mkdir -p "${tempScreenshotFile%/*}"
+	[[ ! -e "$tempScreenshotFile" ]] && mkdir -p "${tempScreenshotFile%/*}"
 	local mode=""
 	[[ "$1" == "area" ]] && mode="--select"
 	scrot --silent --overwrite "$tempScreenshotFile" $mode
