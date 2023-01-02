@@ -2,7 +2,7 @@ configuration {
 	threads: 0;
 	modes: [combi, drun, filebrowser, window, run, windowcd, ssh, keys, calc];
 	combi-modes: [drun];
-	cycle: true;
+	cycle: false;
 	scroll-method: 0;
 	show-icons: true;
 	sidebar-mode: true;
@@ -12,7 +12,7 @@ configuration {
 	
 	window-format: "{w} - {c}\t{t}";
 	window-thumbnail: true;
-	display-drun: "$";
+	display-drun: "";
 	display-run: "#";
 	display-window: "";
 	display-windowcd: "";

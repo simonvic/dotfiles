@@ -12,7 +12,7 @@ configuration {
 window {
 	children: [mainbox];
 	background-color: @window-background;
-	width: 800px;
+	width: 600px;
 	location: center;
 	anchor: north;
 	y-offset: -25%;
@@ -61,13 +61,15 @@ entry {
 listview {
 	children: [element];
 	background-color: @listView-background;
-	columns: 4;
+	columns: 1;
 	fixed-columns: false;
 	lines: 5;
 	fixed-height: false;
 	spacing: 1%;
 	padding: 2% 2%;
 	scrollbar: true;
+	flow: vertical;
+	require-input: false;
 }
 
 scrollbar{

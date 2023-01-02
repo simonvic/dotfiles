@@ -7,6 +7,6 @@ listview {
 	fixed-height: true;
 }
 
-element-icon{
+element-icon {
 	size: 24px;
 }

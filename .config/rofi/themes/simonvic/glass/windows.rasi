@@ -1,23 +1,26 @@
 @import "simonvic/glass/reversed"
 
+window {
+	width: 1600px;
+}
+
 listview {
-	lines: 2;
-	size: inherit;
-	dynamic: true;
+	columns: 4;
+	fixed-columns: false;
+	lines: 1;
+	flow: horizontal;
 }
 
 element {
-	children: [element-icon, element-text];
 	background-color: @element-background;
 	orientation: vertical;
+	size: inherit;
 }
 
 element-icon {
-	squared: true;
+	horizontal-align: 0.5;
 	vertical-align: 0.5;
 	size: 256px;
-	padding: 0;
-	margin: 0;
 }
 
 element-text {

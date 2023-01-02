@@ -6,7 +6,7 @@
 	
 	mainbox-background: transparent;
 	
-	inputbar-background: @color-glass;
+	inputbar-background: transparent;
 	prompt-background: transparent;
 	entry-background: transparent;
 	color-placeholder: @color-text-semitransparent;
@@ -15,11 +15,11 @@
 	color-case-indicator: transparent;
 	
 	message-background: transparent;
-	messageTextbox-background: @color-glass;
+	messageTextbox-background: transparent;
 	
 	listView-background: transparent;
 	scrollbar-background: @color-glass-thin;
-	scrollbar-handle-background: @color-glass-thick;
+	scrollbar-handle-background: @color-primary-accent-semitransparent;
 	
 	element-background: @color-glass-thin;
 	element-active-background: @color-glass-thin;
