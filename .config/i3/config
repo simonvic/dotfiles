@@ -139,7 +139,8 @@ bindsym $mod+z                           gaps inner all toggle $gaps_inner ; \
 
 
 #                                                                          WIFI
-bindsym $mod+y                           exec sWifi
+bindsym $mod+y                           exec sWifi rescan no
+bindsym $mod+Shift+y                     exec sWifi rescan yes
 
 #                                                                    LOCKSCREEN
 bindsym $mod+l                           exec --no-startup-id sLockscreenctl lock
@@ -200,7 +201,7 @@ bindsym --release $mod+Shift+s           exec --no-startup-id sScreenshot area
 bindsym --release $mod+Ctrl+Shift+s      exec --no-startup-id sScreenshot screen
 
 #                                                          APPLICATION LAUNCHER
-bindsym $mod+a                           exec rofi -show combi -combi-modes "drun#window" -theme "$rofi_theme_drun"
+bindsym $mod+a                           exec rofi -show combi -modes combi -combi-modes "drun#window" -theme "$rofi_theme_drun"
 bindsym $mod+Ctrl+a                      exec rofi -show drun -theme "$rofi_theme_drun"
 bindsym $mod+Tab                         exec rofi -show window -modi "window#windowcd" -theme "$rofi_theme_windowSwitcher"
 bindsym $mod+Shift+Tab                   exec rofi -show filebrowser -theme "$rofi_theme_fileBrowser"

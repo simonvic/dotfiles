@@ -32,9 +32,10 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ##
 # Scan for wifi signals
+# @param rescan (default: auto)
 # @return wifi signals
 function getSignals() {
-	nmcli -get-values ACTIVE,BARS,CHAN,SSID device wifi list
+	nmcli -get-values ACTIVE,BARS,CHAN,SSID device wifi list --rescan "${1:-auto}"
 }
 
 ##
@@ -94,37 +95,58 @@ function sendNotification() {
 		"WiFi" "$1"
 }
 
+##
+# Prompt wifi selection
+# @param rescan policy (auto|yes|no)
+function promptSelection() {
+	sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
+	local signals=$(getSignals "$1")
+	local active=$(getActive "$signals")
+
+	sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
+	local selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
+		-format "i" \
+		-a "$active" \
+		-p "/" \
+		-theme "$dmenu_theme" \
+	)
+
+	if [[ -z "$selectedIdx" ]]; then
+		# hacky way to close notification via notify-send
+		# replace current notification (id) with one that lasts 1ms
+		notify-send --replace-id "$notificationUID" --expire-time 1 " "
+		exit 0
+	fi
+
+	selectedSSID=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
+	selectedSSID=${selectedSSID#*:}
+	selectedSSID=${selectedSSID#*:}
+	selectedSSID=${selectedSSID#*:}
+
+	sendNotification "Connecting to <b>$selectedSSID</b> ..." "network-wireless-acquiring-symbolic" 0
+	nmcli d w c "$selectedSSID"
+	# use correct icon based on signal strength
+	sendNotification "Connected to <b>$selectedSSID</b>" "network-wireless-signal-excellent-symbolic"
+}
+
+function printUsage() {
+	printf "%s\n" "
+- Usage
+	sWifi <options>
+	
+-Options
+	help                   # Show this help
+	rescan [auto|yes|no]   # Specify rescan behaviour (Default: yes)
+	
+- Abbreviations
+	r = rescan
+"
+}
 ###############################################################################
 
-sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
-
-signals=$(getSignals)
-active=$(getActive "$signals")
-
-sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
-selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
-	-format "i" \
-	-a "$active" \
-	-p "/" \
-	-theme "$dmenu_theme"
-	-no-default-config \
-)
-
-if [[ -z "$selectedIdx" ]]; then
-	# hacky way to close notification via notify-send
-	# replace current notification (id) with one that lasts 1ms
-	notify-send --replace-id "$notificationUID" --expire-time 1 " "
-	exit 0
-fi
-
-selectedSSID=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
-selectedSSID=${selectedSSID#*:}
-selectedSSID=${selectedSSID#*:}
-selectedSSID=${selectedSSID#*:}
-
-sendNotification "Connecting to <b>$selectedSSID</b> ..." "network-wireless-acquiring-symbolic" 0
-nmcli d w c "$selectedSSID"
-# use correct icon based on signal strength
-sendNotification "Connected to <b>$selectedSSID</b>" "network-wireless-signal-excellent-symbolic"
-
+case "$1" in
+	rescan | r) promptSelection "${2:-yes}" ;;
+	help) printUsage ;;
+	*) promptSelection
+esac
 
