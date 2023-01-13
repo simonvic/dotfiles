@@ -127,7 +127,7 @@ precmd() {
 
 ######################################
 # THEME
-fpath+=($HOME/.config/zsh/custom/themes)
+fpath+=(${XDG_CONFIG_HOME:-$HOME/.config}/zsh/custom/themes)
 
 autoload -Uz promptinit
 promptinit
