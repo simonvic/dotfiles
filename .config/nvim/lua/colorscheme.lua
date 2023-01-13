@@ -138,10 +138,14 @@ M.groups = {
 	["@attribute"]             = { fg = "#BBB529", bold = false },
 	["@punctuation.bracket"]   = { fg = "#CACACA", bold = false },
 	["@punctuation.delimiter"] = { fg = "#CC7832", bold = false },
+	["@type.qualifier"]        = { fg = "#CC7832", bold = false },
 	["@type.builtin"]          = { fg = "#f98b31", bold = false },
 	["@variable.builtin"]      = { fg = "#f98b31", bold = false },
 }
 
+if M.config.transparent then
+	M.groups.ColorColumn = { bg = "#3A3A3A" }
+end
 
 function M.apply()
 	vim.cmd("colorscheme darcula")
