@@ -113,7 +113,7 @@ return function()
 						vim.api.nvim_feedkeys("k", "n", false)
 					end
 				end,
-				["<C-p>"] = { "toggle_preview", config = { use_float = true } },
+				["<A-CR>"] = { "toggle_preview", config = { use_float = true } },
 				["<2-LeftMouse>"] = "open",
 				["<CR>"] = "open",
 				-- ["<C-h>"] = "open_split",
