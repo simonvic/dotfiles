@@ -64,12 +64,12 @@ set $rofi_theme_calculator      "simonvic/glass/calculator"
 #                                                                    STATUS BAR
 set $statusbar_main_position top
 
-# statusbar gap = desired gap + gaps_outer (e.g. 55 = 45 + 10)
+# statusbar gap = desired gap + gaps_inner (e.g. 55 = 35 + 20)
 set $statusbar_main_gap 55
 
 #                                                                       WINDOWS
 set $gaps_inner 20
-set $gaps_outer 10
+set $gaps_outer 0
 
 gaps outer $gaps_outer
 gaps inner $gaps_inner
@@ -281,10 +281,10 @@ bindsym $mod+Shift+0                     move container to workspace number $ws1
 
 #                                                        DESKTOP MANAGER RESIZE
 mode "resize" {
-	bindsym Left                         resize shrink width 10 px or 10 ppt
-	bindsym Down                         resize grow height 10 px or 10 ppt
-	bindsym Up                           resize shrink height 10 px or 10 ppt
-	bindsym Right                        resize grow width 10 px or 10 ppt
+	bindsym Left                         resize shrink width 5 px or 5 ppt
+	bindsym Down                         resize grow height 5 px or 5 ppt
+	bindsym Up                           resize shrink height 5 px or 5 ppt
+	bindsym Right                        resize grow width 5 px or 5 ppt
 
 	bindsym Return                       mode "default"
 	bindsym Escape                       mode "default"
