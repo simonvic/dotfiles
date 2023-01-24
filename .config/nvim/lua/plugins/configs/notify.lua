@@ -1,8 +1,7 @@
 return function()
 	local notify = require("notify")
 	notify.setup({
-		background_color = "#333333",
-		stage = "fade_in_slide_out",
+		stages = "slide",
 		top_down = false
 	})
 	vim.notify = notify
