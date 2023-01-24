@@ -1,11 +1,12 @@
 return function()
 	local dapui = require("dapui")
 	dapui.setup({
+		icons = { expanded = "", collapsed = "▶", current_frame = "" },
 		layouts = {
 			{
 				elements = {
 					-- Elements can be strings or table with id and size keys.
-					{ id = "scopes", size = 0.25 },
+					"scopes",
 					"breakpoints",
 					"stacks",
 					"watches",
