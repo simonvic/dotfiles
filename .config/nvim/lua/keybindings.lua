@@ -1,3 +1,5 @@
+local vim = vim
+local map = vim.keymap.set
 vim.cmd [[
 """"""""""""""""""""""""""""""""""""""""""""""
 "" ACTIONS
@@ -178,7 +180,7 @@ nnoremap <A-v>    <C-v>
 inoremap <A-v>    <C-o><C-v>
 vnoremap <A-v>    <C-v>
 
-" that (useful) thing at prints the character you pressed lol 
+" that (useful) thing at prints the character you pressed lol
 inoremap <A-C-v>    <C-v>
 
 
@@ -345,13 +347,44 @@ map <Leader>ud <Cmd>lua require("dapui").toggle()<CR>
 " Editor
 map <Leader>ul <Cmd>lua vim.opt.list = not vim.opt.list:get()<CR>
 
-nnoremap <F7>       <Cmd>DapContinue<CR>
-nnoremap <F31>      <Cmd>JdtHotcodeReplace<CR>
-nnoremap <F8>       <Cmd>DapStepInto<CR>
-nnoremap <F9>       <Cmd>DapStepOver<CR>
-nnoremap <F10>      <Cmd>DapStepOut<CR>
-nnoremap <Leader>db <Cmd>DapToggleBreakpoint<CR>
-nnoremap <Leader>dc <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <Leader>dl <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <Leader>dr <Cmd>lua require'dap'.run_last()<CR>
 ]]
+
+local dap = require("dap")
+
+local function logBreakpoint()
+	vim.ui.input({ prompt = "Log point message" }, function(input)
+		dap.set_breakpoint(nil, nil, input)
+	end)
+end
+
+local function conditionBreakpoint()
+	vim.ui.input({ prompt = "Breakpoint condition" }, function(input)
+		dap.set_breakpoint(input)
+	end)
+end
+
+local function conditionLogBreakpoint()
+	vim.ui.input({ prompt = "Breakpoint condition" }, function(condition)
+		vim.ui.input({ prompt = "Log point message" }, function(message)
+			dap.set_breakpoint(condition, nil, message)
+		end)
+	end)
+end
+
+local function inspectVariable()
+	-- require("dap.ui.widgets").hover()
+	require("dapui").eval()
+end
+
+map("n", "<F7>", "<Cmd>DapContinue<CR>")          -- F7
+map("n", "<F55>", "<Cmd>DapTerminate<CR>")        -- Alt + F7
+map("n", "<F31>", "<Cmd>JdtHotcodeReplace<CR>")   -- Ctrl + F7
+map("n", "<F8>", "<Cmd>DapStepOver<CR>")          -- F8
+map("n", "<F32>", "<Cmd>DapStepInto<CR>")         -- Ctrl + F8
+map("n", "<F20>", "<Cmd>DapStepOut<CR>")          -- Shift + F8
+map("n", "<F9>", "<Cmd>DapToggleBreakpoint<CR>")  -- F9
+map("n", "<F33>", conditionBreakpoint)            -- Ctrl + F9
+map("n", "<F57>", logBreakpoint)                  -- Alt + F9
+map("n", "<F21>", conditionLogBreakpoint)         -- Shift + F9
+map("n", "<A-q>", inspectVariable)
+-- map("n", "<Leader>dr", function() dap.run_last() end)
