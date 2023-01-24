@@ -163,7 +163,7 @@ return function()
 			follow_current_file = true,
 			group_empty_dirs = true,
 			hijack_netrw_behavior = "open_default",
-			use_libuv_file_watcher = false,
+			use_libuv_file_watcher = true,
 		},
 		buffers = {
 			follow_current_file = true, -- This will find and focus the file in the active buffer every
