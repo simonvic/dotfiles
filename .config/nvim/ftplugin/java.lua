@@ -1,4 +1,7 @@
 local vim = vim
+
+vim.opt.colorcolumn = "100";
+
 local jdtls = require("jdtls")
 vim.api.nvim_create_user_command(
 	"JTestClass",
@@ -33,6 +36,7 @@ jdtls.start_or_attach({
 	on_attach = function(client, bufnr)
 		require("jdtls").setup_dap({ hotcode_replace = "auto" })
 		require("jdtls.setup").add_commands()
+		vim.keymap.set({ "n", "i" }, "<A-i>", function() require("jdtls").organize_imports() end)
 	end,
 	settings = {
 		java = {
