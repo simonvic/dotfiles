@@ -166,6 +166,10 @@ M.groups = {
 	["@type.qualifier"]        = { bg = "none", fg = "#CC7832", bold = false },
 	["@type.builtin"]          = { bg = "none", fg = "#f98b31", bold = false },
 	["@variable.builtin"]      = { bg = "none", fg = "#f98b31", bold = false },
+
+	Todo             = { bg = "none", fg = p.hint, bold = true },
+	["@text.todo"]   = { link = "Todo" },
+	["@text.danger"] = { bg = "none", fg = p.warn, bold = true },
 }
 
 if M.config.transparent then
