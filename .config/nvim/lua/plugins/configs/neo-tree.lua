@@ -121,7 +121,6 @@ return function()
 				["<C-h>"] = "split_with_window_picker",
 				["<C-v>"] = "vsplit_with_window_picker",
 				["<C-t>"] = "open_tabnew",
-				["<A-CR>"] = "open_with_window_picker",
 				["C"] = "close_node",
 				["z"] = "close_all_nodes",
 				["Z"] = "expand_all_nodes",
