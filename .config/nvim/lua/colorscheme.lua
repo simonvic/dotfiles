@@ -172,11 +172,11 @@ M.groups = {
 	["@text.danger"] = { bg = "none", fg = p.warn, bold = true },
 }
 
-if M.config.transparent then
-	M.groups.ColorColumn = { bg = "#202020" }
-end
-
 function M.apply()
+	if M.config.transparent then
+		M.groups.ColorColumn = { bg = "#202020" }
+		M.groups.NonText = { fg = "#555555", bold = true }
+	end
 	vim.cmd("colorscheme darcula")
 	for group, colors in pairs(M.groups) do
 		vim.api.nvim_set_hl(0, group, colors)
