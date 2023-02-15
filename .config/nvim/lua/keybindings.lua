@@ -1,353 +1,16 @@
 local vim = vim
 local map = vim.keymap.set
-vim.cmd [[
-""""""""""""""""""""""""""""""""""""""""""""""
-"" ACTIONS
-
-" save
-nnoremap <silent> <C-s>    <Cmd>write<CR>
-inoremap <silent> <C-s>    <Cmd>write<CR>
-vnoremap <silent> <C-s>    <Cmd>write<CR>
-
-" undo
-nnoremap <silent> <C-z>    <Cmd>undo<CR>
-inoremap <silent> <C-z>    <Cmd>undo<CR>
-vnoremap <silent> <C-z>    <Cmd>undo<CR>
-
-" redo
-nnoremap <silent> <C-y>    <Cmd>redo<CR>
-inoremap <silent> <C-y>    <Cmd>redo<CR>
-vnoremap <silent> <C-y>    <Cmd>redo<CR>
-
-" completion
-" inoremap <C-SPACE>         <Cmd>lua vim.lsp.buf.completion()<CR>
-
-" code action
-nnoremap <A-CR>     <Cmd>lua vim.lsp.buf.code_action()<CR>
-inoremap <A-CR>     <Cmd>lua vim.lsp.buf.code_action()<CR>
-
-" go to definition
-nnoremap <C-b>      <Cmd>lua vim.lsp.buf.definition()<CR>
-inoremap <C-b>      <Cmd>lua vim.lsp.buf.definition()<CR>
-
-" find usage
-" @TODO change this
-nnoremap <A-f>       <Cmd>Telescope lsp_references<CR>
-inoremap <A-f>       <Cmd>Telescope lsp_references<CR>
-
-" rename
-nnoremap <F2>       <Cmd>lua vim.lsp.buf.rename()<CR>
-inoremap <F2>       <Cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <C-r>      <Cmd>lua vim.lsp.buf.rename()<CR>
-inoremap <C-r>      <Cmd>lua vim.lsp.buf.rename()<CR>
-
-" documentation
-nnoremap <F1>       <Cmd>lua vim.lsp.buf.hover()<CR>
-inoremap <F1>       <Cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <C-q>      <Cmd>lua vim.lsp.buf.hover()<CR>
-inoremap <C-q>      <Cmd>lua vim.lsp.buf.hover()<CR>
-
-" diagnostic
-nnoremap <C-e>      <Cmd>lua vim.diagnostic.open_float()<CR>
-inoremap <C-e>      <Cmd>lua vim.diagnostic.open_float()<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""
-"" MOVEMENT
-
-" Go previous word end
-nnoremap <C-LEFT>          b
-inoremap <C-LEFT>          <C-o>b
-vnoremap <C-LEFT>          b
-
-" Go next word end
-nnoremap <C-RIGHT>         e
-inoremap <C-RIGHT>         <C-o>e<RIGHT>
-vnoremap <C-RIGHT>         e
-
-" Go to first character
-nnoremap <HOME>            ^
-inoremap <HOME>            <C-o>^
-vnoremap <HOME>            ^
-
-" Go to start of line
-nnoremap <A-HOME>          0
-inoremap <A-HOME>          <C-o>0
-vnoremap <A-HOME>          0
-
-" Go to the last character
-nnoremap <END>             g_
-" inoremap <END>             <C-o>g_
-vnoremap <END>             g_
-
-" Go to the end of line
-nnoremap <A-END>           $
-inoremap <A-END>           <C-o>$
-vnoremap <A-END>           $
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""
-"" SELECTION
-
-" Switch to select mode
-" xnoremap s                 <C-g>
-
-" Select all
-nnoremap <C-a>             ggg0vGg$
-inoremap <C-a>             <ESC>ggg0vGg$
-vnoremap <C-a>             <ESC>ggg0vGg$
-
-" Select to left
-nnoremap <S-LEFT>          v
-inoremap <S-LEFT>          <LEFT><C-o>v
-vnoremap <S-LEFT>          <LEFT>
-
-" Select to right
-nnoremap <S-RIGHT>         v
-inoremap <S-RIGHT>         <C-o>v
-vnoremap <S-RIGHT>         <RIGHT>
-
-" Select to up
-nnoremap <S-UP>            v<UP>
-inoremap <S-UP>            <LEFT><C-o>v<UP><RIGHT>
-vnoremap <S-UP>            <UP>
-
-" Select to down
-nnoremap <S-DOWN>          v<DOWN>
-inoremap <S-DOWN>          <C-o>v<DOWN><LEFT>
-vnoremap <S-DOWN>          <DOWN>
-
-" Select previous word end
-nnoremap <S-C-LEFT>        vb
-inoremap <S-C-LEFT>        <LEFT><C-o>vb
-vnoremap <S-C-LEFT>        b
-
-" Select next word end
-nnoremap <S-C-RIGHT>       ve
-inoremap <S-C-RIGHT>       <C-o>ve
-vnoremap <S-C-RIGHT>       e
-
-" Select to first character
-nnoremap <S-HOME>          v^
-inoremap <S-HOME>          <LEFT><C-o>v^
-vnoremap <S-HOME>          ^
-
-" Select to start of line
-nnoremap <S-A-HOME>        v0
-inoremap <S-A-HOME>        <LEFT><C-o>v0
-vnoremap <S-A-HOME>        0
-
-" Select to last character
-nnoremap <S-END>           vg_
-inoremap <S-END>           <C-o>vg_
-vnoremap <S-END>           g_
-
-" Select to last character
-nnoremap <S-A-END>         v$
-inoremap <S-A-END>         <C-o>v$
-vnoremap <S-A-END>         $
-
-" Select to start of file
-nnoremap <S-C-HOME>        vgg0
-inoremap <S-C-HOME>        <LEFT><C-o>vgg0
-vnoremap <S-C-HOME>        gg0
-
-" Select to beginning of file
-nnoremap <S-C-END>         vG$
-inoremap <S-C-END>         <C-o>vG$
-vnoremap <S-C-END>         G$
-
-
-""""""""""""""""""""""""""""""""""""""""""""""
-"" EDITING
-
-" copy
-nnoremap <C-c>    yl
-vnoremap <C-c>    y
-
-" cut
-nnoremap <C-x>    vd
-vnoremap <C-x>    d
-
-" paste
-nnoremap <C-v>    "0p
-inoremap <C-v>    <C-o>"0p
-vnoremap <C-v>    "0p
-
-" visual block mode
-nnoremap <A-v>    <C-v>
-inoremap <A-v>    <C-o><C-v>
-vnoremap <A-v>    <C-v>
-
-" that (useful) thing at prints the character you pressed lol
-inoremap <A-C-v>    <C-v>
-
-
-" Delete
-nnoremap <BS>                 "_x
-vnoremap <BS>                 "_x
-vnoremap <Del>                "_x
-
-" Delete rear/front word
-nnoremap <C-H>                "_db
-inoremap <C-H>                <C-w>
-nnoremap <C-DEL>              "_de
-inoremap <C-DEL>              <C-o>"_de
-
-" Cut line
-nnoremap <S-DEL>              dd
-inoremap <S-DEL>              <C-o>dd
-
-" move down
-nnoremap <silent> <C-A-DOWN>  <Cmd>move +1<CR>
-inoremap <silent> <C-A-DOWN>  <Cmd>move +1<CR>
-vnoremap <silent> <C-A-DOWN>  :move '>+1<CR>gv
-
-" move up
-nnoremap <silent> <C-A-UP>    <Cmd>move -2<CR>
-inoremap <silent> <C-A-UP>    <Cmd>move -2<CR>
-vnoremap <silent> <C-A-UP>    :move '<-2<CR>gv
-
-" duplicate down
-nnoremap <C-S-DOWN>           <Cmd>copy +0<CR>
-inoremap <C-S-DOWN>           <Cmd>copy +0<CR>
-vnoremap <C-S-DOWN>           :copy '<-1<CR>gv
-
-" duplicate up
-nnoremap <C-S-UP>             <Cmd>copy -1<CR>
-inoremap <C-S-UP>             <Cmd>copy -1<CR>
-vnoremap <C-S-UP>             :copy '>+0<CR>gv
-
-" reindent file
-nnoremap <C-A-l>              magg=G`a
-inoremap <C-A-l>              <ESC>magg=G`aa
-
-" reindent selection
-vnoremap <C-A-l>              <ESC>ma'<='>`a
-
-" reformat file
-nnoremap <A-L>                <Cmd>lua vim.lsp.buf.format()<CR>
-inoremap <A-L>                <Cmd>lua vim.lsp.buf.format()<CR>
-
-" comment
-nnoremap <A-c>                <Cmd>CommentToggle<CR>
-inoremap <A-c>                <Cmd>CommentToggle<CR>
-vnoremap <A-c>                :CommentToggle<CR>
-
-
-" folds
-nnoremap <A--> <Cmd>foldclose<CR>
-inoremap <A--> <Cmd>foldclose<CR>
-
-nnoremap <A-+> <Cmd>foldopen<CR>
-inoremap <A-+> <Cmd>foldopen<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""
-"" WINDOWS
-
-" focus left/down/up/right window
-nnoremap <A-LEFT>          <Cmd>wincmd h<CR>
-nnoremap <A-DOWN>          <Cmd>wincmd j<CR>
-nnoremap <A-UP>            <Cmd>wincmd k<CR>
-nnoremap <A-RIGHT>         <Cmd>wincmd l<CR>
-
-inoremap <A-LEFT>          <Cmd>wincmd h<CR>
-inoremap <A-DOWN>          <Cmd>wincmd j<CR>
-inoremap <A-UP>            <Cmd>wincmd k<CR>
-inoremap <A-RIGHT>         <Cmd>wincmd l<CR>
-
-tnoremap <A-LEFT>          <Cmd>wincmd h<CR>
-tnoremap <A-DOWN>          <Cmd>wincmd j<CR>
-tnoremap <A-UP>            <Cmd>wincmd k<CR>
-tnoremap <A-RIGHT>         <Cmd>wincmd l<CR>
-
-" move current window to left/down/up/right
-nnoremap <A-S-LEFT>        <Cmd>wincmd H<CR>
-nnoremap <A-S-DOWN>        <Cmd>wincmd J<CR>
-nnoremap <A-S-UP>          <Cmd>wincmd K<CR>
-nnoremap <A-S-RIGHT>       <Cmd>wincmd L<CR>
-
-inoremap <A-S-LEFT>        <Cmd>wincmd H<CR>
-inoremap <A-S-DOWN>        <Cmd>wincmd J<CR>
-inoremap <A-S-UP>          <Cmd>wincmd K<CR>
-inoremap <A-S-RIGHT>       <Cmd>wincmd L<CR>
-
-" Buffers
-nnoremap <A-PageUp>        <Cmd>bnext<CR>
-inoremap <A-PageUp>        <Cmd>bnext<CR>
-
-nnoremap <A-PageDown>      <Cmd>bprevious<CR>
-inoremap <A-PageDown>      <Cmd>bprevious<CR>
-
-" Tabs
-nnoremap <C-t>             <Cmd>tabnew<CR>
-inoremap <C-t>             <Cmd>tabnew<CR>
-" (ctrl + f4)
-nnoremap <F28>             <Cmd>tabclose<CR>
-inoremap <F28>             <Cmd>tabclose<CR>
-" (ctrl + shift + f4)
-nnoremap <F40>             <Cmd>tabdo close<CR>
-inoremap <F40>             <Cmd>tabdo close<CR>
-nnoremap <C-PageUp>        <Cmd>tabprevious<CR>
-inoremap <C-PageUp>        <Cmd>tabprevious<CR>
-nnoremap <C-PageDown>      <Cmd>tabnext<CR>
-inoremap <C-PageDown>      <Cmd>tabnext<CR>
-nnoremap <C-S-PageUp>      <Cmd>-tabmove<CR>
-inoremap <C-S-PageUp>      <Cmd>-tabmove<CR>
-nnoremap <C-S-PageDown>    <Cmd>+tabmove<CR>
-inoremap <C-S-PageDown>    <Cmd>+tabmove<CR>
-
-" NvimTree
-nnoremap <A-\>             <Cmd>Neotree focus<CR>
-tnoremap <A-\>             <Cmd>Neotree focus<CR>
-inoremap <A-\>             <Cmd>Neotree focus<CR><ESC>
-
-" terminal
-nnoremap <A-ò>             <Cmd>ToggleTerm<CR>
-tnoremap <A-ò>             <Cmd>ToggleTerm<CR>
-tnoremap <Esc>             <C-\><C-n>
-
-" Symbols outline
-nnoremap <A-9>             <Cmd>AerialToggle<CR>
-inoremap <A-9>             <Cmd>AerialToggle<CR>
-vnoremap <A-9>             <Cmd>AerialToggle<CR>
-
-
-" Telescope
-nnoremap <C-p>              <Cmd>Telescope find_files hidden=true<CR>
-inoremap <C-p>              <Cmd>Telescope find_files hidden=true<CR>
-
-nnoremap <A-p>              <Cmd>Telescope<CR>
-inoremap <A-p>              <Cmd>Telescope<CR>
-
-nnoremap <C-A-p>            <Cmd>Telescope lsp_dynamic_workspace_symbols<CR>
-inoremap <C-A-p>            <Cmd>Telescope lsp_dynamic_workspace_symbols<CR>
-
-nnoremap <A-Tab>            <Cmd>Telescope buffers theme=dropdown<CR>
-inoremap <A-Tab>            <Cmd>Telescope buffers theme=dropdown<CR>
-
-nnoremap <C-f>              <Cmd>Telescope current_buffer_fuzzy_find<CR>
-inoremap <C-f>              <Cmd>Telescope current_buffer_fuzzy_find<CR>
-
-nnoremap <C-A-f>            <Cmd>Telescope live_grep<CR>
-inoremap <C-A-f>            <Cmd>Telescope live_grep<CR>
-
-
-let mapleader = " "
-"" UI
-" columns
-" map <Leader>ucg <Cmd>lua simonvic.utils.ui.toggle_gitsigns()<CR>
-" map <Leader>ucf <Cmd>lua simonvic.utils.ui.toggle_foldcolumn()<CR>
-
-" Debug
-map <Leader>ud <Cmd>lua require("dapui").toggle()<CR>
-
-" Editor
-map <Leader>ul <Cmd>lua vim.opt.list = not vim.opt.list:get()<CR>
-
-]]
+local lsp = vim.lsp.buf
+local n___ = { "n" }
+local _v__ = { "v" }
+local __i_ = { "i" }
+local ___t = { "t" }
+local nvi_ = { "n", "v", "i" }
+local nv__ = { "n", "v" }
+local n_i_ = { "n", "i" }
+local n_it = { "n", "i", "t" }
+local n__t = { "n", "t" }
+local _vi_ = { "v", "i" }
 
 local dap = require("dap")
 
@@ -371,20 +34,178 @@ local function conditionLogBreakpoint()
 	end)
 end
 
-local function inspectVariable()
-	-- require("dap.ui.widgets").hover()
-	require("dapui").eval()
-end
+local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
 
-map("n", "<F7>", "<Cmd>DapContinue<CR>")          -- F7
-map("n", "<F55>", "<Cmd>DapTerminate<CR>")        -- Alt + F7
-map("n", "<F31>", "<Cmd>JdtHotcodeReplace<CR>")   -- Ctrl + F7
-map("n", "<F8>", "<Cmd>DapStepOver<CR>")          -- F8
-map("n", "<F32>", "<Cmd>DapStepInto<CR>")         -- Ctrl + F8
-map("n", "<F20>", "<Cmd>DapStepOut<CR>")          -- Shift + F8
-map("n", "<F9>", "<Cmd>DapToggleBreakpoint<CR>")  -- F9
-map("n", "<F33>", conditionBreakpoint)            -- Ctrl + F9
-map("n", "<F57>", logBreakpoint)                  -- Alt + F9
-map("n", "<F21>", conditionLogBreakpoint)         -- Shift + F9
-map("n", "<A-q>", inspectVariable)
--- map("n", "<Leader>dr", function() dap.run_last() end)
+local function inspectVariable() require("dapui").eval() end -- require("dap.ui.widgets").hover()
+
+local function codeAction() lsp.code_action() end
+
+local function goToDefinition() lsp.definition() end
+
+local function rename() lsp.rename() end
+
+local function openDocumentation() lsp.hover(); end
+
+local function showDiagnostics() vim.diagnostics.open_float() end
+
+local function format() lsp.format() end
+
+local function toggleDapUI() require("dapui").toggle() end
+
+local function toggleListChars() vim.opt.list = not vim.opt.list:get() end
+
+vim.g.mapleader = " "
+vim.g.localmapleader = " "
+
+local keybindings = {
+	--	{ modes, lhs, rhs, options}
+	------------------------------------------------------------------- ACTIONS
+	{ nvi_, "<C-s>", cmd("write"), { silent = true } }, --                 save
+	{ nvi_, "<C-z>", cmd("undo"), { silent = true } }, --                  undo
+	{ nvi_, "<C-y>", cmd("redo"), { silent = true } }, --                  redo
+	{ n_i_, "<A-CR>", codeAction }, --                             code actions
+	{ n_i_, "<C-b>", goToDefinition }, --                      go to definition
+	{ n_i_, "<A-f>", cmd("Telescope lsp_references") }, --           find usage
+	{ n_i_, "<F2>", rename }, --                                         rename
+	{ n_i_, "<C-r>", rename },
+	{ n_i_, "<F1>", openDocumentation }, --                           open docs
+	{ n_i_, "<C-q>", openDocumentation },
+	{ n_i_, "<C-e>", showDiagnostics }, --                     show diagnostics
+	------------------------------------------------------------------ MOVEMENT
+	{ nv__, "<C-LEFT>", "b" }, --                                  previous end
+	{ __i_, "<C-LEFT>", "<C-o>b" },
+	{ nv__, "<C-RIGHT>", "e" }, --                                    next word
+	{ __i_, "<C-RIGHT>", "<C-o>e<RIGHT>" },
+	{ nv__, "<HOME>", "^" }, --                                 first character
+	{ __i_, "<HOME>", "<C-o>^" },
+	{ nv__, "<A-HOME>", "0" }, --                                 start of line
+	{ __i_, "<A-HOME>", "<C-o>0" },
+	{ nv__, "<END>", "g_" }, --                                  last character
+	{ nv__, "<A-END>", "$" },
+	{ __i_, "<A-END>", "<C-o>$" }, --                               end of line
+	----------------------------------------------------------------- SELECTION
+	{ n___, "<C-a>", "ggg0vGg$" }, --                                       all
+	{ _vi_, "<C-a>", "<ESC>ggg0vGg$" },
+	{ n___, "<S-LEFT>", "v<LEFT>" }, --                                    left
+	{ _v__, "<S-LEFT>", "<LEFT>" },
+	{ __i_, "<S-LEFT>", "<LEFT><C-o>v" },
+	{ n___, "<S-RIGHT>", "v<RIGHT>" }, --                                 right
+	{ _v__, "<S-RIGHT>", "<RIGHT>" },
+	{ __i_, "<S-RIGHT>", "<C-o>v" },
+	{ n___, "<S-UP>", "v<UP>" }, --                                          up
+	{ _v__, "<S-UP>", "<UP>" },
+	{ __i_, "<S-UP>", "<LEFT><C-o>v<UP><RIGHT>" },
+	{ n___, "<S-DOWN>", "v<DOWN>" }, --                                    down
+	{ _v__, "<S-DOWN>", "<DOWN>" },
+	{ __i_, "<S-DOWN>", "<C-o>v<DOWN><LEFT>" },
+	{ n___, "<S-C-LEFT>", "vb" }, --                                  word left
+	{ _v__, "<S-C-LEFT>", "b" },
+	{ __i_, "<S-C-LEFT>", "<LEFT><C-o>vb" },
+	{ n___, "<S-C-RIGHT>", "ve" }, --                                word right
+	{ _v__, "<S-C-RIGHT>", "e" },
+	{ __i_, "<S-C-RIGHT>", "<C-o>ve" },
+	{ n___, "<S-HOME>", "v^" }, --                           to first character
+	{ _v__, "<S-HOME>", "^" },
+	{ __i_, "<S-HOME>", "<LEFT><C-o>v^" },
+	{ n___, "<S-A-HOME>", "v0" }, --                           to start of line
+	{ _v__, "<S-A-HOME>", "0" },
+	{ __i_, "<S-A-HOME>", "<LEFT><C-o>v0" },
+	{ n___, "<S-END>", "vg_" }, --                            to last character
+	{ _v__, "<S-END>", "g_" },
+	{ __i_, "<S-END>", "<C-o>vg_" },
+	{ n___, "<S-A-END>", "v$" }, --                              to end of line
+	{ _v__, "<S-A-END>", "$" },
+	{ __i_, "<S-A-END>", "<C-o>v$" },
+	{ n___, "<S-C-HOME>", "vgg0" }, --                         to start of file
+	{ _v__, "<S-C-HOME>", "gg0" },
+	{ __i_, "<S-C-HOME>", "<LEFT><C-o>vgg0" },
+	{ n___, "<S-C-END>", "vG$" }, --                             to end of file
+	{ _v__, "<S-C-END>", "G$" },
+	{ __i_, "<S-C-END>", "<C-o>vG$" },
+	------------------------------------------------------------------- EDITING
+	{ n___, "<C-c>", "yl" }, --                                            copy
+	{ _v__, "<C-c>", "y" },
+	{ n___, "<C-x>", "yd" }, --                                             cut
+	{ _v__, "<C-x>", "d" },
+	{ nv__, "<C-v>", '"0p' }, --                                          paste
+	{ __i_, "<C-v>", '<C-o>"0p' },
+	{ nv__, "<A-v>", "<C-v>" }, --                            visual block mode
+	{ __i_, "<A-v>", "<C-o><C-v>" },
+	{ __i_, "<A-C-v>", "<C-v>" }, --                     input keycode listener
+	{ nv__, "<BS>", '"_x' }, --                                           delete
+	{ _v__, "<DEL>", '"_x' },
+	{ n___, "<C-H>", '"_db' }, --                        delete rear/front word
+	{ __i_, "<C-H>", "<C-w>" },
+	{ n___, "<C-DEL>", '"_de' },
+	{ __i_, "<C-DEL>", '<C-o>"_de' },
+	{ n___, "<S-DEL>", "dd" }, --                                      cut line
+	{ __i_, "<S-DEL>", "<C-o>dd" },
+	{ n_i_, "<C-A-DOWN>", cmd("move +1"), { silent = true } }, --     move down
+	{ _v__, "<C-A-DOWN>", ":move '>+1<CR>gv", { silent = true } },
+	{ n_i_, "<C-A-UP>", cmd("move -2"), { silent = true } }, --         move up
+	{ _v__, "<C-A-UP>", ":move '<-2<CR>gv", { silent = true } },
+	{ n_i_, "<C-S-DOWN>", cmd("copy -1"), { silent = true } }, --     copy down
+	{ _v__, "<C-S-DOWN>", ":copy '<-1<CR>gv", { silent = true } },
+	{ n_i_, "<C-S-UP>", cmd("copy -1"), { silent = true } }, --         copy up
+	{ _v__, "<C-S-UP>", ":copy '>+0<CR>gv", { silent = true } },
+	{ n___, "<C-A-l>", "magg=G`a" }, --                           reindent file
+	{ __i_, "<C-A-l>", "<ESC>magg=G`aa" },
+	{ _v__, "<C-A-l>", "<ESC>ma'<='>`a" }, --                reindent selection
+	{ n_i_, "<A-L>", format }, --                                      reformat
+	{ n_i_, "<A-c>", cmd("CommentToggle") }, --                  comment toggle
+	{ _v__, "<A-c>", ":CommentToggle<CR>" },
+	{ n_i_, "<A-->", cmd("foldclose") }, --                          fold close
+	{ n_i_, "<A-+>", cmd("foldopen") }, --                            fold open
+	------------------------------------------------------------------- WINDOWS
+	{ n_it, "<A-LEFT>", cmd("wincmd h") }, --                 focus left window
+	{ n_it, "<A-DOWN>", cmd("wincmd j") }, --                 focus down window
+	{ n_it, "<A-UP>", cmd("wincmd k") }, --                     focus up window
+	{ n_it, "<A-RIGHT>", cmd("wincmd l") }, --               focus right window
+	{ n_i_, "<A-S-LEFT>", cmd("wincmd H") }, --                       move left
+	{ n_i_, "<A-S-DOWN>", cmd("wincmd J") }, --                       move down
+	{ n_i_, "<A-S-UP>", cmd("wincmd K") }, --                           move up
+	{ n_i_, "<A-S-RIGHT>", cmd("wincmd L") }, --                     move right
+	{ n_i_, "<A-PageUp>", cmd("bnext") }, --                        next buffer
+	{ n_i_, "<A-PageDown>", cmd("bprevious") }, --              previous buffer
+	{ n_i_, "<C-t>", cmd("tabnew") }, --                                new tab
+	{ n_i_, "<F28>", cmd("tabclose") }, --                            close tab
+	{ n_i_, "<F40>", cmd("tabdo close") }, --                    close all tabs
+	{ n_i_, "<C-PageUp>", cmd("tabprevious") }, --                 previous tab
+	{ n_i_, "<C-PageDown>", cmd("tabnext") }, --                       next tab
+	{ n_i_, "<C-S-PageUp>", cmd("-tabmove") }, --              move tab to left
+	{ n_i_, "<C-S-PageDown>", cmd("+tabmove") }, --           move tab to right
+	{ n__t, "<A-\\>", cmd("Neotree focus") }, --                 focus filetree
+	{ __i_, "<A-\\>", cmd("Neotree focus") .. "<ESC>" },
+	{ n__t, "<A-ò>", cmd("ToggleTerm") }, --                           terminal
+	{ ___t, "<Esc>", "<C-\\><C-n>" },
+	{ n_i_, "<C-p>", cmd("Telescope find_files hidden=true") }, --   find files
+	{ n_i_, "<A-p>", cmd("Telescope") }, --                           telescope
+	{ n_i_, "<C-A-p>", cmd("Telescope lsp_dynamic_workspace_symbols") }, -- find symbols
+	{ n_i_, "<A-t>", cmd("Telescope buffers theme=dropdown") }, --      buffers
+	{ n_i_, "<C-f>", cmd("Telescope current_buffer_fuzzy_find") }, -- fuzzy find
+	{ n_i_, "<C-A-f>", cmd("Telescope live_grep") }, --               live grep
+	------------------------------------------------------------------------ UI
+	{ n___, "<Leader>ud", toggleDapUI }, --                               dapui
+	{ n___, "<Leader>ul", toggleListChars }, --               toggle list chars
+	----------------------------------------------------------------- DEBUGGING
+	{ n___, "<F7>", cmd("DapContinue") }, --                               [F7]
+	{ n___, "<F55>", cmd("DapTerminate") }, --                       [Alt + F7]
+	{ n___, "<F31>", cmd("JdtHotcodeReplace") }, --                 [Ctrl + F7]
+	{ n___, "<F8>", cmd("DapStepOver") }, --                               [F8]
+	{ n___, "<F32>", cmd("DapStepInto") }, --                       [Ctrl + F8]
+	{ n___, "<F20>", cmd("DapStepOut") }, --                       [Shift + F8]
+	{ n___, "<F9>", cmd("DapToggleBreakpoint") }, --                       [F9]
+	{ n___, "<F33>", conditionBreakpoint }, --                      [Ctrl + F9]
+	{ n___, "<F57>", logBreakpoint }, --                             [Alt + F9]
+	{ n___, "<F21>", conditionLogBreakpoint }, --                  [Shift + F9]
+	{ n___, "<A-q>", inspectVariable }, --                     inspect variable
+}
+
+
+for _, keybind in ipairs(keybindings) do
+	local modes = keybind[1]
+	local lhs = keybind[2]
+	local rhs = keybind[3]
+	local opts = keybind[4] or {}
+	map(modes, lhs, rhs, opts)
+end
