@@ -103,6 +103,8 @@ M.groups = {
 	DiagnosticUnderlineHint      = { undercurl = true },
 
 	-- DAP UI
+	DapUINormal                  = { bg = p.zdepth_1 },
+	DapUINormalNC                = { bg = p.zdepth_1 },
 	DapUIPlayPause               = { bg = p.zdepth_1, fg = p.ok },
 	DapUIStop                    = { bg = p.zdepth_1, fg = p.error },
 	DapUIRestart                 = { bg = p.zdepth_1, fg = p.hint },
