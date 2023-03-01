@@ -46,7 +46,7 @@ local function rename() lsp.rename() end
 
 local function openDocumentation() lsp.hover(); end
 
-local function showDiagnostics() vim.diagnostics.open_float() end
+local function showDiagnostics() vim.diagnostic.open_float() end
 
 local function format() lsp.format() end
 
@@ -55,7 +55,7 @@ local function toggleDapUI() require("dapui").toggle() end
 local function toggleListChars() vim.opt.list = not vim.opt.list:get() end
 
 vim.g.mapleader = " "
-vim.g.localmapleader = " "
+vim.g.maplocalleader = " "
 
 local keybindings = {
 	--	{ modes, lhs, rhs, options}
@@ -144,7 +144,7 @@ local keybindings = {
 	{ _v__, "<C-A-DOWN>", ":move '>+1<CR>gv", { silent = true } },
 	{ n_i_, "<C-A-UP>", cmd("move -2"), { silent = true } }, --         move up
 	{ _v__, "<C-A-UP>", ":move '<-2<CR>gv", { silent = true } },
-	{ n_i_, "<C-S-DOWN>", cmd("copy -1"), { silent = true } }, --     copy down
+	{ n_i_, "<C-S-DOWN>", cmd("copy +0"), { silent = true } }, --     copy down
 	{ _v__, "<C-S-DOWN>", ":copy '<-1<CR>gv", { silent = true } },
 	{ n_i_, "<C-S-UP>", cmd("copy -1"), { silent = true } }, --         copy up
 	{ _v__, "<C-S-UP>", ":copy '>+0<CR>gv", { silent = true } },
@@ -187,6 +187,7 @@ local keybindings = {
 	------------------------------------------------------------------------ UI
 	{ n___, "<Leader>ud", toggleDapUI }, --                               dapui
 	{ n___, "<Leader>ul", toggleListChars }, --               toggle list chars
+	{ nvi_, "<A-9>", cmd("AerialToggle") }, --                  symbols outline
 	----------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>", cmd("DapContinue") }, --                               [F7]
 	{ n___, "<F55>", cmd("DapTerminate") }, --                       [Alt + F7]
