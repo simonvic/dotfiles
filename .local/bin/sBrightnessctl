@@ -34,13 +34,15 @@ notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
 
-# Labels for polybar
-brightnessLowLabel="  "
-brightnessMediumLabel="  "
-brightnessHighLabel="  "
-brightnessMaxLabel="  "
-redshiftOnLabel=" "
-redshiftOffLabel= #""
+# Labels for polybar @deprecated
+brightnessLowLabel="󰃞"
+brightnessMediumLabel="󰃝"
+brightnessHighLabel="󰃟"
+brightnessMaxLabel="󰃠"
+
+# Labels for polybar module
+redshiftOnLabel="󰌶"
+redshiftOffLabel=#"󰹐"
 
 # Default values
 defaultBrightnessChangeValue=1
@@ -206,7 +208,7 @@ function printBrightness() {
 	if [[ "$1" == "extended" ]]; then
 		bar="$(seq -s '─' 0 $((brightness / 10 - 1)) | sed 's/[0-9]//g')│"
 		emptyBar="$(seq -s '─' 0 $((10 - brightness / 10)) | sed 's/[0-9]//g')"
-		body=$brightness%$bar$emptyBar
+		body="$brightness% $bar$emptyBar"
 	fi
 	echo "$suffix$body"
 
