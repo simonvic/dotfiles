@@ -124,10 +124,10 @@ return function()
 				["C"] = "close_node",
 				["z"] = "close_all_nodes",
 				["Z"] = "expand_all_nodes",
-				["a"] = { "add", config = { show_path = "none" } },
+				["a"] = { "add", config = { show_path = "relative" } },
 				["<DEL>"] = "delete",
-				["<F2>"] = "move", -- (rename)
-				["<C-r>"] = "move", -- (rename)
+				["<F2>"] = { "move", config = { show_path = "relative" } }, -- (rename)
+				["<C-r>"] = { "move", config = { show_path = "relative" } }, -- (rename)
 				["y"] = "copy_to_clipboard",
 				["x"] = "cut_to_clipboard",
 				["p"] = "paste_from_clipboard",
