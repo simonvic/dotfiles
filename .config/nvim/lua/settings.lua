@@ -30,9 +30,9 @@ opt.backspace = "indent,eol,start,nostop"
 -- @TODO vim.opt.undofile
 
 -- fold
-opt.foldmethod = "expr"
-vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 opt.foldlevel = 69
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 --------------------------------------------------------------------------------
 --                                                                    APPEARANCE
