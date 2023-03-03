@@ -154,6 +154,8 @@ local keybindings = {
 	{ n_i_, "<A-L>", format }, --                                      reformat
 	{ n_i_, "<A-c>", cmd("CommentToggle") }, --                  comment toggle
 	{ _v__, "<A-c>", ":CommentToggle<CR>" },
+	{ _v__, "<TAB>", ">gv" }, --                                increase indent
+	{ _v__, "<S-TAB>", "<gv" }, --                              decrease indent
 	{ n_i_, "<A-->", cmd("foldclose") }, --                          fold close
 	{ n_i_, "<A-+>", cmd("foldopen") }, --                            fold open
 	------------------------------------------------------------------- WINDOWS
@@ -204,9 +206,5 @@ local keybindings = {
 
 
 for _, keybind in ipairs(keybindings) do
-	local modes = keybind[1]
-	local lhs = keybind[2]
-	local rhs = keybind[3]
-	local opts = keybind[4] or {}
-	map(modes, lhs, rhs, opts)
+	map(keybind[1], keybind[2], keybind[3], keybind[4] or {})
 end
