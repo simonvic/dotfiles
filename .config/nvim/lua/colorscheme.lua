@@ -2,7 +2,7 @@ local vim = vim
 local M = {}
 
 M.config = {
-	transparent = false,
+	transparent = true,
 	italic_comments = true
 }
 
