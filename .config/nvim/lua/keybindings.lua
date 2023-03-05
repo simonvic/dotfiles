@@ -55,10 +55,9 @@ local function fuzzyFind() telescope_builtin.current_buffer_fuzzy_find() end
 local function liveGrep() telescope_builtin.live_grep() end
 local function buffers() telescope_builtin.buffers(telescope_themes.get_dropdown({})) end
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 local keybindings = {
+	leader = " ",
+	localleader = " ",
 	-- { modes, lhs,              rhs,                             options,           description },
 	------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",          cmd("write"),               { silent = true }, "save" },
@@ -207,5 +206,7 @@ local keybindings = {
 
 
 for _, keybind in ipairs(keybindings) do
+	vim.g.mapleader = keybindings.leader
+	vim.g.maplocalleader = keybindings.localleader
 	vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
 end
