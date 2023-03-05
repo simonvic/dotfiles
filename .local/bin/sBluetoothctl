@@ -14,9 +14,13 @@
 #
 ###############################################################################
 
-poweredOnLabel=""
-poweredOffLabel="" #""
-connectedLabel=""
+poweredOffLabel= #"󰂲"
+poweringLabel="󰂳"
+poweredOnLabel="󰂯"
+connectedLabel="󰂱"
+
+secondsBetweenTries=0.1
+maxTries=10
 
 ###############################################################################
 
@@ -33,6 +37,13 @@ function isPowered() {
 }
 
 ##
+#	Get if bluetooth is powering on or off
+#	@return true|false
+function isPowering() {
+	[[ -n $(bluetoothctl show | grep -E "PowerState: off-enabling|PowerState: on-disabling") ]] && echo true || echo false
+}
+
+##
 #	Get if connected to a bluetooth device
 #	@return true|false
 function isConnected() {
@@ -43,31 +54,38 @@ function isConnected() {
 #	Print status label for polybar
 #	@return label
 function printStatus() {
-	if $(isPowered); then
-		if $(isConnected); then
-			echo "$connectedLabel"
-		else
-			echo "$poweredOnLabel"
-		fi
-	else
-		echo "$poweredOffLabel"
-	fi
-
+	if $(isPowering); then
+		echo "$poweringLabel"
+    elif $(isPowered); then
+    	if $(isConnected); then
+    		echo "$connectedLabel"
+    	else
+    		echo "$poweredOnLabel"
+    	fi
+    else
+    	echo "$poweredOffLabel"
+    fi
 }
 
 ##
 #	Change bluetooth power
 #	@param toggle,on or off
 function power() {
-	if [[ $1 == "toggle" ]]; then
+	local newState=$1
+	if [[ $newState == "toggle" ]]; then
 		if $(isPowered); then
-			bluetoothctl power off
+			newState="off"
 		else
-			bluetoothctl power on
+			newState="on"
 		fi
-	else
-		bluetoothctl power $1
 	fi
+	bluetoothctl power $newState
+	updatePolybar
+	local tries=0
+	while [[ $(isPowering) == true ]] && [[ $tries -lt $maxTries ]]; do
+		sleep $secondsBetweenTries
+		((time++))
+	done
 	updatePolybar
 }
 
@@ -77,7 +95,15 @@ function power() {
 #	@param device name
 #	@return device UUID
 function findDeviceUUID() {
-	bluetoothctl devices | grep -i $1 | awk -F ' ' '{print $2}'
+	bluetoothctl devices | grep -i "$1" | awk -F ' ' '{print $2}'
+}
+
+##
+#	Check if connected to device
+#	@param UUID of device
+#	@return boolean
+function isConnectedTo() {
+	[[ $(bluetoothctl devices Connected | grep "$1") ]] && echo true || echo false
 }
 
 
@@ -85,15 +111,21 @@ function findDeviceUUID() {
 #	Connect to a device
 #	@param device name
 function connect() {
-	if [[ -n $1 ]]; then
-		if ! $(isPowered); then
-			power on
-		fi
-		bluetoothctl connect $(findDeviceUUID $1)
-		updatePolybar
-	else
+	if [[ -z "$1" ]]; then
 		printUsage
+		return
 	fi
+	if ! $(isPowered); then
+		power on
+	fi
+	local tries=0
+	local uuid=$(findDeviceUUID "$1")
+	bluetoothctl connect "$uuid"
+	while [[ $(isConnectedTo "$uuid") == false ]] && [[ $tries -lt $maxTries ]]; do
+		sleep $secondsBetweenTries
+		((tries++))
+	done
+	updatePolybar
 }
 
 ##
@@ -108,7 +140,7 @@ function printUsage() {
 	printf "%s\n" "
 - Usage
 	sBluetoothctl <options>
-	
+
 - Options
 	help                                # Show this help
 	print                               # Print the current status label
@@ -122,8 +154,8 @@ function printUsage() {
 }
 
 case $1 in
-print) printStatus ;;
-power | p) power $2 ;;
-connect | c) connect $2 ;;
-help | *) printUsage ;;
+	print) printStatus ;;
+	power | p) power $2 ;;
+	connect | c) connect "$2" ;;
+	help | *) printUsage ;;
 esac
