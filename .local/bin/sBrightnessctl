@@ -34,12 +34,6 @@ notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
 
-# Labels for polybar @deprecated
-brightnessLowLabel="󰃞"
-brightnessMediumLabel="󰃝"
-brightnessHighLabel="󰃟"
-brightnessMaxLabel="󰃠"
-
 # Labels for polybar module
 redshiftOnLabel="󰌶"
 redshiftOffLabel= #"󰹐"
@@ -58,9 +52,15 @@ screensaver_time=1000
 screensaver_fps=240
 
 # Store redshift status and temperature
-redshiftState=~/.config/i3/scripts/redshift.sh
-source $redshiftState
-
+redshiftStateFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/${0##*/}/redshift.sh
+if [[ ! -e "$redshiftStateFile" ]]; then
+	mkdir -p "${redshiftStateFile%/*}"
+	echo "redshiftEnabled=false" >> "$redshiftStateFile"
+	echo "redshiftTemperature=3400" >> "$redshiftStateFile"
+fi
+source "$redshiftStateFile"
+: "${redshiftEnabled:=false}"
+: "${redshiftTemperature:=3400}"
 
 ###############################################################################
 
@@ -86,52 +86,34 @@ function setBrightness() {
 ##
 #	Change brightness level
 #	@param -inc | -dec
-#	@param amount
+#	@param amount default: defaultBrightnessChangeValue
 function changeBrightness() {
-	if [[ -z $2 ]]; then
-		xbacklight $1 $defaultBrightnessChangeValue -steps $fade_steps -time $fade_time
-	else
-		xbacklight $1 $2 -steps $fade_steps -time $fade_time
-	fi
-}
-
-
-##
-#	Get if redshift is on
-#	@return true|false
-function isRedshiftOn() {
-	[[ $REDSHIFT_STATUS == on ]] && echo true || echo false
-}
-
-##
-#	Get redshift temperature
-#	@return temperature in kelvin
-function getRedshiftTemperature() {
-	echo $REDSHIFT_TEMP
+	xbacklight $1 "${2:-$defaultBrightnessChangeValue}" -steps "$fade_steps" -time "$fade_time"
 }
 
 ##
 #	Toggle Redshift status
 function toggleRedshift() {
-	if [[ "$REDSHIFT_STATUS" == on ]]; then
-		sed -i "s/REDSHIFT_STATUS=on/REDSHIFT_STATUS=off/g" $redshiftState
+	if [[ "$redshiftEnabled" == true ]]; then
 		redshift -x
-		REDSHIFT_STATUS=off
-	elif [[ "$REDSHIFT_STATUS" == off ]]; then
-		sed -i "s/REDSHIFT_STATUS=off/REDSHIFT_STATUS=on/g" $redshiftState
-		redshift -O "$REDSHIFT_TEMP"
-		REDSHIFT_STATUS=on
+		redshiftEnabled=false
+	else
+		redshift -P -O "$redshiftTemperature"
+		redshiftEnabled=true
 	fi
+	sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
 }
 
 ##
 #	Change redshift temperature
 #	@param temperature [1000 - 25000]
-function changeTemp() {
+function setRedshiftTemperature() {
 	if [[ "$1" -gt 1000 ]] && [[ "$1" -lt 25000 ]]; then
-		sed -i "s/REDSHIFT_TEMP=$REDSHIFT_TEMP/REDSHIFT_TEMP=$1/g" $redshiftState
-		redshift -P -O $1
-		REDSHIFT_TEMP=$1
+		redshiftTemperature=$1
+		redshiftEnabled=true
+		redshift -P -O "$redshiftTemperature"
+		sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
+		sed -i "s/redshiftTemperature=.*/redshiftTemperature=$redshiftTemperature/" "$redshiftStateFile"
 	fi
 }
 
@@ -140,9 +122,9 @@ function changeTemp() {
 #	@param current brightness
 function buildBar() {
 	DrawBar.sh                               \
-		--length $notificationBarLength      \
-		--step $notificationBarStep          \
-		--value $1                           \
+		--length "$notificationBarLength"    \
+		--step "$notificationBarStep"        \
+		--value "$1"                         \
 		--bar-chars "$notificationBarChars"  \
 		--borders "$notificationBarBorders"
 }
@@ -157,8 +139,8 @@ function sendNotification() {
 	local brightness=$(getBrightness)
 	local summary=""
 	local bodyFormat=""
-	local bar="$(buildBar $brightness)"
-	
+	local bar=$(buildBar "$brightness")
+
 	if [[ $brightness -ge 75 ]]; then		
 		icon=$notificationHighIcon
 	elif [[ $brightness -gt 25 ]]; then
@@ -168,8 +150,8 @@ function sendNotification() {
 	fi
 
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
-	if $(isRedshiftOn); then
-		summary="$brightness% $(getRedshiftTemperature)k"
+	if [[ "$redshiftEnabled" == true ]]; then
+		summary="$brightness% ${redshiftTemperature}k"
 		bodyFormat=$notificationBodyFormatRedshift
 	else
 		summary="$brightness%"
@@ -185,33 +167,6 @@ function sendNotification() {
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$urgency" \
 		"$summary" "$body"
-
-}
-
-##
-#	Print brightness label for polybar module
-#	@param extended
-function printBrightness() {
-	local brightness=$(getBrightness)
-	local suffix=""
-	local body=""
-	if [[ $brightness -le 20 ]]; then
-		suffix=$brightnessLowLabel
-	elif [[ $brightness -le 40 ]]; then
-		suffix=$brightnessMediumLabel
-	elif [[ $brightness -le 60 ]]; then
-		suffix=$brightnessHighLabel
-	elif [[ $brightness -le 100 ]]; then
-		suffix=$brightnessMaxLabel
-	fi
-
-	if [[ "$1" == "extended" ]]; then
-		bar="$(seq -s '─' 0 $((brightness / 10 - 1)) | sed 's/[0-9]//g')│"
-		emptyBar="$(seq -s '─' 0 $((10 - brightness / 10)) | sed 's/[0-9]//g')"
-		body="$brightness% $bar$emptyBar"
-	fi
-	echo "$suffix$body"
-
 }
 
 ##
@@ -220,15 +175,22 @@ function printBrightness() {
 function printTemperature() {
 	local body=""
 	local suffix=""
-	if [[ $REDSHIFT_STATUS == off ]]; then
+	if [[ "$redshiftEnabled" == false ]]; then
 		suffix=$redshiftOffLabel
 	else
 		suffix=$redshiftOnLabel
 		if [[ "$1" = "extended" ]]; then
-			body="$REDSHIFT_TEMP K"
+			body="$redshiftTemperature K"
 		fi
 	fi
 	echo "$suffix$body"
+}
+
+function restoreRedshift() {
+	if [[ "$redshiftEnabled" == true ]]; then
+		redshift -P -O "$redshiftTemperature"
+	fi
+
 }
 
 function screensaver() {
@@ -252,20 +214,20 @@ function printUsage() {
 	printf "%s\n" "
 - Usage
 	sBrightnessctl <options> [...]
-	
+
 - Options
 	help                         # Show this help
 	increase [amount]            # Increase the brightness by [amount] if specified or the default value otherwise
 	decrease [amount]            # Decrease the brightness by [amount] if specified or the default value otherwise
 	set <value>                  # Set the brightness to <value>
-	print                        # Print current brightness label
 	screensaver                  # Lower the brightness to the minimum
 	redshift toggle              # Toggle on/off redshift
 	redshift increase [amount]   # Increase the redshift temperature by [amount] if specified or the default value otherwise
 	redshift decrease [amount]   # Decrease the redshift temperature by [amount] if specified or the default value otherwise
+	redshift restore             # Load previously saved redshift state
 	redshift print               # Print the current redshift temperature (used in polybar)
-	
-- Abbreviations
+
+	- Abbreviations
 	i = increase
 	d = decrease
 	s = set
@@ -275,57 +237,49 @@ function printUsage() {
 }
 
 case $1 in
-increase | i)
-	changeBrightness -inc $2
-	updatePolybar
-	sendNotification
-	;;
-decrease | d)
-	changeBrightness -dec $2
-	updatePolybar
-	sendNotification
-	;;
-set | s)
-	setBrightness "$2 -step $fade_fps -time $fade_time"
-	updatePolybar
-	sendNotification
-	;;
-screensaver)
-	screensaver
-	updatePolybar
-	;;
-print)
-	printBrightness $2
-	;;
-redshift | r)
-	case $2 in
-	toggle | t)
-		toggleRedshift
-		updatePolybar
-		sendNotification
-		;;
 	increase | i)
-		if [[ -z $3 ]]; then
-			changeTemp $((REDSHIFT_TEMP + defaultTempChangeValue))
-		else
-			changeTemp $((REDSHIFT_TEMP + $3))
-		fi
+		changeBrightness -inc $2
 		updatePolybar
 		sendNotification
 		;;
 	decrease | d)
-		if [[ -z $3 ]]; then
-			changeTemp $((REDSHIFT_TEMP - defaultTempChangeValue))
-		else
-			changeTemp $((REDSHIFT_TEMP - $3))
-		fi
+		changeBrightness -dec $2
 		updatePolybar
 		sendNotification
 		;;
-	print)
-		printTemperature $3
+	set | s)
+		setBrightness "$2 -step $fade_fps -time $fade_time"
+		updatePolybar
+		sendNotification
 		;;
-	esac
-	;;
-help | *) printUsage ;;
+	screensaver)
+		screensaver
+		updatePolybar
+		;;
+	redshift | r)
+		case $2 in
+			toggle | t)
+				toggleRedshift
+				updatePolybar
+				sendNotification
+				;;
+			increase | i)
+				setRedshiftTemperature $((redshiftTemperature + ${3:-$defaultTempChangeValue}))
+				updatePolybar
+				sendNotification
+				;;
+			decrease | d)
+				setRedshiftTemperature $((redshiftTemperature - ${3:-$defaultTempChangeValue}))
+				updatePolybar
+				sendNotification
+				;;
+			restore | r)
+				restoreRedshift
+				;;
+			print)
+				printTemperature $3
+				;;
+		esac
+		;;
+	help | *) printUsage ;;
 esac

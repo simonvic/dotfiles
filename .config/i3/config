@@ -26,7 +26,7 @@ exec --no-startup-id xss-lock -n "sBrightnessctl screensaver" -l -- sLockscreenc
 # exec --no-startup-id xss-lock -n dim-screen.sh -l -- transfer-sleep-lock-i3lock.sh
 
 # Restore redshift state
-exec --no-startup-id $HOME/.config/i3/scripts/restoreRedshift.sh
+exec --no-startup-id sBrightnessctl redshift restore
 
 # Use feh to set wallpaper
 exec_always --no-startup-id feh --no-fehbg --bg-fill .config/i3/desktop_wallpaper
