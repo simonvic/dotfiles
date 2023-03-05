@@ -36,6 +36,7 @@ function launch() {
 	launchPolybar "main"
 	launchPolybar "secondary"
 	launchPolybar "tertiary"
+	launchPolybar "tray"
 
 	sleep 2
 	hide "secondary"

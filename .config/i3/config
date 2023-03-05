@@ -127,6 +127,9 @@ bindsym $mod+p                           exec --no-startup-id sPolybarctl toggle
                                          	gaps $statusbar_main_position all toggle $statusbar_main_gap
 bindsym $mod+Shift+p                     exec --no-startup-id sPolybarctl toggle secondary
 bindsym $mod+Ctrl+p                      exec --no-startup-id sPolybarctl toggle tertiary
+# workaround to trigger bar update or the tray won't hide/show
+bindsym $mod+Mod1+p                      exec --no-startup-id sPolybarctl toggle tray; \
+                                         	exec sPolybarctl message "action dummy hook 0"
 bindsym $mod+Ctrl+Shift+p                exec --no-startup-id sPolybarctl hide ; \
                                          	gaps $statusbar_main_position all set 0
 
