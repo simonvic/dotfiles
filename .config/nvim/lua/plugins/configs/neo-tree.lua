@@ -17,6 +17,8 @@ return function()
 				buffers = "﬘",
 				git_status = "",
 			},
+			separator = { left = "", right = "" },
+			separator_active = nil,
 		},
 		enable_git_status = true,
 		enable_diagnostics = true,
