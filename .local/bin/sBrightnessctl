@@ -42,7 +42,7 @@ brightnessMaxLabel="󰃠"
 
 # Labels for polybar module
 redshiftOnLabel="󰌶"
-redshiftOffLabel=#"󰹐"
+redshiftOffLabel= #"󰹐"
 
 # Default values
 defaultBrightnessChangeValue=1
