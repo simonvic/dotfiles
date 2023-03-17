@@ -121,7 +121,7 @@
 	timeout = 8
 
 [urgency_normal]
-	frame_color = "#5B823455"
+	frame_color = "#F0544C55"
 	foreground = "#DADADA"
 	timeout = 8
 
