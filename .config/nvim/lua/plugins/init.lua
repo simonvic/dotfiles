@@ -44,7 +44,8 @@ M.plugins = {
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
-	{ "L3MON4D3/LuaSnip" },
+	{ "L3MON4D3/LuaSnip",
+		config = require("plugins.configs.snippets") },
 	{ "saadparwaiz1/cmp_luasnip" },
 	{ "hrsh7th/nvim-cmp",
 		config = require("plugins.configs.cmp")
