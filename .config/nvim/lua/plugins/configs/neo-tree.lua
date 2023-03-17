@@ -59,14 +59,14 @@ return function()
 			git_status = {
 				symbols = {
 					-- Change type
-					added     = "", -- "",
-					modified  = "", --""",
+					added     = "",
+					modified  = "",
 					deleted   = "",
 					renamed   = "",
 					-- Status type
-					untracked = "-",
+					untracked = "",
 					ignored   = "",
-					unstaged  = "",
+					unstaged  = "", -- "",
 					staged    = "",
 					conflict  = "",
 				}
@@ -183,7 +183,7 @@ return function()
 			window = {
 				position = "float",
 				mappings = {
-					["A"]  = "git_add_all",
+					["A"] = "git_add_all",
 					["gu"] = "git_unstage_file",
 					["ga"] = "git_add_file",
 					["gr"] = "git_revert_file",
