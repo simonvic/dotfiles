@@ -1,16 +1,16 @@
-###########################################
+###############################################################################
 #	Made by
-#       _                              _        
-#      (_)                            (_)       
-#  ___  _  ____    ___   ____   _   _  _   ____ 
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
 # /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___ 
+#|___ || || | | || |_| || | | | \ V / | |( (___
 #(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-
+#
 #	Check updates and give a look at my dotfiles here:
 #		https://github.com/simonvic/dotfiles
-
-###########################################
+#
+###############################################################################
 
 [global]
 	monitor = 0
@@ -70,17 +70,17 @@
 
 	#####################################################
 	## BEHAVIOUR
-	indicate_hidden = yes
-	sort = yes
+	indicate_hidden = true
+	sort = true
 	idle_threshold = 5
 	show_age_threshold = 60
 
-	ignore_newline = no
+	ignore_newline = false
 	stack_duplicates = true
 	hide_duplicate_count = false
-	show_indicators = yes
+	show_indicators = true
 
-	sticky_history = yes
+	sticky_history = true
 	history_length = 50
 
 	mouse_left_click = context, close_current
