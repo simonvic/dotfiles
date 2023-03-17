@@ -50,11 +50,14 @@
 	#icon_path = /usr/share/icons/Vimix-Ruby-dark/24/actions
 
 	progress_bar = true
-	progress_bar_height = 30
-	progress_bar_frame_width = 1
-	progress_bar_min_width = 500
-	progress_bar_max_width = 500
-
+	progress_bar_horizontal_alignment = center
+	progress_bar_height = 15
+	progress_bar_frame_width = 0
+	progress_bar_min_width = 250
+	progress_bar_max_width = 250
+	progress_bar_corner_radius = 10
+	icon_corner_radius = 0
+	highlight = "#f0544c"
 
 	#####################################################
 	## TEXT
