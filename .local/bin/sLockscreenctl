@@ -146,7 +146,8 @@ function lockscreen() {
 	pgrep i3lock || i3lock $args --date-str="$dateString" \
 		--greeter-text="$greeterText" --verif-text="$verifyText" \
 		--wrong-text="$wrongText" --noinput-text="$noInputText" \
-		$background $extraArgs
+		"$background"
+	
 
 }
 
