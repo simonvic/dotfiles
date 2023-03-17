@@ -5,7 +5,7 @@ return function()
 			icons = {
 				package_installed = "✓",
 				package_uninstalled = "·",
-				package_pending = "ﮮ",
+				package_pending = "↻",
 			},
 		}
 	})
