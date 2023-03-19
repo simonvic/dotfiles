@@ -132,6 +132,7 @@
 
 [simonvic.Volume]
 	appname = simonvic.Volume
+	history_ignore = true
 	alignment = center
 	msg_urgency = normal
 	format = "%b"
@@ -140,6 +141,7 @@
 
 [simonvic.Volume-warning]
 	appname = simonvic.Volume
+	history_ignore = true
 	alignment = center
 	msg_urgency = critical
 	format = "%b"
@@ -148,6 +150,7 @@
 
 [simonvic.Microphone]
 	appname = simonvic.Microphone
+	history_ignore = true
 	alignment = center
 	msg_urgency = normal
 	format = "%b"
@@ -156,6 +159,7 @@
 
 [simonvic.Microphone-warning]
 	appname = simonvic.Microphone
+	history_ignore = true
 	alignment = center
 	msg_urgency = critical
 	format = "%b"
@@ -164,6 +168,7 @@
 
 [simonvic.Brightness]
 	appname = simonvic.Brightness
+	history_ignore = true
 	alignment = center
 	msg_urgency = normal
 	format = "%b"
