@@ -34,6 +34,9 @@ notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 # you can skip by using %.s
 notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
 
+# Send volume hint with notify-send. Dunst will show a progress bar
+notificationSendVolumeHint=false
+
 notificationBarLength=20
 notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
@@ -127,46 +130,37 @@ function buildBar() {
 ##
 #	Send notification
 function sendNotification() {
-
-	local bar=""
-	local summary=""
+	local volume=$(getVolume)
+	local summary="$volume%"
+	local urgency="normal"
+	local bar=$(buildBar "$volume")
 	local body=""
 	local icon=""
-	local urgency=""
+	local hintValue=""
 
 	if [[ $(isMute) == true ]]; then
-		# Building the volume bar
-		bar=$(buildBar 0)
 		icon=$notificationMutedIcon
-		urgency=normal
 		summary="Muted"
 	else
-
-		local volume=$(getVolume)
-		bar=$(buildBar "$volume")
 		summary="$volume%"
-
 		if [[ $volume -ge $overamplifiedLevel ]]; then
-			urgency=critical
 			icon=$notificationOveramplifiedIcon
+			urgency="critical"
 		elif [[ $volume -ge $warningLevel ]]; then
-			urgency=critical
 			icon=$notificationWarningIcon
+			urgency="critical"
 		elif [[ $volume -gt 50 ]]; then
-			urgency=normal
 			icon=$notificationHighIcon
 		elif [[ $volume -gt 20 ]]; then
-			urgency=normal
 			icon=$notificationMediumIcon
 		elif [[ $volume -le 20 ]]; then
-			urgency=normal
 			icon=$notificationLowIcon
 		fi
-
 		[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	fi
 
 	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
+	[[ $notificationSendVolumeHint == true ]] && hintValue=$volume
 	notify-send \
 		"$summary" "$body" \
 		--app-name "$notificationAppName" \
@@ -174,6 +168,7 @@ function sendNotification() {
 		--icon "$icon" \
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$urgency" \
+		${hintValue:+--hint int:value:$hintValue}
 }
 
 function printUsage() {
