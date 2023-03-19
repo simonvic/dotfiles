@@ -161,7 +161,7 @@ function setPlayer() {
 function sendDefaultNotification() {
 	local title=$(getTitle)
 	sendNotification "$title" \
-		"<big>$title</big><small> $(getArtist)</small>" \
+		"<big>$title</big><small>\n$(getArtist)</small>" \
 		"$1"
 }
 
