@@ -34,6 +34,7 @@
 	transparency = 0
 
 	background = "#00000055"
+	foreground = "#DADADA"
 
 	separator_height = 5
 	separator_color = auto
@@ -116,18 +117,16 @@
 ## RULES
 
 [urgency_low]
-	frame_color = "#33333355"
-	foreground = "#AAAAAA"
+	foreground = "#666666"
 	timeout = 8
 
 [urgency_normal]
-	frame_color = "#F0544C55"
 	foreground = "#DADADA"
 	timeout = 8
 
 [urgency_critical]
-	frame_color = "#B7472A55"
-	foreground = "#B7472A"
+	foreground = "#DADADA"
+	background = "#842925aa"
 	timeout = 16
 
 
