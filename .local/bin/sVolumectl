@@ -31,12 +31,15 @@ notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 
 # Notification body format
 # where two %s are for ASCII bar and right text
+# you can skip by using %.s
 notificationBodyFormat="<tt>%s<small><b>%6s</b></small></tt>"
 
 notificationBarLength=20
 notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
+# notificationBarChars="█;▉;▊;▌;▎; "
+# notificationBarBorders=";;;;▏;;;"
 
 # Max limit of the volume
 maxVolume=100
@@ -54,12 +57,14 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-
 ##
 #	Get current volume
 #	@return volume
 function getVolume() {
-	pactl get-sink-volume @DEFAULT_SINK@ | head -n1 | cut -d '/' -f 2 | sed 's|%||' | sed 's| ||g'
+	local volume
+	volume=$(pactl get-sink-volume @DEFAULT_SINK@)
+	volume=${volume%%% /*}
+	printf "%s" "${volume##* }"
 }
 
 ##
@@ -74,6 +79,14 @@ function isMute() {
 #	@param true|false
 function setMute() {
 	pactl set-sink-mute @DEFAULT_SINK@ "$1"
+}
+
+
+##
+#	Set volume
+#	@param +|- amount
+function setVolume() {
+	pactl set-sink-volume @DEFAULT_SINK@ "$1"
 }
 
 ##
@@ -96,13 +109,6 @@ function increaseVolume() {
 function decreaseVolume() {
 	setMute false
 	setVolume "-$1%"
-}
-
-##
-#	Set volume
-#	@param +|- amount
-function setVolume() {
-	pactl set-sink-volume @DEFAULT_SINK@ "$1"
 }
 
 ##
@@ -157,17 +163,17 @@ function sendNotification() {
 			icon=$notificationLowIcon
 		fi
 
+		[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	fi
 
-	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
 	notify-send \
+		"$summary" "$body" \
 		--app-name "$notificationAppName" \
 		--replace-id "$notificationUID" \
 		--icon "$icon" \
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$urgency" \
-		"$summary" "$body"
 }
 
 function printUsage() {
