@@ -8,6 +8,7 @@ opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.splitright = true
 opt.splitbelow = true
+opt.splitkeep = "cursor"
 opt.scrolloff = 8
 
 --                                                                         CASE
