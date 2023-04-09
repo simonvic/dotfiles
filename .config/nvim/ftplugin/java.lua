@@ -18,17 +18,21 @@ vim.api.nvim_create_user_command(
 	{}
 )
 
-local bundles = {
-	vim.fn.glob("~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/com.microsoft.java.debug.plugin-*.jar"
-		, 1)
-}
+local cmd = { "/usr/bin/jdtls" }
+local lombokJar = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
+local debugJar = vim.fn.glob("~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar", 1)
+local testJars = vim.fn.glob("~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar", 1)
 
-vim.list_extend(bundles,
-	vim.split(vim.fn.glob("~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar", 1), "\n"))
+if vim.fn.empty(lombokJar) == 0 then
+	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. lombokJar })
+end
+
+local bundles = { debugJar }
+vim.list_extend(bundles, vim.split(testJars, "\n"))
 
 jdtls.start_or_attach({
-	cmd = { "/usr/bin/jdtls" },
-	root_dir = vim.fs.dirname(vim.fs.find({ ".gradlew", ".git", "mvnw", "pom.xml" }, { upward = true })[1]),
+	cmd = cmd,
+	root_dir = require("jdtls.setup").find_root({ ".gradlew", ".git", "mvnw", "pom.xml" }),
 	init_options = {
 		bundles = bundles
 	},
