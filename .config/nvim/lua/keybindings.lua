@@ -48,6 +48,8 @@ local function showDiagnostics() vim.diagnostic.open_float() end
 local function format() lsp.format() end
 local function toggleDapUI() dapui.toggle() end
 local function toggleListChars() vim.opt.list = not vim.opt.list:get() end
+local function toggleColumnFold() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
+local function toggleNumberRel() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
 local function findUsage() telescope_builtin.lsp_references() end
 local function findFiles() telescope_builtin.find_files({ hidden = true }) end
 local function findSymbols() telescope_builtin.lsp_dynamic_workspace_symbols() end
@@ -189,6 +191,8 @@ local keybindings = {
 	------------------------------------------------------------------------ UI
 	{ n___, "<Leader>ud",     toggleDapUI,                {},                "dapui" },
 	{ n___, "<Leader>ul",     toggleListChars,            {},                "toggle list chars" },
+	{ n___, "<Leader>uz",     toggleColumnFold,           {},                "toggle folds column" },
+	{ n___, "<Leader>un",     toggleNumberRel,            {},                "toggle number column" },
 	{ nvi_, "<A-9>",          cmd("AerialToggle"),        {},                "symbols outline" },
 	----------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",           cmd("DapContinue"),         {},                "continue [F7]" },
