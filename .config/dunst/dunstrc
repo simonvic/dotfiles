@@ -117,7 +117,7 @@
 ## RULES
 
 [urgency_low]
-	foreground = "#666666"
+	foreground = "#888888"
 	timeout = 8
 
 [urgency_normal]
