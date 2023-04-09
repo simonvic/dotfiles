@@ -3,20 +3,6 @@ local vim = vim
 vim.opt.colorcolumn = "100";
 
 local jdtls = require("jdtls")
-vim.api.nvim_create_user_command(
-	"JTestClass",
-	function(input)
-		jdtls.test_class()
-	end,
-	{}
-)
-vim.api.nvim_create_user_command(
-	"JTestMethod",
-	function(input)
-		jdtls.test_nearest_method()
-	end,
-	{}
-)
 
 local cmd = { "/usr/bin/jdtls" }
 local lombokJar = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
@@ -38,9 +24,13 @@ jdtls.start_or_attach({
 	},
 	capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 	on_attach = function(client, bufnr)
-		require("jdtls").setup_dap({ hotcode_replace = "auto" })
+		jdtls.setup_dap({ hotcode_replace = "auto" })
 		require("jdtls.setup").add_commands()
-		vim.keymap.set({ "n", "i" }, "<A-i>", function() require("jdtls").organize_imports() end)
+		vim.keymap.set({ "n", "i" }, "<A-i>", function() jdtls.organize_imports() end)
+		vim.keymap.set({ "n", "i" }, "<F6>", function() jdtls.pick_test() end)
+		vim.keymap.set({ "n", "i" }, "<F18>", function() jdtls.test_class() end)
+		vim.keymap.set({ "n", "i" }, "<F30>", function() jdtls.test_nearest_method() end)
+		vim.keymap.set({ "n", "i" }, "<C-A-B>", function() jdtls.super_implementation() end)
 	end,
 	settings = {
 		java = {
