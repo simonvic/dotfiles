@@ -44,11 +44,28 @@ jdtls.start_or_attach({
 	end,
 	settings = {
 		java = {
+			codeGeneration = {
+				generateComments = true
+			},
+			implementationCodeLens = { enabled = false },
+			referencesCodeLens = { enabled = false },
+			inlayhints = {
+				parameterNames = {
+					enabled = true
+				}
+			},
 			format = {
 				settings = {
 					url = "~/.config/jdtls/settings.xml"
-				}
+				},
+				comments = { enabled = false },
 			},
+			sources = {
+				organizeImports = {
+					starThreshold = 5,
+					staticStarThreshold = 3
+				}
+			}
 			-- configuration = {
 			-- 	runtimes = {
 			-- 		{
