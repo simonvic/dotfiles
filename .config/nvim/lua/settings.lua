@@ -42,6 +42,8 @@ opt.shortmess:append("c")
 opt.cursorline = true
 opt.termguicolors = true
 
+opt.showcmdloc = "statusline"
+
 opt.list = false
 opt.listchars = {
 	eol = '¬',
@@ -136,18 +138,96 @@ opt.winbar = "%=%h%m%r%f%="
 opt.cmdheight = 1
 
 --                                                                  STATUS LINE
+
 opt.laststatus = 3
 
-opt.statusline = ""
-opt.statusline:append("[%{luaeval('vim.api.nvim_get_mode().mode')}]") --  @TODO change this     mode
-opt.statusline:append("%w%q") --
-opt.statusline:append("%=") --                                 filling
-opt.statusline:append("%c:%l") --                              column:line
-opt.statusline:append(" | %{&ff}") --                          file format
-opt.statusline:append(" | %{''.(&fenc!=''?&fenc:&enc).''}") -- encoding
-opt.statusline:append(" | %Y") --                              file type
-opt.statusline:append(" | %{get(b:,'gitsigns_head')}") --      git branch
-opt.statusline:append("  ") --                                 Some padding
+local modesAliases = {
+	["n"] = "NORMAL",
+	["no"] = "NORMAL...",
+	["nov"] = "NORMAL... (v)",
+	["noV"] = "NORMAL... (V)",
+	["no"] = "NORMAL... (^V)",
+	["niI"] = "NORMAL (INSERT)",
+	["niR"] = "NORMAL (REPLACE)",
+	["niV"] = "NORMAL (VISUAL)",
+	["v"] = "VISUAL",
+	["V"] = "VISUAL LINE",
+	[""] = "VISUAL BLOCK",
+	["s"] = "SELECT",
+	["S"] = "SELECT LINE",
+	[""] = "SELECT BLOCK",
+	["i"] = "INSERT",
+	["ic"] = "INSERT (c)",
+	["ix"] = "INSERT (x)",
+	["R"] = "REPLACE",
+	["Rc"] = "REPLACE (c)",
+	["Rv"] = "REPLACE (v)",
+	["Rx"] = "REPLACE (x)",
+	["c"] = "COMMAND",
+	["cv"] = "COMMAND (v)",
+	["ce"] = "COMMAND (r)",
+	["r"] = "PROMPT",
+	["rm"] = "PROMPT (m)",
+	["r?"] = "PROMPT (?)",
+	["!"] = "SHELL",
+	["t"] = "TERM INSERT",
+	["nt"] = "TERM NORMAL",
+}
+
+function BuildStatusLineMode()
+	local mode = vim.api.nvim_get_mode().mode
+	return string.format("[ %s ]", modesAliases[mode] or mode, mode)
+end
+
+local function getDiagnosticSignText(sign_name)
+	return "%#" .. sign_name .. "#" .. vim.fn.sign_getdefined(sign_name)[1].text .. "%*"
+end
+
+function BuildStatusLineDiagnostics()
+	local clients = vim.lsp.buf_get_clients()
+	if #clients == 0 then
+		return ""
+	end
+	local output = " |"
+	for _, lsp in ipairs(vim.lsp.buf_get_clients()) do
+		if lsp then
+			output = output .. string.format(" %s", lsp.name)
+		end
+	end
+	local diag = vim.diagnostic
+	local e = getDiagnosticSignText("DiagnosticSignError") .. #diag.get(0, { severity = diag.severity.ERROR })
+	local w = getDiagnosticSignText("DiagnosticSignWarn") .. #diag.get(0, { severity = diag.severity.WARN })
+	local i = getDiagnosticSignText("DiagnosticSignInfo") .. #diag.get(0, { severity = diag.severity.INFO })
+	local h = getDiagnosticSignText("DiagnosticSignHint") .. #diag.get(0, { severity = diag.severity.HINT })
+	output = output .. string.format(" %s %s %s %s", e, w, i, h)
+	return output;
+end
+
+function BuildStatusLineGitBranch()
+	local branch = vim.g.gitsigns_head
+	if branch then
+		return " | " .. branch
+	end
+	return ""
+end
+
+function BuildStatusLine()
+	return ""
+		.. " " .. BuildStatusLineMode()   -- mode
+		.. " [%S]"                        -- command
+		.. "%w"                           -- preview
+		.. "%q"                           -- quickfix/location list
+		.. "%="                           -- filling
+		.. " %c:%l"                       -- column:line
+		.. " | %{&ff}"                    -- file format
+		.. " | %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
+		.. " | %Y"                        -- file type
+		.. BuildStatusLineDiagnostics()   -- diagnostics
+		.. BuildStatusLineGitBranch()     -- git branch
+		.. " "                            -- Some padding
+end
+
+opt.statusline = "%!luaeval('BuildStatusLine()')"
 
 
 --                                                                  DIAGNOSTICS
