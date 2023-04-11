@@ -61,6 +61,22 @@ opt.fillchars = {
 	eob = ' ',
 }
 
+--                                                        STATUSCOLUMN (gutter)
+opt.statuscolumn = ""
+	.. "%C" -- folds
+	.. "%3l" -- numbers
+	.. " " -- spacing
+	.. "%-3r" -- relative numbers
+	.. "%s" -- signs
+
+--                                                                      NUMBERS
+opt.number = true
+opt.relativenumber = true
+
+--                                                                        SIGNS
+opt.signcolumn = "auto:9"
+
+
 --                                                                        FOLDS
 opt.foldcolumn = "auto:9"
 function BuildFoldText()
@@ -106,12 +122,6 @@ vim.api.nvim_create_autocmd("VimLeave", {
 	group = "resetCursor",
 	command = "set guicursor=a:ver25"
 })
-
---                                                                      NUMBERS
-opt.number = true
-
---                                                                        SIGNS
-opt.signcolumn = "auto:9"
 
 --                                                                      TABLINE
 opt.showtabline = 1
