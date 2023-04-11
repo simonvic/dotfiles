@@ -242,7 +242,9 @@ opt.statusline = "%!luaeval('BuildStatusLine()')"
 
 --                                                                  DIAGNOSTICS
 vim.diagnostic.config({
+	underline = true,
 	virtual_text = false,
+	signs = false,
 	float = {
 		border = "rounded",
 		header = "",
