@@ -34,8 +34,8 @@ maxLength=15
 # where to store todo file
 todoFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/todo/todo.csv
 
-doneSymbol=
-todoSymbol=
+doneSymbol=󰄵
+todoSymbol=󰄱
 deletedSymbol= #
 header="
 ··················································

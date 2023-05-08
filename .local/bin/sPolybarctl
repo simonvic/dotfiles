@@ -18,8 +18,8 @@
 polybarLogsDir="/tmp/simonvic/sPolybarctl/logs"
 messagesLogsDir="/tmp/simonvic/sPolybarctl/logs/msg"
 
-visibleIcon=" 蘒 "
-invisibleIcon=" 﨡 "
+visibleIcon=" 󰔡 "
+invisibleIcon=" 󰨙 "
 
 ###############################################################################
 
