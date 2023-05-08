@@ -57,7 +57,7 @@ M.groups = {
 	WinBar                       = { bg = p.zdepth_1, fg = p.text, bold = true },
 	StatusLine                   = { bg = p.zdepth_1 },
 	TabLine                      = { bg = p.zdepth_0 },
-	TabLineSel                   = { bg = p.zdepth_1, underline = true },
+	TabLineSel                   = { bg = p.zdepth_1, underline = true, sp = p.accent },
 	TabLineFill                  = { bg = p.zdepth__1 },
 	Normal                       = { bg = p.zdepth_0, fg = p.text },
 	-- NormalNC                     = { bg = p.zdepth__1, fg = p.text },
@@ -137,7 +137,7 @@ M.groups = {
 	NeoTreeNormal                = { bg = p.zdepth_1, fg = p.text },
 	NeoTreeCursorLine            = { bg = p.accent_xdark },
 	NeoTreeTabInactive           = { bg = p.zdepth_0 },
-	NeoTreeTabActive             = { bg = p.zdepth_1, underline = true },
+	NeoTreeTabActive             = { bg = p.zdepth_1, underline = true, sp = p.accent },
 	NeoTreeTabSeparatorInactive  = { bg = p.zdepth_0, fg = p.zdepth_0 },
 	NeoTreeTabSeparatorActive    = { bg = p.zdepth_1, fg = p.zdepth_1 },
 	-- These colors are read from the scrollbar plugin config
