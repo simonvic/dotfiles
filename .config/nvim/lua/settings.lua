@@ -103,16 +103,16 @@ opt.foldtext = "v:lua.BuildFoldText()"
 
 --                                                                 CURSOR SHAPE
 opt.guicursor = {
-	"a:blinkon100", -- all
-	"n:block", -- normal
-	"sm:block", -- showmatch in insert mode
-	"i:ver25", -- insert
-	"c:ver25", -- command line normal
-	"ci:ver25", -- command line insert
-	"v:block", -- visual
-	"ve:block", -- command line insert
-	"r:hor50", -- replace
-	"cr:hor50", -- command line replace
+	"a:blinkon100",  -- all
+	"n:block",       -- normal
+	"sm:block",      -- showmatch in insert mode
+	"i:ver25",       -- insert
+	"c:ver25",       -- command line normal
+	"ci:ver25",      -- command line insert
+	"v:block",       -- visual
+	"ve:block",      -- command line insert
+	"r:hor50",       -- replace
+	"cr:hor50",      -- command line replace
 	"o:hor50-blinkon0", --  operator pending
 }
 
@@ -167,11 +167,11 @@ local modesAliases = {
 	["S"] = "SELECT LINE",
 	[""] = "SELECT BLOCK",
 	["i"] = "INSERT",
-	["ic"] = "INSERT (c)",
+	["ic"] = "INSERT COMPLETITION",
 	["ix"] = "INSERT (x)",
 	["R"] = "REPLACE",
-	["Rc"] = "REPLACE (c)",
-	["Rv"] = "REPLACE (v)",
+	["Rc"] = "REPLACE COMPLETITION",
+	["Rv"] = "REPLACE VIRTUAL",
 	["Rx"] = "REPLACE (x)",
 	["c"] = "COMMAND",
 	["cv"] = "COMMAND (v)",
@@ -199,10 +199,8 @@ function BuildStatusLineDiagnostics()
 		return ""
 	end
 	local output = " |"
-	for _, lsp in ipairs(vim.lsp.buf_get_clients()) do
-		if lsp then
-			output = output .. string.format(" %s", lsp.name)
-		end
+	for _, lsp in pairs(vim.lsp.buf_get_clients()) do
+		output = output .. string.format(" %s", lsp.name)
 	end
 	local diag = vim.diagnostic
 	local e = getDiagnosticSignText("DiagnosticSignError") .. #diag.get(0, { severity = diag.severity.ERROR })
