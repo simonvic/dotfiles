@@ -5,6 +5,14 @@ return function()
 		layouts = {
 			{
 				elements = {
+					"repl",
+					"console",
+				},
+				size = 0.25, -- 25% of total lines
+				position = "bottom",
+			},
+			{
+				elements = {
 					-- Elements can be strings or table with id and size keys.
 					"scopes",
 					"breakpoints",
@@ -13,14 +21,6 @@ return function()
 				},
 				size = 40, -- 40 columns
 				position = "right",
-			},
-			{
-				elements = {
-					"repl",
-					"console",
-				},
-				size = 0.25, -- 25% of total lines
-				position = "bottom",
 			},
 		},
 	})
