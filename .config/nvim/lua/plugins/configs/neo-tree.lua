@@ -12,10 +12,10 @@ return function()
 		source_selector = {
 			winbar = true,
 			content_layout = "center",
-			tab_labels = {
-				filesystem = "",
-				buffers = "﬘",
-				git_status = "",
+			sources = {
+				{ source = "filesystem", display_name = "󰉓", },
+				{ source = "buffers",    display_name = "󰈢", },
+				{ source = "git_status", display_name = "󰊢", },
 			},
 			separator = { left = "", right = "" },
 			separator_active = nil,

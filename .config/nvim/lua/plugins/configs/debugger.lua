@@ -15,7 +15,7 @@ return function()
 	}
 	local signs = {
 		DiagnosticSignError    = { text = "", texthl = "DiagnosticSignError" },
-		DiagnosticSignWarn     = { text = "", texthl = "DiagnosticSignWarn" },
+		DiagnosticSignWarn     = { text = "", texthl = "DiagnosticSignWarn" },
 		DiagnosticSignInfo     = { text = "", texthl = "DiagnosticSignInfo" },
 		DiagnosticSignHint     = { text = "", texthl = "DiagnosticSignHint" },
 		DapBreakpoint          = { text = "", texthl = "DebugSignBreakpoint" },
