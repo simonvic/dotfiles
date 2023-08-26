@@ -87,7 +87,9 @@ M.plugins = {
 	},
 	{ "mfussenegger/nvim-jdtls" },
 	{ "simrat39/rust-tools.nvim" },
-	{ "lervag/vimtex", require("plugins.configs.vimtex") },
+	{ "lervag/vimtex",
+		config = require("plugins.configs.vimtex")
+	},
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
 	{ "doums/darcula" },
