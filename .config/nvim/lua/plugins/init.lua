@@ -53,11 +53,11 @@ M.plugins = {
 	{ "williamboman/mason.nvim",
 		config = require("plugins.configs.mason")
 	},
+	{ "neovim/nvim-lspconfig" },
 	{ "williamboman/mason-lspconfig.nvim",
 		config = require("plugins.configs.mason-lspconfig"),
 		after = "nvim-lspconfig",
 	},
-	{ "neovim/nvim-lspconfig" },
 	{ "terrortylor/nvim-comment",
 		config = require("plugins.configs.comment")
 	},
@@ -105,6 +105,9 @@ local function with_vimplug()
 			local plug_args = {}
 			if plugin.run then
 				plug_args["do"] = plugin.run
+			end
+			if plugin.branch then
+				plug_args["branch"] = plugin.branch
 			end
 			if next(plug_args) then
 				vim.fn["plug#"](plugin[1], plug_args)
