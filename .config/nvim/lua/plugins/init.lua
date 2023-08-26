@@ -23,8 +23,8 @@ M.plugins = {
 		config = require("plugins.configs.toggleterm")
 	},
 	{ "nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
 		config = require("plugins.configs.neo-tree"),
-		setup = function() vim.g.neo_tree_remove_legacy_commands = true end,
 	},
 	{ "petertriho/nvim-scrollbar",
 		config = require("plugins.configs.scrollbar")
