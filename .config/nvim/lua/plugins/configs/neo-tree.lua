@@ -161,15 +161,18 @@ return function()
 				never_show = {},
 				never_show_by_pattern = {},
 			},
-			follow_current_file = true,
+			follow_current_file = {
+				enabled = true
+			},
 			group_empty_dirs = true,
 			hijack_netrw_behavior = "open_default",
 			use_libuv_file_watcher = true,
 		},
 		buffers = {
-			follow_current_file = true, -- This will find and focus the file in the active buffer every
-			-- ti{me the current file is changed while the tree is open.
-			group_empty_dirs = true, -- when true, empty folders will be grouped together
+			follow_current_file = {
+				enabled = true
+			},
+			group_empty_dirs = true,
 			show_unloaded = true,
 			window = {
 				mappings = {
