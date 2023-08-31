@@ -1,4 +1,4 @@
 require("settings")
-require("plugins").install_with("vimplug")
+require("plugins").with_lazy()
 require("colorscheme").apply()
 require("keybindings")
