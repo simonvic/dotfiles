@@ -16,6 +16,12 @@ local dapui = require("dapui")
 local telescope_builtin = require("telescope.builtin")
 local telescope_themes = require("telescope.themes")
 
+local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
+local function cmdEsc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
+
+local terminal = "<A-ò>"; -- just because accented chars mess up the formatter
+local terminal_float = "<A-ç>";
+
 local function logBreakpoint()
 	vim.ui.input({ prompt = "Log point message" }, function(input)
 		dap.set_breakpoint(nil, nil, input)
@@ -36,8 +42,6 @@ local function conditionLogBreakpoint()
 	end)
 end
 
-local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
-local function cmdEsc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
 
 local function inspectVariable() dapui.eval() end -- require("dap.ui.widgets").hover()
 local function codeAction() lsp.code_action() end
@@ -179,9 +183,9 @@ local keybindings = {
 	{ n_i_, "<C-S-PageUp>",   cmd("-tabmove"),                        {},                "move tab to left" },
 	{ n_i_, "<C-S-PageDown>", cmd("+tabmove"),                        {},                "move tab to right" },
 	{ n__t, "<A-\\>",         cmd("Neotree focus"),                   {},                "focus filetree" },
-	{ __i_, "<A-\\>",         cmdEsc("Neotree focus               "), {},                "focus filetree" },
-	{ n__t, "<A-ò>",          cmd("ToggleTerm direction=horizontal"), {},                "toggle dropdown terminal" },
-	{ n__t, "<A-ç>",          cmd("ToggleTerm direction=float"),      {},                "toggle floating terminal" },
+	{ __i_, "<A-\\>",         cmdEsc("Neotree focus"),                {},                "focus filetree" },
+	{ n__t, terminal,         cmd("ToggleTerm direction=horizontal"), {},                "toggle dropdown terminal" },
+	{ n__t, terminal_float,   cmd("ToggleTerm direction=float"),      {},                "toggle floating terminal" },
 	{ ___t, "<Esc>",          "<C-\\><C-n>",                          {},                "terminal" },
 	{ n_i_, "<C-p>",          findFiles,                              {},                "find files" },
 	{ n_i_, "<A-p>",          cmd("Telescope"),                       {},                "telescope" },
@@ -209,8 +213,8 @@ local keybindings = {
 }
 
 
+vim.g.mapleader = keybindings.leader
+vim.g.maplocalleader = keybindings.localleader
 for _, keybind in ipairs(keybindings) do
-	vim.g.mapleader = keybindings.leader
-	vim.g.maplocalleader = keybindings.localleader
 	vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
 end
