@@ -197,7 +197,6 @@ local keybindings = {
 	----------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",           cmd("DapContinue"),         {},                "continue [F7]" },
 	{ n___, "<F55>",          cmd("DapTerminate"),        {},                "terminate [Alt + F7]" },
-	{ n___, "<F31>",          cmd("JdtHotcodeReplace"),   {},                "hotcodeplace [Ctrl + F7]" },
 	{ n___, "<F8>",           cmd("DapStepOver"),         {},                "step over[F8]" },
 	{ n___, "<F32>",          cmd("DapStepInto"),         {},                "step into [Ctrl + F8]" },
 	{ n___, "<F20>",          cmd("DapStepOut"),          {},                "step out [Shift + F8]" },

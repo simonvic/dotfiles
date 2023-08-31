@@ -27,11 +27,12 @@ jdtls.start_or_attach({
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		jdtls.setup.add_commands()
 		vim.keymap.set({ "n", "i" }, "<A-i>", function() jdtls.organize_imports() end)
-		vim.keymap.set({ "n", "i" }, "<F6>", function() jdtls.pick_test() end)
-		vim.keymap.set({ "n", "i" }, "<F18>", function() jdtls.test_class() end)
-		vim.keymap.set({ "n", "i" }, "<F30>", function() jdtls.test_nearest_method() end)
-		vim.keymap.set({ "n", "i" }, "<F54>", function() vim.cmd("JdtRefreshDebugConfigs") end)
-		vim.keymap.set({ "n", "i" }, "<C-A-B>", function() jdtls.super_implementation() end)
+		vim.keymap.set({ "n", "i" }, "<F6>", function() jdtls.pick_test() end)          -- F6
+		vim.keymap.set({ "n", "i" }, "<F18>", function() jdtls.test_class() end)        -- Shift + F6
+		vim.keymap.set({ "n", "i" }, "<F30>", function() jdtls.test_nearest_method() end) -- Ctrl + F6
+		vim.keymap.set({ "n", "i" }, "<F19>", function() vim.cmd("JdtUpdateDebugConfig") end) -- Shift + F7
+		vim.keymap.set({ "n", "i" }, "<F31>", function() vim.cmd("JdtUpdateHotcode") end) -- Ctrl + F7
+		vim.keymap.set({ "n", "i" }, "<C-A-b>", function() jdtls.super_implementation() end)
 	end,
 	settings = {
 		java = {
