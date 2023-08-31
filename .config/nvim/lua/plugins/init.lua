@@ -52,17 +52,11 @@ M.plugins = {
 local function with_vimplug()
 	vim.call("plug#begin")
 	for _, plugin in ipairs(M.plugins) do
-		if plugin.setup then
-			plugin.setup()
-		end
 		if plugin[1] then
 			local plug_args = {}
-			if plugin.run then
-				plug_args["do"] = plugin.run
-			end
-			if plugin.branch then
-				plug_args["branch"] = plugin.branch
-			end
+			if plugin.run then plug_args["do"] = plugin.run end
+			if plugin.branch then plug_args["branch"] = plugin.branch end
+			if plugin.tag then plug_args["tag"] = plugin.tag end
 			if next(plug_args) then
 				vim.fn["plug#"](plugin[1], plug_args)
 			else
