@@ -2,13 +2,13 @@ return function()
 	local dap = require("dap")
 	dap.configurations.rust = {
 		{
-			name = 'Launch',
-			type = 'rt_lldb',
-			request = 'launch',
+			name = "Launch",
+			type = "rt_lldb",
+			request = "launch",
 			program = function()
-				return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end,
-			cwd = '${workspaceFolder}',
+			cwd = "${workspaceFolder}",
 			stopOnEntry = false,
 			args = {},
 		},

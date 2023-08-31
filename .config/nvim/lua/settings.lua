@@ -46,26 +46,26 @@ opt.showcmdloc = "statusline"
 
 opt.list = false
 opt.listchars = {
-	eol = '¬',
-	tab = '> ',
-	trail = '⋅',
-	extends = '>',
-	precedes = '<',
-	space = '⋅',
+	eol = "¬",
+	tab = "> ",
+	trail = "⋅",
+	extends = ">",
+	precedes = "<",
+	space = "⋅",
 }
 
 opt.fillchars = {
-	fold = ' ',
-	foldopen = '',
-	foldclose = '',
-	eob = ' ',
+	fold = " ",
+	foldopen = "",
+	foldclose = "",
+	eob = " ",
 }
 
 --                                                        STATUSCOLUMN (gutter)
 opt.statuscolumn = ""
 	.. "%C" -- folds
 	.. "%3l" -- numbers
-	.. " " -- spacing
+	.. " "  -- spacing
 	.. "%-3r" -- relative numbers
 	.. "%s" -- signs
 
@@ -152,7 +152,7 @@ opt.cmdheight = 1
 opt.laststatus = 3
 
 local modesAliases = {
-	["n"] = "NORMAL",
+	["n"]  = "NORMAL",
 	["no"] = "NORMAL...",
 	["nov"] = "NORMAL... (v)",
 	["noV"] = "NORMAL... (V)",
@@ -221,18 +221,18 @@ end
 
 function BuildStatusLine()
 	return ""
-		.. " " .. BuildStatusLineMode()   -- mode
-		.. " [%S]"                        -- command
-		.. "%w"                           -- preview
-		.. "%q"                           -- quickfix/location list
-		.. "%="                           -- filling
-		.. " %c:%l"                       -- column:line
-		.. " | %{&ff}"                    -- file format
+		.. " " .. BuildStatusLineMode()    -- mode
+		.. " [%S]"                         -- command
+		.. "%w"                            -- preview
+		.. "%q"                            -- quickfix/location list
+		.. "%="                            -- filling
+		.. " %c:%l"                        -- column:line
+		.. " | %{&ff}"                     -- file format
 		.. " | %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
-		.. " | %Y"                        -- file type
-		.. BuildStatusLineDiagnostics()   -- diagnostics
-		.. BuildStatusLineGitBranch()     -- git branch
-		.. " "                            -- Some padding
+		.. " | %Y"                         -- file type
+		.. BuildStatusLineDiagnostics()    -- diagnostics
+		.. BuildStatusLineGitBranch()      -- git branch
+		.. " "                             -- Some padding
 end
 
 opt.statusline = "%!luaeval('BuildStatusLine()')"

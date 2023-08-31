@@ -14,7 +14,7 @@ return function()
 			content_layout = "center",
 			sources = {
 				{ source = "filesystem", display_name = "󰉓", },
-				{ source = "buffers",    display_name = "󰈢", },
+				{ source = "buffers", display_name = "󰈢", },
 				{ source = "git_status", display_name = "󰊢", },
 			},
 			separator = { left = "", right = "" },

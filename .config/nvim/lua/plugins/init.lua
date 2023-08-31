@@ -10,86 +10,39 @@ M.plugins = {
 	{ "kyazdani42/nvim-web-devicons" },
 	---------------------------------------------------------------------------
 	--                                                                  UI / UX
-	{ "rcarriga/nvim-notify",
-		config = require("plugins.configs.notify")
-	},
-	{ "nvim-telescope/telescope.nvim",
-		config = require("plugins.configs.nvim-telescope")
-	},
-	{ "stevearc/dressing.nvim",
-		config = require("plugins.configs.dressing")
-	},
-	{ "akinsho/toggleterm.nvim",
-		config = require("plugins.configs.toggleterm")
-	},
-	{ "nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		config = require("plugins.configs.neo-tree"),
-	},
-	{ "petertriho/nvim-scrollbar",
-		config = require("plugins.configs.scrollbar")
-	},
-	{ "s1n7ax/nvim-window-picker",
-		config = require("plugins.configs.window-picker")
-	},
+	{ "rcarriga/nvim-notify",              config = require("plugins.configs.notify") },
+	{ "nvim-telescope/telescope.nvim",     config = require("plugins.configs.nvim-telescope") },
+	{ "stevearc/dressing.nvim",            config = require("plugins.configs.dressing") },
+	{ "akinsho/toggleterm.nvim",           config = require("plugins.configs.toggleterm") },
+	{ "nvim-neo-tree/neo-tree.nvim",       config = require("plugins.configs.neo-tree"),        branch = "v3.x", },
+	{ "petertriho/nvim-scrollbar",         config = require("plugins.configs.scrollbar") },
+	{ "s1n7ax/nvim-window-picker",         config = require("plugins.configs.window-picker") },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
-	{ "nvim-treesitter/nvim-treesitter",
-		config = require("plugins.configs.treesitter"),
-		run = ":TSUpdate",
-	},
-	{ "windwp/nvim-ts-autotag",
-		after = "nvim-treesitter"
-	},
+	{ "nvim-treesitter/nvim-treesitter",   config = require("plugins.configs.treesitter"),      run = ":TSUpdate", },
+	{ "windwp/nvim-ts-autotag",            after = "nvim-treesitter" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
-	{ "L3MON4D3/LuaSnip",
-		config = require("plugins.configs.snippets") },
+	{ "L3MON4D3/LuaSnip",                  config = require("plugins.configs.snippets") },
 	{ "saadparwaiz1/cmp_luasnip" },
-	{ "hrsh7th/nvim-cmp",
-		config = require("plugins.configs.cmp")
-	},
-	{ "williamboman/mason.nvim",
-		config = require("plugins.configs.mason")
-	},
+	{ "hrsh7th/nvim-cmp",                  config = require("plugins.configs.cmp") },
+	{ "williamboman/mason.nvim",           config = require("plugins.configs.mason") },
 	{ "neovim/nvim-lspconfig" },
-	{ "williamboman/mason-lspconfig.nvim",
-		config = require("plugins.configs.mason-lspconfig"),
-		after = "nvim-lspconfig",
-	},
-	{ "terrortylor/nvim-comment",
-		config = require("plugins.configs.comment")
-	},
-	{ "stevearc/aerial.nvim",
-		config = require("plugins.configs.aerial")
-	},
-	{ "windwp/nvim-autopairs",
-		config = require("plugins.configs.autopairs")
-	},
-	{ "lewis6991/gitsigns.nvim",
-		config = require("plugins.configs.gitsigns")
-	},
-	{ "NvChad/nvim-colorizer.lua",
-		config = require("plugins.configs.colorizer")
-	},
-	{ "max397574/colortils.nvim",
-		config = require("plugins.configs.colortils")
-	},
+	{ "williamboman/mason-lspconfig.nvim", config = require("plugins.configs.mason-lspconfig"), after = "nvim-lspconfig", },
+	{ "terrortylor/nvim-comment",          config = require("plugins.configs.comment") },
+	{ "stevearc/aerial.nvim",              config = require("plugins.configs.aerial") },
+	{ "windwp/nvim-autopairs",             config = require("plugins.configs.autopairs") },
+	{ "lewis6991/gitsigns.nvim",           config = require("plugins.configs.gitsigns") },
+	{ "NvChad/nvim-colorizer.lua",         config = require("plugins.configs.colorizer") },
+	{ "max397574/colortils.nvim",          config = require("plugins.configs.colortils") },
 	---------------------------------------------------------------------------
 	--                                                          ADVANCED CODING
-	{ "mfussenegger/nvim-dap",
-		config = require("plugins.configs.debugger")
-	},
-	{ "rcarriga/nvim-dap-ui",
-		config = require("plugins.configs.dapui"),
-		after = "nvim-dap",
-	},
+	{ "mfussenegger/nvim-dap",             config = require("plugins.configs.debugger") },
+	{ "rcarriga/nvim-dap-ui",              config = require("plugins.configs.dapui"),           after = "nvim-dap", },
 	{ "mfussenegger/nvim-jdtls" },
 	{ "simrat39/rust-tools.nvim" },
-	{ "lervag/vimtex",
-		config = require("plugins.configs.vimtex")
-	},
+	{ "lervag/vimtex",                     config = require("plugins.configs.vimtex") },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
 	{ "doums/darcula" },

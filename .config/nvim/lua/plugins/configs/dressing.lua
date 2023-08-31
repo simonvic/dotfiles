@@ -10,7 +10,7 @@ return function()
 				winblend = 0,
 			},
 			get_config = function(opts)
-				if opts.kind == 'codeaction' then
+				if opts.kind == "codeaction" then
 					return {
 						telescope = require("telescope.themes").get_cursor()
 					}
