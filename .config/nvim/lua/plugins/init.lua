@@ -2,7 +2,6 @@ M = {}
 M.plugins = {
 	---------------------------------------------------------------------------
 	--                                                      LIBS / DEPENDENCIES
-	{ "wbthomason/packer.nvim" },
 	{ "nvim-lua/plenary.nvim" },
 	{ "BurntSushi/ripgrep" },
 	{ "sharkdp/fd" },
