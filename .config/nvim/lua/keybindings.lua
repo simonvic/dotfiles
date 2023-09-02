@@ -80,7 +80,7 @@ local function find_files() require("telescope.builtin").find_files({ hidden = t
 local function find_symbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
 local function fuzzy_find() require("telescope.builtin").current_buffer_fuzzy_find() end
 local function live_grep() require("telescope.builtin").live_grep() end
-local function buffers() require("telescope.builtin").buffers(require("telescope_themes").get_dropdown({})) end
+local function buffers() require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({})) end
 local function dap_run_last() require("dap").run_last() end
 
 local keybindings = {
