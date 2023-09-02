@@ -237,35 +237,34 @@ local keybindings = {
 		-------------------------------------------------------------- NEO-TREE
 		neotree            = {
 			-- window
-			["<A-Bslash>"] = "close_window",
-			["<F5>"] = "refresh",
-			["<?>"] = "show_help",
-			["<TAB>"] = "next_source",
-			["<S-TAB>"] = "prev_source",
+			["<A-Bslash>"]    = "close_window",
+			["<F5>"]          = "refresh",
+			["<?>"]           = "show_help",
+			["<TAB>"]         = "next_source",
+			["<S-TAB>"]       = "prev_source",
 			-- navigation
-			["l"] = expandOrDescendFiletree,
-			["<RIGHT>"] = expandOrDescendFiletree,
-			["h"] = collapseOrAscendFiletree,
-			["<LEFT>"] = collapseOrAscendFiletree,
-			["<A-CR>"] = { "toggle_preview", config = { use_float = true } },
+			["l"]             = expandOrDescendFiletree,
+			["<RIGHT>"]       = expandOrDescendFiletree,
+			["<LEFT>"]        = collapseOrAscendFiletree,
+			["<A-CR>"]        = { "toggle_preview", config = { use_float = true } },
 			["<2-LeftMouse>"] = "open",
-			["<CR>"] = "open",
+			["<CR>"]          = "open",
 			-- ["<C-h>"] = "open_split",
 			-- ["<C-v>"] = "open_vsplit",
-			["<C-h>"] = "split_with_window_picker",
-			["<C-v>"] = "vsplit_with_window_picker",
-			["<C-t>"] = "open_tabnew",
-			["C"] = "close_node",
-			["z"] = "close_all_nodes",
-			["Z"] = "expand_all_nodes",
-			["a"] = { "add", config = { show_path = "relative" } },
-			["<DEL>"] = "delete",
-			["<F2>"] = { "move", config = { show_path = "relative" } }, -- (rename)
-			["<C-r>"] = { "move", config = { show_path = "relative" } }, -- (rename)
-			["y"] = "copy_to_clipboard",
-			["x"] = "cut_to_clipboard",
-			["p"] = "paste_from_clipboard",
-			["c"] = "copy",
+			["<C-h>"]         = "split_with_window_picker",
+			["<C-v>"]         = "vsplit_with_window_picker",
+			["<C-t>"]         = "open_tabnew",
+			["C"]             = "close_node",
+			["z"]             = "close_all_nodes",
+			["Z"]             = "expand_all_nodes",
+			["a"]             = { "add", config = { show_path = "relative" } },
+			["<DEL>"]         = "delete",
+			["<F2>"]          = { "move", config = { show_path = "relative" } }, -- (rename)
+			["<C-r>"]         = { "move", config = { show_path = "relative" } }, -- (rename)
+			["y"]             = "copy_to_clipboard",
+			["x"]             = "cut_to_clipboard",
+			["p"]             = "paste_from_clipboard",
+			["c"]             = "copy",
 		},
 		neotree_filesystem = {
 			["<A-.>"] = "navigate_up",
@@ -283,7 +282,7 @@ local keybindings = {
 			["<bs>"] = "navigate_up",
 			["."]    = "set_root",
 		},
-		neotree_gitstatus = {
+		neotree_gitstatus  = {
 			["A"]  = "git_add_all",
 			["gu"] = "git_unstage_file",
 			["ga"] = "git_add_file",
@@ -340,16 +339,16 @@ local keybindings = {
 			["zx"]       = "actions.tree_sync_folds",
 			["zX"]       = "actions.tree_sync_folds",
 		},
-			aerial_nav          = {
-				["<CR>"]  = "actions.jump",
-				["p"]     = "actions.scroll",
-				["<C-v>"] = "actions.jump_vsplit",
-				["<C-s>"] = "actions.jump_split",
-				["h"]     = "actions.left",
-				["l"]     = "actions.right",
-				["<Esc>"] = "actions.close",
-				["q"]     = "actions.close",
-			}
+		aerial_nav         = {
+			["<CR>"]  = "actions.jump",
+			["p"]     = "actions.scroll",
+			["<C-v>"] = "actions.jump_vsplit",
+			["<C-s>"] = "actions.jump_split",
+			["h"]     = "actions.left",
+			["l"]     = "actions.right",
+			["<Esc>"] = "actions.close",
+			["q"]     = "actions.close",
+		}
 	}
 }
 
