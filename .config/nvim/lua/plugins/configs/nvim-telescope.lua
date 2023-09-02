@@ -1,12 +1,12 @@
 return function()
-	local telescopeActions = require("telescope.actions")
+	local actions = require("telescope.actions")
 	require("telescope").setup({
 		defaults = {
 			mappings = {
 				i = {
-					["<esc>"] = telescopeActions.close,
-					["<C-h>"] = telescopeActions.select_horizontal,
-					["<C-v>"] = telescopeActions.select_vertical,
+					["<esc>"] = actions.close,
+					["<C-h>"] = actions.select_horizontal,
+					["<C-v>"] = actions.select_vertical,
 				}
 			}
 		},

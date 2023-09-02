@@ -151,7 +151,7 @@ opt.cmdheight = 1
 
 opt.laststatus = 3
 
-local modesAliases = {
+local modes_aliases = {
 	["n"]  = "NORMAL",
 	["no"] = "NORMAL...",
 	["nov"] = "NORMAL... (v)",
@@ -184,16 +184,16 @@ local modesAliases = {
 	["nt"] = "TERM NORMAL",
 }
 
-function BuildStatusLineMode()
+local function build_status_line_mode()
 	local mode = vim.api.nvim_get_mode().mode
-	return string.format("[ %s ]", modesAliases[mode] or mode, mode)
+	return string.format("[ %s ]", modes_aliases[mode] or mode, mode)
 end
 
-local function getDiagnosticSignText(sign_name)
+local function get_diagnostic_sign_text(sign_name)
 	return "%#" .. sign_name .. "#" .. vim.fn.sign_getdefined(sign_name)[1].text .. "%*"
 end
 
-function BuildStatusLineDiagnostics()
+local function build_status_line_diagnostics()
 	local clients = vim.lsp.buf_get_clients()
 	if #clients == 0 then
 		return ""
@@ -203,15 +203,15 @@ function BuildStatusLineDiagnostics()
 		output = output .. string.format(" %s", lsp.name)
 	end
 	local diag = vim.diagnostic
-	local e = getDiagnosticSignText("DiagnosticSignError") .. #diag.get(0, { severity = diag.severity.ERROR })
-	local w = getDiagnosticSignText("DiagnosticSignWarn") .. #diag.get(0, { severity = diag.severity.WARN })
-	local i = getDiagnosticSignText("DiagnosticSignInfo") .. #diag.get(0, { severity = diag.severity.INFO })
-	local h = getDiagnosticSignText("DiagnosticSignHint") .. #diag.get(0, { severity = diag.severity.HINT })
+	local e = get_diagnostic_sign_text("DiagnosticSignError") .. #diag.get(0, { severity = diag.severity.ERROR })
+	local w = get_diagnostic_sign_text("DiagnosticSignWarn") .. #diag.get(0, { severity = diag.severity.WARN })
+	local i = get_diagnostic_sign_text("DiagnosticSignInfo") .. #diag.get(0, { severity = diag.severity.INFO })
+	local h = get_diagnostic_sign_text("DiagnosticSignHint") .. #diag.get(0, { severity = diag.severity.HINT })
 	output = output .. string.format(" %s %s %s %s", e, w, i, h)
 	return output;
 end
 
-function BuildStatusLineGitBranch()
+local function build_status_line_git_branch()
 	local branch = vim.g.gitsigns_head
 	if branch then
 		return " | " .. branch
@@ -221,7 +221,7 @@ end
 
 function BuildStatusLine()
 	return ""
-		.. " " .. BuildStatusLineMode()    -- mode
+		.. " " .. build_status_line_mode()    -- mode
 		.. " [%S]"                         -- command
 		.. "%w"                            -- preview
 		.. "%q"                            -- quickfix/location list
@@ -230,8 +230,8 @@ function BuildStatusLine()
 		.. " | %{&ff}"                     -- file format
 		.. " | %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
 		.. " | %Y"                         -- file type
-		.. BuildStatusLineDiagnostics()    -- diagnostics
-		.. BuildStatusLineGitBranch()      -- git branch
+		.. build_status_line_diagnostics()    -- diagnostics
+		.. build_status_line_git_branch()      -- git branch
 		.. " "                             -- Some padding
 end
 

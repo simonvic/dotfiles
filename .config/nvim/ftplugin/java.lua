@@ -5,16 +5,16 @@ vim.opt.colorcolumn = "100";
 local jdtls = require("jdtls")
 
 local cmd = { "/usr/bin/jdtls" }
-local lombokJar = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
-local debugJar = vim.fn.glob("~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar", 1)
-local testJars = vim.fn.glob("~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar", 1)
+local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
+local jars_debug = vim.fn.glob("~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar", 1)
+local jars_testing = vim.fn.glob("~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar", 1)
 
-if vim.fn.empty(lombokJar) == 0 then
-	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. lombokJar })
+if vim.fn.empty(jars_lombok) == 0 then
+	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok })
 end
 
-local bundles = { debugJar }
-vim.list_extend(bundles, vim.split(testJars, "\n"))
+local bundles = { jars_debug }
+vim.list_extend(bundles, vim.split(jars_testing, "\n"))
 
 jdtls.start_or_attach({
 	cmd = cmd,

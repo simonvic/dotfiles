@@ -13,24 +13,24 @@ local n__t = { "n", "t" }
 local _vi_ = { "v", "i" }
 
 local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
-local function cmdEsc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
+local function cmd_esc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
 
 local terminal = "<A-ò>"; -- just because accented chars mess up the formatter
 local terminal_float = "<A-ç>";
 
-local function logBreakpoint()
+local function breakpoing_log()
 	vim.ui.input({ prompt = "Log point message" }, function(input)
 		require("dap").set_breakpoint(nil, nil, input)
 	end)
 end
 
-local function conditionBreakpoint()
+local function breakpoint_condition()
 	vim.ui.input({ prompt = "Breakpoint condition" }, function(input)
 		require("dap").set_breakpoint(input)
 	end)
 end
 
-local function conditionLogBreakpoint()
+local function breapoint_condition_log()
 	vim.ui.input({ prompt = "Breakpoint condition" }, function(condition)
 		vim.ui.input({ prompt = "Log point message" }, function(message)
 			require("dap").set_breakpoint(condition, nil, message)
@@ -38,7 +38,7 @@ local function conditionLogBreakpoint()
 	end)
 end
 
-local function expandOrDescendFiletree(state)
+local function expand_or_descend_filetree(state)
 	local node = state.tree:get_node()
 	if node.type == "directory" then
 		if node:is_expanded() then
@@ -51,7 +51,7 @@ local function expandOrDescendFiletree(state)
 	end
 end
 
-local function collapseOrAscendFiletree(state)
+local function collapse_or_ascend_filetree(state)
 	local node = state.tree:get_node()
 	if node.type == "directory" then
 		if node:is_expanded() then
@@ -64,24 +64,24 @@ local function collapseOrAscendFiletree(state)
 	end
 end
 
-local function inspectVariable() require("dapui").eval() end -- require("dap.ui.widgets").hover()
-local function codeAction() lsp.code_action() end
-local function goToDefinition() lsp.definition() end
+local function inspect_variable() require("dapui").eval() end -- require("dap.ui.widgets").hover()
+local function code_actions() lsp.code_action() end
+local function goto_definition() lsp.definition() end
 local function rename() lsp.rename() end
-local function openDocumentation() lsp.hover(); end
-local function showDiagnostics() vim.diagnostic.open_float() end
+local function open_docs() lsp.hover(); end
+local function show_diagnostics() vim.diagnostic.open_float() end
 local function format() lsp.format() end
-local function toggleDapUI() require("dapui").toggle() end
-local function toggleListChars() vim.opt.list = not vim.opt.list:get() end
-local function toggleColumnFold() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
-local function toggleNumberRel() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
-local function findUsage() require("telescope.builtin").lsp_references() end
-local function findFiles() require("telescope.builtin").find_files({ hidden = true }) end
-local function findSymbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
-local function fuzzyFind() require("telescope.builtin").current_buffer_fuzzy_find() end
-local function liveGrep() require("telescope.builtin").live_grep() end
+local function toggle_dapUI() require("dapui").toggle() end
+local function toggle_list_chars() vim.opt.list = not vim.opt.list:get() end
+local function toggle_fold_column() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
+local function toggle_relative_number() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
+local function find_usage() require("telescope.builtin").lsp_references() end
+local function find_files() require("telescope.builtin").find_files({ hidden = true }) end
+local function find_symbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
+local function fuzzy_find() require("telescope.builtin").current_buffer_fuzzy_find() end
+local function live_grep() require("telescope.builtin").live_grep() end
 local function buffers() require("telescope.builtin").buffers(require("telescope_themes").get_dropdown({})) end
-local function dapRunLast() require("dap").run_last() end
+local function dap_run_last() require("dap").run_last() end
 
 local keybindings = {
 	leader = " ",
@@ -91,14 +91,14 @@ local keybindings = {
 	{ nvi_, "<C-s>",          cmd("write"),                           { silent = true }, "save" },
 	{ nvi_, "<C-z>",          cmd("undo"),                            { silent = true }, "undo" },
 	{ nvi_, "<C-y>",          cmd("redo"),                            { silent = true }, "redo" },
-	{ n_i_, "<A-CR>",         codeAction,                             {},                "code actions" },
-	{ n_i_, "<C-b>",          goToDefinition,                         {},                "go to definition" },
-	{ n_i_, "<A-f>",          findUsage,                              {},                "find usage" },
+	{ n_i_, "<A-CR>",         code_actions,                           {},                "code actions" },
+	{ n_i_, "<C-b>",          goto_definition,                        {},                "go to definition" },
+	{ n_i_, "<A-f>",          find_usage,                             {},                "find usage" },
 	{ n_i_, "<F2>",           rename,                                 {},                "rename" },
 	{ n_i_, "<C-r>",          rename,                                 {},                "rename" },
-	{ n_i_, "<F1>",           openDocumentation,                      {},                "open docs" },
-	{ n_i_, "<C-q>",          openDocumentation,                      {},                "open docs" },
-	{ n_i_, "<C-e>",          showDiagnostics,                        {},                "show diagnostics" },
+	{ n_i_, "<F1>",           open_docs,                              {},                "open docs" },
+	{ n_i_, "<C-q>",          open_docs,                              {},                "open docs" },
+	{ n_i_, "<C-e>",          show_diagnostics,                       {},                "show diagnostics" },
 	{ n___, "-",              "/",                                    {},                "search forward" },
 	{ n___, "_",              "?",                                    {},                "search backward" },
 	------------------------------------------------------------------ MOVEMENT
@@ -207,35 +207,35 @@ local keybindings = {
 	{ n_i_, "<C-S-PageUp>",   cmd("-tabmove"),                        {},                "move tab to left" },
 	{ n_i_, "<C-S-PageDown>", cmd("+tabmove"),                        {},                "move tab to right" },
 	{ n__t, "<A-\\>",         cmd("Neotree focus"),                   {},                "focus filetree" },
-	{ __i_, "<A-\\>",         cmdEsc("Neotree focus"),                {},                "focus filetree" },
+	{ __i_, "<A-\\>",         cmd_esc("Neotree focus"),               {},                "focus filetree" },
 	{ n__t, terminal,         cmd("ToggleTerm direction=horizontal"), {},                "toggle dropdown terminal" },
 	{ n__t, terminal_float,   cmd("ToggleTerm direction=float"),      {},                "toggle floating terminal" },
 	{ ___t, "<Esc>",          "<C-\\><C-n>",                          {},                "terminal" },
-	{ n_i_, "<C-p>",          findFiles,                              {},                "find files" },
+	{ n_i_, "<C-p>",          find_files,                             {},                "find files" },
 	{ n_i_, "<A-p>",          cmd("Telescope"),                       {},                "telescope" },
-	{ n_i_, "<C-A-p>",        findSymbols,                            {},                "find symbols" },
+	{ n_i_, "<C-A-p>",        find_symbols,                           {},                "find symbols" },
 	{ n_i_, "<A-Tab>",        buffers,                                {},                "buffers" },
-	{ n_i_, "<C-f>",          fuzzyFind,                              {},                "fuzzy find" },
-	{ n_i_, "<C-A-f>",        liveGrep,                               {},                "live grep" },
+	{ n_i_, "<C-f>",          fuzzy_find,                             {},                "fuzzy find" },
+	{ n_i_, "<C-A-f>",        live_grep,                              {},                "live grep" },
 	------------------------------------------------------------------------ UI
-	{ n___, "<Leader>ud",     toggleDapUI,                            {},                "dapui" },
-	{ n___, "<Leader>ul",     toggleListChars,                        {},                "toggle list chars" },
-	{ n___, "<Leader>uz",     toggleColumnFold,                       {},                "toggle folds column" },
-	{ n___, "<Leader>un",     toggleNumberRel,                        {},                "toggle number column" },
+	{ n___, "<Leader>ud",     toggle_dapUI,                           {},                "dapui" },
+	{ n___, "<Leader>ul",     toggle_list_chars,                      {},                "toggle list chars" },
+	{ n___, "<Leader>uz",     toggle_fold_column,                     {},                "toggle folds column" },
+	{ n___, "<Leader>un",     toggle_relative_number,                 {},                "toggle number column" },
 	{ nvi_, "<A-9>",          cmd("AerialToggle"),                    {},                "symbols outline" },
 	{ nvi_, "<A-)>",          cmd("AerialNavToggle"),                 {},                "symbols outline floating navigation" },
 	----------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",           cmd("DapContinue"),                     {},                "continue [F7]" },
 	{ n___, "<F55>",          cmd("DapTerminate"),                    {},                "terminate [Alt + F7]" },
-	{ n___, "<F19>",          dapRunLast,                             {},                "run last [Shift + F7]" },
+	{ n___, "<F19>",          dap_run_last,                           {},                "run last [Shift + F7]" },
 	{ n___, "<F8>",           cmd("DapStepOver"),                     {},                "step over[F8]" },
 	{ n___, "<F32>",          cmd("DapStepInto"),                     {},                "step into [Ctrl + F8]" },
 	{ n___, "<F20>",          cmd("DapStepOut"),                      {},                "step out [Shift + F8]" },
 	{ n___, "<F9>",           cmd("DapToggleBreakpoint"),             {},                "breakpoint [F9]" },
-	{ n___, "<F33>",          conditionBreakpoint,                    {},                "conditional breakpoint [Ctrl + F9]" },
-	{ n___, "<F57>",          logBreakpoint,                          {},                "log breakpoint [Alt + F9]" },
-	{ n___, "<F21>",          conditionLogBreakpoint,                 {},                "conditional log breakpoint [Shift + F9]" },
-	{ n___, "<A-q>",          inspectVariable,                        {},                "inspect variable" },
+	{ n___, "<F33>",          breakpoint_condition,                   {},                "conditional breakpoint [Ctrl + F9]" },
+	{ n___, "<F57>",          breakpoing_log,                         {},                "log breakpoint [Alt + F9]" },
+	{ n___, "<F21>",          breapoint_condition_log,                {},                "conditional log breakpoint [Shift + F9]" },
+	{ n___, "<A-q>",          inspect_variable,                       {},                "inspect variable" },
 	------------------------------------------------------------------- PLUGINS
 	plugins = {
 		-------------------------------------------------------------- NEO-TREE
@@ -247,10 +247,10 @@ local keybindings = {
 			["<TAB>"]         = "next_source",
 			["<S-TAB>"]       = "prev_source",
 			-- navigation
-			["l"]             = expandOrDescendFiletree,
-			["<RIGHT>"]       = expandOrDescendFiletree,
-			["h"]             = collapseOrAscendFiletree,
-			["<LEFT>"]        = collapseOrAscendFiletree,
+			["l"]             = expand_or_descend_filetree,
+			["<RIGHT>"]       = expand_or_descend_filetree,
+			["h"]             = collapse_or_ascend_filetree,
+			["<LEFT>"]        = collapse_or_ascend_filetree,
 			["<A-CR>"]        = { "toggle_preview", config = { use_float = true } },
 			["<2-LeftMouse>"] = "open",
 			["<CR>"]          = "open",
