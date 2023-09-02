@@ -11,6 +11,8 @@ opt.splitbelow = true
 opt.splitkeep = "cursor"
 opt.scrolloff = 8
 
+opt.undofile = true
+
 --                                                                         CASE
 opt.ignorecase = true
 opt.smartcase = true
@@ -27,8 +29,6 @@ opt.preserveindent = true
 
 opt.completeopt = "menuone,noinsert,noselect"
 opt.backspace = "indent,eol,start,nostop"
-
--- @TODO vim.opt.undofile
 
 -- fold
 opt.foldlevel = 69
