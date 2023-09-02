@@ -12,7 +12,7 @@ return function()
 			placement = "window",
 		},
 		backends = { "lsp", "treesitter", "markdown" },
-		attach_mode = "global",
+		attach_mode = "window",
 		close_automatic_events = {},
 		keymaps = keybindings.plugins.aerial,
 		show_guides = true,
