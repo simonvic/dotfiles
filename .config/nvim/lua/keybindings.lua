@@ -38,6 +38,31 @@ local function conditionLogBreakpoint()
 	end)
 end
 
+local function expandOrDescendFiletree(state)
+	local node = state.tree:get_node()
+	if node.type == "directory" then
+		if node:is_expanded() then
+			vim.api.nvim_feedkeys("j", "n", false)
+		else
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+		end
+	else
+		vim.api.nvim_feedkeys("j", "n", false)
+	end
+end
+
+local function collapseOrAscendFiletree(state)
+	local node = state.tree:get_node()
+	if node.type == "directory" then
+		if node:is_expanded() then
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+		else
+			vim.api.nvim_feedkeys("k", "n", false)
+		end
+	else
+		vim.api.nvim_feedkeys("k", "n", false)
+	end
+end
 
 local function inspectVariable() require("dapui").eval() end -- require("dap.ui.widgets").hover()
 local function codeAction() lsp.code_action() end
@@ -218,30 +243,10 @@ local keybindings = {
 			["<TAB>"] = "next_source",
 			["<S-TAB>"] = "prev_source",
 			-- navigation
-			["<RIGHT>"] = function(state) -- expand or descend
-				local node = state.tree:get_node()
-				if node.type == "directory" then
-					if node:is_expanded() then
-						vim.api.nvim_feedkeys("j", "n", false)
-					else
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
-					end
-				else
-					vim.api.nvim_feedkeys("j", "n", false)
-				end
-			end,
-			["<LEFT>"] = function(state) -- collapse or ascend
-				local node = state.tree:get_node()
-				if node.type == "directory" then
-					if node:is_expanded() then
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
-					else
-						vim.api.nvim_feedkeys("k", "n", false)
-					end
-				else
-					vim.api.nvim_feedkeys("k", "n", false)
-				end
-			end,
+			["l"] = expandOrDescendFiletree,
+			["<RIGHT>"] = expandOrDescendFiletree,
+			["h"] = collapseOrAscendFiletree,
+			["<LEFT>"] = collapseOrAscendFiletree,
 			["<A-CR>"] = { "toggle_preview", config = { use_float = true } },
 			["<2-LeftMouse>"] = "open",
 			["<CR>"] = "open",
