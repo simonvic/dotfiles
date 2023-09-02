@@ -99,6 +99,8 @@ local keybindings = {
 	{ n_i_, "<F1>",           openDocumentation,                      {},                "open docs" },
 	{ n_i_, "<C-q>",          openDocumentation,                      {},                "open docs" },
 	{ n_i_, "<C-e>",          showDiagnostics,                        {},                "show diagnostics" },
+	{ n___, "-",              "/",                                    {},                "search forward" },
+	{ n___, "_",              "?",                                    {},                "search backward" },
 	------------------------------------------------------------------ MOVEMENT
 	{ nv__, "<C-LEFT>",       "b",                                    {},                "previous end" },
 	{ __i_, "<C-LEFT>",       "<C-o>b",                               {},                "previous end" },
@@ -221,9 +223,11 @@ local keybindings = {
 	{ n___, "<Leader>uz",     toggleColumnFold,                       {},                "toggle folds column" },
 	{ n___, "<Leader>un",     toggleNumberRel,                        {},                "toggle number column" },
 	{ nvi_, "<A-9>",          cmd("AerialToggle"),                    {},                "symbols outline" },
+	{ nvi_, "<A-)>",          cmd("AerialNavToggle"),                 {},                "symbols outline floating navigation" },
 	----------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",           cmd("DapContinue"),                     {},                "continue [F7]" },
 	{ n___, "<F55>",          cmd("DapTerminate"),                    {},                "terminate [Alt + F7]" },
+	{ n___, "<F19>",          dapRunLast,                             {},                "run last [Shift + F7]" },
 	{ n___, "<F8>",           cmd("DapStepOver"),                     {},                "step over[F8]" },
 	{ n___, "<F32>",          cmd("DapStepInto"),                     {},                "step into [Ctrl + F8]" },
 	{ n___, "<F20>",          cmd("DapStepOut"),                      {},                "step out [Shift + F8]" },
@@ -245,6 +249,7 @@ local keybindings = {
 			-- navigation
 			["l"]             = expandOrDescendFiletree,
 			["<RIGHT>"]       = expandOrDescendFiletree,
+			["h"]             = collapseOrAscendFiletree,
 			["<LEFT>"]        = collapseOrAscendFiletree,
 			["<A-CR>"]        = { "toggle_preview", config = { use_float = true } },
 			["<2-LeftMouse>"] = "open",
