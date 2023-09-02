@@ -23,6 +23,7 @@ return function()
 				position = "right",
 			},
 		},
+		mappings = require("keybindings").plugins.dapui,
 	})
 
 	require("dap").listeners.after.event_initialized["dapui_config"] = function()

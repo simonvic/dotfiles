@@ -1,3 +1,4 @@
+M = {}
 local vim = vim
 local lsp = vim.lsp.buf
 local n___ = { "n" }
@@ -11,11 +12,6 @@ local n_it = { "n", "i", "t" }
 local n__t = { "n", "t" }
 local _vi_ = { "v", "i" }
 
-local dap = require("dap")
-local dapui = require("dapui")
-local telescope_builtin = require("telescope.builtin")
-local telescope_themes = require("telescope.themes")
-
 local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
 local function cmdEsc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
 
@@ -24,42 +20,43 @@ local terminal_float = "<A-ç>";
 
 local function logBreakpoint()
 	vim.ui.input({ prompt = "Log point message" }, function(input)
-		dap.set_breakpoint(nil, nil, input)
+		require("dap").set_breakpoint(nil, nil, input)
 	end)
 end
 
 local function conditionBreakpoint()
 	vim.ui.input({ prompt = "Breakpoint condition" }, function(input)
-		dap.set_breakpoint(input)
+		require("dap").set_breakpoint(input)
 	end)
 end
 
 local function conditionLogBreakpoint()
 	vim.ui.input({ prompt = "Breakpoint condition" }, function(condition)
 		vim.ui.input({ prompt = "Log point message" }, function(message)
-			dap.set_breakpoint(condition, nil, message)
+			require("dap").set_breakpoint(condition, nil, message)
 		end)
 	end)
 end
 
 
-local function inspectVariable() dapui.eval() end -- require("dap.ui.widgets").hover()
+local function inspectVariable() require("dapui").eval() end -- require("dap.ui.widgets").hover()
 local function codeAction() lsp.code_action() end
 local function goToDefinition() lsp.definition() end
 local function rename() lsp.rename() end
 local function openDocumentation() lsp.hover(); end
 local function showDiagnostics() vim.diagnostic.open_float() end
 local function format() lsp.format() end
-local function toggleDapUI() dapui.toggle() end
+local function toggleDapUI() require("dapui").toggle() end
 local function toggleListChars() vim.opt.list = not vim.opt.list:get() end
 local function toggleColumnFold() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
 local function toggleNumberRel() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
-local function findUsage() telescope_builtin.lsp_references() end
-local function findFiles() telescope_builtin.find_files({ hidden = true }) end
-local function findSymbols() telescope_builtin.lsp_dynamic_workspace_symbols() end
-local function fuzzyFind() telescope_builtin.current_buffer_fuzzy_find() end
-local function liveGrep() telescope_builtin.live_grep() end
-local function buffers() telescope_builtin.buffers(telescope_themes.get_dropdown({})) end
+local function findUsage() require("telescope.builtin").lsp_references() end
+local function findFiles() require("telescope.builtin").find_files({ hidden = true }) end
+local function findSymbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
+local function fuzzyFind() require("telescope.builtin").current_buffer_fuzzy_find() end
+local function liveGrep() require("telescope.builtin").live_grep() end
+local function buffers() require("telescope.builtin").buffers(require("telescope_themes").get_dropdown({})) end
+local function dapRunLast() require("dap").run_last() end
 
 local keybindings = {
 	leader = " ",
@@ -210,11 +207,161 @@ local keybindings = {
 	{ n___, "<F57>",          logBreakpoint,                          {},                "log breakpoint [Alt + F9]" },
 	{ n___, "<F21>",          conditionLogBreakpoint,                 {},                "conditional log breakpoint [Shift + F9]" },
 	{ n___, "<A-q>",          inspectVariable,                        {},                "inspect variable" },
+	------------------------------------------------------------------- PLUGINS
+	plugins = {
+		-------------------------------------------------------------- NEO-TREE
+		neotree            = {
+			-- window
+			["<A-Bslash>"] = "close_window",
+			["<F5>"] = "refresh",
+			["<?>"] = "show_help",
+			["<TAB>"] = "next_source",
+			["<S-TAB>"] = "prev_source",
+			-- navigation
+			["<RIGHT>"] = function(state) -- expand or descend
+				local node = state.tree:get_node()
+				if node.type == "directory" then
+					if node:is_expanded() then
+						vim.api.nvim_feedkeys("j", "n", false)
+					else
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+					end
+				else
+					vim.api.nvim_feedkeys("j", "n", false)
+				end
+			end,
+			["<LEFT>"] = function(state) -- collapse or ascend
+				local node = state.tree:get_node()
+				if node.type == "directory" then
+					if node:is_expanded() then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+					else
+						vim.api.nvim_feedkeys("k", "n", false)
+					end
+				else
+					vim.api.nvim_feedkeys("k", "n", false)
+				end
+			end,
+			["<A-CR>"] = { "toggle_preview", config = { use_float = true } },
+			["<2-LeftMouse>"] = "open",
+			["<CR>"] = "open",
+			-- ["<C-h>"] = "open_split",
+			-- ["<C-v>"] = "open_vsplit",
+			["<C-h>"] = "split_with_window_picker",
+			["<C-v>"] = "vsplit_with_window_picker",
+			["<C-t>"] = "open_tabnew",
+			["C"] = "close_node",
+			["z"] = "close_all_nodes",
+			["Z"] = "expand_all_nodes",
+			["a"] = { "add", config = { show_path = "relative" } },
+			["<DEL>"] = "delete",
+			["<F2>"] = { "move", config = { show_path = "relative" } }, -- (rename)
+			["<C-r>"] = { "move", config = { show_path = "relative" } }, -- (rename)
+			["y"] = "copy_to_clipboard",
+			["x"] = "cut_to_clipboard",
+			["p"] = "paste_from_clipboard",
+			["c"] = "copy",
+		},
+		neotree_filesystem = {
+			["<A-.>"] = "navigate_up",
+			["."]     = "set_root",
+			["H"]     = "toggle_hidden",
+			["/"]     = "fuzzy_finder",
+			["D"]     = "fuzzy_finder_directory",
+			["f"]     = "filter_on_submit",
+			["<ESC>"] = "clear_filter",
+			["[g"]    = "prev_git_modified",
+			["]g"]    = "next_git_modified",
+		},
+		neotree_buffers    = {
+			["bd"]   = "buffer_delete",
+			["<bs>"] = "navigate_up",
+			["."]    = "set_root",
+		},
+		neotree_gitstatus = {
+			["A"]  = "git_add_all",
+			["gu"] = "git_unstage_file",
+			["ga"] = "git_add_file",
+			["gr"] = "git_revert_file",
+			["gc"] = "git_commit",
+			["gp"] = "git_push",
+			["gg"] = "git_commit_and_push",
+		},
+		------------------------------------------------------------ NVIM-JDTLS
+		----------------------------------------------------------------- DAPUI
+		dapui              = {
+			edit = "e",
+			expand = "<CR>",
+			open = { "o", "p" },
+			remove = { "d", "<DEL>" },
+			repl = "r",
+			toggle = "t"
+		},
+		---------------------------------------------------------------- AERIAL
+		aerial             = {
+			["?"]        = "actions.show_help",
+			["g?"]       = false,
+			["<CR>"]     = "actions.jump",
+			["<C-v>"]    = "actions.jump_vsplit",
+			["<C-h>"]    = "actions.jump_split",
+			["p"]        = "actions.scroll",
+			["<C-j>"]    = "actions.down_and_scroll",
+			["<C-k>"]    = "actions.up_and_scroll",
+			["{"]        = "actions.prev",
+			["}"]        = "actions.next",
+			["[["]       = "actions.prev_up",
+			["]]"]       = "actions.next_up",
+			["q"]        = "actions.close",
+			["o"]        = "actions.tree_toggle",
+			["za"]       = "actions.tree_toggle",
+			["O"]        = "actions.tree_toggle_recursive",
+			["zA"]       = "actions.tree_toggle_recursive",
+			["l"]        = "actions.tree_open",
+			["<RIGHT>"]  = "actions.tree_open",
+			["zo"]       = "actions.tree_open",
+			["L"]        = "actions.tree_open_recursive",
+			["<S-RIGHT"] = "actions.tree_open_recursive",
+			["zO"]       = "actions.tree_open_recursive",
+			["h"]        = "actions.tree_close",
+			["<LEFT>"]   = "actions.tree_close",
+			["zc"]       = "actions.tree_close",
+			["H"]        = "actions.tree_close_recursive",
+			["<S-Left>"] = "actions.tree_close_recursive",
+			["zC"]       = "actions.tree_close_recursive",
+			["zr"]       = "actions.tree_increase_fold_level",
+			["zR"]       = "actions.tree_open_all",
+			["zm"]       = "actions.tree_decrease_fold_level",
+			["zM"]       = "actions.tree_close_all",
+			["zx"]       = "actions.tree_sync_folds",
+			["zX"]       = "actions.tree_sync_folds",
+		},
+			aerial_nav          = {
+				["<CR>"]  = "actions.jump",
+				["p"]     = "actions.scroll",
+				["<C-v>"] = "actions.jump_vsplit",
+				["<C-s>"] = "actions.jump_split",
+				["h"]     = "actions.left",
+				["l"]     = "actions.right",
+				["<Esc>"] = "actions.close",
+				["q"]     = "actions.close",
+			}
+	}
 }
 
 
-vim.g.mapleader = keybindings.leader
-vim.g.maplocalleader = keybindings.localleader
-for _, keybind in ipairs(keybindings) do
-	vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
+
+M = keybindings
+
+M.set = function(bindings)
+	for _, keybind in ipairs(bindings) do
+		vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
+	end
 end
+
+M.apply = function()
+	vim.g.mapleader = keybindings.leader
+	vim.g.maplocalleader = keybindings.localleader
+	M.set(keybindings)
+end
+
+return M
