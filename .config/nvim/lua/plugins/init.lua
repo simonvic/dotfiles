@@ -3,8 +3,6 @@ M.plugins = {
 	---------------------------------------------------------------------------
 	--                                                      LIBS / DEPENDENCIES
 	{ "nvim-lua/plenary.nvim" },
-	{ "BurntSushi/ripgrep" },
-	{ "sharkdp/fd" },
 	{ "MunifTanjim/nui.nvim" },
 	{ "kyazdani42/nvim-web-devicons" },
 	---------------------------------------------------------------------------
@@ -84,7 +82,14 @@ M.with_lazy = function()
 		})
 	end
 	vim.opt.rtp:prepend(lazypath)
-	require("lazy").setup(M.plugins)
+	require("lazy").setup(M.plugins, {
+		ui = { border = "rounded", },
+		checker = {
+			enabled = true,
+			notify = true,
+			frequency = 3600,
+		},
+	})
 end
 
 return M
