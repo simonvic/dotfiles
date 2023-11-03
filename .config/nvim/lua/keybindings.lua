@@ -82,6 +82,12 @@ local function fuzzy_find() require("telescope.builtin").current_buffer_fuzzy_fi
 local function live_grep() require("telescope.builtin").live_grep() end
 local function buffers() require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({})) end
 local function dap_run_last() require("dap").run_last() end
+local function jdtls_organize_imports() require("jdtls").organize_imports() end
+local function jdtls_pick_tests() require("jdtls").pick_test() end
+local function jdtls_test_class() require("jdtls").test_class() end
+local function jdtls_test_method() require("jdtls").test_nearest_method() end
+local function jdtls_setup_debug_config() require("jdtls.dap").setup_dap_main_class_configs() end
+local function jdtls_super_implementation() require("jdtls").super_implementation() end
 
 local keybindings = {
 	leader = " ",
@@ -297,6 +303,15 @@ local keybindings = {
 			["gg"] = "git_commit_and_push",
 		},
 		------------------------------------------------------------ NVIM-JDTLS
+		jdtls              = {
+			{ n_i_, "<A-i>",   jdtls_organize_imports,     {}, "Organize imports" },
+			{ n_i_, "<F6>",    jdtls_pick_tests,           {}, "Pick test [F6]" },
+			{ n_i_, "<F18>",   jdtls_test_class,           {}, "Test class [Shift + F6]" },
+			{ n_i_, "<F30>",   jdtls_test_method,          {}, "Test method [Ctrl + F6]" },
+			{ n_i_, "<F43>",   jdtls_setup_debug_config,   {}, "Setup debug launch config [Ctrl + Shift + F7]" },
+			{ n_i_, "<F31>",   cmd("JdtUpdateHotcode"),    {}, "Hotcode replace [Ctrl + F7]" },
+			{ n_i_, "<C-A-b>", jdtls_super_implementation, {}, "Go to super implementation" },
+		},
 		----------------------------------------------------------------- DAPUI
 		dapui              = {
 			edit = "e",

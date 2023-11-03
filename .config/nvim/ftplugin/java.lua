@@ -15,7 +15,6 @@ end
 
 local bundles = { jars_debug }
 vim.list_extend(bundles, vim.split(jars_testing, "\n"))
-
 jdtls.start_or_attach({
 	cmd = cmd,
 	root_dir = require("jdtls.setup").find_root({ ".gradlew", ".git", "mvnw", "pom.xml" }),
@@ -26,13 +25,8 @@ jdtls.start_or_attach({
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		jdtls.setup.add_commands()
-		vim.keymap.set({ "n", "i" }, "<A-i>", function() jdtls.organize_imports() end)
-		vim.keymap.set({ "n", "i" }, "<F6>", function() jdtls.pick_test() end)          -- F6
-		vim.keymap.set({ "n", "i" }, "<F18>", function() jdtls.test_class() end)        -- Shift + F6
-		vim.keymap.set({ "n", "i" }, "<F30>", function() jdtls.test_nearest_method() end) -- Ctrl + F6
-		vim.keymap.set({ "n", "i" }, "<F19>", function() vim.cmd("JdtUpdateDebugConfig") end) -- Shift + F7
-		vim.keymap.set({ "n", "i" }, "<F31>", function() vim.cmd("JdtUpdateHotcode") end) -- Ctrl + F7
-		vim.keymap.set({ "n", "i" }, "<C-A-b>", function() jdtls.super_implementation() end)
+		local keybindings = require("keybindings")
+		keybindings.set(keybindings.plugins.jdtls)
 	end,
 	settings = {
 		java = {
