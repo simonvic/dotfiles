@@ -26,8 +26,6 @@ notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
 
-dmenu_theme="simonvic/glass/notification_actions"
-
 # Max length of body in the notification
 maxLength=15
 
@@ -87,11 +85,11 @@ printUsage() {
 # @param todo status (done|todo|deleted) or empty
 # @return count
 function getCount() {
-	grep "^[0-9]\+,$1" "$todoFile" | wc -l
+	grep -c "^[0-9]\+,$1" "$todoFile"
 }
 
 function prettifyList() {
-	while IFS=, read id status description; do
+	while IFS=, read -r id status description; do
 		case "$status" in
 			todo) status=$todoSymbol ;;
 			done) status=$doneSymbol ;;
@@ -135,7 +133,7 @@ function buildBar() {
 	DrawBar.sh                               \
 		--length $notificationBarLength      \
 		--step $notificationBarStep          \
-		--value $1                           \
+		--value "$1"                         \
 		--bar-chars "$notificationBarChars"  \
 		--borders "$notificationBarBorders"
 }
@@ -143,17 +141,18 @@ function buildBar() {
 # @param status (done|todo|deleted)
 # @param description or empty
 function sendNotification() {
-	local doneCount=$(getCount done "$2")
-	local todoCount=$(getCount todo "$2")
-	local deletedCount=$(getCount deleted "$2")
-	local totalCount=$(getCount)
-	local todoPercent=$((doneCount * 100 / (totalCount - deletedCount)))
+	local doneCount todoCount deletedCount totalCount todoPercent length list choice
+	doneCount=$(getCount "done" "$2")
+	todoCount=$(getCount "todo" "$2")
+	deletedCount=$(getCount "deleted" "$2")
+	totalCount=$(getCount)
+	todoPercent=$((doneCount * 100 / (totalCount - deletedCount)))
 	# If the list is too big cut it
-	local length=$(getCount "$1" "$2")
-	local list=$(list "$1" "$2" | head -$maxLength | prettifyList)
+	length=$(getCount "$1" "$2")
+	list=$(list "$1" "$2" | head -$maxLength | prettifyList)
 	local body="\n<small>$list"
 	if [[ $length -ge $maxLength ]]; then
-		body+="\n... $(($length - $maxLength)) more\n"
+		body+="\n... $((length - maxLength)) more\n"
 	fi
 	body+="</small>\n"
 	body+="\n$(buildBar $todoPercent) $todoPercent%\n"
@@ -161,7 +160,7 @@ function sendNotification() {
 	
 
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
-	local choice=$(notify-send \
+	choice=$(notify-send \
 		--app-name "$notificationAppName" \
 		--hint "string:x-canonical-private-synchronous:$notificationAppName" \
 		--icon "$notificationIcon" \
@@ -187,8 +186,8 @@ function sendNotification() {
 
 function createTodoFile() {
 	mkdir -p "${todoFile%/*}"
-	echo "0,todo,Check out https://github.com/simonvic/dotfiles" >> $todoFile
-	echo "1,todo,Give a star to https://github.com/simonvic/dotfiles" >> $todoFile
+	echo "0,todo,Check out https://github.com/simonvic/dotfiles" >> "$todoFile"
+	echo "1,todo,Give a star to https://github.com/simonvic/dotfiles" >> "$todoFile"
 }
 
 [[ ! -e "$todoFile" ]] && createTodoFile
@@ -197,9 +196,9 @@ case "$1" in
 	"list") list "$2" "$3" | prettifyList ;;
 	"count") getCount "$2" "$3" ;;
 	"new") addNew "$2" ;;
-	"do") mark done "$2" ;;
-	"undo") mark todo "$2" ;;
-	"delete") mark deleted "$2" ;;
+	"do") mark "done" "$2" ;;
+	"undo") mark "todo" "$2" ;;
+	"delete") mark "deleted" "$2" ;;
 	"edit") editFile ;;
 	"notification") sendNotification "$2" "$3" ;;
 	"help") printUsage ;;
