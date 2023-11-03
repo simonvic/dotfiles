@@ -146,7 +146,7 @@ bindsym $mod+y                           exec sWifi rescan no
 bindsym $mod+Shift+y                     exec sWifi rescan yes
 
 #                                                                    LOCKSCREEN
-bindsym $mod+l                           exec --no-startup-id sLockscreenctl lock
+bindsym $mod+Ctrl+l                           exec --no-startup-id sLockscreenctl lock
 
 #                                                        SPEAKER AND MICROPHONE
 # -Ctrl is used to control the microphone
@@ -230,7 +230,12 @@ bindsym $mod+Left                        focus left
 bindsym $mod+Down                        focus down
 bindsym $mod+Up                          focus up
 bindsym $mod+Right                       focus right
-bindsym $mod+Shift+a                     focus parent
+bindsym $mod+h                           focus left
+bindsym $mod+j                           focus down
+bindsym $mod+k                           focus up
+bindsym $mod+l                           focus right
+
+bindsym $mod+Shift+d                     focus parent
 bindsym $mod+d                           focus child
 
 #                                                      DESKTOP MANAGER MOVEMENT
@@ -239,8 +244,13 @@ bindsym $mod+Shift+Down                  move down
 bindsym $mod+Shift+Up                    move up
 bindsym $mod+Shift+Right                 move right
 
+bindsym $mod+Shift+h                     move left
+bindsym $mod+Shift+j                     move down
+bindsym $mod+Shift+k                     move up
+bindsym $mod+Shift+l                     move right
+
 #                                                     DESKTOP MANAGER SPLITTING
-bindsym $mod+h                           split h
+bindsym $mod+x                           split h
 bindsym $mod+v                           split v
 
 #                                                        DESKTOP MANAGER LAYOUT
@@ -288,6 +298,10 @@ mode "resize" {
 	bindsym Down                         resize grow height 5 px or 5 ppt
 	bindsym Up                           resize shrink height 5 px or 5 ppt
 	bindsym Right                        resize grow width 5 px or 5 ppt
+	bindsym h                            resize shrink width 5 px or 5 ppt
+	bindsym j                            resize grow height 5 px or 5 ppt
+	bindsym k                            resize shrink height 5 px or 5 ppt
+	bindsym l                            resize grow width 5 px or 5 ppt
 
 	bindsym Return                       mode "default"
 	bindsym Escape                       mode "default"
