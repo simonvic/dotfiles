@@ -155,6 +155,7 @@ M.groups = {
 	-- PreProc      = { fg = "#BBB529" },
 	Comment                      = { bg = "none", fg = "#808080", italic = M.config.italic_comments },
 	Type                         = { bg = "none", fg = "#FAFAFA", bold = false },
+	Todo                         = { bg = "none", fg = p.hint, bold = true },
 	["@parameter"]               = { bg = "none", fg = "#CACACA", bold = false },
 	["@variable"]                = { bg = "none", fg = "#CACACA", bold = false },
 	["@field"]                   = { bg = "none", fg = "#9876AA", bold = false },
@@ -165,9 +166,9 @@ M.groups = {
 	["@type.qualifier"]          = { bg = "none", fg = "#CC7832", bold = false },
 	["@type.builtin"]            = { bg = "none", fg = "#f98b31", bold = false },
 	["@variable.builtin"]        = { bg = "none", fg = "#f98b31", bold = false },
-	Todo                         = { bg = "none", fg = p.hint, bold = true },
 	["@text.todo"]               = { link = "Todo" },
 	["@text.danger"]             = { bg = "none", fg = p.warn, bold = true },
+	["@lsp.type.property.lua"]   = { link = "@field" }
 }
 
 function M.apply()
