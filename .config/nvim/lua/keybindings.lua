@@ -75,7 +75,7 @@ local function toggle_dapUI() require("dapui").toggle() end
 local function toggle_list_chars() vim.opt.list = not vim.opt.list:get() end
 local function toggle_fold_column() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
 local function toggle_relative_number() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
-local function find_usage() require("telescope.builtin").lsp_references() end
+local function find_references() require("telescope.builtin").lsp_references() end
 local function find_files() require("telescope.builtin").find_files({ hidden = true }) end
 local function find_symbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
 local function fuzzy_find() require("telescope.builtin").current_buffer_fuzzy_find() end
@@ -93,7 +93,6 @@ local keybindings = {
 	{ nvi_, "<C-y>",          cmd("redo"),                            { silent = true }, "redo" },
 	{ n_i_, "<A-CR>",         code_actions,                           {},                "code actions" },
 	{ n_i_, "<C-b>",          goto_definition,                        {},                "go to definition" },
-	{ n_i_, "<A-f>",          find_usage,                             {},                "find usage" },
 	{ n_i_, "<F2>",           rename,                                 {},                "rename" },
 	{ n_i_, "<C-r>",          rename,                                 {},                "rename" },
 	{ n_i_, "<F1>",           open_docs,                              {},                "open docs" },
@@ -101,6 +100,7 @@ local keybindings = {
 	{ n_i_, "<C-e>",          show_diagnostics,                       {},                "show diagnostics" },
 	{ n___, "-",              "/",                                    {},                "search forward" },
 	{ n___, "_",              "?",                                    {},                "search backward" },
+	{ n_i_, "<A-r>",            find_references,                        {},                "find references" },
 	------------------------------------------------------------------ MOVEMENT
 	{ nv__, "<C-LEFT>",       "b",                                    {},                "previous end" },
 	{ __i_, "<C-LEFT>",       "<C-o>b",                               {},                "previous end" },
