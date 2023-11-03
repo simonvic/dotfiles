@@ -90,17 +90,6 @@ end
 
 opt.foldtext = "v:lua.BuildFoldText()"
 
--- vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
--- 	group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
--- 	callback = function()
--- 	  vim.opt.foldmethod     = 'expr'
--- 	  vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
--- 	end
---   })
-
-
--- @TODO formatoptions
-
 --                                                                 CURSOR SHAPE
 opt.guicursor = {
 	"a:blinkon100",  -- all
@@ -142,7 +131,13 @@ end
 vim.opt.tabline = "%!v:lua.BuildTabLine()"
 
 --                                                                  WINDOW LINE
-opt.winbar = "%=%h%m%r%f%="
+opt.winbar = ""
+	.. "%="  -- padding
+	.. "%h"  -- help flag
+	.. "%m"  -- modified flag
+	.. "%r"  -- readonly flag
+	.. "%f"  -- file (relative to cwd)
+	.. "%="  -- padding
 
 --                                                                 COMMAND LINE
 opt.cmdheight = 1
