@@ -42,14 +42,11 @@ redshiftOffLabel= #"󰹐"
 defaultBrightnessChangeValue=1
 defaultTempChangeValue=100
 screensaverBrightnessValue=1
-# Transitions smoothnesss and time
-fade_steps=1
-fade_time=100
-fade_fps=240
+fade_time=10
+fade_fps=60
 
-screensaver_steps=50
 screensaver_time=1000
-screensaver_fps=240
+screensaver_fps=60
 
 # Store redshift status and temperature
 redshiftStateFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/${0##*/}/redshift.sh
@@ -79,8 +76,10 @@ function getBrightness() {
 ##
 #	Set brightness level
 #	@param brightness [0 - 100]
+#	@param transition fps. Default: $fade_fps
+#	@param transition duration. Default: $fade_time
 function setBrightness() {
-	xbacklight -set $1
+	xbacklight -set "$1" -fps "${2:-$fade_fps}" -time "${3:-$fade_time}"
 }
 
 ##
@@ -88,7 +87,7 @@ function setBrightness() {
 #	@param -inc | -dec
 #	@param amount default: defaultBrightnessChangeValue
 function changeBrightness() {
-	xbacklight $1 "${2:-$defaultBrightnessChangeValue}" -steps "$fade_steps" -time "$fade_time"
+	xbacklight "$1" "${2:-$defaultBrightnessChangeValue}" 
 }
 
 ##
@@ -195,8 +194,8 @@ function restoreRedshift() {
 
 function screensaver() {
 	trap 'exit 0' TERM INT
-	trap "setBrightness $(getBrightness); kill %%" EXIT
-	setBrightness "$screensaverBrightnessValue -fps $screensaver_fps -time $screensaver_time"
+	trap "setBrightness "$(getBrightness)" "$screensaver_fps" "$screensaver_time"; kill %%" EXIT
+	setBrightness "$screensaverBrightnessValue" "$screensaver_fps" "$screensaver_time"
 	sleep 2147483647 &
 	wait
 }
@@ -248,7 +247,7 @@ case $1 in
 		sendNotification
 		;;
 	set | s)
-		setBrightness "$2 -step $fade_fps -time $fade_time"
+		setBrightness "$2"
 		updatePolybar
 		sendNotification
 		;;
