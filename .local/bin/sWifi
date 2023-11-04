@@ -50,7 +50,7 @@ function getActive() {
 			activeIdx=$activeIdx,$count
 		fi
 		((count++))
-	done <<< $1
+	done <<< "$1"
 	echo $activeIdx
 }
 
@@ -63,7 +63,7 @@ function prettifySignals() {
 		local active=${signal%%:*}
 		signal=${signal#*:}
 
-		local bars=$(echo "${signal%%:*}" \
+		local bars; bars=$(echo "${signal%%:*}" \
         	| sed "s/\*\{4,4\}/▂▄▆█/g" \
         	| sed "s/\*\{3,3\}/▂▄▆_/g" \
         	| sed "s/\*\{2,2\}/▂▄__/g" \
@@ -76,7 +76,7 @@ function prettifySignals() {
 
 		local ssid=$signal
 		printf "%s %s\n" "$bars" "$ssid"
-	done <<< $1
+	done <<< "$1"
 }
 
 ##
@@ -100,11 +100,11 @@ function sendNotification() {
 # @param rescan policy (auto|yes|no)
 function promptSelection() {
 	sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
-	local signals=$(getSignals "$1")
-	local active=$(getActive "$signals")
+	local signals; signals=$(getSignals "$1")
+	local active; active=$(getActive "$signals")
 
 	sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
-	local selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
+	local selectedIdx; selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
 		-format "i" \
 		-a "$active" \
 		-p "/" \

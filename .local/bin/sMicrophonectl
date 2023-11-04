@@ -76,7 +76,7 @@ function setMute() {
 function increaseVolume() {
 	setMute false
 	local increaseAmount=$1
-	local currentVolume=$(getVolume)
+	local currentVolume; currentVolume=$(getVolume)
 	[[ $((currentVolume + increaseAmount)) -gt $maxVolume ]] \
 		&& setVolume "$maxVolume%" \
 		|| setVolume "+$increaseAmount%"
@@ -104,7 +104,7 @@ function buildBar() {
 	DrawBar.sh                               \
 		--length $notificationBarLength      \
 		--step $notificationBarStep          \
-		--value $1                           \
+		--value "$1"                         \
 		--bar-chars "$notificationBarChars"  \
 		--borders "$notificationBarBorders"	
 }
@@ -125,9 +125,9 @@ function sendNotification() {
 		urgency=normal
 		summary="Muted"
 	else
-		local volume=$(getVolume)
+		local volume; volume=$(getVolume)
 		summary="$volume%"
-		bar=$(buildBar $volume)
+		bar=$(buildBar "$volume")
 		if [[ $volume -ge $warningLevel ]]; then
 			urgency=critical
 			icon=$notificationWarningIcon

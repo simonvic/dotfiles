@@ -121,7 +121,8 @@ function promptPlayerSelection() {
 		0 \
 		"$notificationSelectPlayerUID"
 
-	local selectedPlayer=$(printf "%s\n" "$autoPlayer" $(playerctl -l) | rofi \
+	local selectedPlayer
+	selectedPlayer=$(printf "%s\n" "$autoPlayer" "$(playerctl -l)" | rofi \
 		-dmenu -p "" \
 		-theme "$dmenu_theme" \
 		-format "s")
@@ -159,7 +160,7 @@ function setPlayer() {
 # Send default notification when interacting with a player
 # @param icon
 function sendDefaultNotification() {
-	local title=$(getTitle)
+	local title; title=$(getTitle)
 	sendNotification "$title" \
 		"<big>$title</big><small>\n$(getArtist)</small>" \
 		"$1"
@@ -210,7 +211,7 @@ function previous() {
 #	Get formatted song info
 #	@return info
 function info() {
-	local artist=$(getArtist)
+	local artist; artist=$(getArtist)
 	[[ -n "$artist" ]] && artist="($artist)"
 	printf "%s %s\n" "$(getTitle)" "$artist"
 }

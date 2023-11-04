@@ -98,7 +98,7 @@ function setVolume() {
 function increaseVolume() {
 	setMute false
 	local increaseAmount=$1
-	local currentVolume=$(getVolume)
+	local currentVolume; currentVolume=$(getVolume)
 	if [[ $((currentVolume + increaseAmount)) -gt $maxVolume ]]; then
 		setVolume "$maxVolume%"
 	else
@@ -130,10 +130,10 @@ function buildBar() {
 ##
 #	Send notification
 function sendNotification() {
-	local volume=$(getVolume)
+	local volume; volume=$(getVolume)
 	local summary="$volume%"
 	local urgency="normal"
-	local bar=$(buildBar "$volume")
+	local bar; bar=$(buildBar "$volume")
 	local body=""
 	local icon=""
 	local hintValue=""

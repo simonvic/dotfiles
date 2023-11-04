@@ -64,7 +64,7 @@ function launchPolybar() {
 #	@return pid of a polybar or nothing if 
 #		zero or more than one pid have been found
 function getPolybarPid() {
-	local pid=$(pgrep -f "polybar $1")
+	local pid; pid=$(pgrep -f "polybar $1")
 	[[ $(echo "$pid" | wc -w) -eq 1 ]] && echo "$pid"
 }
 
@@ -75,7 +75,7 @@ function getPolybarPid() {
 #	@return "-p $pid" or empty
 function getPidArgument() {
 	if [[ -n "$1" ]]; then
-		local pid=$(getPolybarPid "$1")
+		local pid; pid=$(getPolybarPid "$1")
 		if [[ -n "$pid" ]]; then
 			echo "-p $pid"
 		fi

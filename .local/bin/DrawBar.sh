@@ -26,7 +26,7 @@ BAR_CHARS=( █ ░ )
 
 function draw() {
 	local normalizedValue=$((value / step))
-	if [ $length -lt $normalizedValue ]; then
+	if [ "$length" -lt $normalizedValue ]; then
 		length=$normalizedValue
 	fi
 	local currentStep=$(( step - (value % step) ))
@@ -38,11 +38,11 @@ function draw() {
 	##################### Draw top border #####################
 	if $drawBorders; then
 		printf "%s" "${BORDER_CHARS[0]}"
-		for i in $(seq $length); do
+		for i in $(seq "$length"); do
 			printf "%s" "${BORDER_CHARS[1]}"
 		done
 		printf "%s" "${BORDER_CHARS[2]}"
-		if [ ! -z "${BORDER_CHARS[2]}" ]; then  # Avoid printing new line if top border is empty
+		if [ -n "${BORDER_CHARS[2]}" ]; then  # Avoid printing new line if top border is empty
 			printf "\n"
 		fi
 		printf "%s" "${BORDER_CHARS[3]}"
@@ -54,7 +54,7 @@ function draw() {
 	done
 
 	##################### Draw current step #####################
-	if [ $normalizedValue -ne $length ]; then
+	if [ $normalizedValue -ne "$length" ]; then
 		printf "%s" "${BAR_CHARS[ $(( currentStep )) ]}"
 	fi
 
@@ -69,7 +69,7 @@ function draw() {
 	if $drawBorders; then
 		printf "%s\n" "${BORDER_CHARS[4]}"
 		printf "%s" "${BORDER_CHARS[5]}"
-		for i in $(seq $length); do
+		for i in $(seq "$length"); do
 			printf "%s" "${BORDER_CHARS[6]}"
 		done
 		printf "%s" "${BORDER_CHARS[7]}"

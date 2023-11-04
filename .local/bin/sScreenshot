@@ -45,7 +45,7 @@ function copyScreenshot() {
 #	@param icon
 function sendNotification() {
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" &
-	local choice=$(notify-send \
+	local choice; choice=$(notify-send \
 		--app-name "$notificationAppName" \
 		--hint "string:x-canonical-private-synchronous:$notificationAppName" \
 		--icon "$3" \
@@ -72,7 +72,7 @@ function captureScreenshot() {
 	[[ "$1" == "area" ]] && mode="--select"
 	scrot --silent --overwrite "$tempScreenshotFile" $mode
 	[[ $? != 0 ]] && return
-	local body="$(file $tempScreenshotFile | cut -d, -f2)"
+	local body; body="$(file $tempScreenshotFile | cut -d, -f2)"
 	if [[ "$autoCopy" == true ]]; then
 		copyScreenshot
 		body+=" | Copied to clipboard"

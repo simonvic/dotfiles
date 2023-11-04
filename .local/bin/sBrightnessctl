@@ -136,10 +136,10 @@ function sendNotification() {
 	local body=""
 	local icon=""
 	local urgency=normal
-	local brightness=$(getBrightness)
+	local brightness; brightness=$(getBrightness)
 	local summary=""
 	local bodyFormat=""
-	local bar=$(buildBar "$brightness")
+	local bar; bar=$(buildBar "$brightness")
 
 	if [[ $brightness -ge 75 ]]; then		
 		icon=$notificationHighIcon
@@ -238,12 +238,12 @@ function printUsage() {
 
 case $1 in
 	increase | i)
-		changeBrightness -inc $2
+		changeBrightness -inc "$2"
 		updatePolybar
 		sendNotification
 		;;
 	decrease | d)
-		changeBrightness -dec $2
+		changeBrightness -dec "$2"
 		updatePolybar
 		sendNotification
 		;;
@@ -277,7 +277,7 @@ case $1 in
 				restoreRedshift
 				;;
 			print)
-				printTemperature $3
+				printTemperature "$3"
 				;;
 		esac
 		;;

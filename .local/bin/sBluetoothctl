@@ -33,31 +33,31 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 #	Get if bluetooth is powered on
 #	@return true|false
 function isPowered() {
-	[[ -n $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
+	[[ $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
 }
 
 ##
 #	Get if bluetooth is powering on or off
 #	@return true|false
 function isPowering() {
-	[[ -n $(bluetoothctl show | grep -E "PowerState: off-enabling|PowerState: on-disabling") ]] && echo true || echo false
+	[[ $(bluetoothctl show | grep -E "PowerState: off-enabling|PowerState: on-disabling") ]] && echo true || echo false
 }
 
 ##
 #	Get if connected to a bluetooth device
 #	@return true|false
 function isConnected() {
-	[[ -n $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
+	[[ $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
 }
 
 ##
 #	Print status label for polybar
 #	@return label
 function printStatus() {
-	if $(isPowering); then
+	if [[ $(isPowering) == true ]]; then
 		echo "$poweringLabel"
-    elif $(isPowered); then
-    	if $(isConnected); then
+    elif [[ $(isPowered) == true ]]; then
+    	if [[ $(isConnected) == true ]]; then
     		echo "$connectedLabel"
     	else
     		echo "$poweredOnLabel"
@@ -73,13 +73,13 @@ function printStatus() {
 function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
-		if $(isPowered); then
+		if [[ $(isPowered) == true ]]; then
 			newState="off"
 		else
 			newState="on"
 		fi
 	fi
-	bluetoothctl power $newState
+	bluetoothctl power "$newState"
 	updatePolybar
 	local tries=0
 	while [[ $(isPowering) == true ]] && [[ $tries -lt $maxTries ]]; do
@@ -115,11 +115,11 @@ function connect() {
 		printUsage
 		return
 	fi
-	if ! $(isPowered); then
+	if [[ $(isPowered) == "false" ]]; then
 		power on
 	fi
 	local tries=0
-	local uuid=$(findDeviceUUID "$1")
+	local uuid; uuid=$(findDeviceUUID "$1")
 	bluetoothctl connect "$uuid"
 	while [[ $(isConnectedTo "$uuid") == false ]] && [[ $tries -lt $maxTries ]]; do
 		sleep $secondsBetweenTries
@@ -144,8 +144,11 @@ function printUsage() {
 - Options
 	help                                # Show this help
 	print                               # Print the current status label
-	power <toggle|on|off>               # Switch on or off the bluetooth, or toggle between the states
-	connect <device UUID|device Name>   # Power on bluetooth if necessary and connect to <device UUID> (xx:xx:xx:xx:xx:xx) or <device Name> (i.e. 'Galaxy buds')
+	power <toggle|on|off>               # Switch on or off the bluetooth, or
+	                                        toggle between the states
+	connect <device UUID|device Name>   # Power on bluetooth if necessary and
+	                                        connect to <device UUID> (xx:xx:xx:xx:xx:xx)
+	                                        or <device Name> (i.e. 'Galaxy buds')
 
 - Abbreviations
 	p = power
@@ -155,7 +158,7 @@ function printUsage() {
 
 case $1 in
 	print) printStatus ;;
-	power | p) power $2 ;;
+	power | p) power "$2" ;;
 	connect | c) connect "$2" ;;
 	help | *) printUsage ;;
 esac

@@ -118,16 +118,16 @@ function createBatteryStatusFile() {
 # 	- is discharging and reached 20%
 # 	- is discharging and reached 10% (shown every minute)
 function monitor() {
-	local chargeValue=$(getChargeValue)
-	local chargeStatus=$(getChargeStatus)
-	local temp=$(getTemp)
-	local time=$(getTime)
+	local chargeValue; chargeValue=$(getChargeValue)
+	local chargeStatus; chargeStatus=$(getChargeStatus)
+	local temp; temp=$(getTemp "celsius")
+	local time; time=$(getTime)
 
 	local title="$chargeValue %"
 	local body=""
 	local urgency=normal
 	local timeout=3000
-	local icon=$(getIcon "$chargeValue" "$chargeStatus")
+	local icon; icon=$(getIcon "$chargeValue" "$chargeStatus")
 
 	local shouldSendNotification=false
 	local isFull=false
@@ -195,7 +195,7 @@ function monitor() {
 ##
 #	Show a notification regarding plugging in the battery charger
 function plugin() {
-	local title="$(getChargeValue) %"
+	local title; title="$(getChargeValue) %"
 	local body="AC plugged"
 	local urgency=low
 	local timeout=1500
@@ -207,7 +207,7 @@ function plugin() {
 ##
 #	Show a notification regarding unplugging in the battery charger
 function unplug() {
-	local title="$(getChargeValue) %"
+	local title; title="$(getChargeValue) %"
 	local body="<b>AC unplugged</b>"
 	local urgency=normal
 	local timeout=1500
@@ -219,10 +219,10 @@ function unplug() {
 ##
 #	Show a notification regarding current stats of the battery
 function current() {
-	local chargeValue=$(getChargeValue)
-	local chargeStatus=$(getChargeStatus)
-	local temp=$(getTemp)
-	local time=$(getTime)
+	local chargeValue; chargeValue=$(getChargeValue)
+	local chargeStatus; chargeStatus=$(getChargeStatus)
+	local temp; temp=$(getTemp)
+	local time; time=$(getTime)
 
 	local title="$chargeValue %"
 	local body="\
@@ -232,7 +232,7 @@ $temp</small>
 "
 	local urgency=normal
 	local timeout=3000
-	local icon=$(getIcon "$chargeValue" "$chargeStatus")
+	local icon; icon=$(getIcon "$chargeValue" "$chargeStatus")
 
 	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
@@ -244,8 +244,8 @@ function wakelock() {
 		printUsage
 	else
 		case $1 in
-			toggle | t) setWakelock $2 ;;
-			status | s) echo $(getWakelockStatus) ;;
+			toggle | t) setWakelock "$2" ;;
+			status | s) getWakelockStatus ;;
 			#TODO add settings for dpms and screensaver
 			*) printUsage ;;
 		esac
@@ -353,8 +353,8 @@ function setWakelock() {
 		[[ "$wakelockStatus" == "on" ]] && icon="caffeine-cup-full" || icon="caffeine-cup-empty"
 		body="\
 Wakelock is <b>$wakelockStatus</b>		
-DPMS: <b>$(isDPMSEnabled)</b>
-Screensaver: <b>$(isScreensaverEnabled)</b>"
+<small>DPMS: <b>$(isDPMSEnabled)</b>
+Screensaver: <b>$(isScreensaverEnabled)</b></small>"
 
 		updateWakelockStatus "$wakelockStatus"
 		updatePolybar
@@ -443,6 +443,6 @@ monitor | m) monitor ;;
 plugin | p) plugin ;;
 unplug | u) unplug ;;
 current | c) current ;;
-wakelock | w) wakelock $2 $3 ;;
+wakelock | w) wakelock "$2" "$3" ;;
 help | *) printUsage ;;
 esac
