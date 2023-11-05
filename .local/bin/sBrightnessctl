@@ -128,7 +128,6 @@ function buildBar() {
 		--borders "$notificationBarBorders"
 }
 
-
 ##
 #	Send notification
 function sendNotification() {
@@ -194,7 +193,7 @@ function restoreRedshift() {
 
 function screensaver() {
 	trap 'exit 0' TERM INT
-	trap "setBrightness "$(getBrightness)" "$screensaver_fps" "$screensaver_time"; kill %%" EXIT
+	trap "setBrightness '$(getBrightness)' '$screensaver_fps' '$screensaver_time'; kill %%" EXIT
 	setBrightness "$screensaverBrightnessValue" "$screensaver_fps" "$screensaver_time"
 	sleep 2147483647 &
 	wait

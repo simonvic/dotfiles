@@ -29,36 +29,6 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 ###############################################################################
 
 ##
-#	Launch and hide the predefined polybars
-function launch() {
-	killPolybars
-
-	launchPolybar "main"
-	launchPolybar "secondary"
-	launchPolybar "tertiary"
-	launchPolybar "tray"
-
-	sleep 2
-	hide "secondary"
-	hide "tertiary"
-}
-
-##
-#	Kill all active polybars
-function killPolybars() {
-	polybarMsg "cmd quit"
-}
-
-##
-#	Launch a polyabr
-#	@param polybar name
-function launchPolybar() {
-	if [[ -n "$1" ]]; then
-		polybar "$1" >> "$polybarLogsDir/$1.log" 2>&1 &
-	fi
-}
-
-##
 #	Get the pid of a polybar
 #	@param polybar name
 #	@return pid of a polybar or nothing if 
@@ -80,6 +50,22 @@ function getPidArgument() {
 			echo "-p $pid"
 		fi
 	fi
+}
+
+function status() {
+	case "$(xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5)" in
+		IsViewable) echo "$visibleIcon" ;;
+		IsUnMapped) echo "$invisibleIcon" ;;
+		*) echo "$invisibleIcon" ;;
+	esac
+}
+
+##
+#	Send a message (polybar-msg) to a polybar
+#	@param message for polybar-msg
+#	@param polybar name or empty to send msg to all polybar
+function polybarMsg() {
+	polybar-msg $(getPidArgument "$2") $1 >> "$messagesLogsDir/polybar-msg.log" 2>&1
 }
 
 ##
@@ -112,20 +98,34 @@ function updateSwitches() {
 	polybarMsg "action bar-switch-$1 hook 0"
 }
 
-function status() {
-	case "$(xwininfo -name "polybar_$1" | grep "Map State:" | cut -d " " -f5)" in
-		IsViewable) echo "$visibleIcon" ;;
-		IsUnMapped) echo "$invisibleIcon" ;;
-		*) echo "$invisibleIcon" ;;
-	esac
+##
+#	Launch a polyabr
+#	@param polybar name
+function launchPolybar() {
+	if [[ -n "$1" ]]; then
+		polybar "$1" >> "$polybarLogsDir/$1.log" 2>&1 &
+	fi
 }
 
 ##
-#	Send a message (polybar-msg) to a polybar
-#	@param message for polybar-msg
-#	@param polybar name or empty to send msg to all polybar
-function polybarMsg() {
-	polybar-msg $(getPidArgument "$2") $1 >> "$messagesLogsDir/polybar-msg.log" 2>&1
+#	Kill all active polybars
+function killPolybars() {
+	polybarMsg "cmd quit"
+}
+
+##
+#	Launch and hide the predefined polybars
+function launch() {
+	killPolybars
+
+	launchPolybar "main"
+	launchPolybar "secondary"
+	launchPolybar "tertiary"
+	launchPolybar "tray"
+
+	sleep 2
+	hide "secondary"
+	hide "tertiary"
 }
 
 function printUsage() {

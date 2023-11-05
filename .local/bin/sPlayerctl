@@ -91,21 +91,6 @@ function closeNotification() {
 }
 
 ##
-#	Select player to control
-function selectPlayer() {
-	case "$1" in
-		set)
-			if [[ -z "$2" ]]; then
-				printUsage
-			else
-				setPlayer "$2"
-			fi
-			;;
-		*) promptPlayerSelection ;;
-	esac
-}
-
-##
 # Show notification and rofi dmenu for player selection
 function promptPlayerSelection() {
 	local pastSelectionBody=""
@@ -214,6 +199,21 @@ function info() {
 	local artist; artist=$(getArtist)
 	[[ -n "$artist" ]] && artist="($artist)"
 	printf "%s %s\n" "$(getTitle)" "$artist"
+}
+
+##
+#	Select player to control
+function selectPlayer() {
+	case "$1" in
+		set)
+			if [[ -z "$2" ]]; then
+				printUsage
+			else
+				setPlayer "$2"
+			fi
+			;;
+		*) promptPlayerSelection ;;
+	esac
 }
 
 function printUsage() {

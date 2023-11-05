@@ -104,6 +104,18 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
+function takeScreenshot() {
+	if [[ ! -e $tempScreenshotFile ]]; then
+		mkdir -p "${tempScreenshotFile%/*}"
+	fi
+	scrot -z -o "$tempScreenshotFile" \
+		&& convert -scale 10% \
+			-blur "0x$bgBlurSigma" \
+			-modulate "$bgDim" \
+			-resize 1000% \
+			"$tempScreenshotFile" "$tempScreenshotFile"
+}
+
 function lockscreen() {
 	# who wrote this shit? Me? ThAt's uNpOssiBlE
 	if [[ $showSongAsGreeter == true ]]; then
@@ -149,13 +161,6 @@ function lockscreen() {
 		"$background"
 	
 
-}
-
-function takeScreenshot() {
-	if [[ ! -e $tempScreenshotFile ]]; then
-		mkdir -p "${tempScreenshotFile%/*}"
-	fi
-	scrot -z -o "$tempScreenshotFile" && convert -scale 10% -blur "0x$bgBlurSigma" -modulate "$bgDim" -resize 1000% "$tempScreenshotFile" "$tempScreenshotFile"
 }
 
 function printUsage() {

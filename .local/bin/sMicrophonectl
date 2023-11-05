@@ -69,6 +69,12 @@ function setMute() {
 	pactl set-source-mute @DEFAULT_SOURCE@ "$1"
 }
 
+##
+#	Set microhpone volume
+#	@param +|-amount
+function setVolume() {
+	pactl set-source-volume @DEFAULT_SOURCE@ "$1"
+}
 
 ##
 #	Increase microphone input volume
@@ -88,13 +94,6 @@ function increaseVolume() {
 function decreaseVolume() {
 	setMute false
 	setVolume "-$1%"
-}
-
-##
-#	Set microhpone volume
-#	@param +|-amount
-function setVolume() {
-	pactl set-source-volume @DEFAULT_SOURCE@ "$1"
 }
 
 ##

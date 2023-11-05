@@ -1,8 +1,9 @@
---------------------------------------------------------------------------------
---                                                                    BEHAVIOUR
 local vim = vim
 local opt = vim.opt
 M = {}
+
+--------------------------------------------------------------------------------
+--                                                                    BEHAVIOUR
 opt.wrap = false
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
@@ -128,7 +129,7 @@ function BuildTabLine()
 	return s
 end
 
-vim.opt.tabline = "%!v:lua.BuildTabLine()"
+opt.tabline = "%!v:lua.BuildTabLine()"
 
 --                                                                  WINDOW LINE
 opt.winbar = ""

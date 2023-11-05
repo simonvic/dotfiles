@@ -68,6 +68,14 @@ function printStatus() {
 }
 
 ##
+#	Update all polybar modules of bluetooth
+function updatePolybar() {
+	sPolybarctl message "action bluetooth hook 0"
+	# sPolybarctl message "action earbuds hook 0"
+	# sPolybarctl message "action earbuds-extended hook 0"
+}
+
+##
 #	Change bluetooth power
 #	@param toggle,on or off
 function power() {
@@ -106,7 +114,6 @@ function isConnectedTo() {
 	[[ $(bluetoothctl devices Connected | grep "$1") ]] && echo true || echo false
 }
 
-
 ##
 #	Connect to a device
 #	@param device name
@@ -126,14 +133,6 @@ function connect() {
 		((tries++))
 	done
 	updatePolybar
-}
-
-##
-#	Update all polybar modules of bluetooth
-function updatePolybar() {
-	sPolybarctl message "action bluetooth hook 0"
-	# sPolybarctl message "action earbuds hook 0"
-	# sPolybarctl message "action earbuds-extended hook 0"
 }
 
 function printUsage() {
