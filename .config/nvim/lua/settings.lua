@@ -57,8 +57,8 @@ opt.listchars = {
 
 opt.fillchars = {
 	fold = " ",
-	foldopen = "",
-	foldclose = "",
+	foldopen = "",
+	foldclose = "",
 	eob = " ",
 }
 
