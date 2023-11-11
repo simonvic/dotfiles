@@ -30,6 +30,14 @@ jdtls.start_or_attach({
 	end,
 	settings = {
 		java = {
+			configuration = {
+				runtimes = {
+					{
+						name = "JavaSE-17",
+						path = "/usr/lib/jvm/java-17-openjdk/",
+					},
+				},
+			},
 			codeGeneration = {
 				generateComments = true
 			},
