@@ -14,11 +14,6 @@
 #
 ###############################################################################
 
-poweredOffLabel= #"󰂲"
-poweringLabel="󰂳"
-poweredOnLabel="󰂯"
-connectedLabel="󰂱"
-
 secondsBetweenTries=0.1
 maxTries=10
 
@@ -51,26 +46,24 @@ function isConnected() {
 }
 
 ##
-#	Print status label for polybar
-#	@return label
-function printStatus() {
+#	Update all polybar modules of bluetooth
+#	Hook triggered:
+#		1: powered off
+#		2: powering on/off
+#		3: powered on
+#		4: connected
+function updatePolybar() {
 	if [[ $(isPowering) == true ]]; then
-		echo "$poweringLabel"
+		sPolybarctl message "action bluetooth hook 2"
     elif [[ $(isPowered) == true ]]; then
     	if [[ $(isConnected) == true ]]; then
-    		echo "$connectedLabel"
+			sPolybarctl message "action bluetooth hook 4"
     	else
-    		echo "$poweredOnLabel"
+			sPolybarctl message "action bluetooth hook 3"
     	fi
     else
-    	echo "$poweredOffLabel"
+			sPolybarctl message "action bluetooth hook 1"
     fi
-}
-
-##
-#	Update all polybar modules of bluetooth
-function updatePolybar() {
-	sPolybarctl message "action bluetooth hook 0"
 	# sPolybarctl message "action earbuds hook 0"
 	# sPolybarctl message "action earbuds-extended hook 0"
 }
@@ -142,12 +135,12 @@ function printUsage() {
 
 - Options
 	help                                # Show this help
-	print                               # Print the current status label
 	power <toggle|on|off>               # Switch on or off the bluetooth, or
 	                                        toggle between the states
 	connect <device UUID|device Name>   # Power on bluetooth if necessary and
 	                                        connect to <device UUID> (xx:xx:xx:xx:xx:xx)
 	                                        or <device Name> (i.e. 'Galaxy buds')
+	polybar update                      # Update polybar modules
 
 - Abbreviations
 	p = power
@@ -156,8 +149,13 @@ function printUsage() {
 }
 
 case $1 in
-	print) printStatus ;;
 	power | p) power "$2" ;;
 	connect | c) connect "$2" ;;
+	polybar)
+		case $2 in
+			update) updatePolybar ;;
+			*) printUsage ;;
+		esac
+		;;
 	help | *) printUsage ;;
 esac
