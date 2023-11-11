@@ -1,0 +1,12 @@
+[Unit]
+Description="Periodly poll battery info"
+
+[Timer]
+AccuracySec=1m
+OnBootSec=5min
+OnCalendar=minutely
+Persistent=true
+Unit=sBatteryctl.service
+
+[Install]
+WantedBy=timers.target

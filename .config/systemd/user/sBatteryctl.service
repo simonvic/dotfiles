@@ -1,0 +1,6 @@
+[Unit]
+Description="sBatteryctl battery monitor"
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/sBatteryctl monitor
