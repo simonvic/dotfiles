@@ -101,9 +101,6 @@ local keybindings = {
 	{ n___, backward,           "[",                                    { remap = true },  "backward [ alias" },
 	{ n___, forward,            "]",                                    { remap = true },  "forward ] alias" },
 	------------------------------------------------------------------- ACTIONS
-	{ __i_, "jf",               "<C-o>",                                {},                "save" },
-	{ __i_, "jj",               "<ESC>",                                {},                "save" },
-	{ ___t, "jj",               "<C-\\><C-n>",                          {},                "save" },
 	{ nvi_, "<C-s>",            cmd("write"),                           { silent = true }, "save" },
 	{ nvi_, "<C-z>",            cmd("undo"),                            { silent = true }, "undo" },
 	{ nvi_, "<C-y>",            cmd("redo"),                            { silent = true }, "redo" },
