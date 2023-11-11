@@ -34,10 +34,6 @@ notificationBarStep=5
 notificationBarChars="█;▆;▅;▃;▁;░"
 notificationBarBorders=";;;;;;;"
 
-# Labels for polybar module
-redshiftOnLabel="󰌶"
-redshiftOffLabel= #"󰹐"
-
 # Default values
 defaultBrightnessChangeValue=1
 defaultTempChangeValue=100
@@ -126,7 +122,7 @@ function buildBar() {
 		--value "$1"                         \
 		--bar-chars "$notificationBarChars"  \
 		--borders "$notificationBarBorders"
-}
+	}
 
 ##
 #	Send notification
@@ -165,24 +161,7 @@ function sendNotification() {
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$urgency" \
 		"$summary" "$body"
-}
-
-##
-#	Print redshift label for polybar module
-#	@param extended
-function printTemperature() {
-	local body=""
-	local suffix=""
-	if [[ "$redshiftEnabled" == false ]]; then
-		suffix=$redshiftOffLabel
-	else
-		suffix=$redshiftOnLabel
-		if [[ "$1" = "extended" ]]; then
-			body="$redshiftTemperature K"
-		fi
-	fi
-	echo "$suffix$body"
-}
+	}
 
 function restoreRedshift() {
 	if [[ "$redshiftEnabled" == true ]]; then
@@ -202,10 +181,15 @@ function screensaver() {
 ##
 #	Update polybar modules
 function updatePolybar() {
-	sPolybarctl message "action redshift hook 0"
-	sPolybarctl message "action redshift-extended hook 0"
 	sPolybarctl message "action brightness hook 0"
 	sPolybarctl message "action brightness-extended hook 0"
+	if [[ "$redshiftEnabled" == true ]]; then
+		sPolybarctl message "action redshift hook 2"
+		sPolybarctl message "action redshift-extended hook 2"
+	else
+		sPolybarctl message "action redshift hook 1"
+		sPolybarctl message "action redshift-extended hook 1"
+	fi
 }
 
 function printUsage() {
@@ -224,14 +208,15 @@ function printUsage() {
 	redshift decrease [amount]   # Decrease the redshift temperature by [amount] if specified or the default value otherwise
 	redshift restore             # Load previously saved redshift state
 	redshift print               # Print the current redshift temperature (used in polybar)
+	polybar update               # Update polybar modules
 
-	- Abbreviations
+- Abbreviations
 	i = increase
 	d = decrease
 	s = set
 	r = redshift
 	t = toggle
-"
+	"
 }
 
 case $1 in
@@ -273,10 +258,15 @@ case $1 in
 				;;
 			restore | r)
 				restoreRedshift
+				updatePolybar
 				;;
-			print)
-				printTemperature "$3"
-				;;
+			print) echo "$redshiftTemperature" ;;
+		esac
+		;;
+	polybar)
+		case $2 in
+			update) updatePolybar ;;
+			*) printUsage ;;
 		esac
 		;;
 	help | *) printUsage ;;
