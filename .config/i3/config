@@ -172,6 +172,7 @@ bindsym Shift+XF86MonBrightnessUp        exec --no-startup-id sBrightnessctl inc
 bindsym Shift+XF86MonBrightnessDown      exec --no-startup-id sBrightnessctl decrease 10
 bindsym XF86ScreenSaver                  exec --no-startup-id sBrightnessctl set 5
 bindsym Shift+XF86ScreenSaver            exec --no-startup-id sBrightnessctl set 100
+bindsym Mod1+XF86ScreenSaver             exec --no-startup-id sBatteryctl wakelock toggle
 
 bindsym Ctrl+XF86MonBrightnessUp         exec --no-startup-id sBrightnessctl redshift increase
 bindsym Ctrl+XF86MonBrightnessDown       exec --no-startup-id sBrightnessctl redshift decrease
