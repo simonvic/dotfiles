@@ -26,6 +26,9 @@ notificationSelectPlayerIcon="folder-music-symbolic"
 notificationPlayingIcon="media-playback-start-symbolic"
 notificationPausedIcon="media-playback-pause-symbolic"
 
+notificationUseIconArt=false
+notificationDelaySec=0.5
+
 dmenu_theme="simonvic/glass/notification_actions"
 
 # Where to store the selected player
@@ -60,6 +63,7 @@ player=$(getSelectedPlayer)
 function getTitle() { playerctl -p "$player" metadata title; }
 function getArtist() { playerctl -p "$player" metadata artist; }
 function getAlbum() { playerctl -p "$player" metadata album; }
+function getIcon() { playerctl -p "$player" metadata mpris:artUrl; }
 function getStatus() { playerctl -p "$player" status; }
 
 ##
@@ -143,12 +147,14 @@ function setPlayer() {
 
 ##
 # Send default notification when interacting with a player
-# @param icon
+# @param icon - Icon art will be used if notificationUseIconArt=true
 function sendDefaultNotification() {
+	sleep "$notificationDelaySec"
 	local title; title=$(getTitle)
+	local icon; [[ "$notificationUseIconArt" == true ]] && icon=$(getIcon) || icon=$1
 	sendNotification "$title" \
 		"<big>$title</big><small>\n$(getArtist)</small>" \
-		"$1"
+		"$icon"
 }
 
 function play() {

@@ -179,7 +179,7 @@
 	appname = simonvic.Playerctl
 	format = "%b"
 	min_icon_size = 24
-	max_icon_size = 24
+	max_icon_size = 128
 
 [simonvic.Battery]
 	appname = simonvic.Battery
