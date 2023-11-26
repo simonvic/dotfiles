@@ -139,7 +139,7 @@ prompt simonvic-minimal
 function xo() {	xdg-open $1 &! }
 function t() { tree -h -F -D -L ${1:-1} }
 alias ls="ls --color=auto"
-alias l="ls -al --human-readable"
+alias l="ls -Al --human-readable"
 alias grep="grep --color"
 alias Cp="xclip -r -selection clipboard"
 alias todo='sTodo'
