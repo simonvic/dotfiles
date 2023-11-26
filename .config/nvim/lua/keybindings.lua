@@ -71,6 +71,7 @@ local function code_actions() lsp.code_action() end
 local function goto_definition() lsp.definition() end
 local function rename() lsp.rename() end
 local function open_docs() lsp.hover(); end
+local function signature_help() lsp.signature_help(); end
 local function show_diagnostics() vim.diagnostic.open_float() end
 local function format() lsp.format() end
 local function toggle_dapUI() require("dapui").toggle() end
@@ -115,6 +116,7 @@ local keybindings = {
 	{ n_i_, "<F1>",             open_docs,                              {},                "open docs" },
 	{ n_i_, "<C-q>",            open_docs,                              {},                "open docs" },
 	{ n___, "<leader>q",        open_docs,                              {},                "open docs" },
+	{ __i_, "<A-q>",            signature_help,                         {},                "signature help" },
 	{ n_i_, "<C-e>",            show_diagnostics,                       {},                "show diagnostics" },
 	{ n___, "<leader>e",        show_diagnostics,                       {},                "show diagnostics" },
 	{ n___, "<leader>E",        cmd("Telescope diagnostics"),           {},                "show telescope diagnostics" },
