@@ -25,7 +25,7 @@ M.plugins = {
 	{ "saadparwaiz1/cmp_luasnip" },
 	{ "hrsh7th/nvim-cmp",                  config = require("plugins.configs.cmp") },
 	{ "williamboman/mason.nvim",           config = require("plugins.configs.mason") },
-	{ "neovim/nvim-lspconfig" },
+	{ "neovim/nvim-lspconfig",             config = require("plugins.configs.lspconfig") },
 	{ "williamboman/mason-lspconfig.nvim", config = require("plugins.configs.mason-lspconfig"), after = "nvim-lspconfig", },
 	{ "terrortylor/nvim-comment",          config = require("plugins.configs.comment") },
 	{ "stevearc/aerial.nvim",              config = require("plugins.configs.aerial") },
