@@ -254,7 +254,7 @@ local keybindings = {
 	{ ___t, "<Esc>",            "<C-\\><C-n>",                          {},                "terminal" },
 	{ n_i_, "<C-p>",            find_files,                             {},                "find files" },
 	{ n___, "<leader><leader>", find_files,                             {},                "find files" },
-	{ n_i_, "<A-p>",            cmd("Telescope"),                       {},                "telescope" },
+	{ n___, "<A-p>",            cmd("Telescope"),                       {},                "telescope" },
 	{ n_i_, "<C-A-p>",          find_symbols,                           {},                "find symbols" },
 	{ n___, "<leader>s",        find_symbols,                           {},                "find symbols" },
 	{ n_i_, "<A-Tab>",          buffers,                                {},                "buffers" },
