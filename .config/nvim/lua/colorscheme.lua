@@ -28,7 +28,7 @@ M.palette = {
 	text_xxlight  = "#FAFAFA",
 	text_xxxlight = "#FFFFFF",
 	added         = "#2B5640",
-	changed       = "#303C47",
+	changed       = "#226688",
 	deleted       = "#873E41",
 	error         = "#E8312E",
 	warn          = "#E87B2E",
@@ -152,10 +152,16 @@ M.groups = {
 	ScrollbarHintHandle          = { bg = p.accent_xdark, fg = p.hint },
 	ScrollbarMiscHandle          = { bg = p.accent_xdark, fg = "#9876AA" },
 	ScrollbarSearchHandle        = { bg = p.accent_xdark, fg = p.ok },
-	-- PreProc      = { fg = "#BBB529" },
+	-- Noice
+	NoiceCursor                  = { bg = p.accent },
+	NoiceMini                    = { bg = p.zdepth_2 },
+	-- Aerial
+	AerialLine                   = { bg = p.accent_xdark },
+	--
 	Comment                      = { bg = "none", fg = "#808080", italic = M.config.italic_comments },
 	Type                         = { bg = "none", fg = "#FAFAFA", bold = false },
 	Todo                         = { bg = "none", fg = p.hint, bold = true },
+	Constant                     = { fg = "#9876AA" },
 	["@parameter"]               = { bg = "none", fg = "#CACACA", bold = false },
 	["@variable"]                = { bg = "none", fg = "#CACACA", bold = false },
 	["@field"]                   = { bg = "none", fg = "#9876AA", bold = false },
