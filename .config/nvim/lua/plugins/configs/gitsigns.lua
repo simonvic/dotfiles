@@ -3,5 +3,8 @@ return function()
 		preview_config = {
 			border = "rounded",
 		},
+		signs = {
+			changedelete = { text = "┣"},
+		},
 	})
 end
