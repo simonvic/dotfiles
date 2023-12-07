@@ -1,29 +1,32 @@
 return function()
 	local dapui = require("dapui")
 	dapui.setup({
-		icons = { expanded = "", collapsed = "▶", current_frame = "" },
+		mappings = require("keybindings").plugins.dapui,
+		icons = {
+			expanded = "",
+			collapsed = "",
+			current_frame = ""
+		},
 		layouts = {
 			{
-				elements = {
-					"repl",
-					"console",
-				},
-				size = 0.25, -- 25% of total lines
 				position = "bottom",
+				size = 8,
+				elements = {
+					{ id = "breakpoints", size = 0.20 },
+					{ id = "repl",        size = 0.30 },
+					{ id = "console",     size = 0.50 }
+				},
 			},
 			{
-				elements = {
-					-- Elements can be strings or table with id and size keys.
-					"scopes",
-					"breakpoints",
-					"stacks",
-					"watches",
-				},
-				size = 40, -- 40 columns
 				position = "right",
+				size = 16,
+				elements = {
+					{ id = "stacks",  size = 0.20, },
+					{ id = "scopes",  size = 0.40, },
+					{ id = "watches", size = 0.40, },
+				},
 			},
 		},
-		mappings = require("keybindings").plugins.dapui,
 	})
 
 	require("dap").listeners.after.event_initialized["dapui_config"] = function()
