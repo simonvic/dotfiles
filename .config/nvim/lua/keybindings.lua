@@ -362,6 +362,11 @@ local keybindings = {
 			repl = "r",
 			toggle = "t"
 		},
+		----------------------------------------------------------------- ALIGN
+		align              = {
+			start = " a",
+			start_with_preview = " A",
+		},
 		---------------------------------------------------------------- AERIAL
 		aerial             = {
 			["?"]        = "actions.show_help",

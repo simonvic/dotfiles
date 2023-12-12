@@ -31,6 +31,7 @@ M.plugins = {
 	{ "stevearc/aerial.nvim",              config = require("plugins.configs.aerial") },
 	{ "windwp/nvim-autopairs",             config = require("plugins.configs.autopairs") },
 	{ "lewis6991/gitsigns.nvim",           config = require("plugins.configs.gitsigns") },
+	{ "echasnovski/mini.align",            config = require("plugins.configs.align"),           version = false },
 	{ "NvChad/nvim-colorizer.lua",         config = require("plugins.configs.colorizer") },
 	{ "max397574/colortils.nvim",          config = require("plugins.configs.colortils") },
 	---------------------------------------------------------------------------
