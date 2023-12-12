@@ -68,7 +68,7 @@ opt.fillchars = {
 opt.statuscolumn = ""
 	.. "%C" -- folds
 	.. "%3l" -- numbers
-	.. " "  -- spacing
+	.. " " -- spacing
 	.. "%-3r" -- relative numbers
 	.. "%s" -- signs
 
@@ -135,12 +135,12 @@ opt.tabline = "%!v:lua.BuildTabLine()"
 
 --                                                                  WINDOW LINE
 opt.winbar = ""
-	.. "%="  -- padding
-	.. "%h"  -- help flag
-	.. "%m"  -- modified flag
-	.. "%r"  -- readonly flag
-	.. "%f"  -- file (relative to cwd)
-	.. "%="  -- padding
+	.. "%=" -- padding
+	.. "%h" -- help flag
+	.. "%m" -- modified flag
+	.. "%r" -- readonly flag
+	.. "%f" -- file (relative to cwd)
+	.. "%=" -- padding
 
 --                                                                 COMMAND LINE
 opt.cmdheight = 1
@@ -150,36 +150,36 @@ opt.cmdheight = 1
 opt.laststatus = 3
 
 local modes_aliases = {
-	["n"]  = "NORMAL",
-	["no"] = "NORMAL...",
+	["n"]   = "NORMAL",
+	["no"]  = "NORMAL...",
 	["nov"] = "NORMAL... (v)",
 	["noV"] = "NORMAL... (V)",
 	["no"] = "NORMAL... (^V)",
 	["niI"] = "NORMAL (INSERT)",
 	["niR"] = "NORMAL (REPLACE)",
 	["niV"] = "NORMAL (VISUAL)",
-	["v"] = "VISUAL",
-	["V"] = "VISUAL LINE",
-	[""] = "VISUAL BLOCK",
-	["s"] = "SELECT",
-	["S"] = "SELECT LINE",
-	[""] = "SELECT BLOCK",
-	["i"] = "INSERT",
-	["ic"] = "INSERT COMPLETITION",
-	["ix"] = "INSERT (x)",
-	["R"] = "REPLACE",
-	["Rc"] = "REPLACE COMPLETITION",
-	["Rv"] = "REPLACE VIRTUAL",
-	["Rx"] = "REPLACE (x)",
-	["c"] = "COMMAND",
-	["cv"] = "COMMAND (v)",
-	["ce"] = "COMMAND (r)",
-	["r"] = "PROMPT",
-	["rm"] = "PROMPT (m)",
-	["r?"] = "PROMPT (?)",
-	["!"] = "SHELL",
-	["t"] = "TERM INSERT",
-	["nt"] = "TERM NORMAL",
+	["v"]   = "VISUAL",
+	["V"]   = "VISUAL LINE",
+	[""]   = "VISUAL BLOCK",
+	["s"]   = "SELECT",
+	["S"]   = "SELECT LINE",
+	[""]   = "SELECT BLOCK",
+	["i"]   = "INSERT",
+	["ic"]  = "INSERT COMPLETITION",
+	["ix"]  = "INSERT (x)",
+	["R"]   = "REPLACE",
+	["Rc"]  = "REPLACE COMPLETITION",
+	["Rv"]  = "REPLACE VIRTUAL",
+	["Rx"]  = "REPLACE (x)",
+	["c"]   = "COMMAND",
+	["cv"]  = "COMMAND (v)",
+	["ce"]  = "COMMAND (r)",
+	["r"]   = "PROMPT",
+	["rm"]  = "PROMPT (m)",
+	["r?"]  = "PROMPT (?)",
+	["!"]   = "SHELL",
+	["t"]   = "TERM INSERT",
+	["nt"]  = "TERM NORMAL",
 }
 
 local function build_status_line_mode()
@@ -219,18 +219,18 @@ end
 
 function BuildStatusLine()
 	return ""
-		.. " " .. build_status_line_mode()    -- mode
-		.. " [%S]"                         -- command
-		.. "%w"                            -- preview
-		.. "%q"                            -- quickfix/location list
-		.. "%="                            -- filling
-		.. " %c:%l"                        -- column:line
-		.. " | %{&ff}"                     -- file format
+		.. " " .. build_status_line_mode() -- mode
+		.. " [%S]"                        -- command
+		.. "%w"                           -- preview
+		.. "%q"                           -- quickfix/location list
+		.. "%="                           -- filling
+		.. " %c:%l"                       -- column:line
+		.. " | %{&ff}"                    -- file format
 		.. " | %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
-		.. " | %Y"                         -- file type
-		.. build_status_line_diagnostics()    -- diagnostics
-		.. build_status_line_git_branch()      -- git branch
-		.. " "                             -- Some padding
+		.. " | %Y"                        -- file type
+		.. build_status_line_diagnostics() -- diagnostics
+		.. build_status_line_git_branch() -- git branch
+		.. " "                            -- Some padding
 end
 
 opt.statusline = "%!luaeval('BuildStatusLine()')"
