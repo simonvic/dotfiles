@@ -1,5 +1,5 @@
 return function()
-	local keybindings = require("keybindings")
+	local keybindings = require("simonvic.keybindings")
 	require("aerial").setup({
 		layout = {
 			max_width = { 40, 0.2 },

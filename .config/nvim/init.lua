@@ -1,4 +1,4 @@
-require("settings")
-require("plugins").with_lazy()
-require("colorscheme").apply()
-require("keybindings").apply()
+require("simonvic.settings")
+require("simonvic.plugins").with_lazy()
+require("simonvic.colorscheme").apply()
+require("simonvic.keybindings").apply()

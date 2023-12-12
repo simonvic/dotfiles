@@ -1,5 +1,5 @@
 return function()
-	local c = require("colorscheme").groups
+	local c = require("simonvic.colorscheme").groups
 	require("scrollbar").setup({
 		handle = {
 			color = c.ScrollbarHandle.bg

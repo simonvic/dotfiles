@@ -1,7 +1,7 @@
 return function()
 	local dapui = require("dapui")
 	dapui.setup({
-		mappings = require("keybindings").plugins.dapui,
+		mappings = require("simonvic.keybindings").plugins.dapui,
 		icons = {
 			expanded = "",
 			collapsed = "",

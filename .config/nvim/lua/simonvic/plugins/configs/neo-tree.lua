@@ -1,6 +1,6 @@
 return function()
 	vim.g.neo_tree_remove_legacy_commands = true
-	local keybindings = require("keybindings")
+	local keybindings = require("simonvic.keybindings")
 
 	require("neo-tree").setup({
 		close_if_last_window = false,
