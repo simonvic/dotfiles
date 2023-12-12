@@ -34,13 +34,13 @@ notificationFullCharge="3000;normal;Battery fully charged;Battery fully charged"
 declare -A notificationChargeThresholds=(
 [90]="2000;normal;Almost full battery;Battery is almost full"
 [80]="2000;normal;Good battery level;It's over HEIGHTTHOUSAND!!!"
-[50]="1500;normal;Medium battery level;Battery is at <b>50 %</b>"
+[50]="1500;normal;Medium battery level;Battery is at <b>#{level} %</b>"
 )
 
 ##
 # [threshold]="timeout;urgency;title;body"
 declare -A notificationDischargeThresholds=(
-[50]="2000;low;Medium battery level;Battery is at <b>50 %</b>"
+[50]="2000;low;Medium battery level;Battery is at <b>#{level} %</b>"
 [33]="3000;normal;Low battery level;Battery will need to be charged soon"
 [15]="3000;critical;Very low battery level;Battery is at a very low level!"
 [5]="3000;critical;Critical battery level;Battery is at a critically low level!"
@@ -282,6 +282,7 @@ function sendMonitorNotification() {
 			IFS=";" read -r timeout urgency title body <<< "${notificationDischargeThresholds[$threshold]}"
 			;;
 	esac
+	body=${body//#\{level\}/$level}
 	sendNotification "$(getIcon "$level" "$state")" "$timeout" "$urgency" "$title" "$body"
 }
 
@@ -291,7 +292,6 @@ function sendMonitorNotification() {
 function monitor() {
 	local level; level=$(getChargeLevel)
 	local state; state=$(getChargeState)
-
 	local lastThreshold lastLevel lastState
 	if [[ -f "$batteryPollCache" ]]; then
 		IFS=, read -r lastThreshold lastLevel lastState < "$batteryPollCache"
