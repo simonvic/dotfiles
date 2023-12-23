@@ -11,6 +11,9 @@ return function()
 			Info   = { color = c.ScrollbarInfoHandle.fg },
 			Hint   = { color = c.ScrollbarHintHandle.fg },
 			Misc   = { color = c.ScrollbarMiscHandle.fg },
+		},
+		handlers = {
+			cursor = false
 		}
 	})
 end
