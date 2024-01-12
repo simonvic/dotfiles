@@ -7,7 +7,8 @@ M.config = {
 }
 
 M.palette = {
-	accent_xdark  = "#4C302F",
+	accent_xxdark = "#4C302F",
+	accent_xdark  = "#88302B",
 	accent_dark   = "#CC443D",
 	accent        = "#F0544C",
 	accent_light  = "#F6645D",
@@ -51,7 +52,8 @@ end
 -- @TODO darken non-focused windows?
 M.groups = {
 	NonText                      = { fg = p.zdepth_0, bold = true },
-	Visual                       = { bg = p.accent_xdark },
+	Visual                       = { bg = p.accent_xxdark },
+	Search                       = { bg = p.accent_xdark },
 	CursorLine                   = { bg = p.zdepth__1 },
 	ColorColumn                  = { bg = p.zdepth_1 },
 	WinBar                       = { bg = p.zdepth_1, fg = p.text, bold = true },
@@ -64,7 +66,7 @@ M.groups = {
 	MsgArea                      = { bg = p.zdepth_1 },
 	VertSplit                    = { bg = p.zdepth_1, fg = p.text_xdark },
 	Pmenu                        = { bg = p.zdepth_1 },
-	PmenuSel                     = { bg = p.accent_xdark },
+	PmenuSel                     = { bg = p.accent_xxdark },
 	PmenuSbar                    = { bg = p.zdepth_2 },
 	PmenuThumb                   = { bg = p.accent_dark },
 	NormalFloat                  = {},
@@ -135,28 +137,28 @@ M.groups = {
 	DapUIUnavailableNC           = { link = "DapUIUnavailable" },
 	-- Neo tree plugin
 	NeoTreeNormal                = { bg = p.zdepth_1, fg = p.text },
-	NeoTreeCursorLine            = { bg = p.accent_xdark },
+	NeoTreeCursorLine            = { bg = p.accent_xxdark },
 	NeoTreeTabInactive           = { bg = p.zdepth_0 },
 	NeoTreeTabActive             = { bg = p.zdepth_1, underline = true, sp = p.accent },
 	NeoTreeTabSeparatorInactive  = { bg = p.zdepth_0, fg = p.zdepth_0 },
 	NeoTreeTabSeparatorActive    = { bg = p.zdepth_1, fg = p.zdepth_1 },
 	-- These colors are read from the scrollbar plugin config
-	ScrollbarHandle              = { bg = p.accent_xdark },
+	ScrollbarHandle              = { bg = p.accent_xxdark },
 	ScrollbarError               = { fg = p.error },
 	ScrollbarWarn                = { fg = p.warn },
 	ScrollbarInfo                = { fg = p.info },
 	ScrollbarHint                = { fg = p.hint },
-	ScrollbarErrorHandle         = { bg = p.accent_xdark, fg = p.error },
-	ScrollbarWarnHandle          = { bg = p.accent_xdark, fg = p.warn },
-	ScrollbarInfoHandle          = { bg = p.accent_xdark, fg = p.info },
-	ScrollbarHintHandle          = { bg = p.accent_xdark, fg = p.hint },
-	ScrollbarMiscHandle          = { bg = p.accent_xdark, fg = "#9876AA" },
-	ScrollbarSearchHandle        = { bg = p.accent_xdark, fg = p.ok },
+	ScrollbarErrorHandle         = { bg = p.accent_xxdark, fg = p.error },
+	ScrollbarWarnHandle          = { bg = p.accent_xxdark, fg = p.warn },
+	ScrollbarInfoHandle          = { bg = p.accent_xxdark, fg = p.info },
+	ScrollbarHintHandle          = { bg = p.accent_xxdark, fg = p.hint },
+	ScrollbarMiscHandle          = { bg = p.accent_xxdark, fg = "#9876AA" },
+	ScrollbarSearchHandle        = { bg = p.accent_xxdark, fg = p.ok },
 	-- Noice
 	NoiceCursor                  = { bg = p.accent },
 	NoiceMini                    = { bg = p.zdepth_2 },
 	-- Aerial
-	AerialLine                   = { bg = p.accent_xdark },
+	AerialLine                   = { bg = p.accent_xxdark },
 	--
 	Comment                      = { bg = "none", fg = "#808080", italic = M.config.italic_comments },
 	Type                         = { bg = "none", fg = "#FAFAFA", bold = false },
