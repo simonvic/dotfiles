@@ -39,7 +39,7 @@ M.plugins = {
 	{ "mfussenegger/nvim-dap",             config = require("simonvic.plugins.configs.debugger") },
 	{ "rcarriga/nvim-dap-ui",              config = require("simonvic.plugins.configs.dap_ui"),          after = "nvim-dap", },
 	{ "mfussenegger/nvim-jdtls" },
-	{ "simrat39/rust-tools.nvim" },
+	{ "mrcjkb/rustaceanvim" },
 	{ "lervag/vimtex",                     config = require("simonvic.plugins.configs.vimtex") },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
