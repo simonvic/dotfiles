@@ -55,7 +55,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 
 # Showcase 
 <h2 align="center"> Lockscreen (sLockscreenctl) </h1>
-<img src="https://imgur.com/X4KEcVR.gif" width="100%">
+<img src="https://imgur.com/1xyHtuH.gif" width="100%">
 
 [sLockscreenctl](https://github.com/simonvic/dotfiles/wiki/Scripts#slockscreenctl) has plenty of options to tweak as you like
 
@@ -69,7 +69,7 @@ Visit the [installation guide](https://github.com/simonvic/dotfiles/wiki/Install
 <br>
 
 <h2 align="center">Application launcher, window switcher and calculator (Rofi)</h2>
-<img src="https://imgur.com/U2OKJvx.gif" width="100%">
+<img src="https://imgur.com/iU7AKT8.gif" width="100%">
 
 [Rofi](https://github.com/simonvic/dotfiles/wiki/Installation-and-Configuration#rofi) themes have been made to be
 easily configurable and expansible. The config file and thems are structured like this:
@@ -89,10 +89,10 @@ A `Style` defines text fonts, imported from a `Fonts`, and the colors of the com
 <br>
 
 <h2 align="center">Polybar</h2>
-<img src="https://imgur.com/BbjNiOo.gif" width="100%">
+<img src="https://imgur.com/rNcoOSk.gif" width="100%">
 
 [sPolybarctl](https://github.com/simonvic/dotfiles/wiki/Scripts#spolybarctl) will manage your polybars.
-It can `launch` them, `show`, `hide` them or `toggle`. It also serves as a wrapper for polybar-msg for `ipc` calls.
+It can `launch`, `show`, `hide` or `toggle` them. It also serves as a wrapper for polybar-msg for `ipc` calls.
 
 The main feature is that you can interact with polybars using their name, like so:
 ```shell-session
@@ -108,36 +108,50 @@ $ sPolybarctl message "action #date.toggle"  # simulate the toggle action on dat
 <h2 align="center">TODO manager,Notifications and more (Dunst) </h2>
 
 <h3 align="center"> Music control (sPlayerctl) + custom Spotify notification </h3>
-<img src="https://imgur.com/0XehgiR.gif" width="100%">
+<img src="https://imgur.com/kFvlW6i.gif" width="100%">
 
-[sPlayerctl](https://github.com/simonvic/dotfiles/wiki/Scripts#splayerctl) will help you manage your *music*! It also has custom Spotify notification.
+[sPlayerctl](https://github.com/simonvic/dotfiles/wiki/Scripts#splayerctl) will help you manage your *music*! It also supports custom icon arts (album icon, youtube thumbnail, etc.)
 
 The coolest feature is that you can select the player you wish to control via cli
 ```shell-session
 $ sPlayerctl select-player set spotify
 ```
 ... or even better with `Dunst` and `Rofi`
-<img src="https://i.imgur.com/ir8RoHf.png" width="100%">
-
-<br>
-
-<h3 align="center"> Speaker and microphone control</h3>
-<img src="https://imgur.com/NAcWdqa.gif" width="100%">
-
-Nothing special here. [sVolumectl](https://github.com/simonvic/dotfiles/wiki/Scripts#svolumectl) and [sMicrophonectl](https://github.com/simonvic/dotfiles/wiki/Scripts#smicrophonectl)
-will the volume of the speakers and microphone while showing a dunst notification with a [personalizable bar](https://github.com/simonvic/dotfiles/wiki/Scripts#drawbarsh)
-
-<br>
-
-<h3 align="center">Brightness and Redshift control</h3>
-<img src="https://imgur.com/9UBUZQg.gif" width="100%">
-
-[sBrightnessctl](https://github.com/simonvic/dotfiles/wiki/Scripts#sbrightnessctl) will adjust the brightness and manage `redshift` temperature.
+<img src="https://imgur.com/7aRCUr3.gif" width="100%">
 
 <br>
 
 <h3 align="center">App notifications</h3>
-<img src="https://imgur.com/dgIq5dr.gif" width="100%">
+<img src="https://imgur.com/nVk0GU6.gif" width="100%">
+
+<br>
+
+<h3 align="center">WiFi</h3>
+<img src="https://imgur.com/2vIHj1B.gif">
+
+With [sWifi](https://github.com/simonvic/dotfiles/wiki/Scripts#swifi) you can quickly scan for WiFi signals, filter and connect to them with few keystrokes.
+
+<br>
+
+<h3 align="center">sScreenshot</h3>
+<img src="https://imgur.com/ZfSI0Ea.gif">
+
+[sScreenshot](https://github.com/simonvic/dotfiles/wiki/Scripts#sscreenshot) allows you to take area or full screenshot, copy it to clipboard and paste it anywhere.
+
+<br>
+
+<h3 align="center"> Speaker and microphone control</h3>
+<img src="https://imgur.com/Zz33t6s.gif" width="100%">
+
+Nothing special here. [sVolumectl](https://github.com/simonvic/dotfiles/wiki/Scripts#svolumectl) and [sMicrophonectl](https://github.com/simonvic/dotfiles/wiki/Scripts#smicrophonectl)
+allows you to change the volume of the speakers and microphone while showing a dunst notification with a [personalizable bar](https://github.com/simonvic/dotfiles/wiki/Scripts#drawbarsh)
+
+<br>
+
+<h3 align="center">Brightness and Redshift control</h3>
+<img src="https://imgur.com/vTUWWlH.gif" width="100%">
+
+[sBrightnessctl](https://github.com/simonvic/dotfiles/wiki/Scripts#sbrightnessctl) will adjust the brightness and manage `redshift` temperature.
 
 <br>
 
