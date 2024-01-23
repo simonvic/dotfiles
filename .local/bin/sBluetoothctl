@@ -85,7 +85,7 @@ function power() {
 	local tries=0
 	while [[ $(isPowering) == true ]] && [[ $tries -lt $maxTries ]]; do
 		sleep $secondsBetweenTries
-		((time++))
+		((tries++))
 	done
 	updatePolybar
 }
