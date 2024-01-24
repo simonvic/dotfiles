@@ -266,6 +266,13 @@ local keybindings = {
 	{ n___, "<A-q>",            inspect_variable,                       {},                "inspect variable" },
 	------------------------------------------------------------------- PLUGINS
 	plugins = {
+		-------------------------------------------------------------- TREESITTER
+		treesitter         = {
+			init_selection = false,
+			node_incremental = "<A-v>",
+			scope_incremental = false,
+			node_decremental = "<A-V>",
+		},
 		-------------------------------------------------------------- NEO-TREE
 		neotree            = {
 			-- window
