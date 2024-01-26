@@ -108,6 +108,7 @@ return function()
 			window = keybindings.plugins.neotree_buffers,
 		},
 		git_status = {
+			group_empty_dirs = true,
 			window = {
 				position = "float",
 				mappings = keybindings.plugins.neotree_gitstatus
