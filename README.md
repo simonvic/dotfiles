@@ -24,8 +24,8 @@ This repository is not just a rice. In `./local/bin/` you can find many utilitie
 which make the **everyday** usage of your Linux environment ***easier*** and ***faster***, while getting the most out of
 popular softwares among Linux rices (e.g. Polybar, Rofi, Dunst, i3 etc.).
 
-These utilities have been made to be easily configurable (*more to come in v3.0...*); just open it with your favorite text
-editor and edit accordingly. For a more in-depth guide visit the [scripts wiki](https://github.com/simonvic/dotfiles/wiki/Scripts)
+These utilities have been made to be easily configurable.
+For a more in-depth guide visit the [scripts wiki](https://github.com/simonvic/dotfiles/wiki/Scripts)
 
 For a guide on how to use them either check the [wiki](https://github.com/simonvic/dotfiles/wiki/Scripts) 
 or just launch them with the `help` option. Example:
@@ -41,7 +41,7 @@ $ sPolybarctl help
 
 # Requirements
 Main requirements:
-* i3-gaps : the tiling window manager with gaps
+* i3: the tiling window manager with gaps
 * i3lock-color : Used to lock the screen
 * Polybar : show bars with various information 
 * Dunst : notifications daemon
