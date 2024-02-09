@@ -45,6 +45,7 @@ M.palette = {
 	literal_number = "#6897BB",
 
 	guide          = "#202020",
+	code_bg        = "#404040",
 	link           = "#6897BB",
 
 	added          = "#2B5640",
@@ -275,10 +276,10 @@ local function buildGroups()
 
 		------------------------------------------------------------------------ LANGUAGES
 		------------------------------------------------------------------------ markdown
-		markdownCode                          = { bg = p.text_xxxdark },
+		markdownCode                          = { bg = p.code_bg },
 		markdownCodeBlock                     = { link = "markdownCode" },
 		markdownCodeDelimiter                 = { link = "Delimiter" },
-		markdownBlockquote                    = { bg = p.text_xxxdark, fg = p.text },
+		markdownBlockquote                    = { bg = p.code_bg },
 		markdownHeadingDelimiter              = { link = "Title" },
 		markdownHeadingRule                   = { link = "Title" },
 		markdownRule                          = { link = "Keyword" },
