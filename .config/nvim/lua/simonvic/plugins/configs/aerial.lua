@@ -24,6 +24,9 @@ return function()
 		},
 		nav = {
 			keymaps = keybindings.plugins.aerial_nav,
+			win_opts = {
+				winblend = 0
+			}
 		}
 	})
 	require("telescope").load_extension("aerial")
