@@ -299,9 +299,12 @@ local function buildGroups()
 		["@string.special.url.html"]          = { link = "String" },
 
 		------------------------------------------------------------------------ css
+		cssUrl                                = { link = "String" },
 		cssTagName                            = { link = "Keyword" },
 		cssClassName                          = { link = "Type" },
-		cssUrl                                = { link = "String" },
+		cssPseudoClassId                      = { link = "PreProc" },
+		["@type.tag.css"]                     = { link = "cssTagName" },
+		["@property.class.css"]               = { link = "cssPseudoClassId" },
 
 		------------------------------------------------------------------------ c
 		cCharacter                            = { link = "String" },

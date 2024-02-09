@@ -3,7 +3,7 @@ return function()
 		ensure_installed = "all",
 		highlight = {
 			enable = true,
-			disable = { "css", "gitcommit" },
+			disable = { "gitcommit" },
 		},
 		indent = {
 			enable = true,
