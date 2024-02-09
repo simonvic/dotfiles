@@ -24,7 +24,6 @@ jdtls.start_or_attach({
 	capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
-		jdtls.setup.add_commands()
 		local keybindings = require("simonvic.keybindings")
 		keybindings.set(keybindings.plugins.jdtls)
 	end,
