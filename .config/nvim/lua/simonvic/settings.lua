@@ -1,11 +1,10 @@
-local vim = vim
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 local opt = vim.opt
+
 M = {}
 
---------------------------------------------------------------------------------
---                                                                    BEHAVIOUR
+-------------------------------------------------------------------------------- BEHAVIOUR
 opt.wrap = false
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
@@ -16,13 +15,13 @@ opt.scrolloff = 8
 
 opt.undofile = true
 
---                                                                         CASE
+-------------------------------------------------------------------------------- CASE
 opt.ignorecase = true
 opt.smartcase = true
 opt.wildignorecase = true
 opt.infercase = true
 
---                                                                  INDENTATION
+-------------------------------------------------------------------------------- INDENTATION
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.smartindent = true
@@ -38,11 +37,11 @@ opt.foldlevel = 69
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 
---------------------------------------------------------------------------------
---                                                                    APPEARANCE
+-------------------------------------------------------------------------------- APPEARANCE
 opt.colorcolumn = "80"
 opt.shortmess:append("c")
 opt.cursorline = true
+opt.cursorcolumn = false
 opt.termguicolors = true
 
 opt.showcmdloc = "statusline"
@@ -64,7 +63,7 @@ opt.fillchars = {
 	eob = " ",
 }
 
---                                                        STATUSCOLUMN (gutter)
+-------------------------------------------------------------------------------- STATUSCOLUMN (gutter)
 opt.statuscolumn = ""
 	.. "%C" -- folds
 	.. "%3l" -- numbers
@@ -72,15 +71,15 @@ opt.statuscolumn = ""
 	.. "%-3r" -- relative numbers
 	.. "%s" -- signs
 
---                                                                      NUMBERS
+-------------------------------------------------------------------------------- NUMBERS
 opt.number = true
 opt.relativenumber = true
 
---                                                                        SIGNS
+-------------------------------------------------------------------------------- SIGNS
 opt.signcolumn = "auto:9"
 
 
---                                                                        FOLDS
+-------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
 function BuildFoldText()
 	local fn = vim.fn
@@ -93,7 +92,7 @@ end
 
 opt.foldtext = "v:lua.BuildFoldText()"
 
---                                                                 CURSOR SHAPE
+-------------------------------------------------------------------------------- CURSOR SHAPE
 opt.guicursor = {
 	"a:blinkon100",  -- all
 	"n:block",       -- normal
@@ -108,14 +107,14 @@ opt.guicursor = {
 	"o:hor50-blinkon0", --  operator pending
 }
 
---                                                       RESTORE CURSOR ON EXIT
+-------------------------------------------------------------------------------- RESTORE CURSOR ON EXIT
 vim.api.nvim_create_augroup("resetCursor", { clear = true })
 vim.api.nvim_create_autocmd("VimLeave", {
 	group = "resetCursor",
 	command = "set guicursor=a:ver25"
 })
 
---                                                                      TABLINE
+-------------------------------------------------------------------------------- TABLINE
 opt.showtabline = 1
 function BuildTabLine()
 	local s = ""
@@ -133,7 +132,7 @@ end
 
 opt.tabline = "%!v:lua.BuildTabLine()"
 
---                                                                  WINDOW LINE
+-------------------------------------------------------------------------------- WINDOW LINE
 opt.winbar = ""
 	.. "%=" -- padding
 	.. "%h" -- help flag
@@ -142,11 +141,10 @@ opt.winbar = ""
 	.. "%f" -- file (relative to cwd)
 	.. "%=" -- padding
 
---                                                                 COMMAND LINE
+-------------------------------------------------------------------------------- COMMAND LINE
 opt.cmdheight = 1
 
---                                                                  STATUS LINE
-
+-------------------------------------------------------------------------------- STATUS LINE
 opt.laststatus = 3
 
 local modes_aliases = {
@@ -236,7 +234,7 @@ end
 opt.statusline = "%!luaeval('BuildStatusLine()')"
 
 
---                                                                  DIAGNOSTICS
+-------------------------------------------------------------------------------- DIAGNOSTICS
 vim.diagnostic.config({
 	underline = true,
 	virtual_text = false,
