@@ -1,0 +1,1 @@
+require("simonvic.colorscheme").apply()
