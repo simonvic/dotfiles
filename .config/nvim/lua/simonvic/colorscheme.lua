@@ -40,7 +40,7 @@ M.palette = {
 	["function"]   = "#FFC66D",
 	metakeyword    = "#BBB529",
 	keyword        = "#CC7832",
-	keyword_light  = "#f98b31",
+	keyword_light  = "#DCA537",
 	literal_string = "#6A8759",
 	literal_bool   = "#8CB0CB",
 	literal_number = "#6897BB",
@@ -144,7 +144,8 @@ local function buildGroups()
 		SpecialComment                        = { bg = "none", fg = p.text_dark, italic = M.config.italic_comments, bold = M.config.bold_docs },
 		Todo                                  = { bg = "none", fg = p.hint, bold = true },
 		Error                                 = { fg = p.error, undercurl = true },
-		ErrorMsg                              = { link = "Error" },
+		ErrorMsg                              = { fg = p.error },
+		WarningMsg                            = { fg = p.warn },
 
 		------------------------------------------------------------------------ diff
 		DiffAdd                               = { bg = p.added, },
@@ -262,7 +263,7 @@ local function buildGroups()
 		["@markup.list"]                      = { link = "Keyword" },
 		["@markup.quote"]                     = { link = "markdownBlockquote" },
 		["@markup.link"]                      = { link = "markdownUrl" },
-		["@tag.attribute"]                    = { link = "Normal" },
+		["@tag.attribute"]                    = { fg = p.keyword_light },
 		["@punctuation"]                      = { link = "Keyword" },
 		["@punctuation.delimiter"]            = { link = "@punctuation" },
 		["@punctuation.bracket"]              = { link = "@punctuation" },
@@ -270,6 +271,7 @@ local function buildGroups()
 		["@operator"]                         = { link = "Operator" },
 		["@variable"]                         = { link = "Normal" },
 		["@variable.member"]                  = { fg = p.member },
+		["@variable.builtin"]                 = { link = "Keyword" },
 		["@module.builtin"]                   = { link = "Keyword" },
 
 		------------------------------------------------------------------------ SEMANTIC GROUPS
@@ -277,6 +279,7 @@ local function buildGroups()
 		["@lsp.typemod.property.declaration"] = { fg = p.member },
 
 		------------------------------------------------------------------------ LANGUAGES
+
 		------------------------------------------------------------------------ markdown
 		markdownCode                          = { bg = p.code_bg },
 		markdownCodeBlock                     = { link = "markdownCode" },
@@ -286,10 +289,14 @@ local function buildGroups()
 		markdownHeadingRule                   = { link = "Title" },
 		markdownRule                          = { link = "Keyword" },
 
+		------------------------------------------------------------------------ latex
+		["@module.latex"]                     = { link = "Statement" },
+		["@markup.environment.latex"]         = { link = "Statement" },
+
 		------------------------------------------------------------------------ xml
 		xmlTag                                = { link = "Keyword" },
 		xmlTagName                            = { link = "Keyword" },
-		xmlAttrib                             = { link = "Normal" },
+		xmlAttrib                             = { link = "@tag.attribute" },
 		xmlEqual                              = { link = "Keyword" },
 
 		------------------------------------------------------------------------ html
@@ -303,18 +310,24 @@ local function buildGroups()
 		cssTagName                            = { link = "Keyword" },
 		cssClassName                          = { link = "Type" },
 		cssPseudoClassId                      = { link = "PreProc" },
+		cssSelectorOp                         = { link = "@punctuation" },
+		cssClassNameDot                       = { link = "@punctuation" },
 		["@type.tag.css"]                     = { link = "cssTagName" },
-		["@property.class.css"]               = { link = "cssPseudoClassId" },
+		["@property.class.css"]               = { link = "Type" },
 
 		------------------------------------------------------------------------ c
 		cCharacter                            = { link = "String" },
 		cDataStructure                        = { link = "Type" },
 		cDataStructureKeyword                 = { link = "Keyword" },
-		["@constant.c"]                       = { link = "PreProc" },
+		cTypedef                              = { link = "Statement" },
+		cFunction                             = { link = "Function" },
+		cConstant                             = { link = "PreProc" },
+		["@constant.c"]                       = { link = "cConstant" },
 		["@keyword.directive"]                = { link = "PreProc" },
 		["@keyword.import"]                   = { link = "PreProc" },
 
 		------------------------------------------------------------------------ rust
+		rustSelf                              = { link = "Keyword" },
 		["@keyword.import.rust"]              = { link = "Keyword" },
 		["@lsp.type.decorator.rust"]          = { link = "PreProc" },
 
@@ -328,12 +341,15 @@ local function buildGroups()
 		javaDocComment                        = { link = "SpecialComment" },
 		javaDocTag                            = { link = "Keyword" },
 		javaDocParam                          = { link = "Keyword" },
+		javaParen                             = { link = "@punctuation" },
+		javaParen1                            = { link = "javaParen" },
 		javaCommentTitle                      = { link = "javaDocComment" },
 		javaCommentStar                       = { link = "javaDocComment" },
 
 		------------------------------------------------------------------------ lua
 		luaTable                              = { link = "Keyword" },
 		luaTableBlock                         = { link = "Constant" },
+		luaFunction                           = { link = "Statement" },
 		luaConstant                           = { link = "@constant.builtin" },
 		["@variable.member.lua"]              = { link = "@lsp.type.variable" },
 		["@lsp.type.variable.lua"]            = { link = "@lsp.type.variable" },
@@ -341,14 +357,26 @@ local function buildGroups()
 		------------------------------------------------------------------------ shell
 		shQuote                               = { link = "String" },
 		shDeref                               = { link = "Identifier" },
+		shDerefSimple                         = { link = "Keyword" },
 		shArithRegion                         = { link = "Keyword" },
 		shCmdSubRegion                        = { link = "Keyword" },
 		["@variable.bash"]                    = { link = "@variable" },
 
 		------------------------------------------------------------------------ ini
 		dosiniHeader                          = { link = "Type" },
-		dosiniLabel                           = { link = "Type" },
-		["@property.ini"]                     = { link = "Type" },
+		dosiniLabel                           = { link = "@variable.member" },
+		["@property.ini"]                     = { link = "dosiniLabel" },
+
+		------------------------------------------------------------------------ gitcommit
+		gitcommitSummary                      = { link = "Title" },
+		gitcommitHeader                       = { link = "Title" },
+		gitcommitSelectedType                 = { link = "Keyword" },
+		gitcommitSelectedArrow                = { link = "Keyword" },
+		gitcommitDiscardedType                = { link = "Keyword" },
+		gitcommitSelectedFile                 = { link = "Underlined" },
+		gitcommitUntrackedFile                = { link = "Underlined" },
+		gitcommitDiscardedFile                = { link = "Underlined" },
+
 	}
 end
 
