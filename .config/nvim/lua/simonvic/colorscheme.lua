@@ -5,6 +5,7 @@ M.config = {
 	italic_comments = true,
 	bold_docs = false,
 	bold_types = false,
+	bold_constants = true,
 	bold_commandline = true,
 }
 
@@ -46,7 +47,7 @@ M.palette = {
 
 	guide          = "#202020",
 	code_bg        = "#404040",
-	link           = "#6897BB",
+	url            = "#6897BB",
 
 	added          = "#2B5640",
 	changed        = "#226688",
@@ -115,7 +116,7 @@ local function buildGroups()
 
 		------------------------------------------------------------------------ text
 		Title                                 = { fg = p.text_light, bold = true },
-		Underlined                            = { fg = p.link, underline = true },
+		Underlined                            = { fg = p.url, underline = true },
 		Bold                                  = { bold = true },
 		Italic                                = { italic = true },
 		Conceal                               = { fg = p.text_xdark },
@@ -131,7 +132,7 @@ local function buildGroups()
 		Number                                = { fg = p.literal_number },
 		Boolean                               = { fg = p.literal_bool },
 		Identifier                            = { link = "Normal" },
-		Constant                              = { fg = p.constant, bold = true },
+		Constant                              = { fg = p.constant, bold = M.config.bold_constants },
 		Function                              = { fg = p["function"] },
 		Type                                  = { bg = "none", fg = p.text_xxlight, bold = M.config.bold_types },
 		PreProc                               = { fg = p.metakeyword },
@@ -248,6 +249,7 @@ local function buildGroups()
 		["@comment.documentation"]            = { link = "SpecialComment" },
 		["@boolean"]                          = { link = "Boolean" },
 		["@character.printf"]                 = { link = "Keyword" },
+		["@string.special.url"]               = { link = "Underlined" },
 		["@type.qualifier"]                   = { link = "Keyword" },
 		["@type.builtin"]                     = { link = "Type" },
 		["@attribute"]                        = { link = "PreProc" },
