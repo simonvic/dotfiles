@@ -22,7 +22,7 @@
 	scrollbar-handle-background: @color-primary-accent-semitransparent;
 	
 	element-background: @color-glass-thin;
-	element-active-background: @color-glass-thin;
+	element-active-background: @color-primary-accent-dark-semitransparent;
 	element-active-foreground: @color-primary-accent;
 	element-normal-background: transparent;
 	element-normal-foreground: @color-text;

@@ -4,7 +4,8 @@
 	color-primary-accent:                       #F0544C;
 	color-primary-accent-light:                 #F6645D;
 
-	color-primary-accent-semitransparent:       #F0544Caa;
+	color-primary-accent-dark-semitransparent:  #88302B55;
+	color-primary-accent-semitransparent:       #F0544C55;
 	color-primary-accent-light-semitransparent: #F6645Daa;
 	
 	color-urgent:                               #8D0000;
