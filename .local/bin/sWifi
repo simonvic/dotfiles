@@ -37,7 +37,7 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 # @param rescan (default: auto)
 # @return wifi signals
 function getSignals() {
-	nmcli -get-values ACTIVE,BARS,CHAN,SSID device wifi list --rescan "${1:-auto}"
+	nmcli -get-values ACTIVE,SIGNAL,CHAN,FREQ,RATE,SECURITY,SSID device wifi list --rescan "${1:-auto}"
 }
 
 ##
@@ -57,28 +57,50 @@ function getActive() {
 }
 
 ##
-# Print pretty signals (meant for display in rofi)
-# @param newline separated signals
+# Print pretty wifi signal (meant for display in rofi)
+# @param active
+# @param strength
+# @param channel
+# @param frequency
+# @param rate
+# @param security
+# @param ssid
 # @return pretty output
-function prettifySignals() {
-	while read -r signal; do
-		local active=${signal%%:*}
-		signal=${signal#*:}
+function prettifyWifiSignal() {
+	local active=$1
+	local strength=$2
+	local channel=$3
+	local frequency=$4
+	local rate=$5
+	local security=$6
+	local ssid=$7
 
-		local bars; bars=$(echo "${signal%%:*}" \
-        	| sed "s/\*\{4,4\}/▂▄▆█/g" \
-        	| sed "s/\*\{3,3\}/▂▄▆_/g" \
-        	| sed "s/\*\{2,2\}/▂▄__/g" \
-        	| sed "s/\*\{1,1\}/▂___/g" )
+	local output
+	
+	# [[ "$active" == "yes" ]] && output+=" "
 
-		signal=${signal#*:}
+	if [[ "$strength" -le 25 ]]; then
+		output+="▂▁▁▁"
+	elif [[ "$strength" -le 50 ]]; then
+		output+="▂▄▁▁"
+	elif [[ "$strength" -le 75 ]]; then
+		output+="▂▄▆▁"
+	else
+		output+="▂▄▆█"
+	fi
 
-		local channel=${signal%%:*}
-		signal=${signal#*:}
+	output+=" <b>$ssid</b>"
 
-		local ssid=$signal
-		printf "%s %s\n" "$bars" "$ssid"
-	done <<< "$1"
+	case "$frequency" in
+		2*) frequency="2.4Ghz" ;;
+		5*) frequency="5Ghz" ;;
+		6*) frequency="6Ghz" ;;
+	esac
+	output+=" | <small><tt>󰘊 $frequency $channel</tt></small>"
+	# output+=" | <small><tt>$rate</tt></small>"
+	# output+=" | <small><tt> $security</tt></small>"
+
+	printf "%s\n" "$output"
 }
 
 ##
@@ -103,15 +125,26 @@ function sendNotification() {
 function promptSelection() {
 	sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
 	local signals; signals=$(getSignals "$1")
-	local active; active=$(getActive "$signals")
+	local prettyOutput
+	local idx=0
+	local activeIdx
+	while read -r wifi; do
+		local active strength channel frequency rate security ssid
+		IFS=":" read -r active strength channel frequency rate security ssid <<< "$wifi"
+		prettyOutput+="$(prettifyWifiSignal "$active" "$strength" "$channel" "$frequency" "$rate" "$security" "$ssid")\n"
+		# NOTE: Can we assume to be connected to only one wifi?
+		[[ "$active" == "yes" ]] && activeIdx=$idx
+		((idx++))
+	done <<< "$signals"
 
 	sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
-	local selectedIdx; selectedIdx=$(prettifySignals "$signals" | rofi -dmenu \
+	local selectedIdx; selectedIdx=$(printf "%b" "$prettyOutput" | rofi -dmenu \
 		-i \
+		-markup-rows \
 		-matching "$matchingMode" \
 		-format "i" \
-		-a "$active" \
-		-p "/" \
+		-a "$activeIdx" \
+		-p " " \
 		-theme "$dmenu_theme" \
 	)
 
@@ -119,18 +152,28 @@ function promptSelection() {
 		# hacky way to close notification via notify-send
 		# replace current notification (id) with one that lasts 1ms
 		notify-send --replace-id "$notificationUID" --expire-time 1 " "
-		exit 0
+		return
 	fi
 
-	selectedSSID=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
-	selectedSSID=${selectedSSID#*:}
-	selectedSSID=${selectedSSID#*:}
-	selectedSSID=${selectedSSID#*:}
+	local selectedWifi; selectedWifi=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
+	local ignored selectedSSID
+	IFS=":" read -r ignored ignored ignored ignored ignored ignored selectedSSID <<< "$selectedWifi"
 
 	sendNotification "Connecting to <b>$selectedSSID</b> ..." "network-wireless-acquiring-symbolic" 0
 	nmcli d w c "$selectedSSID"
-	# use correct icon based on signal strength
-	sendNotification "Connected to <b>$selectedSSID</b>" "network-wireless-signal-excellent-symbolic"
+
+	local signalIcon="network-wireless-signal-"
+	if [[ "$strength" -le 25 ]]; then
+		signalIcon+="low"
+	elif [[ "$strength" -le 50 ]]; then
+		signalIcon+="ok"
+	elif [[ "$strength" -le 75 ]]; then
+		signalIcon+="good"
+	else
+		signalIcon+="excellent"
+	fi
+
+	sendNotification "Connected to <b>$selectedSSID</b>" "$signalIcon"
 }
 
 function printUsage() {
