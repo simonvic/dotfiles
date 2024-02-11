@@ -145,6 +145,9 @@ bindsym $mod+z                           gaps inner all toggle $gaps_inner ; \
 bindsym $mod+y                           exec sWifi rescan no
 bindsym $mod+Shift+y                     exec sWifi rescan yes
 
+#                                                                     BLUETOOTH
+bindsym $mod+b                           exec sBluetoothctl menu
+
 #                                                                    LOCKSCREEN
 bindsym $mod+Ctrl+l                           exec --no-startup-id sLockscreenctl lock
 

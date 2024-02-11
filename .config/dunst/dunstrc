@@ -200,6 +200,12 @@
 	min_icon_size = 24
 	max_icon_size = 24
 
+[simonvic.Bluetoothctl]
+	appname = simonvic.Bluetoothctl
+	format = "%b"
+	min_icon_size = 24
+	max_icon_size = 24
+
 [simonvic.Screenshot]
 	appname = simonvic.Screenshot
 	icon_position = top

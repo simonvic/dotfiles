@@ -14,6 +14,16 @@
 #
 ###############################################################################
 
+notificationUID=6911
+notificationAppName="simonvic.Bluetoothctl"
+notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
+notificationTimeoutMS=3000
+notificationUrgency=normal
+notificationDefaultIcon="bluetooth"
+
+matchingMode="fuzzy"
+dmenu_theme="simonvic/glass/notification_actions"
+
 secondsBetweenTries=0.5
 maxTries=4
 
@@ -128,29 +138,185 @@ function connect() {
 	updatePolybar
 }
 
+##
+#	Disconnect from a device
+#	@param device name
+function disconnect() {
+	if [[ -z "$1" ]]; then
+		printUsage
+		return
+	fi
+	if [[ $(isPowered) == "false" ]]; then
+		return
+	fi
+	local tries=0
+	local uuid; uuid=$(findDeviceUUID "$1")
+	bluetoothctl disconnect "$uuid"
+	while [[ $(isConnectedTo "$uuid") != false ]] && [[ $tries -lt $maxTries ]]; do
+		sleep $secondsBetweenTries
+		((tries++))
+	done
+	updatePolybar
+}
+
+##
+# Helper function for notifications
+# @param body
+# @param icon (default: $notificationDefaultIcon)
+# @param timeout (default: notificationTimeoutMS)
+function sendNotification() {
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "${2:-$notificationDefaultIcon}" \
+		--expire-time "${3:-$notificationTimeoutMS}" \
+		--urgency "$notificationUrgency" \
+		"sBluetoothctl" "$1"
+}
+
+##
+# Print icon based on device type
+# From: https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/src/dbus-common.c
+# @param device type
+# @return icon
+function prettifyIcon() {
+	local icon
+	case "$1" in
+		"audio-card") icon="󱀞" ;;
+		"audio-headphones") icon="󰋋" ;;
+		"audio-headset") icon="󰋎" ;;
+		"camera-photo") icon="" ;;
+		"camera-video") icon="" ;;
+		"computer") icon="🖥" ;;
+		"input-gaming") icon="󰮂" ;;
+		"input-keyboard") icon="󰌌" ;;
+		"input-mouse") icon="󰍽" ;;
+		"input-tablet") icon="󰓶" ;;
+		"modem") icon="󱂇" ;;
+		"multimedia-player") icon="󱀞" ;;
+		"network-wireless") icon="󰑩" ;;
+		"phone") icon="" ;;
+		"printer") icon="󰐪" ;;
+		"scanner") icon="󰚫" ;;
+		"unknown") icon="?" ;;
+		"video-display") icon="󰍹" ;;
+		*) icon=$1
+	esac
+	printf "%s" "$icon"
+}
+
+##
+# Build prettified line with device details (meant for rofi-dmenu)
+# @param uuid
+# @param name
+# @param details
+# @return prettified device info
+function prettifyDevice() {
+	local uuid=$1
+	local name=$2
+	local details=$3
+	local output
+
+	output+="$(prettifyIcon "$(grep "Icon:" <<< "$details" | sed 's/.*: //')") "
+
+	output+=" $name | <small><i>$uuid</i></small>"
+
+	local battery
+	battery=$(grep "Battery Percentage" <<< "$details" | sed 's/.*(\([0-9]*\))/\1/')
+	if [[ -n "$battery" ]]; then
+		output+=" | <small><i>󰁾 $battery%</i></small>"
+	fi
+
+	output+=" | "
+	grep -q "Paired: yes" <<< "$details" && output+="  "
+	grep -q "Bonded: yes" <<< "$details" && output+=" 󱆟 "
+	grep -q "Trusted: yes" <<< "$details" && output+=" 󰴳 "
+	grep -q "Blocked: yes" <<< "$details" && output+="  "
+
+	printf "%s%s" "$output" "\n"
+}
+
+##
+# Open menu (rofi)
+function menu() {
+	local paired; paired=$(bluetoothctl devices)
+	local i=0
+	local ignored uuid name connectedIdxs prettyDevices
+	while read -r ignored uuid name; do
+		local details; details=$(bluetoothctl info "$uuid")
+		if grep -q "Connected: yes" <<< "$details"; then
+			if [[ -z "$connectedIdxs" ]]; then
+				connectedIdxs="$i"
+			else
+				connectedIdxs+=",$i"
+			fi
+		fi
+		prettyDevices+=$(prettifyDevice "$uuid" "$name" "$details")
+		((i++))
+	done <<< "$paired"
+	sendNotification "Select bluetooth device..." "$notificationDefaultIcon" 0
+	local selectedIdx; selectedIdx=$(printf "%b" "$prettyDevices" | rofi -dmenu \
+		-i \
+		-markup-rows \
+		-matching "$matchingMode" \
+		-format "i" \
+		-a "$connectedIdxs" \
+		-p " " \
+		-theme "$dmenu_theme" \
+	)
+
+	if [[ -z "$selectedIdx" ]]; then
+		# hacky way to close notification via notify-send
+		# replace current notification (id) with one that lasts 1ms
+		notify-send --replace-id "$notificationUID" --expire-time 1 " "
+		return
+	fi
+
+	local selectedUUID
+	read -r ignored selectedUUID selectedName <<< "$(printf "%s" "$paired" | head -$((selectedIdx + 1)) | tail -1)"
+	if bluetoothctl info "$selectedUUID" | grep -q "Connected: yes"; then
+		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		disconnect "$selectedUUID"
+		sendNotification "Disconnected from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+	else
+		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		connect "$selectedUUID"
+		sendNotification "Connected to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+	fi
+
+}
+
 function printUsage() {
 	printf "%s\n" "
 - Usage
 	sBluetoothctl <options>
 
 - Options
-	help                                # Show this help
-	power <toggle|on|off>               # Switch on or off the bluetooth, or
-	                                        toggle between the states
-	connect <device UUID|device Name>   # Power on bluetooth if necessary and
-	                                        connect to <device UUID> (xx:xx:xx:xx:xx:xx)
-	                                        or <device Name> (i.e. 'Galaxy buds')
-	polybar update                      # Update polybar modules
+	help                    # Show this help
+	power <toggle|on|off>   # Switch on or off the bluetooth, or
+	                            toggle between the states
+	connect <UUID|name>     # Power on bluetooth if necessary and
+	                            connect to <device UUID> (xx:xx:xx:xx:xx:xx)
+	                            or <device Name> (i.e. 'Galaxy buds')
+	disconnect <UUID|name>  # Disconnect from <device UUID> (xx:xx:xx:xx:xx:xx)
+	                            or <device Name> (i.e. 'Galaxy buds')
+	menu                    # Show connect menu
+	polybar update          # Update polybar modules
 
 - Abbreviations
 	p = power
 	c = connect
+	d = disconnect
+	m = menu
 "
 }
 
 case $1 in
-	power | p) power "$2" ;;
-	connect | c) connect "$2" ;;
+	p | power) power "$2" ;;
+	c | connect) connect "$2" ;;
+	d | disconnect) disconnect "$2" ;;
+	m | menu) menu ;;
 	polybar)
 		case $2 in
 			update) updatePolybar ;;
