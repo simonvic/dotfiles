@@ -147,9 +147,10 @@ bindsym $mod+Shift+y                     exec sWifi rescan yes
 
 #                                                                     BLUETOOTH
 bindsym $mod+b                           exec sBluetoothctl menu
+bindsym $mod+Mod1+b                      exec sBluetoothctl power toggle
 
 #                                                                    LOCKSCREEN
-bindsym $mod+Ctrl+l                           exec --no-startup-id sLockscreenctl lock
+bindsym $mod+Ctrl+l                      exec --no-startup-id sLockscreenctl lock
 
 #                                                        SPEAKER AND MICROPHONE
 # -Ctrl is used to control the microphone
