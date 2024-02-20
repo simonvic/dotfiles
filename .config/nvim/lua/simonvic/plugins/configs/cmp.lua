@@ -20,6 +20,7 @@ return function()
 			{ name = "buffer" },
 			{ name = "path" },
 		},
+		-- TODO: cmp-git
 		preselect = cmp.PreselectMode.None,
 		completion = {
 			autocomplete = false
@@ -29,8 +30,6 @@ return function()
 			["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
 			["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
 			["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-			["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
-			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 			["<ESC>"] = cmp.mapping.abort(),
 			["<C-Space>"] = cmp.mapping(function()
 				if cmp.visible() then
