@@ -41,14 +41,14 @@ return function()
 			end, { "i", "c" }),
 			["<CR>"] = cmp.mapping.confirm({ select = false }),
 			["<Tab>"] = cmp.mapping(function(fallback)
-				if snippet.jumpable(1) then
+				if snippet.in_snippet() and snippet.jumpable(1) then
 					snippet.jump(1)
 				else
 					fallback()
 				end
 			end, { "i", "s", }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				if snippet.jumpable(-1) then
+				if snippet.in_snippet() and snippet.jumpable(-1) then
 					snippet.jump(-1)
 				else
 					fallback()
