@@ -79,14 +79,32 @@ function updatePolybar() {
 }
 
 ##
+# Helper function for notifications
+# @param body
+# @param icon (default: $notificationDefaultIcon)
+# @param timeout (default: notificationTimeoutMS)
+function sendNotification() {
+	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "${2:-$notificationDefaultIcon}" \
+		--expire-time "${3:-$notificationTimeoutMS}" \
+		--urgency "$notificationUrgency" \
+		"sBluetoothctl" "$1"
+}
+
+##
 #	Change bluetooth power
 #	@param toggle,on or off
 function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
 		if [[ $(isPowered) == true ]]; then
+			sendNotification "Powering off..." "blueman-disabled" 2000
 			newState="off"
 		else
+			sendNotification "Powering on..." "blueman-active" 2000
 			newState="on"
 		fi
 	fi
@@ -157,22 +175,6 @@ function disconnect() {
 		((tries++))
 	done
 	updatePolybar
-}
-
-##
-# Helper function for notifications
-# @param body
-# @param icon (default: $notificationDefaultIcon)
-# @param timeout (default: notificationTimeoutMS)
-function sendNotification() {
-	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
-	notify-send \
-		--app-name "$notificationAppName" \
-		--replace-id "$notificationUID" \
-		--icon "${2:-$notificationDefaultIcon}" \
-		--expire-time "${3:-$notificationTimeoutMS}" \
-		--urgency "$notificationUrgency" \
-		"sBluetoothctl" "$1"
 }
 
 ##
@@ -269,7 +271,7 @@ function menu() {
 	if [[ -z "$selectedIdx" ]]; then
 		# hacky way to close notification via notify-send
 		# replace current notification (id) with one that lasts 1ms
-		notify-send --replace-id "$notificationUID" --expire-time 1 " "
+		notify-send --hint int:transient:1 --replace-id "$notificationUID" --expire-time 1 " "
 		return
 	fi
 
@@ -298,9 +300,9 @@ function printUsage() {
 	                            toggle between the states
 	connect <UUID|name>     # Power on bluetooth if necessary and
 	                            connect to <device UUID> (xx:xx:xx:xx:xx:xx)
-	                            or <device Name> (i.e. 'Galaxy buds')
+	                            or <name> (i.e. 'Galaxy buds')
 	disconnect <UUID|name>  # Disconnect from <device UUID> (xx:xx:xx:xx:xx:xx)
-	                            or <device Name> (i.e. 'Galaxy buds')
+	                            or <name> (i.e. 'Galaxy buds')
 	menu                    # Show connect menu
 	polybar update          # Update polybar modules
 
