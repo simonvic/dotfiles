@@ -116,7 +116,7 @@ local keybindings = {
 	{ n_i_, "<F1>",             open_docs,                              { desc = "Open docs" } },
 	{ n_i_, "<C-q>",            open_docs,                              { desc = "Open docs" } },
 	{ n___, "<leader>q",        open_docs,                              { desc = "Open docs" } },
-	{ __i_, "<A-q>",            signature_help,                         { desc = "Signature help" } },
+	{ n_i_, "<A-q>",            signature_help,                         { desc = "Signature help" } },
 	{ n_i_, "<C-e>",            show_diagnostics,                       { desc = "Show diagnostics" } },
 	{ n___, "<leader>e",        show_diagnostics,                       { desc = "Show diagnostics" } },
 	{ n___, "<leader>E",        cmd("Telescope diagnostics"),           { desc = "Show telescope diagnostics" } },
@@ -262,7 +262,7 @@ local keybindings = {
 	{ n___, "<F33>",            breakpoint_condition,                   { desc = "DAP Conditional breakpoint [Ctrl + F9]" } },
 	{ n___, "<F57>",            breakpoing_log,                         { desc = "DAP Log breakpoint [Alt + F9]" } },
 	{ n___, "<F21>",            breapoint_condition_log,                { desc = "DAP Conditional log breakpoint [Shift + F9]" } },
-	{ n___, "<A-q>",            inspect_variable,                       { desc = "DAP Inspect variable" } },
+	{ n___, "<A-C-q>",          inspect_variable,                       { desc = "DAP Inspect variable" } },
 	---------------------------------------------------------------------------- PLUGINS
 	plugins = {
 		------------------------------------------------------------------------ TREESITTER
