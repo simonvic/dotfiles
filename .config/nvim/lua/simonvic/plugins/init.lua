@@ -5,6 +5,7 @@ M.plugins = {
 	{ "nvim-lua/plenary.nvim" },
 	{ "MunifTanjim/nui.nvim" },
 	{ "kyazdani42/nvim-web-devicons" },
+	{ "nvim-neotest/nvim-nio" },
 	---------------------------------------------------------------------------
 	--                                                                  UI / UX
 	{ "rcarriga/nvim-notify",              config = require("simonvic.plugins.configs.notify") },
