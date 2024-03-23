@@ -86,6 +86,9 @@ M.with_lazy = function()
 	vim.opt.rtp:prepend(lazypath)
 	require("lazy").setup(M.plugins, {
 		ui = { border = "rounded", },
+		install = {
+			colorscheme = { "simonvic" }
+		},
 		checker = {
 			enabled = true,
 			notify = true,
