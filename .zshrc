@@ -121,6 +121,11 @@ compinit -d ~/.local/share/zsh/.zcompdump
 # GIT
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
+
+# enable to check for (un)staged changes to a repo
+# NOTE: may impact performance
+zstyle ':vcs_info:*' check-for-changes true
+
 precmd() {
 	vcs_info
 }

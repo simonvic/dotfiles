@@ -23,22 +23,13 @@ ZSH_S_MINIMUM_FREE_INPUT_CHARS=50
 ZSH_S_COLOR_ACCENT='red'
 ZSH_S_COLOR_DIRECTORY='red'
 ZSH_S_COLOR_USERNAME='red'
+ZSH_S_COLOR_HOST='red'
 ZSH_S_COLOR_PROMPT_CHAR='red'
 ZSH_S_COLOR_DATETIME='242'
 ZSH_S_COLOR_DECORATIONS='245'
-ZSH_S_COLOR_GIT_INFO='229'
-ZSH_S_COLOR_GIT_STATUS='229'
 ZSH_S_COLOR_RETURN_TRUE='115'
 ZSH_S_COLOR_RETURN_FALSE='136'
-
-# Show a character at the beginning of each line.
-# Useful when typing long commands and not loose track of where it begins
-ZSH_S_PROMPT_LINE_START='┃'
-ZSH_S_PROMPT_NEWLINE_START='┣ '
-
-# Directory
-ZSH_S_DIRECTORY_PREFIX="<"
-ZSH_S_DIRECTORY_SUFFIX=">"
+ZSH_S_COLOR_VCS_BRANCH='229'
 
 # %0/       Returns the entire directory structure.
 # %1/       Returns the current directory.
@@ -48,176 +39,90 @@ ZSH_S_DIRECTORY_SUFFIX=">"
 # %number~  Same as above but show "~" when the current directory is the home
 ZSH_S_DIRECTORY_FORMAT="%~"
 
-# Prefix and suffix of username
-ZSH_S_USERNAME_PREFIX="<"
-ZSH_S_USERNAME_SUFFIX=">"
-
 # Char to be shown at the start of the command
-ZSH_S_PROMPT_CHAR_ROOT='# '
-ZSH_S_PROMPT_CHAR_USER='$ '
-ZSH_S_PROMPT_CHAR_SSH_PREFIX=':'
+ZSH_S_PROMPT_CHAR_ROOT='#'
+ZSH_S_PROMPT_CHAR_USER='󰅂'
 
-# DateTime
-ZSH_S_DATETIME_PREFIX="["
-ZSH_S_DATETIME_SUFFIX="]"
 # strftime format
 ZSH_S_DATETIME_FORMAT="%H:%M:%S"
 
-# Return code
-ZSH_S_RETURN_PREFIX="[R-"
-ZSH_S_RETURN_SUFFIX="]"
+# Use '\e' escapes and wrap it inside a glitch block %{ %} with 0 width
+ZSH_S_BLINK="%0{$(echo -e '\e[5m')%}"
+ZSH_S_ITALIC="%0{$(echo -e '\e[3m')%}"
+ZSH_S_RESET="%0{$(echo -e '\e[0m')%}"
 
-# Git info
-ZSH_S_GIT_PROMPT_PREFIX="%F{$ZSH_S_COLOR_DECORATIONS}«%F{$ZSH_S_COLOR_GIT_INFO}"
-ZSH_S_GIT_PROMPT_SUFFIX="%F{$ZSH_S_COLOR_DECORATIONS}»%f "
-ZSH_S_GIT_PROMPT_CLEAN="%F{green} ✓%f"
-ZSH_S_GIT_PROMPT_DIRTY="%F{130} ×%f"
-ZSH_S_GIT_INFO_FORMAT="$ZSH_S_GIT_PROMPT_PREFIX%b$ZSH_S_GIT_PROMPT_SUFFIX"
+# VCS info
+ZSH_S_VCS_FORMAT="%F{$ZSH_S_COLOR_DECORATIONS}¦%f %u%c%F{$ZSH_S_COLOR_VCS_BRANCH}%b%f%%b$ZSH_S_RESET "
+ZSH_S_VCS_ACTIONFORMAT="$ZSH_S_VCS_FORMAT%F{$ZSH_S_COLOR_DECORATIONS} ¦ %f %S%a%%s "
+ZSH_S_VCS_STAGEDSTR="$ZSH_S_ITALIC"
+ZSH_S_VCS_UNSTAGEDSTR="%B"
 
-# Git status
-ZSH_S_GIT_STATUS_PREFIX="["
-ZSH_S_GIT_STATUS_SUFFIX=" ]"
-ZSH_S_GIT_PROMPT_UNTRACKED=" ·⃕"
-ZSH_S_GIT_PROMPT_ADDED=" +⃗"
-ZSH_S_GIT_PROMPT_DELETED=" -⃗"
-ZSH_S_GIT_PROMPT_AHEAD=" ↦"
-ZSH_S_GIT_PROMPT_BEHIND=" ↤"
-ZSH_S_GIT_PROMPT_MODIFIED=" ~⃗"
-ZSH_S_GIT_PROMPT_RENAMED=" α⃗"
-ZSH_S_GIT_PROMPT_STASHED=" ↴⃞"
-ZSH_S_GIT_PROMPT_UNMERGED=" ⇉"
-ZSH_S_GIT_PROMPT_DIVERGED=" ➘⃗"
+################################################################################
 
-# =================================================================================
+zstyle ':vcs_info:*' formats "$ZSH_S_VCS_FORMAT"
+zstyle ':vcs_info:*' actionformats "$ZSH_S_VCS_ACTIONFORMAT"
+zstyle ':vcs_info:*' stagedstr "$ZSH_S_VCS_STAGEDSTR"
+zstyle ':vcs_info:*' unstagedstr "$ZSH_S_VCS_UNSTAGEDSTR"
 
-# Print the ZSH_S_PROMPT_LINE_START
-function lineStart() {
-	echo "%F{$ZSH_S_COLOR_ACCENT}$ZSH_S_PROMPT_LINE_START%f"
-}
+# Prompt
+PS1=""
 
-# If ZSH_S_MINIMUM_FREE_INPUT_CHARS are not available on the line, a new line will begin
-# and ZSH_S_PROMPT_NEWLINE_START will be printed
-function newLineIfNecessary() {
-	echo "%-$ZSH_S_MINIMUM_FREE_INPUT_CHARS(l..\n%F{$ZSH_S_COLOR_ACCENT}$ZSH_S_PROMPT_NEWLINE_START%f)"
-}
+# line start
+PS1+="%F{$ZSH_S_COLOR_ACCENT}┃%f"
 
-# Print the current working directory following ZSH_S_DIRECTORY_FORMAT format.
-# The directory path will be preceded by ZSH_S_DIRECTORY_PREFIX and followed by ZSH_S_DIRECTORY_SUFFIX
-function buildDirectory() {
-	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DIRECTORY_PREFIX%F{$ZSH_S_COLOR_DIRECTORY}$ZSH_S_DIRECTORY_FORMAT%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DIRECTORY_SUFFIX%f"
-}
+# SSH info
+[[ -n $SSH_CONNECTION ]] && \
+	PS1+=" %F{$ZSH_S_COLOR_USERNAME}%n%F{$ZSH_S_COLOR_DECORATIONS}@%F{$ZSH_S_COLOR_HOST}%M%f"
 
-# Print the name of the user preceded by ZSH_S_USERNAME_PREFIX and followed by ZSH_S_USERNAME_SUFFIX
-function buildUsername() {
-	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_USERNAME_PREFIX%F{$ZSH_S_COLOR_USERNAME}%n%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_USERNAME_SUFFIX%f"
-}
+# directory
+PS1+=" %F{$ZSH_S_COLOR_DIRECTORY}$ZSH_S_DIRECTORY_FORMAT%f "
 
-# Get the prompt char to display based on current user
-# and whether it is an ssh connection
-function buildPromptChar() {
-	local promptChar=""
-	[[ -n $SSH_CONNECTION ]] && promptChar="$ZSH_S_PROMPT_CHAR_SSH_PREFIX"
+# VCS info
+PS1+='${vcs_info_msg_0_}'
 
-	promptChar=$promptChar"%(!,$ZSH_S_PROMPT_CHAR_ROOT,$ZSH_S_PROMPT_CHAR_USER)"
+# New line (if necessary)
+# If ZSH_S_MINIMUM_FREE_INPUT_CHARS are not available on the line, a new line
+# will begin and ZSH_S_PROMPT_NEWLINE_START will be printed
+PS1+=$(echo "%-$ZSH_S_MINIMUM_FREE_INPUT_CHARS(l..\n%F{$ZSH_S_COLOR_ACCENT}┣ %f)")
 
-	echo "%F{$ZSH_S_COLOR_PROMPT_CHAR}$promptChar%f"
-}
-
-# Print the current datetime following ZSH_S_DATETIME_FORMAT format.
-# The datetime will be preceded by ZSH_S_DATETIME_PREFIX and followed by ZSH_S_DATETIME_SUFFIX
-function buildTime() {
-	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DATETIME_PREFIX%F{$ZSH_S_COLOR_DATETIME}%D{$ZSH_S_DATETIME_FORMAT}%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_DATETIME_SUFFIX%f"
-}
-
-function buildGitInfo() {
-	echo '${vcs_info_msg_0_}'
-}
-
-# Print GitStatus preceded by ZSH_S_GIT_STATUS_PREFIX and followed by ZSH_S_GIT_STATUS_SUFFIX
-function buildGitStatus() {
-	#local gitStatus=$(git_prompt_status)
-	if [ ! -z $gitStatus ]; then
-		echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_PREFIX%F{$ZSH_S_COLOR_GIT_STATUS}$gitStatus%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_GIT_STATUS_SUFFIX%f"
-	fi
-}
-
-# Print the return code of last executed command preceded by ZSH_S_RETURN_PREFIX and followed by ZSH_S_RETURN_SUFFIX
-# NOTE: you could also set returnColor to "%F{%?}" so it will print a different color for each return code
-function buildReturnCode() {
-	local returnColor="%(?,%F{$ZSH_S_COLOR_RETURN_TRUE},%F{$ZSH_S_COLOR_RETURN_FALSE})"
-	echo "%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_PREFIX$returnColor%?%F{$ZSH_S_COLOR_DECORATIONS}$ZSH_S_RETURN_SUFFIX%f"
-}
+# Prompt char
+PS1+="%F{$ZSH_S_COLOR_PROMPT_CHAR}%(!,$ZSH_S_PROMPT_CHAR_ROOT,$ZSH_S_PROMPT_CHAR_USER)%f "
 
 
-zstyle ':vcs_info:git*' formats "$ZSH_S_GIT_INFO_FORMAT"
+# Rear prompt
+RPS1=""
 
+# Last process return code
+RPS1+="%F{$ZSH_S_COLOR_DECORATIONS}R-%(?,%F{$ZSH_S_COLOR_RETURN_TRUE},%F{$ZSH_S_COLOR_RETURN_FALSE})%?%f"
 
+# Date time
+RPS1+=" %F{$ZSH_S_COLOR_DECORATIONS}¦ %F{$ZSH_S_COLOR_DATETIME}%D{$ZSH_S_DATETIME_FORMAT}%f"
 
-# NOTE: GitInfo and GitStatus may impact the performance
-# Beginning of line
-PS1="$(lineStart)$(buildDirectory) $(buildGitInfo)$(newLineIfNecessary)$(buildPromptChar)"
+# Subshell level (only shown when SHLVL >= 2)
+RPS1+="%2(L, %F{$ZSH_S_COLOR_DECORATIONS}¦ 󰆏 $SHLVL,)"
 
-# Ending of line
-RPS1="$(buildGitStatus)$(buildReturnCode)$(buildTime)"
-
-
-##
-# Cleanup
+# clean up
 unset -v \
 	ZSH_S_MINIMUM_FREE_INPUT_CHARS \
 	ZSH_S_COLOR_ACCENT \
 	ZSH_S_COLOR_DIRECTORY \
 	ZSH_S_COLOR_USERNAME \
+	ZSH_S_COLOR_HOST \
 	ZSH_S_COLOR_PROMPT_CHAR \
 	ZSH_S_COLOR_DATETIME \
 	ZSH_S_COLOR_DECORATIONS \
-	ZSH_S_COLOR_GIT_INFO \
-	ZSH_S_COLOR_GIT_STATUS \
 	ZSH_S_COLOR_RETURN_TRUE \
 	ZSH_S_COLOR_RETURN_FALSE \
-	ZSH_S_PROMPT_LINE_START \
-	ZSH_S_PROMPT_NEWLINE_START \
-	ZSH_S_DIRECTORY_PREFIX \
-	ZSH_S_DIRECTORY_SUFFIX \
+	ZSH_S_COLOR_VCS_BRANCH \
 	ZSH_S_DIRECTORY_FORMAT \
-	ZSH_S_USERNAME_PREFIX \
-	ZSH_S_USERNAME_SUFFIX \
 	ZSH_S_PROMPT_CHAR_ROOT \
 	ZSH_S_PROMPT_CHAR_USER \
-	ZSH_S_PROMPT_CHAR_SSH_PREFIX \
-	ZSH_S_DATETIME_PREFIX \
-	ZSH_S_DATETIME_SUFFIX \
 	ZSH_S_DATETIME_FORMAT \
-	ZSH_S_RETURN_PREFIX \
-	ZSH_S_RETURN_SUFFIX \
-	ZSH_S_GIT_INFO_FORMAT \
-	ZSH_S_GIT_PROMPT_PREFIX \
-	ZSH_S_GIT_PROMPT_SUFFIX \
-	ZSH_S_GIT_PROMPT_CLEAN \
-	ZSH_S_GIT_PROMPT_DIRTY \
-	ZSH_S_GIT_STATUS_PREFIX \
-	ZSH_S_GIT_STATUS_SUFFIX \
-	ZSH_S_GIT_PROMPT_UNTRACKED \
-	ZSH_S_GIT_PROMPT_ADDED \
-	ZSH_S_GIT_PROMPT_DELETED \
-	ZSH_S_GIT_PROMPT_AHEAD \
-	ZSH_S_GIT_PROMPT_BEHIND \
-	ZSH_S_GIT_PROMPT_MODIFIED \
-	ZSH_S_GIT_PROMPT_RENAMED \
-	ZSH_S_GIT_PROMPT_STASHED \
-	ZSH_S_GIT_PROMPT_DIVERGED \
-	ZSH_S_GIT_PROMPT_UNMERGED
-
-unset -f lineStart \
-	newLineIfNecessary \
-	buildDirectory \
-	buildUsername \
-	buildPromptChar \
-	buildTime \
-	buildGitInfo \
-	buildGitStatus \
-	buildReturnCode
-
-#function prompt_simonvic-minimal_help() {
-#}
+	ZSH_S_ITALIC \
+	ZSH_S_BLINK \
+	ZSH_S_RESET \
+	ZSH_S_VCS_FORMAT \
+	ZSH_S_VCS_ACTIONFORMAT \
+	ZSH_S_VCS_STAGEDSTR \
+	ZSH_S_VCS_UNSTAGEDSTR
 
