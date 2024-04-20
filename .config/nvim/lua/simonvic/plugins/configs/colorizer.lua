@@ -8,7 +8,8 @@ return function()
 			AARRGGBB = true,
 			css      = false,
 			css_fn   = true,
-			mode     = "background"
+			mode     = "virtualtext",
+			virtualtext = "██",
 		}
 	})
 end
