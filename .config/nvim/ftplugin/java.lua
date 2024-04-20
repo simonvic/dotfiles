@@ -29,14 +29,6 @@ jdtls.start_or_attach({
 	end,
 	settings = {
 		java = {
-			configuration = {
-				runtimes = {
-					{
-						name = "JavaSE-21",
-						path = "/usr/lib/jvm/java-21-openjdk/",
-					},
-				},
-			},
 			codeGeneration = {
 				generateComments = true
 			},
