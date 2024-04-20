@@ -42,6 +42,7 @@ M.plugins = {
 	{ "mfussenegger/nvim-jdtls" },
 	{ "mrcjkb/rustaceanvim" },
 	{ "lervag/vimtex",                     config = require("simonvic.plugins.configs.vimtex") },
+	{ "iamcco/markdown-preview.nvim",      confit = require("simonvic.plugins.configs.mdpreview") },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
 	{ "doums/darcula" },
