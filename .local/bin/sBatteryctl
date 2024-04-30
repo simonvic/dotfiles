@@ -158,7 +158,24 @@ function sendNotification() {
 		--expire-time "$2" \
 		--urgency "$3" \
 		"$4" "$5"
-	}
+}
+
+##
+#	Send notification
+#	@param icon
+#	@param timeout
+#	@param urgency
+#	@param title
+#	@param body
+function sendNotificationSilent() {
+	notify-send \
+		--app-name "$notificationAppName" \
+		--replace-id "$notificationUID" \
+		--icon "$1" \
+		--expire-time "$2" \
+		--urgency "$3" \
+		"$4" "$5"
+}
 
 ##
 #	Set the wakelock status.
@@ -283,7 +300,7 @@ function sendMonitorNotification() {
 			;;
 	esac
 	body=${body//#\{level\}/$level}
-	sendNotification "$(getIcon "$level" "$state")" "$timeout" "$urgency" "$title" "$body"
+	sendNotificationSilent "$(getIcon "$level" "$state")" "$timeout" "$urgency" "$title" "$body"
 }
 
 ##
