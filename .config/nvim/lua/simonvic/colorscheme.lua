@@ -50,7 +50,7 @@ M.palette = {
 	url            = "#6897BB",
 
 	added          = "#2B5640",
-	changed        = "#226688",
+	changed        = "#DCA537",
 	deleted        = "#873E41",
 	error          = "#E8312E",
 	warn           = "#E87B2E",
@@ -93,7 +93,7 @@ local function buildGroups()
 		MsgArea                            = { bg = p.zdepth_1, bold = M.config.bold_commandline },
 		MoreMsg                            = { bg = p.zdepth_1, bold = true },
 		Question                           = { bg = p.zepth_1, bold = true },
-		WinSeparator                       = { bg = p.zdepth_0, fg = p.text_xdark },
+		WinSeparator                       = { bg = p.zdepth_1, fg = p.text_xdark },
 		VertSplit                          = { link = "WinSeparator" },
 		FloatBorder                        = { link = "WinSeparator" },
 		FloatTitle                         = { link = "Title" },
