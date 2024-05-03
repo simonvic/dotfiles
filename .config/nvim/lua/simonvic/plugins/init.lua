@@ -36,6 +36,7 @@ M.plugins = {
 	{ "echasnovski/mini.align",            config = require("simonvic.plugins.configs.align"),           version = false },
 	{ "NvChad/nvim-colorizer.lua",         config = require("simonvic.plugins.configs.colorizer") },
 	{ "max397574/colortils.nvim",          config = require("simonvic.plugins.configs.colortils") },
+	{ "kylechui/nvim-surround",            config = require("simonvic.plugins.configs.surround") },
 	---------------------------------------------------------------------------
 	--                                                          ADVANCED CODING
 	{ "mfussenegger/nvim-dap",             config = require("simonvic.plugins.configs.debugger") },
