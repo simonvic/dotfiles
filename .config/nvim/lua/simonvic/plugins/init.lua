@@ -15,12 +15,14 @@ M.plugins = {
 	{ "nvim-neo-tree/neo-tree.nvim",                 config = require("simonvic.plugins.configs.neo-tree"),        branch = "v3.x", },
 	{ "petertriho/nvim-scrollbar",                   config = require("simonvic.plugins.configs.scrollbar") },
 	{ "s1n7ax/nvim-window-picker",                   config = require("simonvic.plugins.configs.window-picker") },
+	{ "onsails/lspkind.nvim" },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
 	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"),      run = ":TSUpdate", },
 	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects") },
 	{ "windwp/nvim-ts-autotag",                      after = "nvim-treesitter" },
 	{ "hrsh7th/cmp-nvim-lsp" },
+	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 	{ "hrsh7th/cmp-buffer" },
 	{ "hrsh7th/cmp-path" },
 	{ "L3MON4D3/LuaSnip",                            config = require("simonvic.plugins.configs.snippets") },

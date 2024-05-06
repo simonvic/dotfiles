@@ -183,7 +183,27 @@ local function buildGroups()
 		LspInfoBorder                      = { link = "FloatBorder" },
 
 		------------------------------------------------------------------------ cmp
-		CmpItemAbbrDeprecatedDefault       = { link = "DiagnosticDeprecated" },
+		CmpItemMenu                        = { fg = p.text },
+		CmpItemAbbr                        = { fg = p.text },
+		CmpItemAbbrMatch                   = { fg = p.text, bold = true },
+		CmpItemAbbrDeprecated              = { link = "DiagnosticDeprecated" },
+		CmpItemKind                        = { fg = p.text },
+		CmpItemKindFunction                = { link = "Function" },
+		CmpItemKindMethod                  = { link = "Function" },
+		CmpItemKindConstructor             = { link = "Function" },
+		CmpItemKindVariable                = { link = "@variable" },
+		CmpItemKindField                   = { link = "@variable.member" },
+		CmpItemKindProperty                = { link = "@variable.member" },
+		CmpItemKindClass                   = { link = "Type" },
+		CmpItemKindInterface               = { link = "Type" },
+		CmpItemKindModule                  = { link = "Type" },
+		CmpItemKindEnum                    = { link = "Type" },
+		CmpItemKindEnumMember              = { link = "Constant" },
+		CmpItemKindConstant                = { link = "Constant" },
+		CmpItemKindStruct                  = { link = "Type" },
+
+		------------------------------------------------------------------------ Telescope
+		TelescopeMatching                  = { fg = p.accent },
 
 		------------------------------------------------------------------------ Lazy
 		LazyH1                             = { link = "TabLineSel" },

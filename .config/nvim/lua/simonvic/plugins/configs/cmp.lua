@@ -1,5 +1,6 @@
 return function()
 	local snippet = require("luasnip")
+	local lspkind = require("lspkind")
 	local cmp = require("cmp")
 	cmp.setup({
 		snippet = {
@@ -7,18 +8,70 @@ return function()
 				snippet.lsp_expand(args.body)
 			end,
 		},
-		window = {
-			completion = cmp.config.window.bordered(),
-			documentation = cmp.config.window.bordered(),
+		view = {
+			entries = { name = "custom", selection_order = "near_cursor" },
+			docs = {
+				auto_open = false
+			}
 		},
-		-- formatting = {
-		-- 	fields = { "kind", "abbr", "menu"}
-		-- },
+		window = {
+			completion = {
+				border = "rounded",
+				col_offset = -3,
+			},
+			documentation = {
+				border = "rounded",
+			},
+		},
+		experimental = {
+			ghost_text = true
+		},
+		formatting = {
+			fields = { "kind", "abbr", "menu", },
+			format = lspkind.cmp_format({
+				mode = "symbol",
+				maxwidth = 50,
+				ellipsis_char = '…',
+				show_labelDetails = true,
+				symbol_map = {
+					Text = "󰉿",
+					Method = "󰆧",
+					Function = "󰊕",
+					Constructor = "",
+					Field = "",
+					Variable = "󰀫",
+					Class = "",
+					Interface = "",
+					Module = "",
+					Property = "",
+					Unit = "󰑭",
+					Value = "󰎠",
+					Enum = "",
+					Keyword = "",
+					Snippet = "",
+					Color = "",
+					File = "",
+					Reference = "󰈇",
+					Folder = "󰉋",
+					EnumMember = "",
+					Constant = "󰏿",
+					Struct = "󰙅",
+					Event = "",
+					Operator = "",
+					TypeParameter = "",
+				},
+				-- before = function(entry, vim_item)
+				-- 	vim_item.menu = string.sub(vim_item.menu, 1, 20)
+				-- 	return vim_item
+				-- end
+			})
+		},
 		sources = {
-			{ name = "nvim_lsp" },
-			{ name = "luasnip" },
-			{ name = "buffer" },
-			{ name = "path" },
+			{ group_index = 1, name = "nvim_lsp" },
+			{ group_index = 1, name = "nvim_lsp_signature_help" },
+			{ group_index = 1, name = "luasnip" },
+			{ group_index = 2, name = "buffer" },
+			{ group_index = 2, name = "path" },
 		},
 		-- TODO: cmp-git
 		preselect = cmp.PreselectMode.None,
@@ -30,6 +83,13 @@ return function()
 			["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
 			["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
 			["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+			["<C-q>"] = function()
+				if cmp.visible_docs() then
+					cmp.close_docs()
+				else
+					cmp.open_docs()
+				end
+			end,
 			["<ESC>"] = cmp.mapping.abort(),
 			["<C-Space>"] = cmp.mapping(function()
 				if cmp.visible() then
