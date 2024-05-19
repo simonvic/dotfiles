@@ -342,6 +342,12 @@ local function buildGroups()
 		xmlAttrib                          = { link = "@tag.attribute" },
 		xmlEqual                           = { link = "Keyword" },
 
+		------------------------------------------------------------------------ json
+		["@property.json"]                 = { link = "@variable.member" },
+
+		------------------------------------------------------------------------ jsonc
+		["@property.jsonc"]                = { link = "@variable.member" },
+
 		------------------------------------------------------------------------ html
 		htmlTag                            = { link = "xmlTag" },
 		htmlEndTag                         = { link = "htmlTag" },
