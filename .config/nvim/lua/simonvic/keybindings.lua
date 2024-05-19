@@ -1,3 +1,4 @@
+-- TODO: ts textobject movement repeat
 M = {}
 local vim = vim
 local lsp = vim.lsp.buf
@@ -17,8 +18,6 @@ local function cmd_esc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
 
 local terminal = "<A-ò>"; -- just because accented chars mess up the formatter
 local terminal_float = "<A-ç>";
-local backward = "è";
-local forward = "+";
 
 local function breakpoing_log()
 	vim.ui.input({ prompt = "Log point message" }, function(input)
@@ -92,15 +91,35 @@ local function jdtls_test_method() require("jdtls").test_nearest_method() end
 local function jdtls_setup_debug_config() require("jdtls.dap").setup_dap_main_class_configs() end
 local function jdtls_super_implementation() require("jdtls").super_implementation() end
 
+local langmaps = {
+	-- from, to, bidirectional
+	italian141 = {
+		{ "-", "/" },
+		{ "_", "?" },
+		{ "è", "[" },
+		{ "+", "]" },
+	},
+	custom = {
+		{ "0", "^", true },
+	},
+	eretic = {
+		{ "i", "k" },
+		{ "I", "K" },
+		{ "k", "j" },
+		{ "K", "J" },
+		{ "j", "h" },
+		{ "J", "H" },
+		{ "h", "i" },
+		{ "H", "I" },
+		{ "ò", "a" },
+		{ "ç", "A" },
+	}
+}
+
 local keybindings = {
 	leader = " ",
 	localleader = " ",
 	-- { modes, lhs,              rhs,                                  options },
-	---------------------------------------------------------------------------- ITALIAN KEYBOARD LAYOUT
-	{ n___, "-",                "/",                                    { desc = "Search forward" } },
-	{ n___, "_",                "?",                                    { desc = "Search backward" } },
-	{ n___, backward,           "[",                                    { desc = "Backward [ alias", remap = true } },
-	{ n___, forward,            "]",                                    { desc = "Forward ] alias", remap = true } },
 	--------------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",            cmd("write"),                           { desc = "Save", silent = true } },
 	{ nvi_, "<C-z>",            cmd("undo"),                            { desc = "Undo", silent = true } },
@@ -198,7 +217,6 @@ local keybindings = {
 	{ __i_, "<C-A-l>",          "<ESC>magg=G`aa",                       { desc = "Reindent file" } },
 	{ _v__, "<C-A-l>",          "<ESC>ma'<='>`a",                       { desc = "Reindent selection" } },
 	{ n_i_, "<A-L>",            format,                                 { desc = "Reformat" } },
-	{ n___, "<leader>ll",       format,                                 { desc = "Reformat" } },
 	{ n_i_, "<C-A-c>",          cmd("CommentToggle"),                   { desc = "Comment toggle" } },
 	{ n___, "<leader>cc",       cmd("CommentToggle"),                   { desc = "Comment toggle" } },
 	{ _v__, "<C-A-c>",          ":CommentToggle<CR>",                   { desc = "Comment toggle" } },
@@ -415,10 +433,22 @@ M.set = function(bindings)
 	end
 end
 
+M.add_lang_map = function(mappings)
+	for _, mapping in ipairs(mappings) do
+		vim.opt.langmap:append(mapping[1] .. mapping[2])
+		if mapping[3] or false then
+			vim.opt.langmap:append(mapping[2] .. mapping[1])
+		end
+	end
+end
+
 M.apply = function()
 	vim.g.mapleader = keybindings.leader
 	vim.g.maplocalleader = keybindings.localleader
 	M.set(keybindings)
+	M.add_lang_map(langmaps.italian141)
+	-- M.add_lang_map(langmaps.custom)
+	-- M.add_lang_map(langmaps.eretic)
 end
 
 return M
