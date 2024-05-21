@@ -34,10 +34,10 @@ jdtls.start_or_attach({
 			},
 			implementationCodeLens = { enabled = false },
 			referencesCodeLens = { enabled = false },
-			inlayhints = {
+			inlayHints = {
 				parameterNames = {
-					enabled = true
-				}
+					enabled = "all",
+				},
 			},
 			format = {
 				settings = {
