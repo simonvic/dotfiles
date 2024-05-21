@@ -77,6 +77,7 @@ local function toggle_dapUI() require("dapui").toggle() end
 local function toggle_list_chars() vim.opt.list = not vim.opt.list:get() end
 local function toggle_fold_column() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
 local function toggle_relative_number() vim.opt.relativenumber = not vim.opt.relativenumber:get() end
+local function toggle_inlay_hints() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end
 local function find_references() require("telescope.builtin").lsp_references() end
 local function find_files() require("telescope.builtin").find_files({ hidden = true }) end
 local function find_symbols() require("telescope.builtin").lsp_dynamic_workspace_symbols() end
@@ -266,6 +267,7 @@ local keybindings = {
 	{ n___, "<Leader>ul",       toggle_list_chars,                      { desc = "Toggle list chars" } },
 	{ n___, "<Leader>uz",       toggle_fold_column,                     { desc = "Toggle folds column" } },
 	{ n___, "<Leader>un",       toggle_relative_number,                 { desc = "Toggle number column" } },
+	{ n___, "<Leader>uh",       toggle_inlay_hints,                     { desc = "Toggle lsp inlay hints" } },
 	{ nvi_, "<A-9>",            cmd("AerialToggle"),                    { desc = "Toggle symbols outline" } },
 	{ nvi_, "<A-)>",            cmd("AerialNavToggle"),                 { desc = "Toggle symbols outline floating navigation" } },
 	{ n___, "<leader>S",        cmd("AerialNavToggle"),                 { desc = "Toggle symbols outline floating navigation" } },
