@@ -81,16 +81,7 @@ opt.signcolumn = "auto:9"
 
 -------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
-function BuildFoldText()
-	local fn = vim.fn
-	local v = vim.v
-	local onetab = fn.strpart("          ", 0, opt.tabstop:get())
-	local startline = fn.substitute(fn.getline(v.foldstart), "\t", onetab, "g")
-	local endline = fn.substitute(fn.getline(v.foldend), "\t", "", "g")
-	return startline .. "…" .. endline
-end
-
-opt.foldtext = "v:lua.BuildFoldText()"
+opt.foldtext = ""
 
 -------------------------------------------------------------------------------- CURSOR SHAPE
 opt.guicursor = {
