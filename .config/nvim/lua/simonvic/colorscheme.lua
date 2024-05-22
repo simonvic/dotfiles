@@ -81,11 +81,13 @@ local function buildGroups()
 		NormalNC                           = {}, -- TODO: darken non-focused windows?
 		NormalFloat                        = {},
 		Visual                             = { bg = p.accent_xxdark },
+		SnippetTabstop                     = { bg = p.accent_xxdark, italic = true },
 		Search                             = { bg = p.accent_xxdark },
 		CurSearch                          = { bg = p.accent_xdark },
 		IncSearch                          = { link = "Search" },
 		Substitute                         = { link = "Search" },
 		WinBar                             = { bg = p.zdepth_1, fg = p.text, bold = true, sp = "#333333" },
+		WinBarNC                           = { link = "WinBar" },
 		TabLine                            = { bg = p.zdepth_0 },
 		TabLineSel                         = { bg = p.zdepth_1, underline = true, sp = p.accent_xdark },
 		TabLineFill                        = { bg = p.zdepth__1 },
@@ -124,7 +126,7 @@ local function buildGroups()
 		SpecialKey                         = { bg = p.text_xxxdark, fg = p.text },
 		Special                            = { link = "Keyword" },
 		MatchParen                         = { bg = p.text_xxxdark, bold = true },
-		Folded                             = { bg = p.disabled, fg = p.text_xlight },
+		Folded                             = { bg = p.text_xxxdark, fg = p.text_xlight },
 		Directory                          = { link = "Normal" },
 
 		------------------------------------------------------------------------ coding
