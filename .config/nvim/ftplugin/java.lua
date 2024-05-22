@@ -3,19 +3,34 @@ local vim = vim
 vim.opt.colorcolumn = "100";
 
 local jdtls = require("jdtls")
-
 local cmd = { "/usr/bin/jdtls" }
-local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
-local jars_debug = vim.fn.glob("~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar", 1)
-local jars_testing = vim.fn.glob("~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar", 1)
 
+-- Lombok support
+local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
 if vim.fn.empty(jars_lombok) == 0 then
 	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok })
 end
 
-local bundles = { jars_debug }
-vim.list_extend(bundles, vim.split(jars_testing, "\n"))
-jdtls.start_or_attach({
+local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
+local bundles = {}
+
+-- Debug support
+-- for upstream version: https://github.com/microsoft/java-debug
+-- and glob "~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar"
+local jars_debug = vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/*.jar", 1)
+if vim.fn.empty(jars_debug) == 0 then
+	vim.list_extend(bundles, vim.split(jars_debug, "\n"))
+end
+
+-- Testing support
+-- for upstream version: https://github.com/microsoft/vscode-java-test
+-- and glob "~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar"
+local jars_testing = vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", 1)
+if vim.fn.empty(jars_testing) == 0 then
+	vim.list_extend(bundles, vim.split(jars_testing, "\n"))
+end
+
+local jdtls_config = {
 	cmd = cmd,
 	root_dir = require("jdtls.setup").find_root({ ".gradlew", ".git", "mvnw", "pom.xml" }),
 	init_options = {
@@ -53,4 +68,6 @@ jdtls.start_or_attach({
 			}
 		}
 	}
-})
+}
+
+jdtls.start_or_attach(jdtls_config)
