@@ -181,12 +181,12 @@ local function get_diagnostic_sign_text(sign_name)
 end
 
 local function build_status_line_diagnostics()
-	local clients = vim.lsp.buf_get_clients()
+	local clients = vim.lsp.get_clients()
 	if #clients == 0 then
 		return ""
 	end
 	local output = " |"
-	for _, lsp in pairs(vim.lsp.buf_get_clients()) do
+	for _, lsp in pairs(clients) do
 		output = output .. string.format(" %s", lsp.name)
 	end
 	local diag = vim.diagnostic
