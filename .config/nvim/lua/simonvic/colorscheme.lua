@@ -150,9 +150,12 @@ local function buildGroups()
 		WarningMsg                         = { fg = p.warn },
 
 		------------------------------------------------------------------------ diff
-		DiffAdd                            = { bg = p.added, },
-		DiffChange                         = { bg = p.changed, },
-		DiffDelete                         = { bg = p.deleted, },
+		Added                              = { bg = p.added, },
+		Changed                            = { bg = p.changed, },
+		Removed                            = { bg = p.deleted, },
+		DiffAdd                            = { link = "Added" },
+		DiffChange                         = { link = "Changed" },
+		DiffDelete                         = { link = "Removed" },
 
 		------------------------------------------------------------------------ signs & diagnostics
 		DiagnosticError                    = {},
@@ -262,6 +265,7 @@ local function buildGroups()
 		NeoTreeTabActive                   = { link = "TabLineSel" },
 		NeoTreeTabSeparatorInactive        = { bg = p.zdepth_0, fg = p.zdepth_0 },
 		NeoTreeTabSeparatorActive          = { bg = p.zdepth_1, fg = p.zdepth_1 },
+		NeoTreeTitleBar                    = { link = "WinBar" },
 
 		------------------------------------------------------------------------ Scrollbar
 		-- These colors are read from the scrollbar plugin config
