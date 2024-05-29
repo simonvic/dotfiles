@@ -1,7 +1,7 @@
 return function()
 	vim.g.neo_tree_remove_legacy_commands = true
 	local keybindings = require("simonvic.keybindings")
-
+	local diag_signs = require("simonvic.signs").diagnostic
 	require("neo-tree").setup({
 		close_if_last_window = false,
 		source_selector = {
@@ -66,6 +66,20 @@ return function()
 					conflict  = "",
 				}
 			},
+			diagnostics = {
+				symbols = {
+					error = diag_signs.DiagnosticSignError.text,
+					warn  = diag_signs.DiagnosticSignWarn.text,
+					info  = diag_signs.DiagnosticSignInfo.text,
+					hint  = diag_signs.DiagnosticSignHint.text,
+				},
+				highlights = {
+					error = diag_signs.DiagnosticSignError.texthl,
+					warn  = diag_signs.DiagnosticSignWarn.texthl,
+					info  = diag_signs.DiagnosticSignInfo.texthl,
+					hint  = diag_signs.DiagnosticSignHint.texthl,
+				},
+			}
 		},
 		nesting_rules = {},
 		window = {
