@@ -109,6 +109,7 @@ zstyle ':completion:*' max-errors 2
 zstyle ':completion:*' menu select=2
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
 zstyle ':completion:*' special-dirs true
+zstyle ':completion:*:processes' command 'ps --forest --sort=+pid a o pid,user,%cpu,%mem,cmd'
 zstyle :compinstall filename '$HOME/.zshrc'
 
 
