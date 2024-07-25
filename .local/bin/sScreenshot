@@ -19,7 +19,7 @@ notificationSound=/usr/share/sounds/freedesktop/stereo/screen-capture.oga
 notificationUrgency=normal
 notificationTimeoutMS=2000
 
-tempScreenshotFile=/tmp/simonvic/sScreenshot/temp.png
+tempScreenshotFile=/tmp/simonvic/sScreenshot/$(date +%Y-%m-%d_%H-%M-%S).png
 
 # True to automatically copy the screenshot to the clipboard
 autoCopy=true
