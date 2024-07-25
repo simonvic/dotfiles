@@ -17,6 +17,9 @@
 ###############################################################################
 #                                                                       STARTUP
 
+# Notification deamon
+exec --no-startup-id dunst
+
 # Numlock enable
 exec --no-startup-id numlockx
 
