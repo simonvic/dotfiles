@@ -1,6 +1,7 @@
 return function()
 	vim.g.neo_tree_remove_legacy_commands = true
 	local keybindings = require("simonvic.keybindings")
+	local signs = require("simonvic.signs").plugins.neotree
 	local diag_signs = require("simonvic.signs").diagnostic
 	require("neo-tree").setup({
 		close_if_last_window = false,
@@ -8,9 +9,9 @@ return function()
 			winbar = true,
 			content_layout = "center",
 			sources = {
-				{ source = "filesystem", display_name = "󰉓", },
-				{ source = "buffers", display_name = "󰈢", },
-				{ source = "git_status", display_name = "󰊢", },
+				{ source = "filesystem", display_name = signs.sources.filesystem, },
+				{ source = "buffers",    display_name = signs.sources.buffers, },
+				{ source = "git_status", display_name = signs.sources.git_status, },
 			},
 			separator = { left = "", right = "" },
 			separator_active = nil,
@@ -25,25 +26,25 @@ return function()
 				indent_size = 2,
 				padding = 1,
 				with_markers = true,
-				indent_marker = "│",
-				last_indent_marker = "└",
+				indent_marker = signs.indent_marker,
+				last_indent_marker = signs.last_indent_marker,
 				highlight = "NeoTreeIndentMarker",
 				with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-				expander_collapsed = "",
-				expander_expanded = "",
+				expander_collapsed = signs.expander_collapsed,
+				expander_expanded = signs.expander_expanded,
 				expander_highlight = "NeoTreeExpander",
 			},
 			icon = {
-				folder_closed = "",
-				folder_open = "",
-				folder_empty = "",
+				folder_closed = signs.icon.folder_closed,
+				folder_open = signs.icon.folder_open,
+				folder_empty = signs.icon.folder_empty,
 				-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
 				-- then these will never be used.
-				default = "",
+				default = signs.icon.default,
 				highlight = "NeoTreeFileIcon"
 			},
 			modified = {
-				symbol = "+",
+				symbol = signs.modified,
 				highlight = "NeoTreeModified",
 			},
 			name = {
@@ -52,19 +53,7 @@ return function()
 				highlight = "NeoTreeFileName",
 			},
 			git_status = {
-				symbols = {
-					-- Change type
-					added     = "",
-					modified  = "",
-					deleted   = "",
-					renamed   = "",
-					-- Status type
-					untracked = "",
-					ignored   = "",
-					unstaged  = "", -- "",
-					staged    = "",
-					conflict  = "",
-				}
+				symbols = signs.git_status
 			},
 			diagnostics = {
 				symbols = {

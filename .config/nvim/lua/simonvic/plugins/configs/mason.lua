@@ -2,11 +2,7 @@ return function()
 	require("mason").setup({
 		ui = {
 			border = "rounded",
-			icons = {
-				package_installed = "✓",
-				package_uninstalled = "·",
-				package_pending = "↻",
-			},
+			icons = require("simonvic.signs").plugins.mason,
 		}
 	})
 end

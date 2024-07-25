@@ -16,12 +16,7 @@ return function()
 		close_automatic_events = {},
 		keymaps = keybindings.plugins.aerial,
 		show_guides = true,
-		guides = {
-			mid_item = "├ ",
-			last_item = "└ ",
-			nested_top = "│ ",
-			whitespace = "  ",
-		},
+		guides = require("simonvic.signs").plugins.aerial,
 		nav = {
 			keymaps = keybindings.plugins.aerial_nav,
 			win_opts = {

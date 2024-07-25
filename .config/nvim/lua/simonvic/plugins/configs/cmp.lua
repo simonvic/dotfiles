@@ -1,10 +1,11 @@
 return function()
-	local snippet = require("luasnip")
+	local snippet = require("luasnip") -- TODO: replace with vim.snippet
 	local lspkind = require("lspkind")
 	local cmp = require("cmp")
 	cmp.setup({
 		snippet = {
 			expand = function(args)
+				-- vim.snippet.expand(args.body)
 				snippet.lsp_expand(args.body)
 			end,
 		},
@@ -33,33 +34,7 @@ return function()
 				maxwidth = 50,
 				ellipsis_char = '…',
 				show_labelDetails = true,
-				symbol_map = {
-					Text = "󰉿",
-					Method = "󰆧",
-					Function = "󰊕",
-					Constructor = "",
-					Field = "",
-					Variable = "󰀫",
-					Class = "",
-					Interface = "",
-					Module = "",
-					Property = "",
-					Unit = "󰑭",
-					Value = "󰎠",
-					Enum = "",
-					Keyword = "",
-					Snippet = "",
-					Color = "",
-					File = "",
-					Reference = "󰈇",
-					Folder = "󰉋",
-					EnumMember = "",
-					Constant = "󰏿",
-					Struct = "󰙅",
-					Event = "",
-					Operator = "",
-					TypeParameter = "",
-				},
+				symbol_map = require("simonvic.signs").plugins.cmp,
 				-- before = function(entry, vim_item)
 				-- 	vim_item.menu = string.sub(vim_item.menu, 1, 20)
 				-- 	return vim_item
@@ -100,6 +75,11 @@ return function()
 			end, { "i", "c" }),
 			["<CR>"] = cmp.mapping.confirm({ select = false }),
 			["<Tab>"] = cmp.mapping(function(fallback)
+				-- if vim.snippet.active({ direction = 1 }) then
+				-- 	vim.snippet.jump(1)
+				-- else
+				-- 	fallback()
+				-- end
 				if snippet.in_snippet() and snippet.jumpable(1) then
 					snippet.jump(1)
 				else
@@ -107,6 +87,11 @@ return function()
 				end
 			end, { "i", "s", }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
+				-- if vim.snippet.active({direction = -1}) then
+				-- 	vim.snippet.jump(-1)
+				-- else
+				-- 	fallback()
+				-- end
 				if snippet.in_snippet() and snippet.jumpable(-1) then
 					snippet.jump(-1)
 				else

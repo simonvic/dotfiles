@@ -2,11 +2,7 @@ return function()
 	local dapui = require("dapui")
 	dapui.setup({
 		mappings = require("simonvic.keybindings").plugins.dapui,
-		icons = {
-			expanded = "",
-			collapsed = "",
-			current_frame = ""
-		},
+		icons = require("simonvic.signs").plugins.dapui,
 		layouts = {
 			{
 				position = "bottom",

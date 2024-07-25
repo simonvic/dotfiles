@@ -9,7 +9,7 @@ return function()
 			css      = false,
 			css_fn   = true,
 			mode     = "virtualtext",
-			virtualtext = "██",
+			virtualtext = require("simonvic.signs").plugins.colorizer.virtualtext,
 		}
 	})
 end

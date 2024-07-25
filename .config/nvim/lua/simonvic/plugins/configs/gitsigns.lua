@@ -3,8 +3,6 @@ return function()
 		preview_config = {
 			border = "rounded",
 		},
-		signs = {
-			changedelete = { text = "┣"},
-		},
+		signs = require("simonvic.signs").plugins.gitsigns,
 	})
 end
