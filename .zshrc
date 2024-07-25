@@ -93,6 +93,11 @@ fi
 autoload -U select-word-style
 select-word-style bash
 
+# Edit command line with $EDITOR
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
 ################################################################################ COMPLETITION
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*' # Set completition to be case insensitive
