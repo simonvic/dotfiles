@@ -44,12 +44,11 @@ exec_always --no-startup-id sPolybarctl launch
 # [WIP] Enable autohide for the selected bar 
 # exec_always sPolybarctl autohide main
 
+# Use Headset Mic as default input source
+exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
 
 # Always mute microphone at startup, you know... FBI and stuff
 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
-
-# Use Headset Mic as default input source
-exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
 
 
 ###############################################################################
