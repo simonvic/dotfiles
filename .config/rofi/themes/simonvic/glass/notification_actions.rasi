@@ -22,5 +22,5 @@ element-icon {
 }
 
 inputbar {
-	enabled: false;
+	enabled: true;
 }
