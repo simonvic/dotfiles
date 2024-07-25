@@ -72,7 +72,7 @@ function captureScreenshot() {
 	[[ "$1" == "area" ]] && mode="--select"
 	scrot --silent --overwrite "$tempScreenshotFile" $mode
 	[[ $? != 0 ]] && return
-	local body; body="$(file $tempScreenshotFile | cut -d, -f2)"
+	local body; body=$(file "$tempScreenshotFile" | cut -d, -f2)
 	if [[ "$autoCopy" == true ]]; then
 		copyScreenshot
 		body+=" | Copied to clipboard"
