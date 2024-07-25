@@ -30,7 +30,7 @@
 	#####################################################
 	## UI
 	frame_width = 0
-	frame_color = "#N"
+	frame_color = "#000000"
 	transparency = 0
 
 	background = "#00000055"
