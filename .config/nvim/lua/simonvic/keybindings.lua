@@ -121,6 +121,10 @@ local keybindings = {
 	leader = " ",
 	localleader = " ",
 	-- { modes, lhs,              rhs,                                  options },
+	{ n___, "-",                "/",                                    { desc = "Search forward" } },
+	{ n___, "_",                "?",                                    { desc = "Search backward" } },
+	{ n___, "è",                "[",                                    { desc = "Backward [ alias", remap = true } },
+	{ n___, "+",                "]",                                    { desc = "Forward ] alias", remap = true } },
 	--------------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",            cmd("write"),                           { desc = "Save", silent = true } },
 	{ nvi_, "<C-z>",            cmd("undo"),                            { desc = "Undo", silent = true } },
@@ -448,7 +452,7 @@ M.apply = function()
 	vim.g.mapleader = keybindings.leader
 	vim.g.maplocalleader = keybindings.localleader
 	M.set(keybindings)
-	M.add_lang_map(langmaps.italian141)
+	-- M.add_lang_map(langmaps.italian141)
 	-- M.add_lang_map(langmaps.custom)
 	-- M.add_lang_map(langmaps.eretic)
 end
