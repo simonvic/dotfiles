@@ -115,6 +115,7 @@ local function buildGroups()
 		LineNr                             = { bg = p.zdepth_1, fg = p.text_dark },
 		SignColumn                         = { bg = p.zdepth_1, fg = p.text_xdark },
 		FoldColumn                         = { bg = p.zdepth_1, fg = p.text_xdark },
+		QuickFixLine                       = { link = "PmenuSel" },
 
 		------------------------------------------------------------------------ text
 		Title                              = { fg = p.text_light, bold = true },
@@ -244,7 +245,7 @@ local function buildGroups()
 		DapUIWatchesValue                  = { fg = p.text },
 		DapUIWatchesError                  = { fg = p.error },
 		DapUIWatchesEmpty                  = { fg = p.hint },
-		DapUIModifiedValue                 = { bg = p.changed, fg = p.text, bold = true },
+		DapUIModifiedValue                 = { bg = p.changed, fg = p.text_xxxdark, bold = true },
 		DapUIScope                         = { fg = p.text, bold = true },
 		DapUISource                        = { fg = p.text },
 		DapUIDecoration                    = { fg = p.text, bold = true },
