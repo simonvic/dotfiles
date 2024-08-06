@@ -40,8 +40,8 @@ ZSH_S_COLOR_VCS_BRANCH='229'
 ZSH_S_DIRECTORY_FORMAT="%~"
 
 # Char to be shown at the start of the command
-ZSH_S_PROMPT_CHAR_ROOT='#'
-ZSH_S_PROMPT_CHAR_USER='󰅂'
+ZSH_S_PROMPT_CHAR_ROOT='#'
+ZSH_S_PROMPT_CHAR_USER=''
 
 # strftime format
 ZSH_S_DATETIME_FORMAT="%H:%M:%S"
