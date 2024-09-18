@@ -70,4 +70,38 @@ local jdtls_config = {
 	}
 }
 
+
+local pick_many = function(items, prompt, label_f, opts)
+	if not items or #items == 0 then
+		return {}
+	end
+
+	local choices = {}
+	for i, item in pairs(items) do
+		table.insert(choices, label_f(item))
+	end
+
+	local co = coroutine.running()
+	vim.ui.select(choices, { prompt = prompt, },
+		function(choice, index)
+			vim.notify("accepted")
+			local qf = vim.fn.getqflist()
+			local qf_text = {}
+			for i, qf_entry in pairs(qf) do
+				table.insert(qf_text, qf_entry.text)
+			end
+			local selected_items = {}
+			for i, item in pairs(items) do
+				if vim.list_contains(qf_text, label_f(item)) then
+					table.insert(selected_items, item)
+				end
+			end
+			coroutine.resume(co, selected_items)
+		end
+	)
+	return coroutine.yield()
+end
+
+require("jdtls.ui").pick_many = pick_many
+
 jdtls.start_or_attach(jdtls_config)

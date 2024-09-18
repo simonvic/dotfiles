@@ -7,6 +7,7 @@ return function()
 					["<esc>"] = actions.close,
 					["<C-h>"] = actions.select_horizontal,
 					["<C-v>"] = actions.select_vertical,
+					["<A-CR>"] = actions.send_selected_to_qflist,
 				}
 			}
 		},
