@@ -126,6 +126,7 @@ local function buildGroups()
 		NonText                            = { fg = p.text_xxdark, bold = true },
 		SpecialKey                         = { bg = p.text_xxxdark, fg = p.text },
 		Special                            = { link = "Keyword" },
+		helpSpecial                        = { link = "Special" },
 		MatchParen                         = { bg = p.text_xxxdark, bold = true },
 		Folded                             = { bg = p.text_xxxdark, fg = p.text_xlight },
 		Directory                          = { link = "Normal" },
@@ -159,6 +160,7 @@ local function buildGroups()
 		DiffDelete                         = { link = "Removed" },
 
 		------------------------------------------------------------------------ signs & diagnostics
+		DiagnosticOk                       = {},
 		DiagnosticError                    = {},
 		DiagnosticWarn                     = {},
 		DiagnosticInfo                     = {},
