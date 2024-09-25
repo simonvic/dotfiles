@@ -16,9 +16,6 @@ local _vi_ = { "v", "i" }
 local function cmd(command) return "<Cmd>" .. command .. "<CR>" end
 local function cmd_esc(command) return "<Cmd>" .. command .. "<CR><ESC>" end
 
-local terminal = "<A-ò>"; -- just because accented chars mess up the formatter
-local terminal_float = "<A-ç>";
-
 local function breakpoing_log()
 	vim.ui.input({ prompt = "Log point message" }, function(input)
 		require("dap").set_breakpoint(nil, nil, input)
@@ -244,16 +241,16 @@ local keybindings = {
 	{ n_i_, "<A-PageUp>",       cmd("bnext"),                           { desc = "Next buffer" } },
 	{ n_i_, "<A-PageDown>",     cmd("bprevious"),                       { desc = "Previous buffer" } },
 	{ n_i_, "<C-t>",            cmd("tabnew"),                          { desc = "New tab" } },
-	{ n_i_, "<F28>",            cmd("tabclose"),                        { desc = "Close tab [Ctrl + F4]" } },
-	{ n_i_, "<F40>",            cmd("tabdo close"),                     { desc = "Close all tabs [Ctrl + Shift + F4]" } },
+	{ n_i_, {"<C-F4>","<F28>"},   cmd("tabclose"),                        { desc = "Close tab" } },
+	{ n_i_, {"<C-S-F4>","<F40>"}, cmd("tabdo close"),                     { desc = "Close all tabs" } },
 	{ n_i_, "<C-PageUp>",       cmd("tabprevious"),                     { desc = "Previous tab" } },
 	{ n_i_, "<C-PageDown>",     cmd("tabnext"),                         { desc = "Next tab" } },
 	{ n_i_, "<C-S-PageUp>",     cmd("-tabmove"),                        { desc = "Move tab to left" } },
 	{ n_i_, "<C-S-PageDown>",   cmd("+tabmove"),                        { desc = "Move tab to right" } },
 	{ n__t, "<A-\\>",           cmd("Neotree focus"),                   { desc = "Focus filetree" } },
 	{ __i_, "<A-\\>",           cmd_esc("Neotree focus"),               { desc = "Focus filetree" } },
-	{ n__t, terminal,           cmd("ToggleTerm direction=horizontal"), { desc = "Toggle dropdown terminal" } },
-	{ n__t, terminal_float,     cmd("ToggleTerm direction=float"),      { desc = "Toggle floating terminal" } },
+	{ n__t, "<A-ò>",            cmd("ToggleTerm direction=horizontal"), { desc = "Toggle dropdown terminal" } },
+	{ n__t, { "<A-S-ò>", "<A-ç>" }, cmd("ToggleTerm direction=float"),      { desc = "Toggle floating terminal" } },
 	{ ___t, "<Esc>",            "<C-\\><C-n>",                          { desc = "Exit terminal mode" } },
 	{ n_i_, "<C-p>",            find_files,                             { desc = "Find files" } },
 	{ n___, "<leader><leader>", find_files,                             { desc = "Find files" } },
@@ -273,20 +270,20 @@ local keybindings = {
 	{ n___, "<Leader>un",       toggle_relative_number,                 { desc = "Toggle number column" } },
 	{ n___, "<Leader>uh",       toggle_inlay_hints,                     { desc = "Toggle lsp inlay hints" } },
 	{ nvi_, "<A-9>",            cmd("AerialToggle"),                    { desc = "Toggle symbols outline" } },
-	{ nvi_, "<A-)>",            cmd("AerialNavToggle"),                 { desc = "Toggle symbols outline floating navigation" } },
+	{ nvi_, { "<A-S-9>", "<A-)>" }, cmd("AerialNavToggle"),                 { desc = "Toggle symbols outline floating navigation" } },
 	{ n___, "<leader>S",        cmd("AerialNavToggle"),                 { desc = "Toggle symbols outline floating navigation" } },
 	---------------------------------------------------------------------------- DEBUGGING
-	{ n___, "<F7>",             cmd("DapContinue"),                     { desc = "DAP Continue [F7]" } },
-	{ n___, "<F55>",            cmd("DapTerminate"),                    { desc = "DAP Terminate [Alt + F7]" } },
-	{ n___, "<F19>",            dap_run_last,                           { desc = "DAP Run last [Shift + F7]" } },
-	{ n___, "<F8>",             cmd("DapStepOver"),                     { desc = "DAP Step over [F8]" } },
-	{ n___, "<F32>",            cmd("DapStepInto"),                     { desc = "DAP Step into [Ctrl + F8]" } },
-	{ n___, "<F20>",            cmd("DapStepOut"),                      { desc = "DAP Step out [Shift + F8]" } },
-	{ n___, "<F9>",             cmd("DapToggleBreakpoint"),             { desc = "DAP Breakpoint [F9]" } },
-	{ n___, "<F33>",            breakpoint_condition,                   { desc = "DAP Conditional breakpoint [Ctrl + F9]" } },
-	{ n___, "<F57>",            breakpoing_log,                         { desc = "DAP Log breakpoint [Alt + F9]" } },
-	{ n___, "<F21>",            breapoint_condition_log,                { desc = "DAP Conditional log breakpoint [Shift + F9]" } },
-	{ n___, "<A-C-q>",          inspect_variable,                       { desc = "DAP Inspect variable" } },
+	{ n___, "<F7>",                 cmd("DapContinue"),                     { desc = "DAP Continue" } },
+	{ n___, { "<A-F7>", "<F55>" },  cmd("DapTerminate"),                    { desc = "DAP Terminate" } },
+	{ n___, { "<S-F7>", "<F19>" },  dap_run_last,                           { desc = "DAP Run last" } },
+	{ n___, "<F8>",                 cmd("DapStepOver"),                     { desc = "DAP Step over" } },
+	{ n___, { "<C-F8>", "<F32>" },  cmd("DapStepInto"),                     { desc = "DAP Step into" } },
+	{ n___, { "<S-F8>", "<F20>" },  cmd("DapStepOut"),                      { desc = "DAP Step out" } },
+	{ n___, "<F9>",                 cmd("DapToggleBreakpoint"),             { desc = "DAP Breakpoint" } },
+	{ n___, { "<C-F9>", "<F33>" },  breakpoint_condition,                   { desc = "DAP Conditional breakpoint" } },
+	{ n___, { "<A-F9>", "<F57>" },  breakpoing_log,                         { desc = "DAP Log breakpoint" } },
+	{ n___, { "<S-F9>", "<F21>" },  breapoint_condition_log,                { desc = "DAP Conditional log breakpoint" } },
+	{ n___, "<A-C-q>",              inspect_variable,                       { desc = "DAP Inspect variable" } },
 	---------------------------------------------------------------------------- PLUGINS
 	plugins = {
 		------------------------------------------------------------------------ TREESITTER
@@ -356,13 +353,13 @@ local keybindings = {
 		},
 		------------------------------------------------------------------------ NVIM-JDTLS
 		jdtls              = {
-			{ n_i_, "<A-i>",   jdtls_organize_imports,     { desc = "Organize imports" } },
-			{ n_i_, "<F6>",    jdtls_pick_tests,           { desc = "Pick test [F6]" } },
-			{ n_i_, "<F18>",   jdtls_test_class,           { desc = "Test class [Shift + F6]" } },
-			{ n_i_, "<F30>",   jdtls_test_method,          { desc = "Test method [Ctrl + F6]" } },
-			{ n_i_, "<F43>",   jdtls_setup_debug_config,   { desc = "Setup debug launch config [Ctrl + Shift + F7]" } },
-			{ n_i_, "<F31>",   cmd("JdtUpdateHotcode"),    { desc = "Hotcode replace [Ctrl + F7]" } },
-			{ n_i_, "<C-A-b>", jdtls_super_implementation, { desc = "Go to super implementation" } },
+			{ n_i_, "<A-i>",    jdtls_organize_imports,     { desc = "Organize imports" } },
+			{ n_i_, "<F6>",     jdtls_pick_tests,           { desc = "Pick test" } },
+			{ n_i_, {"<S-F6>", "<F18>"},   jdtls_test_class,           { desc = "Test class" } },
+			{ n_i_, {"<C-F6>", "<F30>"},   jdtls_test_method,          { desc = "Test method" } },
+			{ n_i_, {"<C-S-F7>", "<F43>"}, jdtls_setup_debug_config,   { desc = "Setup debug launch config" } },
+			{ n_i_, {"<C-F7>", "<F31>"},   cmd("JdtUpdateHotcode"),    { desc = "Hotcode replace" } },
+			{ n_i_, "<C-A-b>",  jdtls_super_implementation, { desc = "Go to super implementation" } },
 		},
 		------------------------------------------------------------------------ DAPUI
 		dapui              = {
@@ -435,7 +432,13 @@ M = keybindings
 
 M.set = function(bindings)
 	for _, keybind in ipairs(bindings) do
-		vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
+		if type(keybind[2]) == "string" then
+			vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
+		else
+			for _, mapping in ipairs(keybind[2]) do
+				vim.keymap.set(keybind[1], mapping, keybind[3], keybind[4] or {})
+			end
+		end
 	end
 end
 
