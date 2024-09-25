@@ -8,7 +8,8 @@ local cmd = { "/usr/bin/jdtls" }
 -- Lombok support
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
 if vim.fn.empty(jars_lombok) == 0 then
-	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok })
+	jars_lombok = vim.split(jars_lombok, "\n")
+	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok[#jars_lombok] })
 end
 
 local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
