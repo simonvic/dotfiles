@@ -1,4 +1,5 @@
 -- TODO: ts textobject movement repeat
+
 M = {}
 local vim = vim
 local lsp = vim.lsp.buf
@@ -88,6 +89,21 @@ local function jdtls_test_class() require("jdtls").test_class() end
 local function jdtls_test_method() require("jdtls").test_nearest_method() end
 local function jdtls_setup_debug_config() require("jdtls.dap").setup_dap_main_class_configs() end
 local function jdtls_super_implementation() require("jdtls").super_implementation() end
+local function cursors_add_down() require("multicursor-nvim").addCursor("j") end
+local function cursors_add_up() require("multicursor-nvim").addCursor("k") end
+local function cursors_add_word() require("multicursor-nvim").addCursor("*") end
+local function cursors_add_selection() require("multicursor-nvim").matchAddCursor(1) end
+local function cursors_skip_selection() require("multicursor-nvim").matchSkipCursor(1) end
+local function cursors_align() require("multicursor-nvim").alignCursors() end
+local function cursors_toggle()
+	local mc = require("multicursor-nvim")
+	if mc.cursorsEnabled() then
+		mc.disableCursors()
+	else
+		mc.enableCursors()
+	end
+end
+local function cursors_clear() require("multicursor-nvim").clearCursors() end
 
 local langmaps = {
 	-- from, to, bidirectional
@@ -365,6 +381,18 @@ local keybindings = {
 		align              = {
 			start = " a",
 			start_with_preview = " A",
+		},
+		------------------------------------------------------------------------ MULTICURSOR
+		multicursor        = {
+			-- TODO: sort out leader
+			{ n___, { " cj", "<C-J>", "<C-S-j>" }, cursors_add_down,       { desc = "Add cursor and move down" } },
+			{ n___, { " ck", "<C-K>", "<C-S-K>" }, cursors_add_up,         { desc = "Add cursor and move up" } },
+			{ n___, { " cw", "<C-*>", },           cursors_add_word,       { desc = "Add cursor and do * movement" } },
+			{ _v__, { " cn", },                    cursors_add_selection,  { desc = "Add cursor and move to next selection" } },
+			{ _v__, { " cs", },                    cursors_skip_selection, { desc = "Move to next selection" } },
+			{ n___, { " ca", "<C-S-A>" },          cursors_align,          { desc = "Align cursors" } },
+			{ n___, { " ct", "<C-S-X>" },          cursors_toggle,         { desc = "Toggle cursors" } },
+			{ n___, { " cd", "<C-S-D>" },          cursors_clear,          { desc = "Clear cursors" } },
 		},
 		------------------------------------------------------------------------ AERIAL
 		aerial             = {

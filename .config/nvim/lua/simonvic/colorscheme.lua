@@ -288,6 +288,12 @@ local function buildGroups()
 		NoiceCursor                        = { bg = p.accent },
 		NoiceMini                          = { bg = p.zdepth_2 },
 
+		------------------------------------------------------------------------ Multicursor
+		MultiCursorCursor                  = { bg = p.accent, fg = "black", underdotted = true, sp = p.accent_xxdark },
+		MultiCursorVisual                  = { link = "Visual" },
+		MultiCursorDisabledCursor          = { bg = p.accent_xdark, underdotted = true, sp = p.accent_xxdark },
+		MultiCursorDisabledVisual          = { link = "Visual" },
+
 		------------------------------------------------------------------------ TREESITTER GROUPS
 		["@comment.todo"]                  = { link = "Todo" },
 		["@comment.error"]                 = { fg = p.error, bold = true },
