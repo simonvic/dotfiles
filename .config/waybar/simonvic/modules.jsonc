@@ -1,0 +1,650 @@
+// TODO: increase intervals to reasonable values
+{
+	"user": {
+		"icon": true,
+		"format": " {user}  {work_H}:{work_M}"
+	},
+	"sway/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": false,
+		"warp-on-scroll": false,
+		"format": "{icon}{name}",
+		"format-icons": {
+			"1": "",
+			"2": "",
+			"3": "",
+			"4": "",
+			"5": "",
+			"6": "",
+			"7": "",
+			"8": "",
+			"9": "",
+			"10": "",
+			"urgent": "<span color='#F0544C'></span>"
+			// "focused": "",
+			// "default": ""
+		}
+	},
+	"sway/language": {
+		"format": "{short}", // TODO: bugged
+		"tooltip-format": "{long}"
+	},
+	"sway/mode": {
+		"format": "{}"
+	},
+	"sway/window": {
+		"format": "{title}{shell}",
+		"icon": true,
+		"icon-size": 22
+	},
+	"sway/scratchpad": {
+		"format": "{icon} {count}",
+		"show-empty": false,
+		"format-icons": [
+			"",
+			""
+		],
+		"tooltip": true,
+		"tooltip-format": "{app}: {title}"
+	},
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"scrolllock": true,
+		"format": "{icon} {name}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
+	},
+	"keyboard-state#capslock": {
+		"numlock": false,
+		"capslock": true,
+		"format": "{icon}",
+		"format-icons": {
+			"locked": "󰪛",
+			"unlocked": ""
+		}
+	},
+	"keyboard-state#numlock": {
+		"numlock": true,
+		"capslock": false,
+		"format": "{icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": "󰘜"
+		}
+	},
+	"keyboard-state#scrolllock": {
+		"numlock": false,
+		"capslock": false,
+		"scrolllock": true,
+		"format": "{icon}",
+		"format-icons": {
+			"locked": "󱅜",
+			"unlocked": "↕"
+		}
+	},
+	"mpd": {
+		"format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+		"format-disconnected": "Disconnected ",
+		"format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+		"unknown-tag": "N/A",
+		"interval": 5,
+		"consume-icons": {
+			"on": "󰩫"
+		},
+		"random-icons": {
+			"off": "<span color=\"#f53c3c\"></span> ",
+			"on": "󰒝"
+		},
+		"repeat-icons": {
+			"on": "󰑖"
+		},
+		"single-icons": {
+			"on": "󰑘"
+		},
+		"state-icons": {
+			"paused": "󰏤",
+			"playing": "󰐊"
+		},
+		"tooltip-format": "MPD (connected)",
+		"tooltip-format-disconnected": "MPD (disconnected)"
+	},
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "󰅶",
+			"deactivated": "󰛊" // "󰛊"
+		}
+	},
+	"tray": {
+		"icon-size": 16,
+		"spacing": 10
+	},
+	"clock": {
+		"interval": 60,
+		// "timezone": "Europe/Rome",
+		"locale": "it_IT.UTF-8",
+		"format": "{:%H:%M}",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"format-alt": "󰅐 {:%H:%M | 󰸗 %A, %d %B}",
+		"calendar": {
+			"mode": "month",
+			"format": {
+				"months": "<b>{}</b>",
+				"days": "{}",
+				"weeks": "{}",
+				"weekdays": "<b>{}</b>",
+				"today": "<span color='#F0544C'>{}</span>"
+			}
+		}
+	},
+	"clock#extended": {
+		"interval": 1,
+		// "timezone": "Europe/Rome",
+		"locale": "it_IT.UTF-8",
+		"format": "󰅐 {:%H:%M:%S | 󰸗 %A, %d %B(%m) %Y}",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+			"mode": "year",
+			"mode-mon-col": 3,
+			"format": {
+				"months": "<b>{}</b>",
+				"days": "{}",
+				"weeks": "{}",
+				"weekdays": "<b>{}</b>",
+				"today": "<span color='#F0544C'>{}</span>"
+			}
+		}
+	},
+	"cpu": {
+		"interval": 1,
+		"format": "󰓅 {usage}% {icon0}{icon1}{icon2}{icon3}",
+		"format-icons": [
+			"▁",
+			"▂",
+			"▃",
+			"▄",
+			"▅",
+			"▆",
+			"▇",
+			"█"
+		],
+		"tooltip": true
+	},
+	"memory": {
+		"format": "󰍛 {used} GB {icon}",
+		"format-icons": [
+			"<span color='#666666'>||||||||||</span>",
+			"|<span color='#666666'>|||||||||</span>",
+			"||<span color='#666666'>||||||||</span>",
+			"|||<span color='#666666'>|||||||</span>",
+			"||||<span color='#EDD311'>|</span><span color='#666666'>|||||</span>",
+			"||||<span color='#EDD311'>||</span><span color='#666666'>||||</span>",
+			"||||<span color='#EDD311'>||</span><span color='#ED9111'>|</span><span color='#666666'>|||</span>",
+			"||||<span color='#EDD311'>||</span><span color='#ED9111'>||</span><span color='#666666'>||</span>",
+			"||||<span color='#EDD311'>||</span><span color='#ED9111'>||</span><span color='#FF4543'>|</span><span color='#666666'>|</span>",
+			"||||<span color='#EDD311'>||</span><span color='#ED9111'>||</span><span color='#FF4543'>||</span>"
+		]
+	},
+	"memory#swap": {
+		"format": "󰾴 {swapPercentage}%"
+	},
+	"temperature": {
+		"critical-threshold": 80,
+		// "format-critical": "{temperatureC}°C {icon}",
+		"format": "{icon} {temperatureC}°C",
+		"format-icons": [
+			"󱃃",
+			"󱃃",
+			"󱃃",
+			"󱃂",
+			"󰸁"
+		]
+	},
+	"backlight": {
+		// "device": "acpi_video1",
+		"format": "{icon}",
+		"format-icons": [
+			"󰃞",
+			"󰃟",
+			"󰃟",
+			"󰃝",
+			"󰃝",
+			"󰃠"
+		],
+		"reverse-scrolling": true
+	},
+	"backlight#extended": {
+		"format": "{icon} {percent}%",
+		"format-icons": [
+			"󰃞",
+			"󰃟",
+			"󰃟",
+			"󰃝",
+			"󰃝",
+			"󰃠"
+		],
+		"reverse-scrolling": true
+	},
+	"battery": {
+		"interval": 1,
+		"states": {
+			"good": 80,
+			"warning": 33,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}%",
+		"format-plugged": "󰂄",
+		"format-alt": "{icon} {capacity}% <small>{time} {power:0.3f}W</small>",
+		"format-time": "{H}:{m}",
+		// "format-charging": "{icon} {capacity}%",
+		// "format-discharging": "{icon} {capacity}%",
+		// "format-good": "{icon} {capacity}%",
+		// "format-full": "{icon} {capacity}%",
+		"tooltip-format": "{capacity}% {time}\n󱐋 {power} W\n {cycles} |  {health} %",
+		"format-icons": {
+			"charging": [
+				"󰢜",
+				"󰂆",
+				"󰂇",
+				"󰂈",
+				"󰢝",
+				"󰂉",
+				"󰢞",
+				"󰂊",
+				"󰂋",
+				"󰂅"
+			],
+			"discharging": [
+				"󰁺",
+				"󰁻",
+				"󰁼",
+				"󰁽",
+				"󰁾",
+				"󰁿",
+				"󰂀",
+				"󰂁",
+				"󰂂",
+				"󰁹"
+			]
+		}
+	},
+	"battery#extended": {
+		"interval": 1,
+		"states": {
+			"good": 80,
+			"warning": 33,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}% <small>{time} 󱐋{power:0.3f}W</small>",
+		"format-plugged": "󰂄",
+		// "format-alt": "{icon} {capacity}% <small>{time} {power:0.3f}W</small>",
+		"format-time": "{H}:{m}",
+		// "format-charging": "{icon} {capacity}%",
+		// "format-discharging": "{icon} {capacity}%",
+		// "format-good": "{icon} {capacity}%",
+		// "format-full": "{icon} {capacity}%",
+		"tooltip-format": "{capacity}% {time}\n󱐋 {power:0.3f} W\n {cycles} |  {health} %",
+		"format-icons": {
+			"charging": [
+				"󰢜",
+				"󰂆",
+				"󰂇",
+				"󰂈",
+				"󰢝",
+				"󰂉",
+				"󰢞",
+				"󰂊",
+				"󰂋",
+				"󰂅"
+			],
+			"discharging": [
+				"󰁺",
+				"󰁻",
+				"󰁼",
+				"󰁽",
+				"󰁾",
+				"󰁿",
+				"󰂀",
+				"󰂁",
+				"󰂂",
+				"󰁹"
+			]
+		}
+	},
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "",
+			"performance": "",
+			"balanced": "",
+			"power-saver": ""
+		}
+	},
+	"network": {
+		// "interface": "wlp2*", // (Optional) To force the use of this interface
+		"interval": 5,
+		"format-wifi": "{icon}",
+		"format-alt": "{icon} <small>󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
+		"format-ethernet": "󰈀",
+		"tooltip-format": "{ifname} {ipaddr}/{cidr}\n{icon} {signalStrength}% | 󰘊 {frequency}\n{essid}",
+		"format-linked": "{ifname} (No IP) ",
+		"format-disabled": "󰤮",
+		"format-disconnected": "󰤭",
+		"format-icons": [
+			"󰤯",
+			"󰤟",
+			"󰤢",
+			"󰤥",
+			"󰤨",
+			"󰤨"
+		]
+	},
+	"network#extended": {
+		// "interface": "wlp2*", // (Optional) To force the use of this interface
+		"interval": 1,
+		"format-wifi": "{icon} {essid} <small>{frequency} {ifname} {ipaddr} 󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
+		"format-ethernet": "󰈀 <small>{ifname} {ipaddr} 󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
+		"tooltip-format": "{ifname} {ipaddr}/{cidr}\n{icon} {signalStrength}% | 󰘊 {frequency}\n{essid}",
+		"format-linked": "{ifname} (No IP) ",
+		"format-disabled": "󰤮",
+		"format-disconnected": "󰤭",
+		"format-icons": [
+			"󰤯",
+			"󰤟",
+			"󰤢",
+			"󰤥",
+			"󰤨",
+			"󰤨"
+		]
+	},
+	"bluetooth": {
+		"format": "󰂯",
+		"format-disabled": "",
+		"format-off": "", // 󰂲"
+		"format-on": "󰂯",
+		"format-connected": "󰂱",
+		"tooltip-format": "{controller_alias} {controller_address}\n{status}",
+		"tooltip-format-connected": "{controller_alias} {controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_address} {device_alias}",
+		"format-connected-battery": "󰂱 {icon}",
+		"tooltip-format-connected-battery": "{controller_alias} {controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected-battery": "{icon} {device_battery_percentage}% {device_address} {device_alias}",
+		"format-icons": [
+			"󰤾",
+			"󰤿",
+			"󰥀",
+			"󰥁",
+			"󰥂",
+			"󰥃",
+			"󰥄",
+			"󰥅",
+			"󰥆",
+			"󰥈"
+		]
+	},
+	"bluetooth#extended": {
+		"format": "󰂯",
+		"format-disabled": "",
+		"format-off": "󰂲",
+		"format-on": "󰂯",
+		"format-connected": "󰂱",
+		"tooltip-format": "{controller_alias} {controller_address}\n{status}",
+		"tooltip-format-connected": "{controller_alias} {controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_address} {device_alias}",
+		"format-connected-battery": "󰂱 x{num_connections} {icon} {device_battery_percentage}%",
+		"tooltip-format-connected-battery": "{controller_alias} {controller_address}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected-battery": "{icon} {device_battery_percentage}% {device_address} {device_alias}",
+		"format-icons": [
+			"󰤾",
+			"󰤿",
+			"󰥀",
+			"󰥁",
+			"󰥂",
+			"󰥃",
+			"󰥄",
+			"󰥅",
+			"󰥆",
+			"󰥈"
+		]
+	},
+	"pulseaudio": {
+		"format": "{icon}{format_source}",
+		"format-muted": "󰝟{format_source}",
+		"format-bluetooth": "{icon}{format_source}",
+		"format-bluetooth-muted": "<s>{icon}</s>{format_source}", // 󰝟
+		"format-source": "  {volume}%",
+		"format-source-muted": "", //  
+		"format-icons": {
+			"default": [
+				"󰕿",
+				"󰖀",
+				"󰕾",
+				"󰕾",
+				"󱄡"
+			],
+			"headphone": [
+				"󰋋 󰕿",
+				"󰋋 󰖀",
+				"󰋋 󰕾",
+				"󰋋 󰕾",
+				"󰋋 󱄡"
+			],
+			"hands-free": [
+				"󰋋 󰕿",
+				"󰋋 󰖀",
+				"󰋋 󰕾",
+				"󰋋 󰕾",
+				"󰋋 󱄡"
+			],
+			"headset": [
+				"󰋎 󰕿",
+				"󰋎 󰖀",
+				"󰋎 󰕾",
+				"󰋎 󰕾",
+				"󰋎 󱄡"
+			],
+			"phone": [
+				" 󰕿",
+				" 󰖀",
+				" 󰕾",
+				" 󰕾",
+				" 󱄡"
+			],
+			"portable": [
+				"📾 󰕿",
+				"📾 󰖀",
+				"📾 󰕾",
+				"📾 󰕾",
+				"📾 󱄡"
+			],
+			"hifi": [
+				"󰦢 󰕿",
+				"󰦢 󰖀",
+				"󰦢 󰕾",
+				"󰦢 󰕾",
+				"󰦢 󱄡"
+			],
+			"car": [
+				" 󰕿",
+				" 󰖀",
+				" 󰕾",
+				" 󰕾",
+				" 󱄡"
+			]
+		}
+	},
+	"pulseaudio#extended": {
+		"format": "{icon} {volume}% <small>{desc}</small> {format_source}",
+		"format-muted": "󰝟 <small>{desc}</small> {format_source}",
+		"format-bluetooth": "{icon} {volume}% <small>{desc}</small> {format_source}",
+		"format-bluetooth-muted": "<s>{icon} {volume}% <small>{desc}</small></s> {format_source}", // 󰝟
+		"format-source": " {volume}%",
+		"format-source-muted": "",
+		"format-icons": {
+			"default": [
+				"󰕿",
+				"󰖀",
+				"󰕾",
+				"󰕾",
+				"󱄡"
+			],
+			"headphone": [
+				"󰋋 󰕿",
+				"󰋋 󰖀",
+				"󰋋 󰕾",
+				"󰋋 󰕾",
+				"󰋋 󱄡"
+			],
+			"hands-free": [
+				"󰋋 󰕿",
+				"󰋋 󰖀",
+				"󰋋 󰕾",
+				"󰋋 󰕾",
+				"󰋋 󱄡"
+			],
+			"headset": [
+				"󰋎 󰕿",
+				"󰋎 󰖀",
+				"󰋎 󰕾",
+				"󰋎 󰕾",
+				"󰋎 󱄡"
+			],
+			"phone": [
+				" 󰕿",
+				" 󰖀",
+				" 󰕾",
+				" 󰕾",
+				" 󱄡"
+			],
+			"portable": [
+				"📾 󰕿",
+				"📾 󰖀",
+				"📾 󰕾",
+				"📾 󰕾",
+				"📾 󱄡"
+			],
+			"hifi": [
+				"󰦢 󰕿",
+				"󰦢 󰖀",
+				"󰦢 󰕾",
+				"󰦢 󰕾",
+				"󰦢 󱄡"
+			],
+			"car": [
+				" 󰕿",
+				" 󰖀",
+				" 󰕾",
+				" 󰕾",
+				" 󱄡"
+			]
+		}
+	},
+	"disk": {
+		"interval": 300,
+		"path": "/",
+		"format": "󰋊 {percentage_used}%",
+		"tooltip-format": "{used} / {total}"
+	},
+	"disk#tmp": {
+		"interval": 60,
+		"path": "/tmp",
+		"format": "󰋊 {percentage_used}%",
+		"tooltip-format": "tmpfs {used} / {total}"
+	},
+	"group/power": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"transition-left-to-right": false
+		},
+		"modules": [
+			"custom/group-power",
+			"custom/power",
+			"custom/suspend",
+			"custom/reboot",
+			"custom/lock",
+			"custom/logout"
+		]
+	},
+	"custom/group-power": {
+		"format": "󰐦",
+		"tooltip": false
+	},
+	"custom/logout": {
+		"format": "󰗼",
+		"tooltip-format": "logout",
+		"on-click": "swaymsg exit"
+	},
+	"custom/lock": {
+		"format": "󰍁",
+		"tooltip-format": "lock",
+		"on-click": "swaylock"
+	},
+	"custom/reboot": {
+		"format": "󰜉",
+		"tooltip-format": "reboot",
+		"on-click": "reboot"
+	},
+	"custom/suspend": {
+		"format": "󰒲",
+		"tooltip-format": "suspend",
+		"on-click": "reboot"
+	},
+	"custom/power": {
+		"format": "",
+		"tooltip-format": "shutdown",
+		"on-click": "shutdown now"
+	},
+	"privacy": {
+		"icon-size": 20,
+		"modules": [
+			{
+				"type": "screenshare",
+				"tooltip": true,
+				"tooltip-icon-size": 22
+			},
+			{
+				"type": "audio-out",
+				"tooltip": true,
+				"tooltip-icon-size": 22
+			},
+			{
+				"type": "audio-in",
+				"tooltip": true,
+				"tooltip-icon-size": 22
+			}
+		]
+	},
+	"custom/aur": {
+		"interval": 600,
+		"format": " {}",
+		"return-type": "json",
+		"tooltip-format": "<tt>{alt}</tt>",
+		"exec": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(auracle outdated | wc -l)\" \"$(auracle outdated | sed 's/-> //' | column -t | tr '\n' '\r' )\"",
+		"on-click": "i3-sensible-terminal -e 'auracle outdated' --hold",
+		"on-click-right": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(auracle outdated | wc -l)\" \"$(auracle outdated | sed 's/-> //' | column -t | tr '\n' '\r' )\""
+	},
+	"custom/fan": {
+		"interval": 1,
+		"format": "󰈐 {} {alt}",
+		"return-type": "json",
+		"tooltip-format": "cpu: {}\ngpu: {alt}",
+		"exec": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(sensors | grep cpu_fan | cut -d: -f2 | tr -d ' ')\" \"$(sensors | grep gpu_fan | cut -d: -f2 | tr -d ' ')\""
+	},
+	"custom/tlp": {
+		"interval": 5,
+		"format": "{}",
+		"return-type": "json",
+		"tooltip-format": "{alt}",
+		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in AC) echo '';; AC*) echo 󰠠;; battery) echo 󰌪;; battery*) echo 󱤅;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"TLP mode: $icon $mode\""
+		// 󱐋 AC
+		// 󰠠 AC (manual)
+		// 󰌪 battery
+		// 󱤅 battery (manual)
+	}
+}

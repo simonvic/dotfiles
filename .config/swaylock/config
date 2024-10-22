@@ -1,0 +1,34 @@
+# fade-in=1
+effect-blur=10x10
+color=333333
+# image="${XDG_CONFIG_HOME:-$HOME/.config}/sway/desktop_wallpaper"
+screenshot
+
+font-size=40
+
+clock
+indicator
+indicator-radius=128
+indicator-thickness=16
+indicator-caps-lock
+indicator-idle-visible
+inside-color=00000000
+inside-clear-color=00000000
+inside-caps-lock-color=00000000
+inside-ver-color=F0544C55
+timestr=%H:%M:%S
+datestr=%A, %d %B
+key-hl-color=F0544C
+bs-hl-color=F0544C
+caps-lock-bs-hl-color=F0544C
+caps-lock-key-hl-color=F0544C
+ring-color=00000055
+ring-ver-color=F0544C55
+ring-wrong-color=F0544Cff
+line-uses-ring
+separator-color=F0544Cff
+text-color=DADADAff
+text-ver-color=DADADAff
+text-wrong-color=DADADAff
+text-ver=...
+text-wrong=!!!

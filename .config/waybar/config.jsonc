@@ -1,0 +1,111 @@
+[
+	{
+		"reload_style_on_change": false,
+		"name": "primary",
+		"id": "primary",
+		"ipc": true,
+		"position": "top",
+		"layer": "top",
+		"height": 45,
+		"margin-top": 20,
+		"margin-right": 20,
+		"margin-left": 20,
+		"margin-bottom": 0,
+		"modules-left": [
+			"sway/workspaces",
+			"sway/mode",
+			"sway/scratchpad"
+		],
+		"modules-center": [
+			// "mpd",
+			"clock",
+			"privacy"
+		],
+		"modules-right": [
+			"idle_inhibitor",
+			"network",
+			"bluetooth",
+			"pulseaudio",
+			"backlight",
+			// "redshift",
+			"battery",
+			"custom/tlp",
+			"group/power"
+		],
+		"include": [
+			"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/simonvic/modules.jsonc"
+		]
+	},
+	{
+		"reload_style_on_change": false,
+		"name": "secondary",
+		"id": "secondary",
+		"ipc": true,
+		"position": "top",
+		"layer": "top",
+		"height": 45,
+		"margin-top": -45, // TODO: when primary is hidden, this goes out of the screen
+		"margin-right": 20,
+		"margin-left": 20,
+		"margin-bottom": 0,
+		"modules-left": [
+			"wlr/taskbar"
+			// "sway/window"
+		],
+		"modules-center": [
+		],
+		"modules-right": [
+			"network#extended",
+			"clock#extended",
+			"bluetooth#extended",
+			"pulseaudio#extended",
+			"backlight#extended",
+			"battery#extended",
+			"user"
+		],
+		"include": [
+			"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/simonvic/modules.jsonc"
+		]
+	},
+	{
+		"reload_style_on_change": false,
+		"name": "tertiary",
+		"id": "tertiary",
+		"ipc": true,
+		"position": "bottom",
+		"layer": "top",
+		"height": 50,
+		"width": 800,
+		"margin": 5,
+		"modules-center": [
+			// "sway/language",
+			// "keyboard-state#capslock",
+			// "keyboard-state#numlock",
+			"custom/aur",
+			"disk",
+			"disk#tmp",
+			"memory",
+			"cpu",
+			"temperature",
+			"custom/fan"
+		],
+		"include": [
+			"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/simonvic/modules.jsonc"
+		]
+	},
+	{
+		"reload_style_on_change": false,
+		"name": "tray-bar",
+		"id": "tray-bar",
+		"ipc": true,
+		"position": "left",
+		"layer": "top",
+		"height": 100,
+		"modules-center": [
+			"tray"
+		],
+		"include": [
+			"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/simonvic/modules.jsonc"
+		]
+	}
+]

@@ -1,0 +1,364 @@
+###############################################################################
+#	Made by
+#       _                              _
+#      (_)                            (_)
+#  ___  _  ____    ___   ____   _   _  _   ____
+# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
+#|___ || || | | || |_| || | | | \ V / | |( (___
+#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
+#
+#	Check updates and give a look at my dotfiles here:
+#		https://github.com/simonvic/dotfiles
+#
+###############################################################################
+
+xwayland enable
+
+input * {
+	xkb_layout "it"
+}
+
+input type:touchpad {
+	tap enabled
+	natural_scroll enabled
+}
+
+input type:keyboard xkb_numlock enabled
+
+output "*" bg desktop_wallpaper fill
+
+bar {
+	id primary
+	swaybar_command /usr/bin/waybar
+	modifier none
+}
+
+bar {
+	id secondary
+	swaybar_command ""
+	mode hide
+	hidden_state hide
+	modifier none
+}
+
+bar {
+	id tertiary
+	swaybar_command ""
+	mode hide
+	hidden_state hide
+	modifier none
+}
+
+bar {
+	id tray-bar
+	swaybar_command ""
+	mode hide
+	hidden_state hide
+	modifier none
+}
+
+###############################################################################
+#                                                                       STARTUP
+
+# TODO: remove no-startuo-id (ignored in wayland)
+
+# Notification deamon
+exec --no-startup-id dunst
+
+# Lockscreen
+exec swayidle -w \
+	timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+	timeout 600 'swaylock -f' \
+	before-sleep 'swaylock -f'
+
+# Restore redshift state
+exec gammastep -v -P -l manual
+# TODO: update sBrightnessctl to support wayland
+# exec --no-startup-id sBrightnessctl redshift restore
+
+# Use Headset Mic as default input source
+exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
+
+# Mute microphone at startup
+exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
+
+
+###############################################################################
+#                                                                 LOOK AND FEEL
+
+#                                                                          FONT
+font pango:sans 8
+
+#                                                          APPLICATION LAUNCHER
+set $rofi_theme_drun            "simonvic/glass/reversed"
+set $rofi_theme_windowSwitcher  "simonvic/glass/windows"
+set $rofi_theme_fileBrowser     "simonvic/glass/filebrowser"
+set $rofi_theme_calculator      "simonvic/glass/calculator"
+
+#                                                                    STATUS BAR
+set $statusbar_main_position top
+
+# statusbar gap = desired gap + gaps_inner (e.g. 55 = 35 + 20)
+set $statusbar_main_gap 55
+
+#                                                                       WINDOWS
+set $gaps_inner 20
+set $gaps_outer 0
+
+gaps outer $gaps_outer
+gaps inner $gaps_inner
+
+# smart_gaps on
+# smart_gaps inverse_outer
+
+title_align center
+
+#                                                               WINDOWS BORDERS
+default_border pixel 4
+hide_edge_borders smart
+# for_window [class=".*"] border pixel 4
+# for_window [class="Xfce4-terminal"] border pixel 1
+
+
+#                                                                        COLORS
+set $color_primary       #F0544C
+set $color_background    #333333
+set $color_backgroundAlt #222222
+set $color_foreground    #DADADA
+set $color_foregroundAlt #FFFFFF
+set $color_indicator     #666666
+set $color_indicatorAlt  #444444
+set $color_urgent        #8d0000
+
+
+# <colorclass>          <border>             <background>      <text>               <indicator>         <child_border>
+client.focused          $color_primary       $color_background $color_foreground    $color_indicator    $color_primary
+client.focused_inactive $color_backgroundAlt $color_background $color_foreground    $color_indicatorAlt $color_background
+client.unfocused        $color_background    $color_background $color_foreground    $color_indicator    $color_backgroundAlt
+client.urgent           $color_background    $color_urgent     $color_foregroundAlt $color_urgent       $color_urgent
+client.placeholder      #000000              #0c0c0c           #ffffff              #000000             #0c0c0c
+client.background       $color_background 
+ 
+
+
+###############################################################################
+#                                                                   KEYBINDINGS
+
+#                                                                       MOD-KEY
+set $mod Mod4
+
+#                                                                      TERMINAL
+# start a terminal
+bindsym $mod+Return                      exec xfce4-terminal
+bindsym $mod+Mod1+Return                 exec kitty
+
+# Drop down terminal
+bindsym $mod+Shift+Return                exec xfce4-terminal --drop-down
+
+
+#                                                                       POLYBAR
+bindsym $mod+p                           exec swaymsg bar mode toggle primary ; \
+                                         	exec swaymsg bar hidden_state hide primary
+bindsym $mod+Shift+p                     exec swaymsg bar hidden_state toggle secondary
+bindsym $mod+Ctrl+p                      exec swaymsg bar hidden_state toggle tertiary
+bindsym $mod+Ctrl+Shift+p                exec swaymsg bar hidden_state toggle tertiary
+bindsym $mod+Mod1+p                      exec swaymsg bar hidden_state toggle tray-bar
+
+#                                                                      ZEN-MODE
+# [WIP]
+bindsym $mod+z                           gaps inner all toggle $gaps_inner ; \
+                                         	gaps right all toggle $gaps_outer ; \
+                                         	gaps bottom all toggle $gaps_outer ; \
+                                         	gaps left all toggle $gaps_outer ; \
+                                         	gaps top all toggle $gaps_outer ; \
+                                         	exec swaymsg bar mode hide ; \
+                                         	exec swaymsg bar hidden_state hide
+
+
+
+#                                                                          WIFI
+bindsym $mod+y                           exec sWifi rescan no
+bindsym $mod+Shift+y                     exec sWifi rescan yes
+
+#                                                                     BLUETOOTH
+bindsym $mod+b                           exec sBluetoothctl menu
+bindsym $mod+Mod1+b                      exec sBluetoothctl power toggle
+
+#                                                                    LOCKSCREEN
+bindsym $mod+Ctrl+l                      exec --no-startup-id sLockscreenctl lock
+
+#                                                        SPEAKER AND MICROPHONE
+# -Ctrl is used to control the microphone
+# -Shift is used to change values at higher rate
+bindsym XF86AudioRaiseVolume             exec --no-startup-id sVolumectl increase 1
+bindsym XF86AudioLowerVolume             exec --no-startup-id sVolumectl decrease 1
+bindsym Shift+XF86AudioRaiseVolume       exec --no-startup-id sVolumectl increase 10
+bindsym Shift+XF86AudioLowerVolume       exec --no-startup-id sVolumectl decrease 10
+bindsym XF86AudioMute                    exec --no-startup-id sVolumectl mute toggle
+
+bindsym Ctrl+XF86AudioRaiseVolume        exec --no-startup-id sMicrophonectl increase 1
+bindsym Ctrl+XF86AudioLowerVolume        exec --no-startup-id sMicrophonectl decrease 1
+bindsym Ctrl+Shift+XF86AudioRaiseVolume  exec --no-startup-id sMicrophonectl increase 10
+bindsym Ctrl+Shift+XF86AudioLowerVolume  exec --no-startup-id sMicrophonectl decrease 10
+bindsym Ctrl+XF86AudioMute               exec --no-startup-id sMicrophonectl mute toggle
+
+bindsym Mod1+XF86AudioMute               exec --no-startup-id i3-sensible-terminal --execute pulsemixer
+
+#                                                       BRIGHTNESS and REDSHIFT
+# -Ctrl is used to control the temperature
+# -Shift is used to change values at higher rate
+bindsym XF86MonBrightnessUp              exec --no-startup-id sBrightnessctl increase
+bindsym XF86MonBrightnessDown            exec --no-startup-id sBrightnessctl decrease
+bindsym Shift+XF86MonBrightnessUp        exec --no-startup-id sBrightnessctl increase 10
+bindsym Shift+XF86MonBrightnessDown      exec --no-startup-id sBrightnessctl decrease 10
+# TODO: XF86ScreenSaver doesn't work, idk why
+bindsym XF86WWW                          exec --no-startup-id sBrightnessctl set 5
+bindsym Shift+XF86WWW                    exec --no-startup-id sBrightnessctl set 100
+bindsym Mod1+XF86WWW                     exec --no-startup-id sBatteryctl wakelock toggle
+
+bindsym Ctrl+XF86MonBrightnessUp         exec --no-startup-id sBrightnessctl redshift increase
+bindsym Ctrl+XF86MonBrightnessDown       exec --no-startup-id sBrightnessctl redshift decrease
+bindsym Ctrl+Shift+XF86MonBrightnessUp   exec --no-startup-id sBrightnessctl redshift increase 400
+bindsym Ctrl+Shift+XF86MonBrightnessDown exec --no-startup-id sBrightnessctl redshift decrease 400
+bindsym Ctrl+XF86WWW                     exec --no-startup-id sBrightnessctl redshift toggle
+
+#                                                          MEDIA PLAYER CONTROL
+bindsym XF86AudioPlay                    exec --no-startup-id sPlayerctl play-pause
+bindsym XF86AudioStop                    exec --no-startup-id sPlayerctl stop
+bindsym Shift+XF86AudioStop              exec --no-startup-id sPlayerctl stop all
+bindsym XF86AudioNext                    exec --no-startup-id sPlayerctl next
+bindsym XF86AudioPrev                    exec --no-startup-id sPlayerctl previous
+bindsym Ctrl+XF86AudioPlay               exec --no-startup-id sPlayerctl select-player
+bindsym Ctrl+Shift+XF86AudioPlay         exec --no-startup-id sPlayerctl select-player set __auto__
+
+#                                                                  TODO MANAGER
+bindsym $mod+t                           exec --no-startup-id sTodo notification todo
+bindsym $mod+Ctrl+t                      exec --no-startup-id sTodo notification done
+bindsym $mod+Shift+t                     exec --no-startup-id sTodo notification deleted
+bindsym $mod+Shift+Ctrl+t                exec --no-startup-id sTodo notification
+
+#                                                                    CALCULATOR
+bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme "$rofi_theme_calculator"
+
+#                                                                   SCREENSHOTS
+# Select area
+bindsym $mod+Shift+s                     exec --no-startup-id sScreenshot area
+# All screen
+bindsym $mod+Ctrl+Shift+s                exec --no-startup-id sScreenshot screen
+
+#                                                          APPLICATION LAUNCHER
+bindsym $mod+a                           exec rofi -show combi -modes combi -combi-modes "drun#window" -theme "$rofi_theme_drun"
+bindsym $mod+Ctrl+a                      exec rofi -show drun -theme "$rofi_theme_drun"
+bindsym $mod+Tab                         exec rofi -show window -modi "window#windowcd" -theme "$rofi_theme_windowSwitcher"
+bindsym $mod+Shift+Tab                   exec rofi -show filebrowser -theme "$rofi_theme_fileBrowser"
+
+#                                                                 NOTIFICATIONS
+bindsym $mod+n                           exec --no-startup-id dunstctl context
+bindsym $mod+Shift+n                     exec --no-startup-id dunstctl history-pop
+bindsym $mod+Ctrl+n                      exec --no-startup-id dunstctl close
+bindsym $mod+Ctrl+Shift+n                exec --no-startup-id dunstctl close-all
+
+#                                                       DESKTOP MANAGER GENERAL
+floating_modifier $mod
+bindsym $mod+Shift+q                     kill
+bindsym $mod+Shift+space                 floating toggle
+bindsym $mod+Mod1+space                  move to scratchpad
+bindsym $mod+Ctrl+space                  scratchpad show
+bindsym $mod+space                       focus mode_toggle
+bindsym $mod+f                           fullscreen toggle
+bindsym $mod+Shift+c                     reload
+bindsym $mod+Shift+r                     reload
+bindsym $mod+Shift+e                     exec "swaynag -t warning -m 'Do you want to logout?' -B 'Yes' 'swaymsg exit'"
+
+#                                                      DESKTOP MANAGER FOCUSING
+bindsym $mod+Left                        focus left
+bindsym $mod+Down                        focus down
+bindsym $mod+Up                          focus up
+bindsym $mod+Right                       focus right
+bindsym $mod+h                           focus left
+bindsym $mod+j                           focus down
+bindsym $mod+k                           focus up
+bindsym $mod+l                           focus right
+
+bindsym $mod+Shift+d                     focus parent
+bindsym $mod+d                           focus child
+
+#                                                      DESKTOP MANAGER MOVEMENT
+bindsym $mod+Shift+Left                  move left
+bindsym $mod+Shift+Down                  move down
+bindsym $mod+Shift+Up                    move up
+bindsym $mod+Shift+Right                 move right
+
+bindsym $mod+Shift+h                     move left
+bindsym $mod+Shift+j                     move down
+bindsym $mod+Shift+k                     move up
+bindsym $mod+Shift+l                     move right
+
+#                                                     DESKTOP MANAGER SPLITTING
+bindsym $mod+x                           split h
+bindsym $mod+v                           split v
+
+#                                                        DESKTOP MANAGER LAYOUT
+bindsym $mod+s                           layout stacking
+bindsym $mod+w                           layout tabbed
+bindsym $mod+e                           layout toggle split
+
+#                                                    DESKTOP MANAGER WORKSPACES
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1                           workspace number $ws1
+bindsym $mod+2                           workspace number $ws2
+bindsym $mod+3                           workspace number $ws3
+bindsym $mod+4                           workspace number $ws4
+bindsym $mod+5                           workspace number $ws5
+bindsym $mod+6                           workspace number $ws6
+bindsym $mod+7                           workspace number $ws7
+bindsym $mod+8                           workspace number $ws8
+bindsym $mod+9                           workspace number $ws9
+bindsym $mod+0                           workspace number $ws10
+
+bindsym $mod+Shift+1                     move container to workspace number $ws1
+bindsym $mod+Shift+2                     move container to workspace number $ws2
+bindsym $mod+Shift+3                     move container to workspace number $ws3
+bindsym $mod+Shift+4                     move container to workspace number $ws4
+bindsym $mod+Shift+5                     move container to workspace number $ws5
+bindsym $mod+Shift+6                     move container to workspace number $ws6
+bindsym $mod+Shift+7                     move container to workspace number $ws7
+bindsym $mod+Shift+8                     move container to workspace number $ws8
+bindsym $mod+Shift+9                     move container to workspace number $ws9
+bindsym $mod+Shift+0                     move container to workspace number $ws10
+
+#                                                        DESKTOP MANAGER RESIZE
+mode "resize" {
+	bindsym Left                         resize shrink width 5 px or 5 ppt
+	bindsym Down                         resize grow height 5 px or 5 ppt
+	bindsym Up                           resize shrink height 5 px or 5 ppt
+	bindsym Right                        resize grow width 5 px or 5 ppt
+	bindsym h                            resize shrink width 5 px or 5 ppt
+	bindsym j                            resize grow height 5 px or 5 ppt
+	bindsym k                            resize shrink height 5 px or 5 ppt
+	bindsym l                            resize grow width 5 px or 5 ppt
+
+	bindsym Return                       mode "default"
+	bindsym Escape                       mode "default"
+	bindsym $mod+r                       mode "default"
+}
+
+bindsym $mod+r                           mode "resize"
+
+###############################################################################
+#                                                                     BEHAVIOUR
+focus_follows_mouse no
+
+###############################################################################
+#                                                                   USER-CONFIG
+include config.d/*.conf

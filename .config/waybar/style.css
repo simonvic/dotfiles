@@ -1,0 +1,103 @@
+* {
+	font-family: Lato, nerdfont;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 0;
+}
+
+tooltip {
+	border-radius: 10px;
+	background-color: #333333;
+}
+
+window#waybar {
+	background-color: rgba(0, 0, 0, 0.33);
+	color: #DADADA;
+}
+
+window#waybar .modules-left,
+window#waybar .modules-center,
+window#waybar .modules-right {
+	padding: 8px;
+}
+
+/*  */
+/* window#waybar .modules-left { */
+/* 	margin-left: 8px; */
+/* } */
+/*  */
+/* window#waybar .modules-right { */
+/* 	margin-right: 8px; */
+/* } */
+
+window#waybar .modules-left>*>*,
+window#waybar .modules-center>*>*,
+window#waybar .modules-right>*>* {
+	margin: 0 8px;
+}
+
+window#waybar.secondary .modules-left>*>*,
+window#waybar.secondary .modules-center>*>*,
+window#waybar.secondary .modules-right>*>* {
+	margin: 0px 16px;
+}
+
+window#waybar.tertiary .modules-left>*>*,
+window#waybar.tertiary .modules-center>*>*,
+window#waybar.tertiary .modules-right>*>* {
+	margin: 4px 16px;
+}
+
+#workspaces>button {
+	padding: 0 6px;
+	margin: 0 2px;
+	border-bottom: 0px solid transparent;
+}
+
+#workspaces>button:hover {
+	background-color: rgba(240, 84, 76, 0.33);
+}
+
+#workspaces>button.focused {
+	box-shadow: inset 0 -2px #F0544C;
+}
+
+#temperature.critical {
+	color: #FF4543;
+}
+
+#custom-group-power {
+	padding: 0 8px;
+}
+
+#custom-power,
+#custom-suspend,
+#custom-reboot,
+#custom-lock,
+#custom-logout {
+	margin: 0 2px;
+	padding: 0 6px;
+}
+
+#custom-power:hover,
+#custom-suspend:hover,
+#custom-reboot:hover,
+#custom-lock:hover,
+#custom-logout:hover {
+	background-color: rgba(240, 84, 76, 0.33);
+}
+
+#taskbar button {
+	padding: 0 6px;
+	margin: 0 2px;
+}
+
+#taskbar button.active {
+	box-shadow: inset 0 -2px #F0544C;
+}
+
+#taskbar button:hover {
+	background-color: rgba(240, 84, 76, 0.33);
+}
