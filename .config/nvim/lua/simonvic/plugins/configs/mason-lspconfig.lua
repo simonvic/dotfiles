@@ -38,6 +38,13 @@ return function()
 					}
 				}
 			})
+		end,
+
+		["ltex"] = function(server_name)
+			require("lspconfig")[server_name].setup({
+				capabilities = default_capabilities,
+				filetypes = { "tex" },
+			})
 		end
 
 	})
