@@ -35,7 +35,10 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 ##
 #
 function copyScreenshot() {
-	xclip -selection clipboard -target image/png -i "$tempScreenshotFile"
+	case "$XDG_SESSION_TYPE" in
+		x11) xclip -selection clipboard -target image/png -i "$tempScreenshotFile" ;;
+		wayland) wl-copy < "$tempScreenshotFile" ;;
+	esac
 }
 
 ##
@@ -68,9 +71,20 @@ function sendNotification() {
 # @param capture mode (area|screen)
 function captureScreenshot() {
 	[[ ! -e "$tempScreenshotFile" ]] && mkdir -p "${tempScreenshotFile%/*}"
-	local mode=""
-	[[ "$1" == "area" ]] && mode="--select"
-	scrot --silent --overwrite "$tempScreenshotFile" $mode
+	case "$XDG_SESSION_TYPE" in
+		x11)
+			local mode=""
+			[[ "$1" == "area" ]] && mode="--select"
+			scrot --silent --overwrite "$tempScreenshotFile" $mode
+			;;
+		wayland)
+			case "$1" in
+				area) grim -g "$(slurp -d)" "$tempScreenshotFile" ;;
+				screen) grim "$tempScreenshotFile" ;;
+				*) return ;;
+			esac
+			;;
+	esac
 	[[ $? != 0 ]] && return
 	local body; body=$(file "$tempScreenshotFile" | cut -d, -f2)
 	if [[ "$autoCopy" == true ]]; then
