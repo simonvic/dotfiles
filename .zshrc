@@ -142,7 +142,7 @@ prompt simonvic-minimal
 ################################################################################ ALIASES
 function xo() {	xdg-open $1 &! }
 function t() { tree -h -F -D -L ${1:-1} }
-alias ls="ls --color=auto"
+alias ls="ls -p --color=auto"
 alias l="ls -Al --human-readable"
 alias grep="grep --color"
 alias Cp="xclip -r -selection clipboard"
