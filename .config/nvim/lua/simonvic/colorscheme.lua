@@ -35,6 +35,7 @@ M.palette = {
 	text_xxxlight  = "#FFFFFF",
 	disabled       = "#666666",
 
+	special        = "#CC7832",
 	constant       = "#9876AA",
 	member         = "#9876AA",
 	["function"]   = "#FFC66D",
@@ -125,7 +126,7 @@ local function buildGroups()
 		Conceal                            = { fg = p.text_xdark },
 		NonText                            = { fg = p.text_xxdark, bold = true },
 		SpecialKey                         = { bg = p.text_xxxdark, fg = p.text },
-		Special                            = { link = "Keyword" },
+		Special                            = { fg = p.special },
 		helpSpecial                        = { link = "Special" },
 		MatchParen                         = { bg = p.text_xxxdark, bold = true },
 		Folded                             = { bg = p.text_xxxdark, fg = p.text_xlight },
@@ -219,6 +220,7 @@ local function buildGroups()
 		LazyButtonActive                   = { link = "TabLineSel" },
 		LazyProgressDone                   = { fg = p.accent },
 		LazyProgressTodo                   = { fg = p.accent_xxdark },
+		LazySpecial                        = { link = "Special" },
 
 		------------------------------------------------------------------------ Mason
 		MasonHighlightBlockBold            = { link = "TabLineSel" },
@@ -419,6 +421,7 @@ local function buildGroups()
 		luaConstant                        = { link = "@constant.builtin" },
 		["@variable.member.lua"]           = { link = "@lsp.type.variable" },
 		["@lsp.type.variable.lua"]         = { link = "@lsp.type.variable" },
+		["@constructor.lua"]               = { link = "@punctuation" },
 
 		------------------------------------------------------------------------ shell
 		shQuote                            = { link = "String" },
