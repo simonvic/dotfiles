@@ -324,9 +324,5 @@ bindsym $mod+r                           mode "resize"
 focus_follows_mouse no
 
 ###############################################################################
-#                                                                      SPECIFIC
-for_window [class="Apache NetBeans IDE "] floating enable
-
-###############################################################################
 #                                                                   USER-CONFIG
 include config.d/*.conf
