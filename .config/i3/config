@@ -47,7 +47,7 @@ exec_always --no-startup-id sPolybarctl launch
 # Use Headset Mic as default input source
 exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
 
-# Always mute microphone at startup, you know... FBI and stuff
+# Mute microphone at startup
 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
 
 
@@ -168,6 +168,8 @@ bindsym Ctrl+XF86AudioLowerVolume        exec --no-startup-id sMicrophonectl dec
 bindsym Ctrl+Shift+XF86AudioRaiseVolume  exec --no-startup-id sMicrophonectl increase 10
 bindsym Ctrl+Shift+XF86AudioLowerVolume  exec --no-startup-id sMicrophonectl decrease 10
 bindsym Ctrl+XF86AudioMute               exec --no-startup-id sMicrophonectl mute toggle
+
+bindsym Mod1+XF86AudioMute               exec --no-startup-id i3-sensible-terminal --execute pulsemixer
 
 #                                                       BRIGHTNESS and REDSHIFT
 # -Ctrl is used to control the temperature
