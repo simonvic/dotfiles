@@ -2,9 +2,9 @@
 
 window {
 	width: 500px;
-	location: north;
+	location: north west;
 	anchor: north west;
-	x-offset: 260px;
+	x-offset: calc(50% + 260px);
 	y-offset: 65px;
 }
 
