@@ -6,7 +6,7 @@ local jdtls = require("jdtls")
 local cmd = { "/usr/bin/jdtls" }
 
 -- Lombok support
-local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", 1)
+local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
 if vim.fn.empty(jars_lombok) == 0 then
 	jars_lombok = vim.split(jars_lombok, "\n")
 	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok[#jars_lombok] })
@@ -18,7 +18,7 @@ local bundles = {}
 -- Debug support
 -- for upstream version: https://github.com/microsoft/java-debug
 -- and glob "~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar"
-local jars_debug = vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/*.jar", 1)
+local jars_debug = vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/*.jar", true)
 if vim.fn.empty(jars_debug) == 0 then
 	vim.list_extend(bundles, vim.split(jars_debug, "\n"))
 end
@@ -26,7 +26,7 @@ end
 -- Testing support
 -- for upstream version: https://github.com/microsoft/vscode-java-test
 -- and glob "~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar"
-local jars_testing = vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", 1)
+local jars_testing = vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true)
 if vim.fn.empty(jars_testing) == 0 then
 	vim.list_extend(bundles, vim.split(jars_testing, "\n"))
 end
@@ -46,7 +46,11 @@ local jdtls_config = {
 	settings = {
 		java = {
 			codeGeneration = {
-				generateComments = true
+				generateComments = true,
+				hashCodeEquals = {
+					useJava7Objects = true,
+				},
+				useBlocks = false
 			},
 			implementationCodeLens = { enabled = false },
 			referencesCodeLens = { enabled = false },
