@@ -80,13 +80,13 @@ function prettifyWifiSignal() {
 	# [[ "$active" == "yes" ]] && output+=" "
 
 	if [[ "$strength" -le 25 ]]; then
-		output+="▂▁▁▁"
+		output+="<tt>▂▁▁▁</tt>"
 	elif [[ "$strength" -le 50 ]]; then
-		output+="▂▄▁▁"
+		output+="<tt>▂▄▁▁</tt>"
 	elif [[ "$strength" -le 75 ]]; then
-		output+="▂▄▆▁"
+		output+="<tt>▂▄▆▁</tt>"
 	else
-		output+="▂▄▆█"
+		output+="<tt>▂▄▆█</tt>"
 	fi
 
 	output+=" <b>$ssid</b>"
