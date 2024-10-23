@@ -646,5 +646,25 @@
 		// 󰠠 AC (manual)
 		// 󰌪 battery
 		// 󱤅 battery (manual)
+	},
+	"custom/redshift": {
+		"interval": 1,
+		"format": "{}",
+		"return-type": "json",
+		"tooltip-format": "{alt}",
+		"exec": "temperature=$(sBrightnessctl r print); stateFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/sBrightnessctl/redshift.sh; enabled=$(cat $stateFile | grep Enabled | cut -d= -f2); icon=$(case $enabled in true) echo 󰌵 ;; false) echo 󰌶 ;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"$icon $temperature K\"",
+		"on-click": "sBrightnessctl redshift toggle",
+		"on-scroll-up": "sBrightnessctl redshift increase 400",
+		"on-scroll-down": "sBrightnessctl redshift decrease 400"
+	},
+	"custom/redshift#extended": {
+		"interval": 1,
+		"format": "{}",
+		"return-type": "json",
+		"tooltip-format": "{alt}",
+		"exec": "temperature=$(sBrightnessctl r print); stateFile=${XDG_DATA_HOME:-$HOME/.local/share}/simonvic/sBrightnessctl/redshift.sh; enabled=$(cat $stateFile | grep Enabled | cut -d= -f2); icon=$(case $enabled in true) echo 󰌵 ;; false) echo 󰌶 ;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon $temperature K\" \"$icon $temperature K\"",
+		"on-click": "sBrightnessctl redshift toggle",
+		"on-scroll-up": "sBrightnessctl redshift increase 400",
+		"on-scroll-down": "sBrightnessctl redshift decrease 400"
 	}
 }

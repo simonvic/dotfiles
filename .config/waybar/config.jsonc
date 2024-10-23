@@ -27,7 +27,7 @@
 			"bluetooth",
 			"pulseaudio",
 			"backlight",
-			// "redshift",
+			// "custom/redshift",
 			"battery",
 			"custom/tlp",
 			"group/power"
@@ -60,6 +60,7 @@
 			"bluetooth#extended",
 			"pulseaudio#extended",
 			"backlight#extended",
+			// "custom/redshift#extended",
 			"battery#extended",
 			"user"
 		],
