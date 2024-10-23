@@ -89,13 +89,29 @@ function changeBrightness() {
 ##
 #	Toggle Redshift status
 function toggleRedshift() {
-	if [[ "$redshiftEnabled" == true ]]; then
-		redshift -x
-		redshiftEnabled=false
-	else
-		redshift -P -O "$redshiftTemperature"
-		redshiftEnabled=true
-	fi
+	case "$XDG_SESSION_TYPE" in
+		x11)
+			if [[ "$redshiftEnabled" == true ]]; then
+				redshift -x
+				redshiftEnabled=false
+			else
+				redshift -P -O "$redshiftTemperature"
+				redshiftEnabled=true
+			fi
+			;;
+
+		wayland)
+			if [[ "$redshiftEnabled" == true ]]; then
+				pkill gammastep
+				redshiftEnabled=false
+			else
+				gammastep -P -O "$redshiftTemperature" &
+				disown
+				redshiftEnabled=true
+			fi
+			;;
+
+	esac
 	sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
 }
 
@@ -103,13 +119,24 @@ function toggleRedshift() {
 #	Change redshift temperature
 #	@param temperature [1000 - 25000]
 function setRedshiftTemperature() {
-	if [[ "$1" -gt 1000 ]] && [[ "$1" -lt 25000 ]]; then
-		redshiftTemperature=$1
-		redshiftEnabled=true
-		redshift -P -O "$redshiftTemperature"
-		sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
-		sed -i "s/redshiftTemperature=.*/redshiftTemperature=$redshiftTemperature/" "$redshiftStateFile"
+	if [[ "$1" -lt 1000 ]] || [[ "$1" -gt 25000 ]]; then
+		return
 	fi
+	redshiftTemperature=$1
+	redshiftEnabled=true
+	case "$XDG_SESSION_TYPE" in
+		x11) redshift -P -O "$redshiftTemperature" ;;
+		wayland)
+			# TODO: gammastep doesn't allow to change temperature at runtime,
+			# so we have to kill it and restart, which might result in
+			# flickering
+			pkill gammastep
+			gammastep -P -O "$redshiftTemperature" &
+			disown
+			;;
+	esac
+	sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
+	sed -i "s/redshiftTemperature=.*/redshiftTemperature=$redshiftTemperature/" "$redshiftStateFile"
 }
 
 ##
@@ -164,9 +191,16 @@ function sendNotification() {
 	}
 
 function restoreRedshift() {
-	if [[ "$redshiftEnabled" == true ]]; then
-		redshift -P -O "$redshiftTemperature"
+	if [[ "$redshiftEnabled" == false ]]; then
+		return
 	fi
+	case "$XDG_SESSION_TYPE" in
+		x11) redshift -P -O "$redshiftTemperature" ;;
+		wayland)
+			pkill gammastep
+			gammastep -P -O "$redshiftTemperature"
+			;;
+	esac
 
 }
 

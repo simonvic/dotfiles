@@ -72,9 +72,7 @@ exec swayidle -w \
 	before-sleep 'swaylock -f'
 
 # Restore redshift state
-exec gammastep -v -P -l manual
-# TODO: update sBrightnessctl to support wayland
-# exec --no-startup-id sBrightnessctl redshift restore
+exec --no-startup-id sBrightnessctl redshift restore
 
 # Use Headset Mic as default input source
 exec --no-startup-id pactl set-source-port @DEFAULT_SOURCE@ analog-input-headset-mic
