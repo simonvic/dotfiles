@@ -236,7 +236,9 @@ bindsym $mod+Shift+t                     exec --no-startup-id sTodo notification
 bindsym $mod+Shift+Ctrl+t                exec --no-startup-id sTodo notification
 
 #                                                                    CALCULATOR
-bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard -i" -theme "$rofi_theme_calculator"
+bindsym XF86Calculator                   exec rofi -show calc -modi calc -no-show-match -no-sort \
+                                         	-calc-command "echo -n '{result}' | wl-copy" \
+                                         	-theme "$rofi_theme_calculator"
 
 #                                                                   SCREENSHOTS
 # Select area
