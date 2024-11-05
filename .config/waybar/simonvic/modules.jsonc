@@ -162,14 +162,16 @@
 		"interval": 1,
 		"format": "󰓅 {usage}% {icon0}{icon1}{icon2}{icon3}",
 		"format-icons": [
-			"▁",
-			"▂",
-			"▃",
-			"▄",
-			"▅",
-			"▆",
-			"▇",
-			"█"
+			"<tt>▁</tt>",
+			"<tt>▁</tt>",
+			"<tt>▂</tt>",
+			"<tt>▂</tt>",
+			"<tt>▃</tt>",
+			"<tt>▄</tt>",
+			"<tt><span color='#CEB70E'>▅</span></tt>",
+			"<tt><span color='#DE8810'>▆</span></tt>",
+			"<tt><span color='#FF4543'>▇</span></tt>",
+			"<tt><span color='#FF3838'>█</span></tt>"
 		],
 		"tooltip": true
 	},
@@ -214,7 +216,8 @@
 			"󰃝",
 			"󰃠"
 		],
-		"reverse-scrolling": true
+		"reverse-scrolling": true,
+		"tooltip-format": "{percent}%"
 	},
 	"backlight#extended": {
 		"format": "{icon} {percent}%",
@@ -226,7 +229,8 @@
 			"󰃝",
 			"󰃠"
 		],
-		"reverse-scrolling": true
+		"reverse-scrolling": true,
+		"tooltip-format": "{percent}%"
 	},
 	"battery": {
 		"interval": 1,
