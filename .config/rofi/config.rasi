@@ -1,6 +1,6 @@
 configuration {
 	threads: 0;
-	modes: [combi, drun, filebrowser, window, run, windowcd, ssh, keys, calc];
+	modes: [combi, drun, filebrowser, window, run, ssh, keys, calc];
 	combi-modes: [drun];
 	cycle: false;
 	scroll-method: 0;
@@ -13,14 +13,13 @@ configuration {
 	window-format: "{w} - {c}\t{t}";
 	window-thumbnail: true;
 	display-drun: "";
-	display-run: "#";
-	display-window: "";
-	display-windowcd: "";
+	display-run: "$";
+	display-window: "󰖲";
 	display-ssh: ":$";
 	display-combi: ">";
-	display-calc: "";
+	display-calc: "󰃬";
 	display-keys: "";
-	display-filebrowser: "";
+	display-filebrowser: "";
 
 	filebrowser {
 		directory: ".";
