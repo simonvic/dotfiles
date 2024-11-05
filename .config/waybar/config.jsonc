@@ -22,7 +22,6 @@
 			"privacy"
 		],
 		"modules-right": [
-			"idle_inhibitor",
 			"network",
 			"bluetooth",
 			"pulseaudio",
@@ -61,6 +60,7 @@
 			"pulseaudio#extended",
 			"backlight#extended",
 			// "custom/redshift#extended",
+			"idle_inhibitor",
 			"battery#extended",
 			"user"
 		],
