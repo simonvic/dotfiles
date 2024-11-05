@@ -198,7 +198,8 @@ function restoreRedshift() {
 		x11) redshift -P -O "$redshiftTemperature" ;;
 		wayland)
 			pkill gammastep
-			gammastep -P -O "$redshiftTemperature"
+			gammastep -P -O "$redshiftTemperature" &
+			disown
 			;;
 	esac
 
