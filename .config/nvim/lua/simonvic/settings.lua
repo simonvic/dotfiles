@@ -109,6 +109,13 @@ vim.api.nvim_create_autocmd("VimLeave", {
 	command = "set guicursor=a:ver25"
 })
 
+-------------------------------------------------------------------------------- TITLE
+opt.title = true
+-- opt.titlestring = ""
+-- 	.. "nvim "
+-- 	.. "%t"
+-- 	.. " (%f)"
+
 -------------------------------------------------------------------------------- TABLINE
 opt.showtabline = 1
 function BuildTabLine()
