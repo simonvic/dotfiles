@@ -71,6 +71,14 @@ local function open_docs() lsp.hover(); end
 local function signature_help() lsp.signature_help(); end
 local function show_diagnostics() vim.diagnostic.open_float() end
 local function format() lsp.format() end
+local function formatSelection()
+	lsp.format({
+		range = {
+			["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+			["end"] = vim.api.nvim_buf_get_mark(0, ">")
+		}
+	})
+end
 local function toggle_dapUI() require("dapui").toggle() end
 local function toggle_list_chars() vim.opt.list = not vim.opt.list:get() end
 local function toggle_fold_column() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end
@@ -229,6 +237,7 @@ local keybindings = {
 	{ _v__, "<C-S-UP>",                      ":copy '>+0<CR>gv",                     { desc = "Copy line up", silent = true } },
 	{ n___, "<C-A-l>",                       "gg=G<C-o>",                            { desc = "Reindent file" } },
 	{ n_i_, "<A-S-l>",                       format,                                 { desc = "Reformat" } },
+	{ _v__, "<A-S-l>",                       formatSelection,                        { desc = "Reformat selection" } },
 	{ n_i_, "<C-A-c>",                       cmd("CommentToggle"),                   { desc = "Comment toggle" } },
 	{ n___, "<leader>cc",                    cmd("CommentToggle"),                   { desc = "Comment toggle" } },
 	{ _v__, { "<C-A-c>", "<leader>cc" },     ":CommentToggle<CR>",                   { desc = "Comment toggle" } },
