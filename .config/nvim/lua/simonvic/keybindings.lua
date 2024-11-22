@@ -1,4 +1,4 @@
--- TODO: ts textobject movement repeat
+-- TODO: toggle bool (<C-x> set to false, <C-a> set to true)
 
 M = {}
 local vim = vim
@@ -254,10 +254,9 @@ local keybindings = {
 	{ n_i_, "<C-PageDown>",                  cmd("tabnext"),                         { desc = "Next tab" } },
 	{ n_i_, "<C-S-PageUp>",                  cmd("-tabmove"),                        { desc = "Move tab to left" } },
 	{ n_i_, "<C-S-PageDown>",                cmd("+tabmove"),                        { desc = "Move tab to right" } },
-	{ n__t, "<A-\\>",                        cmd("Neotree focus"),                   { desc = "Focus filetree" } },
-	{ __i_, "<A-\\>",                        cmd_esc("Neotree focus"),               { desc = "Focus filetree" } },
-	{ n__t, "<A-ò>",                         cmd("ToggleTerm direction=horizontal"), { desc = "Toggle dropdown terminal" } },
-	{ n__t, { "<A-S-ò>", "<A-ç>" },          cmd("ToggleTerm direction=float"),      { desc = "Toggle floating terminal" } },
+	{ n__t, "|",                             cmd("Neotree focus"),                   { desc = "Focus filetree" } },
+	{ n__t, { "<A-S-ù>", "<A-§>" },          cmd("ToggleTerm direction=horizontal"), { desc = "Toggle dropdown terminal" } },
+	{ n__t, "<A-ù>",                         cmd("ToggleTerm direction=float"),      { desc = "Toggle floating terminal" } },
 	{ ___t, "<Esc>",                         "<C-\\><C-n>",                          { desc = "Exit terminal mode" } },
 	{ n___, { "<leader><leader>", "<C-p>" }, find_files,                             { desc = "Find files" } },
 	{ __i_, "<C-p>",                         find_files,                             { desc = "Find files" } },
@@ -303,7 +302,7 @@ local keybindings = {
 		------------------------------------------------------------------------ NEO-TREE
 		neotree            = {
 			-- window
-			["<A-Bslash>"]    = "close_window",
+			["|"]             = "close_window",
 			["<F5>"]          = "refresh",
 			["<?>"]           = "show_help",
 			["<TAB>"]         = "next_source",
