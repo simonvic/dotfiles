@@ -1,3 +1,3 @@
 return function()
-	vim.fn["mkdp#util#install"]()
+	-- vim.fn["mkdp#util#install"]()
 end
