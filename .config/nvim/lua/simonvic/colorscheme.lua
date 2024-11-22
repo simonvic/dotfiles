@@ -333,6 +333,7 @@ local function buildGroups()
 
 		------------------------------------------------------------------------ SEMANTIC GROUPS
 		["@lsp.typemod.property.readonly"] = { link = "Constant" },
+		["@lsp.typemod.variable.readonly"] = { link = "Constant" },
 		["@lsp.typemod.property"]          = { fg = p.member },
 		-- ["@lsp.typemod.property.public"]    = { fg = p.member },
 		-- ["@lsp.typemod.property.protected"] = { fg = p.member },
