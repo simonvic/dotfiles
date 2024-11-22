@@ -296,6 +296,9 @@ local function buildGroups()
 		MultiCursorDisabledCursor          = { bg = p.accent_xdark, underdotted = true, sp = p.accent_xxdark },
 		MultiCursorDisabledVisual          = { link = "Visual" },
 
+		------------------------------------------------------------------------ Treesitter
+		TSCurrentScope                     = { bg = "#202020" },
+
 		------------------------------------------------------------------------ TREESITTER GROUPS
 		["@comment.todo"]                  = { link = "Todo" },
 		["@comment.error"]                 = { fg = p.error, bold = true },
