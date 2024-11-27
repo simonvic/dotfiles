@@ -34,7 +34,7 @@ return function()
 				maxwidth = 50,
 				ellipsis_char = '…',
 				show_labelDetails = true,
-				symbol_map = require("simonvic.signs").plugins.cmp,
+				symbol_map = require("simonvic.glyphs").symbols,
 				-- before = function(entry, vim_item)
 				-- 	vim_item.menu = string.sub(vim_item.menu, 1, 20)
 				-- 	return vim_item

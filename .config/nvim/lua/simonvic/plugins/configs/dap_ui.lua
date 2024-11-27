@@ -1,8 +1,14 @@
 return function()
 	local dapui = require("dapui")
+	local glyphs = require("simonvic.glyphs")
+	---@diagnostic disable-next-line: missing-fields
 	dapui.setup({
 		mappings = require("simonvic.keybindings").plugins.dapui,
-		icons = require("simonvic.signs").plugins.dapui,
+		icons = {
+			expanded = glyphs.fs.dir.expanded,
+			collapsed = glyphs.fs.dir.collapsed,
+			current_frame = glyphs.dap.current_frame,
+		},
 		layouts = {
 			{
 				position = "bottom",

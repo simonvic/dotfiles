@@ -1,7 +1,7 @@
 return function()
 	vim.g.neo_tree_remove_legacy_commands = true
 	local keybindings = require("simonvic.keybindings")
-	local signs = require("simonvic.signs").plugins.neotree
+	local glyphs = require("simonvic.glyphs")
 	local diag_signs = require("simonvic.signs").diagnostic
 	require("neo-tree").setup({
 		close_if_last_window = false,
@@ -9,9 +9,9 @@ return function()
 			winbar = true,
 			content_layout = "center",
 			sources = {
-				{ source = "filesystem", display_name = signs.sources.filesystem, },
-				{ source = "buffers",    display_name = signs.sources.buffers, },
-				{ source = "git_status", display_name = signs.sources.git_status, },
+				{ source = "filesystem", display_name = glyphs.plugins.neotree.sources.filesystem, },
+				{ source = "buffers",    display_name = glyphs.plugins.neotree.sources.buffers, },
+				{ source = "git_status", display_name = glyphs.plugins.neotree.sources.git_status, },
 			},
 			separator = { left = "", right = "" },
 			separator_active = nil,
@@ -26,25 +26,25 @@ return function()
 				indent_size = 2,
 				padding = 1,
 				with_markers = true,
-				indent_marker = signs.indent_marker,
-				last_indent_marker = signs.last_indent_marker,
+				indent_marker = glyphs.fs.indent_markers.edge,
+				last_indent_marker = glyphs.fs.indent_markers.corner,
 				highlight = "NeoTreeIndentMarker",
 				with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-				expander_collapsed = signs.expander_collapsed,
-				expander_expanded = signs.expander_expanded,
+				expander_collapsed = glyphs.fs.dir.collapsed,
+				expander_expanded = glyphs.fs.dir.expanded,
 				expander_highlight = "NeoTreeExpander",
 			},
 			icon = {
-				folder_closed = signs.icon.folder_closed,
-				folder_open = signs.icon.folder_open,
-				folder_empty = signs.icon.folder_empty,
+				folder_closed = glyphs.fs.dir.default,
+				folder_open = glyphs.fs.dir.open,
+				folder_empty = glyphs.fs.dir.empty_open,
 				-- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
 				-- then these will never be used.
-				default = signs.icon.default,
+				default = glyphs.fs.default,
 				highlight = "NeoTreeFileIcon"
 			},
 			modified = {
-				symbol = signs.modified,
+				symbol = glyphs.fs.unsaved,
 				highlight = "NeoTreeModified",
 			},
 			name = {
@@ -53,7 +53,17 @@ return function()
 				highlight = "NeoTreeFileName",
 			},
 			git_status = {
-				symbols = signs.git_status
+				symbols = {
+					added     = glyphs.vcs.added,
+					deleted   = glyphs.vcs.removed,
+					modified  = glyphs.vcs.modified,
+					renamed   = glyphs.vcs.renamed,
+					untracked = glyphs.vcs.untracked,
+					ignored   = glyphs.vcs.ignored,
+					unstaged  = glyphs.vcs.untracked,
+					staged    = glyphs.vcs.added,
+					conflict  = glyphs.vcs.conflict,
+				}
 			},
 			diagnostics = {
 				symbols = {

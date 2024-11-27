@@ -1,5 +1,6 @@
 return function()
 	local keybindings = require("simonvic.keybindings")
+	local glyphs = require("simonvic.glyphs")
 	require("aerial").setup({
 		layout = {
 			max_width = { 40, 0.2 },
@@ -16,7 +17,12 @@ return function()
 		close_automatic_events = {},
 		keymaps = keybindings.plugins.aerial,
 		show_guides = true,
-		guides = require("simonvic.signs").plugins.aerial,
+		guides = {
+			mid_item = glyphs.fs.indent_markers.item .. " ",
+			nested_top = glyphs.fs.indent_markers.edge .. " ",
+			last_item = glyphs.fs.indent_markers.bottom .. " ",
+			whitespace = "  ",
+		},
 		nav = {
 			keymaps = keybindings.plugins.aerial_nav,
 			win_opts = {
