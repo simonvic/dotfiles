@@ -37,10 +37,12 @@ function M.not_implemented(name)
 	vim.notify(name .. " not implemented", vim.log.levels.WARN)
 end
 
+local foldcolumn = vim.opt.foldcolumn
+
 M.fn                 = {
 
 	toggle_list_chars           = function() vim.opt.list = not vim.opt.list:get() end,
-	toggle_fold_column          = function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "auto:9" or "0" end, -- TODO: eventually cache the set options and remove hardcoded setting
+	toggle_fold_column          = function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and foldcolumn or "0" end,
 	toggle_relative_number      = function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end,
 	toggle_inlay_hints          = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
 
