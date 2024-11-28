@@ -6,4 +6,7 @@ return function()
 		create_mappings = false,
 		hook = nil
 	})
+	require("simonvic.keybindings").implement({
+		toggle_comment = function() vim.cmd("CommentToggle") end,
+	})
 end
