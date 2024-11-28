@@ -50,6 +50,8 @@ M.fn                 = {
 	terminal                    = function() vim.cmd("terminal") end,
 	terminal_float              = function() vim.cmd("terminal") end,
 
+	commands                    = function() vim.cmd("map") end,
+
 	diagnostic_show             = vim.diagnostic.open_float,
 	diagnostic_show_all         = vim.diagnostic.setqflist,
 	diagnostic_next             = vim.diagnostic.goto_next,
@@ -150,7 +152,6 @@ M.mappings           = {
 	{ n___, { "<C-e>", "<leader>e" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ __i_, "<C-e>",                              function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ n___, "<leader>E",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show telescope diagnostics" } },
-	-- TODO: add Telescope keymaps as a command palette
 	--------------------------------------------------------------------------- MOVEMENT
 	{ nv__, "<C-LEFT>",                           "b",                                             { desc = "Previous end" } },
 	{ __i_, "<C-LEFT>",                           "<C-o>b",                                        { desc = "Previous end" } },
@@ -256,6 +257,7 @@ M.mappings           = {
 	{ n___, { "<leader><leader>", "<C-p>" },      function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ __i_, "<C-p>",                              function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ n___, "<A-p>",                              cmd("Telescope"),                                { desc = "Telescope" } },
+	{ n___, "<leader>:",                          function() M.fn.commands() end,                  { desc = "Commands palette" } },
 	{ n___, { "<leader>s", "<C-A-p>" },           function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
 	{ __i_, "<C-A-p>",                            function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
 	{ n___, { "<leader><tab>", "<A-Tab>" },       function() M.fn.buffers() end,                   { desc = "Buffers" } },

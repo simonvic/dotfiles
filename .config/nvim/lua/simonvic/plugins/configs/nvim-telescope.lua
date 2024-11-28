@@ -24,5 +24,6 @@ return function()
 		diagnostic_show_all = builtin.diagnostics,
 		find_files          = function() builtin.find_files({ hidden = true }) end,
 		buffers             = function() builtin.buffers(themes.get_dropdown({})) end,
+		commands            = builtin.keymaps,
 	})
 end
