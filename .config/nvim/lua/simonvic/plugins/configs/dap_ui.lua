@@ -1,9 +1,11 @@
 return function()
-	local dapui = require("dapui")
 	local glyphs = require("simonvic.glyphs")
+	local keybindings = require("simonvic.keybindings")
+	local dap = require("dap")
+	local dapui = require("dapui")
 	---@diagnostic disable-next-line: missing-fields
 	dapui.setup({
-		mappings = require("simonvic.keybindings").plugins.dapui,
+		mappings = keybindings.plugins.dapui,
 		icons = {
 			expanded = glyphs.fs.dir.expanded,
 			collapsed = glyphs.fs.dir.collapsed,
@@ -31,7 +33,12 @@ return function()
 		},
 	})
 
-	require("dap").listeners.after.event_initialized["dapui_config"] = function()
+	dap.listeners.after.event_initialized["dapui_config"] = function()
 		dapui.open()
 	end
+
+	keybindings.implement({
+		toggle_debugger = dapui.toggle,
+		inspect_variable = dapui.eval,
+	})
 end

@@ -88,11 +88,11 @@ return function()
 				noremap = true,
 				nowait = true,
 			},
-			mappings = keybindings.plugins.neotree
+			mappings = keybindings.plugins.neotree.base
 		},
 		filesystem = {
 			window = {
-				mappings = keybindings.plugins.neotree_filesystem
+				mappings = keybindings.plugins.neotree.filesystem
 			},
 			filtered_items = {
 				visible = false, -- when true, they will just be displayed differently than normal items
@@ -118,14 +118,36 @@ return function()
 			},
 			group_empty_dirs = true,
 			show_unloaded = true,
-			window = keybindings.plugins.neotree_buffers,
+			window = keybindings.plugins.neotree.buffers,
 		},
 		git_status = {
 			group_empty_dirs = true,
 			window = {
 				position = "float",
-				mappings = keybindings.plugins.neotree_gitstatus
+				mappings = keybindings.plugins.neotree.gitstatus
 			}
 		}
+	})
+	local execute = require("neo-tree.command").execute
+	keybindings.implement({
+		filetree_focus = function() execute({ action = "focus" }) end,
+		filetree_toggle = function() execute({ action = "toggle" }) end,
+		filetree_refresh = function() execute({ action = "refresh" }) end,
+		filetree_expand_or_descend = function(state)
+			local node = state.tree:get_node()
+			if node.type == "directory" and not node:is_expanded() then
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+			else
+				vim.api.nvim_feedkeys("j", "n", false)
+			end
+		end,
+		filetree_collapse_or_ascend = function(state)
+			local node = state.tree:get_node()
+			if node.type == "directory" and node:is_expanded() then
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 'm', true)
+			else
+				vim.api.nvim_feedkeys("k", "n", false)
+			end
+		end
 	})
 end

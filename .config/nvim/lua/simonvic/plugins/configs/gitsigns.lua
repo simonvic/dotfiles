@@ -1,6 +1,7 @@
 return function()
 	local glyphs = require("simonvic.glyphs")
-	require('gitsigns').setup({
+	local gitsigns = require('gitsigns')
+	gitsigns.setup({
 		preview_config = {
 			border = "rounded",
 		},
@@ -12,5 +13,12 @@ return function()
 			changedelete = { text = glyphs.statuscolumn.vcs.changed_deleted },
 			untracked    = { text = glyphs.statuscolumn.vcs.untracked },
 		}
+	})
+	require("simonvic.keybindings").implement({
+		-- TODO: replace with gitsigns functions
+		vcs_change_next           = function() vim.cmd("Gitsigns next_hunk") end,
+		vcs_change_prev           = function() vim.cmd("Gitsigns prev_hunk") end,
+		vcs_change_preview_inline = gitsigns.preview_hunk_inline,
+		vcs_change_preview        = gitsigns.preview_hunk,
 	})
 end
