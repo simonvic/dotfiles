@@ -1,19 +1,19 @@
 local M = {}
 
 M.listchars = {
-	eol = "¬",
-	tab = "> ", -- TODO: why a space?
-	trail = "⋅",
-	extends = ">",
+	eol      = "¬",
+	tab      = "> ", -- TODO: why a space?
+	trail    = "⋅",
+	extends  = ">",
 	precedes = "<",
-	space = "⋅",
+	space    = "⋅",
 }
 
 M.fillchars = {
-	fold = " ",
-	foldopen = "",
+	fold      = " ",
+	foldopen  = "",
 	foldclose = "",
-	eob = " ",
+	eob       = " ",
 }
 
 M.tabline = {
@@ -81,18 +81,18 @@ M.vcs = {
 }
 
 M.fs = {
-	default = "",
-	unsaved = "󰏫",
-	hidden = " ",
-	symlink_arrow = "󱦰",
-	dir = {
-		collapsed = "",
-		expanded = "",
-		default = "",
-		open = "",
-		empty = "",
-		empty_open = "",
-		symlink = "",
+	default        = "",
+	unsaved        = "󰏫",
+	hidden         = " ",
+	symlink_arrow  = "󱦰",
+	dir            = {
+		collapsed    = "",
+		expanded     = "",
+		default      = "",
+		open         = "",
+		empty        = "",
+		empty_open   = "",
+		symlink      = "",
 		symlink_open = "",
 	},
 	indent_markers = {
@@ -115,14 +115,14 @@ M.statuscolumn = {
 
 M.plugins = {
 	mason = {
-		package_installed = "✓",
+		package_installed   = "✓",
 		package_uninstalled = "·",
-		package_pending = "󰇚",
+		package_pending     = "󰇚",
 	},
 	neotree = {
 		sources = {
 			filesystem = "󰉓",
-			buffers = "󰈢",
+			buffers    = "󰈢",
 			git_status = "󰊢",
 		},
 	},

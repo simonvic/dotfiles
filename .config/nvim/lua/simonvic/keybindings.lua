@@ -1,8 +1,8 @@
 -- TODO: toggle bool (<C-x> set to false, <C-a> set to true)
 
-local M    = {}
+local M = {}
 
-M.modes    = {
+M.modes = {
 	n___ = { "n" },
 	_v__ = { "v" },
 	__i_ = { "i" },
@@ -15,8 +15,9 @@ M.modes    = {
 	_vi_ = { "v", "i" },
 }
 
-M.util     = {
+M.util = {
 	cmd = function(command) return "<Cmd>" .. command .. "<CR>" end,
+	cmd_sel = function(command) return "'<,'>" .. command .. "<CR>" end,
 	cmd_esc = function(command) return "<Cmd>" .. command .. "<CR><ESC>" end,
 }
 
@@ -30,7 +31,8 @@ local nv__ = M.modes.nv__
 local n_i_ = M.modes.n_i_
 local n_it = M.modes.n_it
 local n__t = M.modes.n__t
-local cmd  = M.util.cmd
+local cmd = M.util.cmd
+local cmd_sel = M.util.cmd_sel
 
 function M.not_implemented(name)
 	name = name or "Key mapping"
@@ -39,7 +41,7 @@ end
 
 local foldcolumn = vim.opt.foldcolumn
 
-M.fn                 = {
+M.fn = {
 
 	toggle_list_chars           = function() vim.opt.list = not vim.opt.list:get() end,
 	toggle_fold_column          = function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and foldcolumn or "0" end,
@@ -128,9 +130,9 @@ M.fn                 = {
 	toggle_comment              = function() M.not_implemented("toggle_comment") end,
 }
 
-M.leader             = " "
-M.localleader        = " "
-M.mappings           = {
+M.leader = " "
+M.localleader = " "
+M.mappings = {
 	--modes,lhs,                                  rhs,                                             options },
 	{ n___, "-",                                  "/",                                             { desc = "Search forward" } },
 	{ n___, "_",                                  "?",                                             { desc = "Search backward" } },
@@ -310,22 +312,22 @@ M.mappings           = {
 }
 
 -------------------------------------------------------------------------------- PLUGINS
-M.plugins            = {}
+M.plugins = {}
 
 -------------------------------------------------------------------------------- TREESITTER
 M.plugins.treesitter = {
-	init_selection = false,
-	node_incremental = "<A-v>",
+	init_selection    = false,
+	node_incremental  = "<A-v>",
 	scope_incremental = false,
-	node_decremental = "<A-V>",
+	node_decremental  = "<A-V>",
 }
 
 -------------------------------------------------------------------------------- TELESCOPE
-M.plugins.telescope  = {
+M.plugins.telescope = {
 }
 
 -------------------------------------------------------------------------------- NVIMTREE
-M.plugins.nvimtree   = {
+M.plugins.nvimtree = {
 	{ n___, "|",                 function() require("nvim-tree.api").tree.toggle() end,                    { desc = "Toggle filetree" } },
 	{ n___, "<F5>",              function() require("nvim-tree.api").tree.reload() end,                    { desc = "Refresh filetree" } },
 	{ n___, { "l", "<Right>" },  function() M.fn.filetree_expand_or_descend() end,                         { desc = "Expand filetree node or descend" } },
@@ -363,7 +365,7 @@ M.plugins.nvimtree   = {
 }
 
 -------------------------------------------------------------------------------- NEO-TREE
-M.plugins.neotree    = {
+M.plugins.neotree = {
 	base = {
 		-- window
 		["|"]             = "close_window",
@@ -424,7 +426,7 @@ M.plugins.neotree    = {
 }
 
 -------------------------------------------------------------------------------- NVIM-JDTLS
-M.plugins.jdtls      = {
+M.plugins.jdtls = {
 	-- TODO: add abstract functions?
 	{ n_i_, "<A-i>",                 function() require("jdtls").organize_imports() end,                 { desc = "Organize imports" } },
 	{ n_i_, "<F6>",                  function() require("jdtls").pick_test() end,                        { desc = "Pick test" } },
@@ -436,7 +438,7 @@ M.plugins.jdtls      = {
 }
 
 -------------------------------------------------------------------------------- DAPUI
-M.plugins.dapui      = {
+M.plugins.dapui = {
 	["edit"]   = "e",
 	["expand"] = "<CR>",
 	["open"]   = { "o", "p" },
@@ -446,13 +448,13 @@ M.plugins.dapui      = {
 }
 
 -------------------------------------------------------------------------------- ALIGN
-M.plugins.align      = {
+M.plugins.align = {
 	["start"]              = M.leader .. "a",
 	["start_with_preview"] = M.leader .. "A",
 }
 
 -------------------------------------------------------------------------------- AERIAL
-M.plugins.aerial     = {
+M.plugins.aerial = {
 	base = {
 		["?"]        = "actions.show_help",
 		["g?"]       = false,
