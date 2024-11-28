@@ -21,6 +21,8 @@ M.plugins = {
 	--                                                                   CODING
 	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"),      run = ":TSUpdate", },
 	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects") },
+	{ "nvim-treesitter/nvim-treesitter-context",     config = require("simonvic.plugins.configs.ts-context") },
+	{ "nvim-treesitter/nvim-treesitter-refactor",    config = require("simonvic.plugins.configs.ts-refactor") },
 	{ "windwp/nvim-ts-autotag",                      after = "nvim-treesitter" },
 	{ "hrsh7th/cmp-nvim-lsp" },
 	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
