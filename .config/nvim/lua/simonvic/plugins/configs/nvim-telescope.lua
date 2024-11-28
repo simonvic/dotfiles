@@ -20,7 +20,7 @@ return function()
 		find_symbols        = builtin.lsp_dynamic_workspace_symbols,
 		fuzzy_find          = builtin.current_buffer_fuzzy_find,
 		live_grep           = builtin.live_grep,
-		find_references     = builtin.lsp_references,
+		references          = builtin.lsp_references,
 		diagnostic_show_all = builtin.diagnostics,
 		find_files          = function() builtin.find_files({ hidden = true }) end,
 		buffers             = function() builtin.buffers(themes.get_dropdown({})) end,
