@@ -1,3 +1,5 @@
+local M = {}
+
 M.diagnostics = {
 	hint  = "",
 	info  = "",

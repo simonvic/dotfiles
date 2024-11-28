@@ -1,3 +1,5 @@
+local M = {}
+
 M.diagnostic = {
 	DiagnosticSignError = { text = "", texthl = "DiagnosticSignError" },
 	DiagnosticSignWarn  = { text = "", texthl = "DiagnosticSignWarn" },

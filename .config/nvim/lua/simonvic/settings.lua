@@ -2,7 +2,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 local opt = vim.opt
 
-M = {}
+local M = {}
 
 -------------------------------------------------------------------------------- BEHAVIOUR
 opt.wrap = false
