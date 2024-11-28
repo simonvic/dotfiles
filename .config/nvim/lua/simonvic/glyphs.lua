@@ -1,10 +1,35 @@
 local M = {}
 
+M.listchars = {
+	eol = "¬",
+	tab = "> ", -- TODO: why a space?
+	trail = "⋅",
+	extends = ">",
+	precedes = "<",
+	space = "⋅",
+}
+
+M.fillchars = {
+	fold = " ",
+	foldopen = "",
+	foldclose = "",
+	eob = " ",
+}
+
+M.tabline = {
+	close = ""
+}
+
+M.statusline = {
+	separator = " |"
+}
+
 M.diagnostics = {
-	hint  = "",
-	info  = "",
-	warn  = "",
-	error = "",
+	prefix = "• ",
+	hint   = "",
+	info   = "",
+	warn   = "",
+	error  = "",
 }
 
 M.symbols = {

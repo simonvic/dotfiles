@@ -1,6 +1,8 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 local opt = vim.opt
+local glyphs = require("simonvic.glyphs")
+local signs = require("simonvic.signs")
 
 local M = {}
 
@@ -47,21 +49,8 @@ opt.termguicolors = true
 opt.showcmdloc = "statusline"
 
 opt.list = false
-opt.listchars = {
-	eol = "¬",
-	tab = "> ",
-	trail = "⋅",
-	extends = ">",
-	precedes = "<",
-	space = "⋅",
-}
-
-opt.fillchars = {
-	fold = " ",
-	foldopen = "",
-	foldclose = "",
-	eob = " ",
-}
+opt.listchars = glyphs.listchars
+opt.fillchars = glyphs.fillchars
 
 -------------------------------------------------------------------------------- STATUSCOLUMN (gutter)
 opt.statuscolumn = ""
@@ -78,8 +67,7 @@ opt.relativenumber = true
 -------------------------------------------------------------------------------- SIGNS
 opt.signcolumn = "auto:9"
 
-local diagnostic_signs = require("simonvic.signs").diagnostic
-for name, sign in pairs(diagnostic_signs) do
+for name, sign in pairs(signs.diagnostic) do
 	vim.fn.sign_define(name, sign)
 end
 
@@ -126,7 +114,7 @@ function BuildTabLine()
 		else
 			s = s .. "%#TabLine#"
 		end
-		s = s .. "%" .. i .. "T  %{" .. i .. "}  %" .. i .. "X "
+		s = s .. "%" .. i .. "T  %{" .. i .. "}  %" .. i .. "X" .. glyphs.tabline.close .. " "
 	end
 	s = s .. "%#TabLineFill#%T"
 	return s
@@ -196,41 +184,42 @@ local function build_status_line_diagnostics()
 	if #clients == 0 then
 		return ""
 	end
-	local output = " |"
+	local output = glyphs.statusline.separator
 	for _, lsp in pairs(clients) do
 		output = output .. string.format(" %s", lsp.name)
 	end
 	local diag = vim.diagnostic
-	local e = get_diagnostic_sign_text("DiagnosticSignError") .. #diag.get(0, { severity = diag.severity.ERROR })
-	local w = get_diagnostic_sign_text("DiagnosticSignWarn") .. #diag.get(0, { severity = diag.severity.WARN })
-	local i = get_diagnostic_sign_text("DiagnosticSignInfo") .. #diag.get(0, { severity = diag.severity.INFO })
-	local h = get_diagnostic_sign_text("DiagnosticSignHint") .. #diag.get(0, { severity = diag.severity.HINT })
-	output = output .. string.format(" %s %s %s %s", e, w, i, h)
+	output = output .. string.format(
+		"  %s  %s  %s  %s",
+		"%#DiagnosticSignError#" .. glyphs.diagnostics.error .. "%* " .. #diag.get(0, { severity = diag.severity.ERROR }),
+		"%#DiagnosticSignWarn#" .. glyphs.diagnostics.warn .. "%* " .. #diag.get(0, { severity = diag.severity.WARN }),
+		"%#DiagnosticSignInfo#" .. glyphs.diagnostics.info .. "%* " .. #diag.get(0, { severity = diag.severity.INFO }),
+		"%#DiagnosticSignHint#" .. glyphs.diagnostics.hint .. "%* " .. #diag.get(0, { severity = diag.severity.HINT }))
 	return output;
 end
 
 local function build_status_line_git_branch()
 	local branch = vim.g.gitsigns_head
 	if branch then
-		return " | " .. branch
+		return glyphs.statusline.separator .. " " .. branch
 	end
 	return ""
 end
 
 function BuildStatusLine()
 	return ""
-		.. " " .. build_status_line_mode() -- mode
-		.. " [%S]"                        -- command
-		.. "%w"                           -- preview
-		.. "%q"                           -- quickfix/location list
-		.. "%="                           -- filling
-		.. " %c:%l"                       -- column:line
-		.. " | %{&ff}"                    -- file format
-		.. " | %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
-		.. " | %Y"                        -- file type
-		.. build_status_line_diagnostics() -- diagnostics
-		.. build_status_line_git_branch() -- git branch
-		.. " "                            -- Some padding
+		.. " " .. build_status_line_mode()                            -- mode
+		.. " [%S]"                                                    -- command
+		.. "%w"                                                       -- preview
+		.. "%q"                                                       -- quickfix/location list
+		.. "%="                                                       -- filling
+		.. " %c:%l"                                                   -- column:line
+		.. glyphs.statusline.separator .. " %{&ff}"                    -- file format
+		.. glyphs.statusline.separator .. " %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
+		.. glyphs.statusline.separator .. " %Y"                        -- file type
+		.. build_status_line_diagnostics()                            -- diagnostics
+		.. build_status_line_git_branch()                             -- git branch
+		.. " "                                                        -- Some padding
 end
 
 opt.statusline = "%!luaeval('BuildStatusLine()')"
@@ -244,7 +233,7 @@ vim.diagnostic.config({
 	float = {
 		border = "rounded",
 		header = "",
-		prefix = "• "
+		prefix = glyphs.diagnostics.prefix
 	}
 })
 local lsp = vim.lsp
