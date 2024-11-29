@@ -10,4 +10,8 @@ return function()
 			border = "curved",
 		},
 	})
+	require("simonvic.keybindings").implement({
+		terminal = function() vim.cmd("ToggleTerm direction=horizontal") end,
+		terminal_float = function() vim.cmd("ToggleTerm direction=float") end
+	})
 end
