@@ -30,7 +30,8 @@ return function()
 			}
 		}
 	})
-	require("telescope").load_extension("aerial")
+	local ok, telescope = pcall(require, "telescope")
+	if ok then telescope.load_extension("aerial") end
 	keybindings.implement({
 		symbols_outline_focus = function() vim.cmd("AerialToggle") end,
 		symbols_outline_float = function() vim.cmd("AerialNavToggle") end

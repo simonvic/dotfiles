@@ -5,5 +5,6 @@ return function()
 		render = "compact"
 	})
 	vim.notify = notify
-	require("telescope").load_extension("notify")
+	local ok, telescope = pcall(require, "telescope")
+	if ok then telescope.load_extension("notify") end
 end
