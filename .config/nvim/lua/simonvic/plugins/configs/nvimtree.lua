@@ -35,7 +35,7 @@ return function()
 		},
 		view = {
 			width = {
-				max = 45,
+				max = 30,
 				padding = 1,
 			},
 			signcolumn = "auto",
