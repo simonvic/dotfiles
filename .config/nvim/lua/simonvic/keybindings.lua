@@ -172,7 +172,7 @@ M.mappings = {
 	{ n___, "<leader>gh",                         function() M.fn.vcs_change_preview_inline() end, { desc = "Preview hunk diff inline" } },
 	{ n___, "<leader>gH",                         function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
 	{ n___, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
-	{ n___, "[d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go prev diagnostic" } },
+	{ n___, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
 	---------------------------------------------------------------------------- SELECTION
 	{ n___, "<S-LEFT>",                           "v<LEFT>",                                       { desc = "Select left" } },
 	{ _v__, "<S-LEFT>",                           "<LEFT>",                                        { desc = "Select left" } },
