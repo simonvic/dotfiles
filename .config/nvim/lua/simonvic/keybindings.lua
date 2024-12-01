@@ -41,6 +41,14 @@ end
 
 local foldcolumn = vim.opt.foldcolumn
 
+local function feed(keys, termcodes)
+	termcodes = termcodes or true
+	if termcodes then
+		keys = vim.api.nvim_replace_termcodes(keys, true, true, true)
+	end
+	vim.api.nvim_feedkeys(keys, "n", false)
+end
+
 M.fn = {
 
 	toggle_list_chars           = function() vim.opt.list = not vim.opt.list:get() end,
@@ -79,7 +87,7 @@ M.fn = {
 	-- plugin abstractions
 
 	-- eventually add default implementation with netrw
-	filetree_focus              = function() M.not_implemented("filetree_focus") end,
+	filetree_focus              = function() vim.cmd("Explore") end,
 	filetree_toggle             = function() M.not_implemented("filetree_toggle") end,
 	filetree_refresh            = function() M.not_implemented("filetree_refresh") end,
 	filetree_expand_or_descend  = function() M.not_implemented("filetree_expand_or_descend") end,
@@ -88,11 +96,12 @@ M.fn = {
 	symbols_outline_focus       = function() M.not_implemented("symbols_outline_focus") end,
 	symbols_outline_float       = function() M.not_implemented("symbols_outline_float") end,
 
-	find_files                  = function() M.not_implemented("find_files") end,
+	toggle_context              = function() M.not_implemented("toggle_context") end,
+	find_files                  = function() feed(":edit **/*") end,
 	find_symbols                = function() M.not_implemented("find_symbols") end,
-	fuzzy_find                  = function() M.not_implemented("fuzzy_find") end,
-	live_grep                   = function() M.not_implemented("live_grep") end,
-	buffers                     = function() M.not_implemented("buffers") end,
+	fuzzy_find                  = function() feed(":grep %<left><left> ") end,
+	live_grep                   = function() feed(":grep ") end,
+	buffers                     = function() vim.cmd("buffers") end,
 
 	vcs_change_next             = function() M.not_implemented("vcs_change_next") end,
 	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
