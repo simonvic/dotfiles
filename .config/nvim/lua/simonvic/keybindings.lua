@@ -283,6 +283,7 @@ M.mappings = {
 	---------------------------------------------------------------------------- UI
 	{ n___, "<Leader>ud",                         function() M.fn.toggle_debugger() end,           { desc = "Toggle debugger UI" } },
 	{ n___, "<Leader>ul",                         function() M.fn.toggle_list_chars() end,         { desc = "Toggle list chars" } },
+	{ n___, "<Leader>uc",                         function() M.fn.toggle_context() end,            { desc = "Toggle code context (scope)" } },
 	{ n___, "<Leader>uz",                         function() M.fn.toggle_fold_column() end,        { desc = "Toggle folds column" } },
 	{ n___, "<Leader>un",                         function() M.fn.toggle_relative_number() end,    { desc = "Toggle relative number column" } },
 	{ n___, "<Leader>uN",                         function() M.fn.toggle_line_number() end,        { desc = "Toggle number column" } },
