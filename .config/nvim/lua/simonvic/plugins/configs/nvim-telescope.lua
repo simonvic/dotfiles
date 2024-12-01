@@ -22,7 +22,7 @@ return function()
 		live_grep           = builtin.live_grep,
 		references          = builtin.lsp_references,
 		definition          = builtin.lsp_definitions,
-		diagnostic_show_all = builtin.diagnostics,
+		diagnostic_show_all = function() builtin.diagnostics({ sort_by = "severity" }) end,
 		find_files          = function() builtin.find_files({ hidden = true }) end,
 		buffers             = function() builtin.buffers(themes.get_dropdown({})) end,
 		commands            = builtin.keymaps,
