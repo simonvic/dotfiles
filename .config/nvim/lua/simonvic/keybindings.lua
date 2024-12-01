@@ -182,6 +182,8 @@ M.mappings = {
 	{ n___, "<leader>gH",                         function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
 	{ n___, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
 	{ n___, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
+	{ n___, "]q",                                 cmd("cnext"),                                    { desc = "Go next quickfix list entry" } },
+	{ n___, "[q",                                 cmd("cprevious"),                                { desc = "Go prev quickfix list entry" } },
 	---------------------------------------------------------------------------- SELECTION
 	{ n___, "<S-LEFT>",                           "v<LEFT>",                                       { desc = "Select left" } },
 	{ _v__, "<S-LEFT>",                           "<LEFT>",                                        { desc = "Select left" } },
