@@ -642,9 +642,12 @@
 	},
 	"custom/tlp": {
 		"interval": 5,
+		"signal": 1,
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
+		"on-click": "sBatteryctl power ac",
+		"on-click-right": "sBatteryctl power auto",
 		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in AC) echo '';; AC*) echo 󰠠;; battery) echo 󰌪;; battery*) echo 󱤅;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"TLP mode: $icon $mode\""
 		// 󱐋 AC
 		// 󰠠 AC (manual)
