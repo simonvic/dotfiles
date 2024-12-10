@@ -137,9 +137,12 @@ function getWakelockStatus() {
 }
 
 ##
-#	Update polybar modules of wakelock
-function updatePolybar() {
-	sPolybarctl message "action wakelock hook 0"
+#	Update system status bar (polybar/waybar)
+function updateBar() {
+	case "$XDG_SESSION_TYPE" in
+		x11) sPolybarctl message "action wakelock hook 0" ;;
+		wayland) pkill -RTMIN+1 waybar ;;
+	esac
 }
 
 ##
@@ -240,7 +243,7 @@ Wakelock is <b>$wakelockStatus</b>
 Screensaver: <b>$(isScreensaverEnabled)</b></small>"
 
 		updateWakelockStatus "$wakelockStatus"
-		updatePolybar
+		updateBar
 		sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 	fi
 }

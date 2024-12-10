@@ -214,17 +214,24 @@ function screensaver() {
 }
 
 ##
-#	Update polybar modules
-function updatePolybar() {
-	sPolybarctl message "action brightness hook 0"
-	sPolybarctl message "action brightness-extended hook 0"
-	if [[ "$redshiftEnabled" == true ]]; then
-		sPolybarctl message "action redshift hook 2"
-		sPolybarctl message "action redshift-extended hook 2"
-	else
-		sPolybarctl message "action redshift hook 1"
-		sPolybarctl message "action redshift-extended hook 1"
-	fi
+#	Update system bar (polybar/waybar)
+function updateBar() {
+	case "$XDG_SESSION_TYPE" in
+		x11)
+			sPolybarctl message "action brightness hook 0"
+			sPolybarctl message "action brightness-extended hook 0"
+			if [[ "$redshiftEnabled" == true ]]; then
+				sPolybarctl message "action redshift hook 2"
+				sPolybarctl message "action redshift-extended hook 2"
+			else
+				sPolybarctl message "action redshift hook 1"
+				sPolybarctl message "action redshift-extended hook 1"
+			fi
+			;;
+		wayland)
+			pkill -RTMIN+1 waybar
+			;;
+	esac
 }
 
 function printUsage() {
@@ -257,50 +264,51 @@ function printUsage() {
 case $1 in
 	increase | i)
 		changeBrightness -inc "$2"
-		updatePolybar
+		updateBar
 		sendNotification
 		;;
 	decrease | d)
 		changeBrightness -dec "$2"
-		updatePolybar
+		updateBar
 		sendNotification
 		;;
 	set | s)
 		setBrightness "$2"
-		updatePolybar
+		updateBar
 		sendNotification
 		;;
 	screensaver)
 		screensaver
-		updatePolybar
+		updateBar
 		;;
 	redshift | r)
 		case $2 in
 			toggle | t)
 				toggleRedshift
-				updatePolybar
+				updateBar
 				sendNotification
 				;;
 			increase | i)
 				setRedshiftTemperature $((redshiftTemperature + ${3:-$defaultTempChangeValue}))
-				updatePolybar
+				updateBar
 				sendNotification
 				;;
 			decrease | d)
 				setRedshiftTemperature $((redshiftTemperature - ${3:-$defaultTempChangeValue}))
-				updatePolybar
+				updateBar
 				sendNotification
 				;;
 			restore | r)
 				restoreRedshift
-				updatePolybar
+				# TODO: waybar hangs on boot
+				# updateBar
 				;;
 			print) echo "$redshiftTemperature" ;;
 		esac
 		;;
 	polybar)
 		case $2 in
-			update) updatePolybar ;;
+			update) updateBar ;;
 			*) printUsage ;;
 		esac
 		;;
