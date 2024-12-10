@@ -134,4 +134,12 @@ return function()
 			end
 		end
 	})
+	vim.api.nvim_create_autocmd({"BufEnter", "DirChanged"}, {
+		pattern = "*",
+		callback = function()
+			if vim.bo.filetype == "NvimTree" then
+				vim.wo.winbar = vim.fn.fnamemodify(vim.uv.cwd(), ":~:h") .. "/"
+			end
+		end,
+	})
 end
