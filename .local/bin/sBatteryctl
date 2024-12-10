@@ -416,6 +416,36 @@ function wakelock() {
 }
 
 ##
+#	Manage power
+function power() {
+	if [[ -z $1 ]]; then
+		printUsage
+		return
+	fi
+	case $1 in
+		auto) sudo tlp start ;;
+		ac) sudo tlp ac ;;
+		bat) sudo tlp bat ;;
+		*) printUsage; return ;;
+	esac
+	updateBar
+
+	local mode; mode=$(tlp-stat --mode)
+	local title="sBatteryctl | Power"
+	local body="Power profile set to: <b>$mode</b>"
+	local urgency=normal
+	local timeout=3500
+	local icon=""
+	case "$mode" in
+		AC) icon="power-profile-performance-symbolic" ;;
+		AC*) icon="power-profile-performance-symbolic" ;;
+		battery) icon="power-profile-balanced-symbolic" ;;
+		battery*) icon="power-profile-power-saver-symbolic" ;;
+	esac
+	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
+}
+
+##
 # Print script usage
 function printUsage() {
 	printf "%s\n" "
@@ -431,6 +461,7 @@ function printUsage() {
 	current                     # Show current information on the battery
 	wakelock toggle [on|off]    # Toggle on/off the wakelock
 	wakelock status             # Print current wakelock status
+	power <auto|ac|bat>         # Set power mode to auto, AC or battery
 
 - Abbreviations
 	m = monitor
@@ -449,5 +480,6 @@ case $1 in
 	unplug | u) unplug ;;
 	current | c) current ;;
 	wakelock | w) wakelock "$2" "$3" ;;
+	power) power "$2" ;;
 	help | *) printUsage ;;
 esac
