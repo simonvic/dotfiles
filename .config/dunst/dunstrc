@@ -19,9 +19,9 @@
 	#####################################################
 	## GEOMETRY
 	width = (0, 500)
-	height = 500
+	height = (0, 500)
 	origin = top-center
-	offset = 0x65
+	offset = (0, 65)
 	scale = 0
 	notification_limit = 0
 	corner_radius = 0
