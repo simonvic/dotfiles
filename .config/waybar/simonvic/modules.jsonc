@@ -625,7 +625,7 @@
 		]
 	},
 	"custom/aur": {
-		"interval": 600,
+		"interval": 3600,
 		"format": " {}",
 		"return-type": "json",
 		"tooltip-format": "<tt>{alt}</tt>",
@@ -634,7 +634,7 @@
 		"on-click-right": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(auracle outdated | wc -l)\" \"$(auracle outdated | sed 's/-> //' | column -t | tr '\n' '\r' )\""
 	},
 	"custom/fan": {
-		"interval": 1,
+		"interval": 3,
 		"format": "󰈐 {} {alt}",
 		"return-type": "json",
 		"tooltip-format": "cpu: {}\ngpu: {alt}",
@@ -652,7 +652,7 @@
 		// 󱤅 battery (manual)
 	},
 	"custom/redshift": {
-		"interval": 1,
+		"interval": 5,
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
@@ -662,7 +662,7 @@
 		"on-scroll-down": "sBrightnessctl redshift decrease 400"
 	},
 	"custom/redshift#extended": {
-		"interval": 1,
+		"interval": 5,
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
@@ -671,4 +671,5 @@
 		"on-scroll-up": "sBrightnessctl redshift increase 400",
 		"on-scroll-down": "sBrightnessctl redshift decrease 400"
 	}
+
 }
