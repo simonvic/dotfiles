@@ -1,72 +1,34 @@
--- TODO: zK move fold up, zJ move fold down
 return function()
+	local k = require("simonvic.keybindings").plugins.ts_textobjects
 	---@diagnostic disable-next-line: missing-fields
 	require("nvim-treesitter.configs").setup({
 		textobjects = {
 			swap = {
 				enable = true,
-				swap_next = {
-					["mal"] = "@parameter.inner",
-					["mfl"] = "@function.outer",
-					["mcl"] = "@class.outer",
-				},
-				swap_previous = {
-					["mah"] = "@parameter.inner",
-					["mfh"] = "@function.outer",
-					["mch"] = "@class.outer",
-				},
+				swap_next = k.swap.swap_next,
+				swap_previous = k.swap.swap_previous,
 			},
 			lsp_interop = {
 				enable = true,
 				border = "rounded",
 				floating_preview_opts = {},
-				peek_definition_code = {
-					["<leader>df"] = "@function.outer",
-					["<leader>dc"] = "@class.outer",
-				},
+				peek_definition_code = k.lsp_interop.peek_definition_code,
 			},
 			move = {
 				enable = true,
 				set_jumps = true, -- whether to set jumps in the jumplist
-				goto_next_start = {
-					["]f"] = "@function.outer",
-					["]a"] = "@parameter.inner",
-					["]c"] = "@class.outer",
-				},
-				goto_next_end = {
-					["]F"] = "@function.outer",
-					["]A"] = "@parameter.outer",
-					["]C"] = "@class.outer",
-				},
-				goto_previous_start = {
-					["[f"] = "@function.outer",
-					["[a"] = "@parameter.inner",
-					["[c"] = "@class.outer",
-				},
-				goto_previous_end = {
-					["[F"] = "@function.outer",
-					["[A"] = "@parameter.outer",
-					["[C"] = "@class.outer",
-				},
-				goto_next = {
-					-- ["]i"] = "@conditional.outer",
-				},
-				goto_previous = {
-					-- ["[i"] = "@conditional.outer",
-				}
+				goto_next_start = k.move.goto_next_start,
+				goto_next_end = k.move.goto_next_end,
+				goto_previous_start = k.move.goto_previous_start,
+				goto_previous_end = k.move.goto_previous_end,
+				goto_next = k.move.goto_next,
+				goto_previous = k.move.goto_previous,
 			},
 			select = {
 				enable = true,
 				lookahead = true,
 				include_surrounding_whitespace = false,
-				keymaps = {
-					["af"] = "@function.outer",
-					["aa"] = "@parameter.outer",
-					["ac"] = "@class.outer",
-					["if"] = "@function.inner",
-					["ia"] = "@parameter.inner",
-					["ic"] = "@class.inner",
-				},
+				keymaps = k.select.keymaps,
 
 				-- v, V, <c-v>
 				selection_modes = {
@@ -85,5 +47,4 @@ return function()
 	vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
 	vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
 	vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-
 end

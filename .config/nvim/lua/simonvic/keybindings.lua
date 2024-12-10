@@ -339,6 +339,66 @@ M.plugins.treesitter = {
 	node_decremental  = "<A-V>",
 }
 
+-------------------------------------------------------------------------------- TS-TEXTOBJECTS
+M.plugins.ts_textobjects = {
+	swap = {
+		swap_next = {
+			["mal"] = "@parameter.inner",
+			["mfl"] = "@function.outer",
+			["mcl"] = "@class.outer",
+		},
+		swap_previous = {
+			["mah"] = "@parameter.inner",
+			["mfh"] = "@function.outer",
+			["mch"] = "@class.outer",
+		},
+	},
+	lsp_interop = {
+		peek_definition_code = {
+			["<leader>df"] = "@function.outer",
+			["<leader>dc"] = "@class.outer",
+		},
+	},
+	move = {
+		goto_next_start = {
+			["]f"] = "@function.outer",
+			["]a"] = "@parameter.inner",
+			["]c"] = "@class.outer",
+		},
+		goto_next_end = {
+			["]F"] = "@function.outer",
+			["]A"] = "@parameter.outer",
+			["]C"] = "@class.outer",
+		},
+		goto_previous_start = {
+			["[f"] = "@function.outer",
+			["[a"] = "@parameter.inner",
+			["[c"] = "@class.outer",
+		},
+		goto_previous_end = {
+			["[F"] = "@function.outer",
+			["[A"] = "@parameter.outer",
+			["[C"] = "@class.outer",
+		},
+		goto_next = {
+			-- ["]i"] = "@conditional.outer",
+		},
+		goto_previous = {
+			-- ["[i"] = "@conditional.outer",
+		}
+	},
+	select = {
+		keymaps = {
+			["af"] = "@function.outer",
+			["aa"] = "@parameter.outer",
+			["ac"] = "@class.outer",
+			["if"] = "@function.inner",
+			["ia"] = "@parameter.inner",
+			["ic"] = "@class.inner",
+		},
+	},
+}
+
 -------------------------------------------------------------------------------- TELESCOPE
 M.plugins.telescope = {
 }
@@ -362,6 +422,17 @@ M.plugins.nvimtree = {
 	{ n___, ".",                 function() require("nvim-tree.api").tree.change_root_to_node() end,       { desc = "cd" } },
 	{ n___, "[h",                function() require("nvim-tree.api").node.navigate.git.prev() end,         { desc = "Prev Git" } },
 	{ n___, "]h",                function() require("nvim-tree.api").node.navigate.git.next() end,         { desc = "Next Git" } },
+	-- { n___, "]h", function()
+	-- 	local api = require("nvim-tree.api")
+	-- 	api.node.navigate.git.next()
+	-- 	local node = api.tree.get_node_under_cursor()
+	-- 	while node.type == "directory" and not node.open do
+	-- 		if not node then break end
+	-- 		node:expand_or_collapse() -- expand only
+	-- 		api.node.navigate.git.next()
+	-- 		node = api.tree.get_node_under_cursor()
+	-- 	end
+	-- end, { desc = "Prev Git" } },
 	{ n___, "]d",                function() require("nvim-tree.api").node.navigate.diagnostics.next() end, { desc = "Next Diagnostic" } },
 	{ n___, "[d",                function() require("nvim-tree.api").node.navigate.diagnostics.prev() end, { desc = "Prev Diagnostic" } },
 	{ n___, "H",                 function() require("nvim-tree.api").tree.toggle_hidden_filter() end,      { desc = "Toggle Filter: Dotfiles" } },
