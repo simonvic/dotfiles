@@ -367,6 +367,7 @@ local function buildGroups()
 		["@lsp.typemod.property.readonly"] = { link = "Constant" },
 		["@lsp.typemod.variable.readonly"] = { link = "Constant" },
 		["@lsp.typemod.property"]          = { fg = p.member },
+		["@lsp.typemod.annotation"]        = { link = "PreProc" },
 		-- ["@lsp.typemod.property.public"]    = { fg = p.member },
 		-- ["@lsp.typemod.property.protected"] = { fg = p.member },
 		-- ["@lsp.typemod.property.private"]   = { fg = p.member },
