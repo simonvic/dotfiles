@@ -107,6 +107,25 @@ local pick_many = function(items, prompt, label_f, opts)
 	return coroutine.yield()
 end
 
+local pick_one = function(items, prompt, label_fn)
+	local co = coroutine.running();
+	local choices = {}
+	for i, item in pairs(items) do
+		table.insert(choices, label_fn(item))
+	end
+	vim.ui.select(choices, { prompt = prompt },
+		function(choice, index)
+			if index == nil then
+				coroutine.resume(co, nil) -- Just to be explicit
+			else
+				coroutine.resume(co, items[index])
+			end
+		end
+	)
+	return coroutine.yield()
+end
+
 require("jdtls.ui").pick_many = pick_many
+require("jdtls.ui").pick_one = pick_one
 
 jdtls.start_or_attach(jdtls_config)
