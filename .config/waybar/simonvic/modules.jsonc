@@ -656,6 +656,7 @@
 	},
 	"custom/redshift": {
 		"interval": 5,
+		"signal": 1,
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
@@ -666,6 +667,7 @@
 	},
 	"custom/redshift#extended": {
 		"interval": 5,
+		"signal": 1,
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
