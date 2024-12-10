@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<profiles version="1">
-<profile kind="CodeFormatterProfile" name="simonvicStyle" version="1">
+<profiles version="23">
+<profile kind="CodeFormatterProfile" name="simonvicStyle" version="23">
 <setting id="org.eclipse.jdt.core.formatter.align_with_spaces" value="true"/>
 <!-- <setting id="org.eclipse.jdt.core.formatter.use_tabs_only_for_leading_indentations" value="true"/> -->
 <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="48"/>
@@ -20,6 +20,15 @@
 <setting id="org.eclipse.jdt.core.formatter.blank_lines_before_method" value="1"/>
 <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_last_class_body_declaration" value="1"/>
 <setting id="org.eclipse.jdt.core.formatter.blank_lines_before_first_class_body_declaration" value="1"/>
+<setting id="org.eclipse.jdt.core.formatter.text_block_indentation" value="3"/>
+<setting id="org.eclipse.jdt.core.formatter.wrap_before_switch_case_arrow_operator" value="true"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_delcaration" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_enum_constant_declaration" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_annotation" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_record_declaration" value="separate_lines_if_wrapped"/>
+<!-- <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_invocation" value="separate_lines_if_wrapped"/> -->
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_try_clause" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_lambda_declaration" value="separate_lines_if_wrapped"/>
 </profile>
 </profiles>
 
