@@ -104,7 +104,7 @@ M.fn = {
 	find_symbols                = function() M.not_implemented("find_symbols") end,
 	fuzzy_find                  = function() feed(":grep %<left><left> ") end,
 	live_grep                   = function() feed(":grep ") end,
-	buffers                     = function() vim.cmd("buffers") end,
+	buffers                     = function() feed(":buffer ") end,
 
 	vcs_change_next             = function() M.not_implemented("vcs_change_next") end,
 	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
