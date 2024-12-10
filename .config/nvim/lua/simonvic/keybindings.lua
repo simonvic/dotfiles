@@ -40,6 +40,7 @@ function M.not_implemented(name)
 end
 
 local foldcolumn = vim.opt.foldcolumn
+local signcolumn = vim.opt.signcolumn
 
 local function feed(keys, termcodes)
 	termcodes = termcodes or true
@@ -52,7 +53,9 @@ end
 M.fn = {
 
 	toggle_list_chars           = function() vim.opt.list = not vim.opt.list:get() end,
+	-- TODO: if == "no" then update signcolumn
 	toggle_fold_column          = function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and foldcolumn or "0" end,
+	toggle_sign_column          = function() vim.opt.signcolumn = vim.opt.signcolumn:get() == "no" and signcolumn or "no" end,
 	toggle_line_number          = function() vim.opt.number = not vim.opt.number:get() end,
 	toggle_relative_number      = function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end,
 	toggle_inlay_hints          = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
@@ -285,6 +288,7 @@ M.mappings = {
 	{ n___, "<Leader>ul",                         function() M.fn.toggle_list_chars() end,         { desc = "Toggle list chars" } },
 	{ n___, "<Leader>uc",                         function() M.fn.toggle_context() end,            { desc = "Toggle code context (scope)" } },
 	{ n___, "<Leader>uz",                         function() M.fn.toggle_fold_column() end,        { desc = "Toggle folds column" } },
+	{ n___, "<Leader>us",                         function() M.fn.toggle_sign_column() end,        { desc = "Toggle signs column" } },
 	{ n___, "<Leader>un",                         function() M.fn.toggle_relative_number() end,    { desc = "Toggle relative number column" } },
 	{ n___, "<Leader>uN",                         function() M.fn.toggle_line_number() end,        { desc = "Toggle number column" } },
 	{ n___, "<Leader>uh",                         function() M.fn.toggle_inlay_hints() end,        { desc = "Toggle lsp inlay hints" } },
