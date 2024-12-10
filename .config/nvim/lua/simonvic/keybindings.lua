@@ -125,6 +125,7 @@ M.fn = {
 	breapoint_condition_log     = function() M.not_implemented("breapoint_condition_log") end,
 	inspect_variable            = function() M.not_implemented("inspect_variable") end,
 
+	organize_imports            = function() M.not_implemented("organize_imports") end,
 	pick_tests                  = function() M.not_implemented("pick_tests") end,
 	test_class                  = function() M.not_implemented("test_class") end,
 	test_method                 = function() M.not_implemented("test_method") end,
