@@ -27,6 +27,7 @@ return function()
 	})
 	local builtin = require("telescope.builtin")
 	keybindings.implement({
+		commands_menu       = function() vim.cmd("Telescope") end,
 		find_symbols        = builtin.lsp_dynamic_workspace_symbols,
 		fuzzy_find          = builtin.current_buffer_fuzzy_find,
 		live_grep           = builtin.live_grep,

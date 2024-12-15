@@ -89,6 +89,8 @@ M.fn = {
 
 	-- plugin abstractions
 
+	commands_menu               = function() M.not_implemented("commands_menu") end,
+
 	-- eventually add default implementation with netrw
 	filetree_focus              = function() vim.cmd("Explore") end,
 	filetree_toggle             = function() M.not_implemented("filetree_toggle") end,
@@ -169,7 +171,7 @@ M.mappings = {
 	{ n_i_, "<A-q>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
 	{ n___, { "<C-e>", "<leader>e" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ __i_, "<C-e>",                              function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
-	{ n___, "<leader>E",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show telescope diagnostics" } },
+	{ n___, "<leader>E",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
 	--------------------------------------------------------------------------- MOVEMENT
 	{ nv__, "<C-LEFT>",                           "b",                                             { desc = "Previous end" } },
 	{ __i_, "<C-LEFT>",                           "<C-o>b",                                        { desc = "Previous end" } },
@@ -276,7 +278,7 @@ M.mappings = {
 	{ ___t, "<Esc>",                              "<C-\\><C-n>",                                   { desc = "Exit terminal mode" } },
 	{ n___, { "<leader><leader>", "<C-p>" },      function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ __i_, "<C-p>",                              function() M.fn.find_files() end,                { desc = "Find files" } },
-	{ n___, "<A-p>",                              cmd("Telescope"),                                { desc = "Telescope" } },
+	{ n___, "<A-p>",                              function() M.fn.commands_menu() end,             { desc = "Commands menu" } },
 	{ n___, "<leader>:",                          function() M.fn.commands() end,                  { desc = "Commands palette" } },
 	{ n___, { "<leader>s", "<C-A-p>" },           function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
 	{ __i_, "<C-A-p>",                            function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
