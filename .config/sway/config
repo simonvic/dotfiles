@@ -155,8 +155,7 @@ bindsym $mod+Shift+Return                exec xfce4-terminal --drop-down
 
 
 #                                                                       POLYBAR
-bindsym $mod+p                           exec swaymsg bar mode toggle primary ; \
-                                         	exec swaymsg bar hidden_state hide primary
+bindsym $mod+p                           exec swaymsg bar mode toggle primary
 bindsym $mod+Shift+p                     exec swaymsg bar hidden_state toggle secondary
 bindsym $mod+Ctrl+p                      exec swaymsg bar hidden_state toggle tertiary
 bindsym $mod+Ctrl+Shift+p                exec swaymsg bar hidden_state toggle tertiary
