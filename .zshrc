@@ -141,8 +141,12 @@ promptinit
 prompt simonvic-minimal
 
 ################################################################################ ALIASES
-function xo() {	xdg-open $1 &! }
-function t() { tree -h -F -D -L ${1:-1} }
+function xo() {
+	xdg-open $1 &!
+}
+function t() {
+	tree -h -F -D -L ${1:-1}
+}
 alias ls="ls -p --color=auto"
 alias l="ls -Al --human-readable"
 alias grep="grep --color"
