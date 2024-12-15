@@ -13,18 +13,28 @@ return function()
 				}
 			}
 		},
+		pickers = {
+			find_files = {
+				hidden = true
+			},
+			diagnostics = {
+				sort_by = "severity"
+			},
+			buffers = {
+				theme = "dropdown"
+			}
+		}
 	})
 	local builtin = require("telescope.builtin")
-	local themes = require("telescope.themes")
 	keybindings.implement({
 		find_symbols        = builtin.lsp_dynamic_workspace_symbols,
 		fuzzy_find          = builtin.current_buffer_fuzzy_find,
 		live_grep           = builtin.live_grep,
 		references          = builtin.lsp_references,
 		definition          = builtin.lsp_definitions,
-		diagnostic_show_all = function() builtin.diagnostics({ sort_by = "severity" }) end,
-		find_files          = function() builtin.find_files({ hidden = true }) end,
-		buffers             = function() builtin.buffers(themes.get_dropdown({})) end,
+		diagnostic_show_all = builtin.diagnostics,
+		find_files          = builtin.find_files,
+		buffers             = builtin.buffers,
 		commands            = builtin.keymaps,
 	})
 end
