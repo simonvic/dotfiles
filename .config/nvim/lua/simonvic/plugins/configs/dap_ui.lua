@@ -16,8 +16,8 @@ return function()
 				position = "bottom",
 				size = 8,
 				elements = {
-					{ id = "breakpoints", size = 0.20 },
-					{ id = "repl",        size = 0.30 },
+					{ id = "breakpoints", size = 0.10 },
+					{ id = "repl",        size = 0.40 },
 					{ id = "console",     size = 0.50 }
 				},
 			},
