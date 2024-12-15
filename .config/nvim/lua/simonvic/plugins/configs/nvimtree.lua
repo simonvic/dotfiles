@@ -132,9 +132,21 @@ return function()
 			else
 				vim.api.nvim_feedkeys("k", "n", false)
 			end
+		end,
+		filetree_vcs_change_prev = api.node.navigate.git.prev,
+		-- filetree_vcs_change_next = api.node.navigate.git.next,
+		filetree_vcs_change_next = function() -- directly navigate to file
+			api.node.navigate.git.next()
+			local node = api.tree.get_node_under_cursor()
+			while node.type == "directory" and not node.open do
+				if not node then break end
+				node:expand_or_collapse() -- expand only
+				api.node.navigate.git.next()
+				node = api.tree.get_node_under_cursor()
+			end
 		end
 	})
-	vim.api.nvim_create_autocmd({"BufEnter", "DirChanged"}, {
+	vim.api.nvim_create_autocmd({ "BufEnter", "DirChanged" }, {
 		pattern = "*",
 		callback = function()
 			if vim.bo.filetype == "NvimTree" then

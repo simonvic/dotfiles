@@ -95,6 +95,8 @@ M.fn = {
 	filetree_refresh            = function() M.not_implemented("filetree_refresh") end,
 	filetree_expand_or_descend  = function() M.not_implemented("filetree_expand_or_descend") end,
 	filetree_collapse_or_ascend = function() M.not_implemented("filetree_collapse_or_ascend") end,
+	filetree_vcs_change_next    = function() M.not_implemented("filetree_vcs_change_next") end,
+	filetree_vcs_change_prev    = function() M.not_implemented("filetree_vcs_change_prev") end,
 
 	symbols_outline_focus       = function() M.not_implemented("symbols_outline_focus") end,
 	symbols_outline_float       = function() M.not_implemented("symbols_outline_float") end,
@@ -420,19 +422,8 @@ M.plugins.nvimtree = {
 	-- navigation
 	{ n___, "<A-.>",             function() require("nvim-tree.api").tree.change_root_to_parent() end,     { desc = "Up" } },
 	{ n___, ".",                 function() require("nvim-tree.api").tree.change_root_to_node() end,       { desc = "cd" } },
-	{ n___, "[h",                function() require("nvim-tree.api").node.navigate.git.prev() end,         { desc = "Prev Git" } },
-	{ n___, "]h",                function() require("nvim-tree.api").node.navigate.git.next() end,         { desc = "Next Git" } },
-	-- { n___, "]h", function()
-	-- 	local api = require("nvim-tree.api")
-	-- 	api.node.navigate.git.next()
-	-- 	local node = api.tree.get_node_under_cursor()
-	-- 	while node.type == "directory" and not node.open do
-	-- 		if not node then break end
-	-- 		node:expand_or_collapse() -- expand only
-	-- 		api.node.navigate.git.next()
-	-- 		node = api.tree.get_node_under_cursor()
-	-- 	end
-	-- end, { desc = "Prev Git" } },
+	{ n___, "[h",                function() M.fn.filetree_vcs_change_prev() end,                           { desc = "Prev Git" } },
+	{ n___, "]h",                function() M.fn.filetree_vcs_change_next() end,                           { desc = "Next Git" } },
 	{ n___, "]d",                function() require("nvim-tree.api").node.navigate.diagnostics.next() end, { desc = "Next Diagnostic" } },
 	{ n___, "[d",                function() require("nvim-tree.api").node.navigate.diagnostics.prev() end, { desc = "Prev Diagnostic" } },
 	{ n___, "H",                 function() require("nvim-tree.api").tree.toggle_hidden_filter() end,      { desc = "Toggle Filter: Dotfiles" } },
