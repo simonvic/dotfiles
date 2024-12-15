@@ -14,10 +14,6 @@
 
 xwayland enable
 
-input * {
-	xkb_layout "it"
-}
-
 input type:touchpad {
 	tap enabled
 	natural_scroll enabled
@@ -314,6 +310,13 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# bindgesture swipe:3:right workspace prev
+# bindgesture swipe:3:left workspace next
+# bindgesture hold:3 workspace next
+# bindgesture pinch:outward fullscreen enable
+# bindgesture pinch:inward fullscreen disable
+# bindgesture pinch:counterclockwise move left
+# bindgesture pinch:clockwise move right
 bindsym $mod+1                           workspace number $ws1
 bindsym $mod+2                           workspace number $ws2
 bindsym $mod+3                           workspace number $ws3
