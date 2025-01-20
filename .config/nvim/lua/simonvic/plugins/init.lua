@@ -1,4 +1,5 @@
 local M = {}
+
 M.plugins = {
 	---------------------------------------------------------------------------
 	--                                                      LIBS / DEPENDENCIES
@@ -12,8 +13,8 @@ M.plugins = {
 	{ "nvim-telescope/telescope.nvim",               config = require("simonvic.plugins.configs.nvim-telescope") },
 	{ "stevearc/dressing.nvim",                      config = require("simonvic.plugins.configs.dressing") },
 	{ "akinsho/toggleterm.nvim",                     config = require("simonvic.plugins.configs.toggleterm") },
-	{ "nvim-neo-tree/neo-tree.nvim",                 config = require("simonvic.plugins.configs.neo-tree"),        branch = "v3.x", },
-	-- { "nvim-tree/nvim-tree.lua",                     config = require("simonvic.plugins.configs.nvimtree") },
+	-- { "nvim-neo-tree/neo-tree.nvim",                 config = require("simonvic.plugins.configs.neo-tree"),        branch = "v3.x", },
+	{ "nvim-tree/nvim-tree.lua",                     config = require("simonvic.plugins.configs.nvimtree") },
 	{ "petertriho/nvim-scrollbar",                   config = require("simonvic.plugins.configs.scrollbar") },
 	{ "s1n7ax/nvim-window-picker",                   config = require("simonvic.plugins.configs.window-picker") },
 	{ "onsails/lspkind.nvim" },
