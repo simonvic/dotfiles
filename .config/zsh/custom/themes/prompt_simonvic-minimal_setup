@@ -40,8 +40,8 @@ ZSH_S_COLOR_VCS_BRANCH='229'
 ZSH_S_DIRECTORY_FORMAT="%~"
 
 # Char to be shown at the start of the command
-ZSH_S_PROMPT_CHAR_ROOT='#'
-ZSH_S_PROMPT_CHAR_USER=''
+ZSH_S_PROMPT_CHAR_ROOT='#»'
+ZSH_S_PROMPT_CHAR_USER='»'
 
 # strftime format
 ZSH_S_DATETIME_FORMAT="%H:%M:%S"
@@ -68,7 +68,7 @@ zstyle ':vcs_info:*' unstagedstr "$ZSH_S_VCS_UNSTAGEDSTR"
 PS1=""
 
 # line start
-PS1+="%F{$ZSH_S_COLOR_ACCENT}┃%f"
+PS1+="%F{$ZSH_S_COLOR_ACCENT}│%f"
 
 # SSH info
 [[ -n $SSH_CONNECTION ]] && \
@@ -83,7 +83,7 @@ PS1+='${vcs_info_msg_0_}'
 # New line (if necessary)
 # If ZSH_S_MINIMUM_FREE_INPUT_CHARS are not available on the line, a new line
 # will begin and ZSH_S_PROMPT_NEWLINE_START will be printed
-PS1+=$(echo "%-$ZSH_S_MINIMUM_FREE_INPUT_CHARS(l..\n%F{$ZSH_S_COLOR_ACCENT}┣ %f)")
+PS1+=$(echo "%-$ZSH_S_MINIMUM_FREE_INPUT_CHARS(l..\n%F{$ZSH_S_COLOR_ACCENT}├ %f)")
 
 # Prompt char
 PS1+="%F{$ZSH_S_COLOR_PROMPT_CHAR}%(!,$ZSH_S_PROMPT_CHAR_ROOT,$ZSH_S_PROMPT_CHAR_USER)%f "
