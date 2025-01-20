@@ -52,8 +52,8 @@ local jdtls_config = {
 				},
 				useBlocks = false
 			},
-			implementationCodeLens = { enabled = false },
-			referencesCodeLens = { enabled = false },
+			implementationCodeLens = "all",
+			referencesCodeLens = { enabled = true },
 			inlayHints = {
 				parameterNames = {
 					enabled = "all",
