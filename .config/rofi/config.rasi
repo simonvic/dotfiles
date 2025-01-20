@@ -20,6 +20,7 @@ configuration {
 	display-calc: "󰃬";
 	display-keys: "";
 	display-filebrowser: "";
+	display-recursivebrowser: "";
 
 	filebrowser {
 		directory: ".";
