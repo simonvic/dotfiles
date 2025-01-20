@@ -51,7 +51,8 @@ M.palette = {
 	url            = "#6897BB",
 
 	added          = "#2B5640",
-	changed        = "#DCA537",
+	changed        = "#87663E",
+	changed_xdark  = "#635b2b",
 	deleted        = "#873E41",
 	error          = "#E8312E",
 	warn           = "#E87B2E",
@@ -157,7 +158,8 @@ local function buildGroups()
 		Changed                            = { bg = p.changed, },
 		Removed                            = { bg = p.deleted, },
 		DiffAdd                            = { link = "Added" },
-		DiffChange                         = { link = "Changed" },
+		DiffChange                         = { bg = p.changed_xdark },
+		DiffText                           = { link = "Changed" },
 		DiffDelete                         = { link = "Removed" },
 
 		------------------------------------------------------------------------ signs & diagnostics
