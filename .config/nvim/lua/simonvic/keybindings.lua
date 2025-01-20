@@ -254,6 +254,8 @@ M.mappings = {
 	{ _v__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
 	{ n_i_, "<A-->",                              cmd("foldclose"),                                { desc = "Fold close" } },
 	{ n_i_, "<A-+>",                              cmd("foldopen"),                                 { desc = "Fold open" } },
+	{ nv__, "<leader>dl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
+	{ nv__, "<leader>dh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
 	---------------------------------------------------------------------------- WINDOWS
 	{ n_it, "<A-LEFT>",                           cmd("wincmd h"),                                 { desc = "Focus window left" } },
 	{ n_it, "<A-DOWN>",                           cmd("wincmd j"),                                 { desc = "Focus window down" } },
