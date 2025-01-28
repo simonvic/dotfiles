@@ -18,6 +18,7 @@ M.plugins = {
 	{ "petertriho/nvim-scrollbar",                   config = require("simonvic.plugins.configs.scrollbar") },
 	{ "s1n7ax/nvim-window-picker",                   config = require("simonvic.plugins.configs.window-picker") },
 	{ "onsails/lspkind.nvim" },
+	-- { "folke/which-key.nvim",                        config = require("simonvic.plugins.configs.whichkey") },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
 	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"),      run = ":TSUpdate", },
