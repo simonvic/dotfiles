@@ -109,6 +109,8 @@ title_align center
 
 #                                                               WINDOWS BORDERS
 default_border pixel 4
+titlebar_border_thickness 4
+titlebar_padding 10
 hide_edge_borders smart
 # for_window [class=".*"] border pixel 4
 # for_window [class="Xfce4-terminal"] border pixel 1
