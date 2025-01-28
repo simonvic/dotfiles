@@ -217,7 +217,10 @@ function previous() {
 function info() {
 	local artist; artist=$(getArtist)
 	[[ -n "$artist" ]] && artist="($artist)"
-	printf "%s %s\n" "$(getTitle)" "$artist"
+	case "$1" in
+		"n" | "notification") sendDefaultNotification ;;
+		*) printf "%s %s\n" "$(getTitle)" "$artist" ;;
+	esac
 }
 
 ##
@@ -248,7 +251,7 @@ function printUsage() {
 	stop [all]                                 # Stop the player
 	next                                       # Go to the next song
 	previous                                   # Go to the previous song
-	info                                       # Print info of the playing song
+	info [notification]                        # Show info of the playing song
 	select-player [set {auto|<player-name>}]   # Select what controller you whish to control. Use 'auto' to automatic choose the first available player
 
 - Abbreviations
@@ -269,7 +272,7 @@ case "$1" in
 	stop | s) stop "$2" ;;
 	next | n) next ;;
 	previous | p) previous ;;
-	info | i) info ;;
+	info | i) info "$2" ;;
 	select-player | sp) selectPlayer "$2" "$3" ;;
 	help | *) printUsage ;;
 esac
