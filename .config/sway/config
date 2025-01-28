@@ -84,10 +84,11 @@ exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ true
 font pango:sans 8
 
 #                                                          APPLICATION LAUNCHER
-set $rofi_theme_drun            "simonvic/glass/reversed"
-set $rofi_theme_windowSwitcher  "simonvic/glass/windows"
-set $rofi_theme_fileBrowser     "simonvic/glass/filebrowser"
-set $rofi_theme_calculator      "simonvic/glass/calculator"
+set $rofi_theme_drun             "simonvic/glass/reversed"
+set $rofi_theme_windowSwitcher   "simonvic/glass/windows"
+set $rofi_theme_fileBrowser      "simonvic/glass/filebrowser"
+set $rofi_theme_recursiveBrowser "simonvic/glass/recursivebrowser"
+set $rofi_theme_calculator       "simonvic/glass/calculator"
 
 #                                                                    STATUS BAR
 set $statusbar_main_position top
@@ -248,6 +249,7 @@ bindsym $mod+a                           exec rofi -show combi -modes combi -com
 bindsym $mod+Ctrl+a                      exec rofi -show drun -theme "$rofi_theme_drun"
 bindsym $mod+Tab                         exec rofi -show window -modi "window" -theme "$rofi_theme_windowSwitcher"
 bindsym $mod+Shift+Tab                   exec rofi -show filebrowser -theme "$rofi_theme_fileBrowser"
+bindsym $mod+Ctrl+Tab                    exec rofi -show recursivebrowser -theme "$rofi_theme_recursiveBrowser"
 
 #                                                                 NOTIFICATIONS
 bindsym $mod+n                           exec --no-startup-id dunstctl context
