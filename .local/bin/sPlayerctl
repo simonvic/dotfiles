@@ -146,12 +146,28 @@ function setPlayer() {
 }
 
 ##
+# Get the appropriate icon based on the player status (e.g. playing, paused)
+# @return icon name
+function getStatusIcon() {
+	case "$(getStatus)" in
+		"Playing") echo "$notificationPlayingIcon" ;;
+		"Paused") echo "$notificationPausedIcon" ;;
+		*) echo "foo" ;;
+	esac
+}
+
+##
 # Send default notification when interacting with a player
-# @param icon - Icon art will be used if notificationUseIconArt=true
+# @param icon - Icon art will be used if notificationUseIconArt=true, otherwise default will be used
 function sendDefaultNotification() {
 	sleep "$notificationDelaySec"
 	local title; title=$(getTitle)
-	local icon; [[ "$notificationUseIconArt" == true ]] && icon=$(getIcon) || icon=$1
+	local icon
+	if [[ "$notificationUseIconArt" == true ]]; then
+		icon=$(getIcon)
+	else
+		icon=${1:-$(getStatusIcon)}
+	fi
 	sendNotification "$title" \
 		"<big>$title</big><small>\n$(getArtist)</small>" \
 		"$icon"
@@ -172,10 +188,7 @@ function pause() {
 
 function playPause() {
 	playerctl -p "$player" play-pause
-	case "$(getStatus)" in
-		"Playing") sendDefaultNotification "$notificationPlayingIcon" ;;
-		"Paused") sendDefaultNotification "$notificationPausedIcon" ;;
-	esac
+	sendDefaultNotification
 }
 
 ##
