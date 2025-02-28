@@ -46,7 +46,7 @@
 	icon_position = left
 	min_icon_size = 16
 	max_icon_size = 32
-	icon_theme = "Vimix-Ruby-dark"
+	icon_theme = "Vimix-ruby-dark,Adwaita"
 	enable_recursive_icon_lookup = true
 	#icon_path = /usr/share/icons/Vimix-Ruby-dark/24/actions
 
