@@ -11,6 +11,7 @@
 <setting id="org.eclipse.jdt.core.formatter.join_wrapped_lines" value="false"/>
 <setting id="org.eclipse.jdt.core.formatter.keep_imple_if_on_one_line" value="true"/>
 <setting id="org.eclipse.jdt.core.formatter.keep_lambda_body_block_on_one_line" value="one_line_if_empty"/>
+<setting id="org.eclipse.jdt.core.formatter.keep_switch_case_with_arrow_on_one_line" value="one_line_if_empty"/>
 <!-- <setting id="org.eclipse.jdt.core.formatter.keep_simple_getter_setter_on_one_line" value="true"/> -->
 <setting id="org.eclipse.jdt.core.formatter.lineSplit" value="100"/>
 <setting id="org.eclipse.jdt.core.formatter.number_of_empty_lines_to_preserve" value="2"/>
