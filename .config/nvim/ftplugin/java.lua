@@ -2,7 +2,10 @@ local vim = vim
 
 vim.opt.colorcolumn = "100";
 
-local jdtls = require("jdtls")
+local ok, jdtls = pcall(require, "jdtls");
+if not ok then
+	return
+end
 local cmd = { "/usr/bin/jdtls" }
 
 -- Lombok support
