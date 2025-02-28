@@ -20,6 +20,7 @@ notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 notificationTimeoutMS=2000
 notificationUrgency=normal
 notificationDefaultIcon="network-wireless-symbolic"
+notificationProcessingIcon="network-wireless-acquiring-symbolic"
 
 matchingMode="fuzzy"
 
@@ -123,7 +124,7 @@ function sendNotification() {
 # Prompt wifi selection
 # @param rescan policy (auto|yes|no)
 function promptSelection() {
-	sendNotification "Scanning for WiFi signals..." "network-wireless-acquiring-symbolic" 0
+	sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 0
 	local signals; signals=$(getSignals "$1")
 	local prettyOutput
 	local idx=0
@@ -137,7 +138,7 @@ function promptSelection() {
 		((idx++))
 	done <<< "$signals"
 
-	sendNotification "Select WiFi ..." "network-wireless-acquiring-symbolic" 0
+	sendNotification "Select WiFi ..." "$notificationProcessingIcon" 0
 	local selectedIdx; selectedIdx=$(printf "%b" "$prettyOutput" | rofi -dmenu \
 		-i \
 		-markup-rows \
@@ -159,12 +160,14 @@ function promptSelection() {
 	local ignored selectedSSID
 	IFS=":" read -r ignored ignored ignored ignored ignored ignored selectedSSID <<< "$selectedWifi"
 
-	sendNotification "Connecting to <b>$selectedSSID</b> ..." "network-wireless-acquiring-symbolic" 0
+	sendNotification "Connecting to <b>$selectedSSID</b> ..." "$notificationProcessingIcon" 0
 	nmcli d w c "$selectedSSID"
 
 	local signalIcon="network-wireless-signal-"
-	if [[ "$strength" -le 25 ]]; then
-		signalIcon+="low"
+	if [[ "$strength" -le 10 ]]; then
+		signalIcon+="none"
+	elif [[ "$strength" -le 25 ]]; then
+		signalIcon+="weak"
 	elif [[ "$strength" -le 50 ]]; then
 		signalIcon+="ok"
 	elif [[ "$strength" -le 75 ]]; then
@@ -172,7 +175,7 @@ function promptSelection() {
 	else
 		signalIcon+="excellent"
 	fi
-
+	signalIcon+="-symbolic"
 	sendNotification "Connected to <b>$selectedSSID</b>" "$signalIcon"
 }
 

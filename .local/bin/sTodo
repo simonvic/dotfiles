@@ -19,7 +19,7 @@ notificationAppName="simonvic.TODO"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 notificationUrgency=normal
 notificationTimeoutMS=0
-notificationIcon=accessories-clipboard
+notificationIcon=clipman-symbolic
 
 notificationBarLength=20
 notificationBarStep=5

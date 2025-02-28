@@ -22,6 +22,8 @@ wakelockUsesScreensaver=true
 notificationSound=/usr/share/sounds/freedesktop/stereo/message.oga
 notificationUID=6901
 notificationAppName="simonvic.Battery"
+notificationIconWakelockOn="caffeine-cup-full-symbolic"
+notificationIconWakelockOff="caffeine-cup-empty-symbolic"
 
 batteryPollCache=/tmp/simonvic/sBatteryctl/pollCache
 wakelockStatusPath=/tmp/simonvic/sBatteryctl/wakelockStatus
@@ -236,7 +238,9 @@ function setWakelock() {
 	esac
 
 	if [[ $wakelockUsesScreensaver == true ]] || [[ $wakelockUsesDPMS == true ]]; then
-		[[ "$wakelockStatus" == "on" ]] && icon="caffeine-cup-full" || icon="caffeine-cup-empty"
+		[[ "$wakelockStatus" == "on" ]] \
+			&& icon="$notificationIconWakelockOn" \
+			|| icon="$notificationIconWakelockOff"
 		body="\
 Wakelock is <b>$wakelockStatus</b>		
 <small>DPMS: <b>$(isDPMSEnabled)</b>
@@ -254,22 +258,16 @@ Screensaver: <b>$(isScreensaverEnabled)</b></small>"
 #	@param charge status
 #	@return icon file name
 function getIcon() {
-	local iconFileName="battery-"
-	if [[ $1 -ge 100 ]]; then iconFileName=$iconFileName"100"
-	elif [[ $1 -ge 80 ]]; then iconFileName=$iconFileName"080"
-	elif [[ $1 -ge 60 ]]; then iconFileName=$iconFileName"060"
-	elif [[ $1 -ge 40 ]]; then iconFileName=$iconFileName"040"
-	elif [[ $1 -ge 20 ]]; then iconFileName=$iconFileName"020"
-	elif [[ $1 -ge 0 ]]; then iconFileName=$iconFileName"000"
-	else iconFileName="battery-missing"
+	local percentage=$(( ($1 + 5) / 10 * 10 ))
+	local iconFileName="battery-level-$percentage"
+	if [[ "$2" == "Charging" ]]; then
+		if [[ "$percentage" -eq 100 ]]; then
+			iconFileName+="-charged"
+		else
+			iconFileName+="-charging"
+		fi
 	fi
-
-	case $2 in
-		"Charging") iconFileName=$iconFileName"-charging" ;;
-		"Discharging") : ;;
-		"Not charging") iconFileName="battery-full-charged" ;;
-		*) iconFileName="battery-missing" ;;
-	esac
+	iconFileName+="-symbolic"
 
 	echo "$iconFileName"
 }

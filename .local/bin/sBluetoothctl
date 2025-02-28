@@ -19,7 +19,10 @@ notificationAppName="simonvic.Bluetoothctl"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
 notificationTimeoutMS=3000
 notificationUrgency=normal
-notificationDefaultIcon="bluetooth"
+notificationDefaultIcon="bluetooth-symbolic"
+notificationIconProcessing="bluetooth-acquiring-symbolic"
+notificationIconDisconnected="bluetooth-disconnected-symbolic"
+notificationIconConnected="bluetooth-active-symbolic"
 
 matchingMode="fuzzy"
 dmenu_theme="simonvic/glass/notification_actions"
@@ -101,10 +104,10 @@ function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
 		if [[ $(isPowered) == true ]]; then
-			sendNotification "Powering off..." "blueman-disabled" 2000
+			sendNotification "Powering off..." "$notificationIconProcessing" 2000
 			newState="off"
 		else
-			sendNotification "Powering on..." "blueman-active" 2000
+			sendNotification "Powering on..." "$notificationIconProcessing" 2000
 			newState="on"
 		fi
 	fi
@@ -278,13 +281,13 @@ function menu() {
 	local selectedUUID
 	read -r ignored selectedUUID selectedName <<< "$(printf "%s" "$paired" | head -$((selectedIdx + 1)) | tail -1)"
 	if bluetoothctl info "$selectedUUID" | grep -q "Connected: yes"; then
-		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing"
 		disconnect "$selectedUUID"
-		sendNotification "Disconnected from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		sendNotification "Disconnected from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconDisconnected"
 	else
-		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing"
 		connect "$selectedUUID"
-		sendNotification "Connected to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>"
+		sendNotification "Connected to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconConnected"
 	fi
 
 }
