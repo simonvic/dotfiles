@@ -86,15 +86,6 @@ function sendNotification() {
 }
 
 ##
-# Close the notification with the given id
-# @param notification id
-function closeNotification() {
-	# hacky way to close notification via notify-send instead of dunstctl
-	# send empty notification with 1ms expire time
-	notify-send --replace-id "$1" --expire-time "1" " "
-}
-
-##
 # Show notification and rofi dmenu for player selection
 function promptPlayerSelection() {
 	local pastSelectionBody=""
@@ -107,7 +98,7 @@ function promptPlayerSelection() {
 	sendNotification "sPlayerctl | Playerctl" \
 		"Select a player you wish to control.\n<small>$pastSelectionBody</small>" \
 		"$notificationSelectPlayerIcon" \
-		0 \
+		69000 \
 		"$notificationSelectPlayerUID"
 
 	local selectedPlayer
@@ -117,7 +108,17 @@ function promptPlayerSelection() {
 		-format "s")
 
 	if [[ -z "$selectedPlayer" ]]; then
-		closeNotification "$notificationSelectPlayerUID"
+		# NOTE: hacky way to close notification via notify-send
+		# send empty notification with 1ms expire time
+		notify-send \
+			--transient \
+			--replace-id "$notificationSelectPlayerUID" \
+			--expire-time 1 \
+			--app-name "$notificationAppName" \
+			--icon "$notificationSelectPlayerIcon" \
+			--urgency "$notificationUrgency" \
+			"sPlayerctl | Playerctl" \
+			"Select a player you wish to control.\n<small>$pastSelectionBody</small>" 
 	else
 		setPlayer "$selectedPlayer"
 		local body=""

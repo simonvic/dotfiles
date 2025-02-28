@@ -124,7 +124,7 @@ function sendNotification() {
 # Prompt wifi selection
 # @param rescan policy (auto|yes|no)
 function promptSelection() {
-	sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 0
+	sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 69000
 	local signals; signals=$(getSignals "$1")
 	local prettyOutput
 	local idx=0
@@ -138,7 +138,7 @@ function promptSelection() {
 		((idx++))
 	done <<< "$signals"
 
-	sendNotification "Select WiFi ..." "$notificationProcessingIcon" 0
+	sendNotification "Select WiFi ..." "$notificationProcessingIcon" 69000
 	local selectedIdx; selectedIdx=$(printf "%b" "$prettyOutput" | rofi -dmenu \
 		-i \
 		-markup-rows \
@@ -150,9 +150,17 @@ function promptSelection() {
 	)
 
 	if [[ -z "$selectedIdx" ]]; then
-		# hacky way to close notification via notify-send
+		# NOTE: hacky way to close notification via notify-send
 		# replace current notification (id) with one that lasts 1ms
-		notify-send --replace-id "$notificationUID" --expire-time 1 " "
+		notify-send \
+			--transient \
+			--replace-id "$notificationUID" \
+			--expire-time 1 \
+			--app-name "$notificationAppName" \
+			--urgency "$notificationUrgency" \
+			--icon "$notificationProcessingIcon" \
+			"WiFi" \
+			"Select WiFi..."
 		return
 	fi
 
@@ -160,7 +168,7 @@ function promptSelection() {
 	local ignored selectedSSID
 	IFS=":" read -r ignored ignored ignored ignored ignored ignored selectedSSID <<< "$selectedWifi"
 
-	sendNotification "Connecting to <b>$selectedSSID</b> ..." "$notificationProcessingIcon" 0
+	sendNotification "Connecting to <b>$selectedSSID</b> ..." "$notificationProcessingIcon" 69000
 	nmcli d w c "$selectedSSID"
 
 	local signalIcon="network-wireless-signal-"

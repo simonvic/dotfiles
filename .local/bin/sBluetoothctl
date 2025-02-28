@@ -104,10 +104,10 @@ function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
 		if [[ $(isPowered) == true ]]; then
-			sendNotification "Powering off..." "$notificationIconProcessing" 2000
+			sendNotification "Powering off..." "$notificationIconProcessing"
 			newState="off"
 		else
-			sendNotification "Powering on..." "$notificationIconProcessing" 2000
+			sendNotification "Powering on..." "$notificationIconProcessing"
 			newState="on"
 		fi
 	fi
@@ -260,7 +260,7 @@ function menu() {
 		prettyDevices+=$(prettifyDevice "$uuid" "$name" "$details")
 		((i++))
 	done <<< "$paired"
-	sendNotification "Select bluetooth device..." "$notificationDefaultIcon" 0
+	sendNotification "Select bluetooth device..." "$notificationDefaultIcon" 69000
 	local selectedIdx; selectedIdx=$(printf "%b" "$prettyDevices" | rofi -dmenu \
 		-i \
 		-markup-rows \
@@ -272,20 +272,28 @@ function menu() {
 	)
 
 	if [[ -z "$selectedIdx" ]]; then
-		# hacky way to close notification via notify-send
+		# NOTE: hacky way to close notification via notify-send
 		# replace current notification (id) with one that lasts 1ms
-		notify-send --hint int:transient:1 --replace-id "$notificationUID" --expire-time 1 " "
+		notify-send \
+			--transient \
+			--replace-id "$notificationUID" \
+			--expire-time 1 \
+			--app-name "$notificationAppName" \
+			--icon "$notificationDefaultIcon" \
+			--urgency "$notificationUrgency" \
+			"sBluetoothctl" \
+			"Select bluetooth device..."
 		return
 	fi
 
 	local selectedUUID
 	read -r ignored selectedUUID selectedName <<< "$(printf "%s" "$paired" | head -$((selectedIdx + 1)) | tail -1)"
 	if bluetoothctl info "$selectedUUID" | grep -q "Connected: yes"; then
-		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing"
+		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing" 69000
 		disconnect "$selectedUUID"
 		sendNotification "Disconnected from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconDisconnected"
 	else
-		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing"
+		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing" 69000
 		connect "$selectedUUID"
 		sendNotification "Connected to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconConnected"
 	fi
