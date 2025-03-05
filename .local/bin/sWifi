@@ -124,7 +124,9 @@ function sendNotification() {
 # Prompt wifi selection
 # @param rescan policy (auto|yes|no)
 function promptSelection() {
-	sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 69000
+	if [[ "$1" != "no" ]]; then
+		sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 69000
+	fi
 	local signals; signals=$(getSignals "$1")
 	local prettyOutput
 	local idx=0
