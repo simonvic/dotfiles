@@ -25,6 +25,27 @@
 			// "default": ""
 		}
 	},
+	"sway/workspaces#extended": {
+		"disable-scroll": true,
+		"all-outputs": true,
+		"warp-on-scroll": false,
+		"format": "{icon}{name}\n<span size='x-small'>{output}</span>",
+		"format-icons": {
+			"1": "",
+			"2": "",
+			"3": "",
+			"4": "",
+			"5": "",
+			"6": "",
+			"7": "",
+			"8": "",
+			"9": "",
+			"10": "",
+			"urgent": "<span color='#F0544C'></span>"
+			// "focused": "",
+			// "default": ""
+		}
+	},
 	"sway/language": {
 		"format": "{short}", // TODO: bugged
 		"tooltip-format": "{long}"
@@ -144,7 +165,7 @@
 		"interval": 1,
 		// "timezone": "Europe/Rome",
 		"locale": "it_IT.UTF-8",
-		"format": "󰅐 {:%H:%M:%S | 󰸗 %A, %d %B(%m) %Y}",
+		"format": "\t\t{:%H:%M:%S\n<small>%A, %d %B(%m) %Y</small>}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "year",
@@ -282,7 +303,7 @@
 			"warning": 33,
 			"critical": 15
 		},
-		"format": "{icon} {capacity}% <small>{time} 󱐋{power:0.3f}W</small>",
+		"format": "{icon} {capacity}% <span size='smaller'>󰅐 {time}\n󱐋 {power:0.3f}W</span>",
 		"format-plugged": "󰂄",
 		// "format-alt": "{icon} {capacity}% <small>{time} {power:0.3f}W</small>",
 		"format-time": "{H}:{m}",
@@ -330,7 +351,7 @@
 		}
 	},
 	"network": {
-		// "interface": "wlp2*", // (Optional) To force the use of this interface
+		 //"interface": "wlp2*", // (Optional) To force the use of this interface
 		"interval": 5,
 		"format-wifi": "{icon}",
 		"format-alt": "{icon} <small>󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
@@ -351,7 +372,7 @@
 	"network#extended": {
 		// "interface": "wlp2*", // (Optional) To force the use of this interface
 		"interval": 1,
-		"format-wifi": "{icon} {essid} <small>{frequency} {ifname} {ipaddr} 󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
+		"format-wifi": "{icon}<span size='x-small'>{frequency}</span> {essid} <span size='x-small'>{ipaddr}</span>\n<span size='smaller'>󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</span>",
 		"format-ethernet": "󰈀 <small>{ifname} {ipaddr} 󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
 		"tooltip-format": "{ifname} {ipaddr}/{cidr}\n{icon} {signalStrength}% | 󰘊 {frequency}\n{essid}",
 		"format-linked": "{ifname} (No IP) ",
@@ -396,11 +417,11 @@
 		"format-disabled": "",
 		"format-off": "󰂲",
 		"format-on": "󰂯",
-		"format-connected": "󰂱",
+		"format-connected": "󰂱 x{num_connections}\n<span size='smaller'>{icon} {device_battery_percentage}%</span>",
 		"tooltip-format": "{controller_alias} {controller_address}\n{status}",
 		"tooltip-format-connected": "{controller_alias} {controller_address}\n\n{device_enumerate}",
-		"tooltip-format-enumerate-connected": "{device_address} {device_alias}",
-		"format-connected-battery": "󰂱 x{num_connections} {icon} {device_battery_percentage}%",
+		"tooltip-format-enumerate-connected": "{icon} {device_address} {device_alias}",
+		"format-connected-battery": "󰂱 x{num_connections}\n<span size='smaller'>{icon} {device_battery_percentage}%</span>",
 		"tooltip-format-connected-battery": "{controller_alias} {controller_address}\n\n{device_enumerate}",
 		"tooltip-format-enumerate-connected-battery": "{icon} {device_battery_percentage}% {device_address} {device_alias}",
 		"format-icons": [
@@ -423,6 +444,7 @@
 		"format-bluetooth-muted": "<s>{icon}</s>{format_source}", // 󰝟
 		"format-source": "  {volume}%",
 		"format-source-muted": "", //  
+		"tooltip-format": "{icon} {volume:3d}% {format_source}\n{desc}",
 		"format-icons": {
 			"default": [
 				"󰕿",
@@ -483,12 +505,12 @@
 		}
 	},
 	"pulseaudio#extended": {
-		"format": "{icon} {volume}% <small>{desc}</small> {format_source}",
-		"format-muted": "󰝟 <small>{desc}</small> {format_source}",
-		"format-bluetooth": "{icon} {volume}% <small>{desc}</small> {format_source}",
-		"format-bluetooth-muted": "<s>{icon} {volume}% <small>{desc}</small></s> {format_source}", // 󰝟
-		"format-source": " {volume}%",
-		"format-source-muted": "",
+		"format": "{icon} {volume:3d}% {format_source}\n<span size='x-small'>{desc}</span>",
+		"format-muted": "󰝟 {volume:3d}% {format_source}\n<span size='x-small'>{desc}</span>",
+		"format-bluetooth": "{icon} {volume:3d}% {format_source}\n<span size='smaller'>{desc}</span>",
+		"format-bluetooth-muted": "<s>{icon} {volume:3d}%</s> {format_source}\n<span size='smaller'>{desc}</span>", // 󰝟
+		"format-source": "<tt>󰍬</tt> {volume:3d}%",
+		"format-source-muted": "<tt>󰍭</tt> {volume:3d}%",
 		"format-icons": {
 			"default": [
 				"󰕿",
@@ -675,6 +697,14 @@
 		"on-click": "sBrightnessctl redshift toggle",
 		"on-scroll-up": "sBrightnessctl redshift increase 400",
 		"on-scroll-down": "sBrightnessctl redshift decrease 400"
+	},
+	"custom/rss" : {
+		"interval": 3600,
+		"format": "{}",
+		"return-type": "json",
+		"tooltip-format": "{alt}",
+		"exec": "sNews fetch 2> /dev/null; xml=$(sNews check); count=$(xmllint --xpath 'count(//item)' - <<< \"$xml\"); titles=$(xmllint --xpath '//item[position()<=99]/title/text()' - <<< \"$xml\"); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \" $count\" \"$(printf '%s' \"$titles\" | sed 's/^/· /' | tr '\n' '\r' )\"",
+		"on-click": "sNews fetch"
 	}
 
 }

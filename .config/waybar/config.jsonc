@@ -5,8 +5,8 @@
 		"id": "primary",
 		"ipc": true,
 		"position": "top",
-		"layer": "top",
-		"height": 45,
+		"layer": "bottom",
+		"height": 55,
 		"margin-top": 20,
 		"margin-right": 20,
 		"margin-left": 20,
@@ -41,28 +41,29 @@
 		"id": "secondary",
 		"ipc": true,
 		"position": "top",
-		"layer": "top",
-		"height": 45,
-		"margin-top": -45, // TODO: when primary is hidden, this goes out of the screen
+		"layer": "bottom",
+		"height": 55,
+		"margin-top": -55, // TODO: when primary is hidden, this goes out of the screen
 		"margin-right": 20,
 		"margin-left": 20,
 		"margin-bottom": 0,
 		"modules-left": [
 			"wlr/taskbar"
 			// "sway/window"
+			//"sway/workspaces#extended", // TODO: urgent workspace forces the bar to be visible
 		],
 		"modules-center": [
+			"clock#extended"
 		],
 		"modules-right": [
 			"network#extended",
-			"clock#extended",
 			"bluetooth#extended",
 			"pulseaudio#extended",
 			"backlight#extended",
 			// "custom/redshift#extended",
 			"idle_inhibitor",
-			"battery#extended",
-			"user"
+			"battery#extended"
+			//"user"
 		],
 		"include": [
 			"${XDG_CONFIG_HOME:-$HOME/.config}/waybar/simonvic/modules.jsonc"
@@ -74,7 +75,7 @@
 		"id": "tertiary",
 		"ipc": true,
 		"position": "bottom",
-		"layer": "top",
+		"layer": "bottom",
 		"height": 50,
 		"width": 800,
 		"margin": 5,
@@ -100,7 +101,7 @@
 		"id": "tray-bar",
 		"ipc": true,
 		"position": "left",
-		"layer": "top",
+		"layer": "bottom",
 		"height": 100,
 		"modules-center": [
 			"tray"

@@ -35,7 +35,7 @@ window#waybar .modules-right {
 window#waybar .modules-left>*>*,
 window#waybar .modules-center>*>*,
 window#waybar .modules-right>*>* {
-	margin: 0 8px;
+	margin: 0 12px;
 }
 
 window#waybar.secondary .modules-left>*>*,
