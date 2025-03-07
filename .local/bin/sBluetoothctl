@@ -27,9 +27,6 @@ notificationIconConnected="bluetooth-active-symbolic"
 matchingMode="fuzzy"
 dmenu_theme="simonvic/glass/notification_actions"
 
-secondsBetweenTries=0.5
-maxTries=4
-
 ###############################################################################
 
 usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
@@ -104,21 +101,20 @@ function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
 		if [[ $(isPowered) == true ]]; then
-			sendNotification "Powering off..." "$notificationIconProcessing"
+			sendNotification "Powering off..." "$notificationIconProcessing" 69000
 			newState="off"
 		else
-			sendNotification "Powering on..." "$notificationIconProcessing"
+			sendNotification "Powering on..." "$notificationIconProcessing" 69000
 			newState="on"
 		fi
 	fi
 	bluetoothctl power "$newState"
 	updatePolybar
-	local tries=0
-	while [[ $(isPowering) == true ]] && [[ $tries -lt $maxTries ]]; do
-		sleep $secondsBetweenTries
-		((tries++))
-	done
-	updatePolybar
+	if [[ $(isPowered) == true ]]; then
+		sendNotification "Powered on"
+	else
+		sendNotification "Powered off"
+	fi
 }
 
 
@@ -149,13 +145,13 @@ function connect() {
 	if [[ $(isPowered) == "false" ]]; then
 		power on
 	fi
-	local tries=0
 	local uuid; uuid=$(findDeviceUUID "$1")
-	bluetoothctl connect "$uuid"
-	while [[ $(isConnectedTo "$uuid") == false ]] && [[ $tries -lt $maxTries ]]; do
-		sleep $secondsBetweenTries
-		((tries++))
-	done
+	sendNotification "Connecting to\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconProcessing" 69000
+	if bluetoothctl connect "$uuid"; then
+		sendNotification "Connected to\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconConnected"
+	else
+		sendNotification "Couldn't connect to\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconDisconnected"
+	fi
 	updatePolybar
 }
 
@@ -170,13 +166,13 @@ function disconnect() {
 	if [[ $(isPowered) == "false" ]]; then
 		return
 	fi
-	local tries=0
 	local uuid; uuid=$(findDeviceUUID "$1")
-	bluetoothctl disconnect "$uuid"
-	while [[ $(isConnectedTo "$uuid") != false ]] && [[ $tries -lt $maxTries ]]; do
-		sleep $secondsBetweenTries
-		((tries++))
-	done
+	sendNotification "Disconnecting from\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconProcessing" 69000
+	if bluetoothctl disconnect "$uuid"; then
+		sendNotification "Disconnected from\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconDisconnected"
+	else
+		sendNotification "Couldn't disconnect from\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconDisconnected"
+	fi
 	updatePolybar
 }
 
@@ -289,13 +285,9 @@ function menu() {
 	local selectedUUID
 	read -r ignored selectedUUID selectedName <<< "$(printf "%s" "$paired" | head -$((selectedIdx + 1)) | tail -1)"
 	if bluetoothctl info "$selectedUUID" | grep -q "Connected: yes"; then
-		sendNotification "Disconnecting from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing" 69000
 		disconnect "$selectedUUID"
-		sendNotification "Disconnected from\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconDisconnected"
 	else
-		sendNotification "Connecting to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconProcessing" 69000
 		connect "$selectedUUID"
-		sendNotification "Connected to\n<b>$selectedName\n(<small>$selectedUUID</small>)</b>" "$notificationIconConnected"
 	fi
 
 }
