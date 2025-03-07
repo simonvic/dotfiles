@@ -1,4 +1,5 @@
 -- TODO: toggle bool (<C-x> set to false, <C-a> set to true)
+-- TODO: surround to gs
 
 local M = {}
 
@@ -370,21 +371,25 @@ M.plugins.ts_textobjects = {
 			["]f"] = "@function.outer",
 			["]a"] = "@parameter.inner",
 			["]c"] = "@class.outer",
+			["]k"] = "@comment.outer",
 		},
 		goto_next_end = {
 			["]F"] = "@function.outer",
 			["]A"] = "@parameter.outer",
 			["]C"] = "@class.outer",
+			["]K"] = "@comment.outer",
 		},
 		goto_previous_start = {
 			["[f"] = "@function.outer",
 			["[a"] = "@parameter.inner",
 			["[c"] = "@class.outer",
+			["[k"] = "@comment.outer",
 		},
 		goto_previous_end = {
 			["[F"] = "@function.outer",
 			["[A"] = "@parameter.outer",
 			["[C"] = "@class.outer",
+			["[K"] = "@comment.outer",
 		},
 		goto_next = {
 			-- ["]i"] = "@conditional.outer",
@@ -398,9 +403,11 @@ M.plugins.ts_textobjects = {
 			["af"] = "@function.outer",
 			["aa"] = "@parameter.outer",
 			["ac"] = "@class.outer",
+			["ak"] = "@comment.outer",
 			["if"] = "@function.inner",
 			["ia"] = "@parameter.inner",
 			["ic"] = "@class.inner",
+			["ik"] = "@comment.inner",
 		},
 	},
 }
