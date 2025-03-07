@@ -57,7 +57,7 @@ M.symbols = {
 	Struct        = "󰙅",
 	Event         = "",
 	Operator      = "",
-	TypeParameter = "",
+	TypeParameter = "",
 }
 
 M.dap = {
