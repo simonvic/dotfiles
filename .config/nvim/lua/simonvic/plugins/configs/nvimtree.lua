@@ -48,6 +48,25 @@ return function()
 				window_picker = {
 					enable = true,
 					-- picker = require("window-picker").pick_window
+					exclude = {
+						filetype = {
+							"notify",
+							"lazy",
+							"qf",
+							"diff",
+							"aerial",
+							"dap-repl",
+							"dapui_breakpoints",
+							"dapui_console",
+							"dapui_stacks",
+							"dapui_scopes",
+							"dapui_watches",
+						},
+						buftype = {
+							"nofile",
+							"terminal",
+						},
+					},
 				}
 			},
 			file_popup = {
