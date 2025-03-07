@@ -47,7 +47,6 @@ return function()
 			open_file = {
 				window_picker = {
 					enable = true,
-					-- picker = require("window-picker").pick_window
 					exclude = {
 						filetype = {
 							"notify",
