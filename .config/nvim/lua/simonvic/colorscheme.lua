@@ -293,6 +293,7 @@ local function buildGroups()
 		NvimTreeDiagnosticInfoFileHL       = {},
 		NvimTreeDiagnosticWarnFileHL       = {},
 		NvimTreeDiagnosticErrorFileHL      = {},
+		NvimTreeWindowPicker               = { bg = p.accent_dark, bold = true },
 
 		------------------------------------------------------------------------ NeoTree
 		NeoTreeNormal                      = { bg = p.zdepth_1, fg = p.text },
