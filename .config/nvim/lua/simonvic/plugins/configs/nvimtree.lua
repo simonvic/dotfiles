@@ -47,6 +47,7 @@ return function()
 			open_file = {
 				window_picker = {
 					enable = true,
+					chars = "HJKLASDF1234567890",
 					exclude = {
 						filetype = {
 							"notify",
