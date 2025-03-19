@@ -63,10 +63,14 @@ bar {
 # Notification deamon
 exec --no-startup-id dunst
 
+# Screensaver
+exec swayidle -w \
+	timeout 300 'sBrightnessctl screensaver &' resume 'pkill sBrightnessctl'
+
 # Lockscreen
 exec swayidle -w \
-	timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-	timeout 600 'swaylock -f' \
+	timeout 360 'swaylock -f' \
+	timeout 370 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
 	before-sleep 'swaylock -f'
 
 # Restore redshift state
