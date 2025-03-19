@@ -12,6 +12,8 @@
 #
 ###############################################################################
 
+include /etc/sway/config.d/*
+
 xwayland enable
 
 input type:touchpad {
