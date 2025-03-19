@@ -1,0 +1,22 @@
+set inputbar-bg             "#33333300"
+set inputbar-fg             "#DADADA"
+set statusbar-bg            "#33333300"
+set statusbar-fg            "#DADADA"
+set completion-bg           "#33333300"
+set completion-fg           "#DADADA"
+set completion-highlight-bg rgba(240,84,76,0.4)
+set completion-highlight-fg "#DADADA"
+set notification-bg         "#33333300"
+set notification-fg         "#DADADA"
+
+set highlight-color         rgba(240,84,76,0.3)
+set highlight-active-color  rgba(240,84,76,0.4)
+
+set index-bg                "#333333"
+set index-fg                "#DADADA"
+set index-active-bg         rgba(240,84,76,0.4)
+set index-active-fg         "#DADADA"
+
+set statusbar-home-tilde    true
+set window-title-home-tilde true
+
