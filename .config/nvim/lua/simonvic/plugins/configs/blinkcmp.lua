@@ -1,7 +1,6 @@
 -- TODO: reverse order
 return function()
 	require("blink-cmp").setup({
-		-- TODO: remove arrows, and user C-y to accept instead of CR
 		keymap = require("simonvic.keybindings").plugins.blink,
 
 		snippets = {

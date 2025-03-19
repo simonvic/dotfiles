@@ -158,8 +158,7 @@ M.mappings = {
 	{ n___, "+",                                  "]",                                             { desc = "Forward ] alias", remap = true } },
 	--------------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",                              cmd("write"),                                    { desc = "Save", silent = true } },
-	{ nvi_, "<C-z>",                              cmd("undo"),                                     { desc = "Undo", silent = true } },
-	{ nvi_, "<C-y>",                              cmd("redo"),                                     { desc = "Redo", silent = true } },
+	{ n___, "U",                                  cmd("redo"),                                     { desc = "Redo", silent = true } },
 	{ n_i_, "<A-CR>",                             function() M.fn.code_actions() end,              { desc = "Code actions" } },
 	{ n___, { "<C-b>", "gd" },                    function() M.fn.definition() end,                { desc = "Go to definition" } },
 	{ __i_, "<C-b>",                              function() M.fn.definition() end,                { desc = "Go to definition" } },
@@ -280,7 +279,6 @@ M.mappings = {
 	{ n__t, "<A-ù>",                              function() M.fn.terminal_float() end,            { desc = "Toggle floating terminal" } },
 	{ ___t, "<Esc>",                              "<C-\\><C-n>",                                   { desc = "Exit terminal mode" } },
 	{ n___, { "<leader><leader>", "<C-p>" },      function() M.fn.find_files() end,                { desc = "Find files" } },
-	{ __i_, "<C-p>",                              function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ n___, "<A-p>",                              function() M.fn.commands_menu() end,             { desc = "Commands menu" } },
 	{ n___, "<leader>:",                          function() M.fn.commands() end,                  { desc = "Commands palette" } },
 	{ n___, { "<leader>s", "<C-A-p>" },           function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
@@ -517,18 +515,27 @@ M.plugins.neotree = {
 
 -------------------------------------------------------------------------------- BLINK
 M.plugins.blink = {
+	preset = "none",
+
 	["<C-Space>"] = { "show", "select_next", "fallback" },
-	["<CR>"] = { "accept", "fallback" },
+
+	["<C-y>"] = { "accept", "fallback" },
 	["<C-e>"] = { "hide", "fallback" },
-	["<Up>"] = { "select_prev", "fallback" },
-	["<Down>"] = { "select_next", "fallback" },
+	["<C-p>"] = { "select_prev", "fallback" },
+	["<C-n>"] = { "select_next", "fallback" },
+
+	["<CR>"] = { "accept", "fallback" },
+	-- ["<ESC>"] = { "hide", "fallback" },
+	-- ["<Down>"] = { "select_next", "fallback" },
+	-- ["<Up>"] = { "select_prev", "fallback" },
 
 	["<C-q>"] = { "show_documentation", "hide_documentation", "fallback" },
-	["<C-u>"] = { "scroll_documentation_up", "fallback" },
 	["<C-d>"] = { "scroll_documentation_down", "fallback" },
+	["<C-u>"] = { "scroll_documentation_up", "fallback" },
 
 	["<Tab>"] = { "snippet_forward", "fallback" },
 	["<S-Tab>"] = { "snippet_backward", "fallback" },
+
 }
 
 -------------------------------------------------------------------------------- NVIM-JDTLS

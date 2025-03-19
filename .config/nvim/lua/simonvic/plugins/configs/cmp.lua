@@ -55,18 +55,7 @@ return function()
 		},
 		mapping = {
 			-- TODO: move to keybindings
-			["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-			["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-			["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-			["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-			["<C-q>"] = function()
-				if cmp.visible_docs() then
-					cmp.close_docs()
-				else
-					cmp.open_docs()
-				end
-			end,
-			["<ESC>"] = cmp.mapping.abort(),
+
 			["<C-Space>"] = cmp.mapping(function()
 				if cmp.visible() then
 					cmp.select_next_item()
@@ -74,7 +63,26 @@ return function()
 					cmp.complete()
 				end
 			end, { "i", "c" }),
+
+			["<C-y>"] = cmp.mapping.confirm({ select = false }),
+			["<C-e>"] = cmp.mapping.abort(),
+			["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+			["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+
 			["<CR>"] = cmp.mapping.confirm({ select = false }),
+			-- ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+			-- ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+
+			["<C-q>"] = function()
+				if cmp.visible_docs() then
+					cmp.close_docs()
+				else
+					cmp.open_docs()
+				end
+			end,
+			["<C-d>"] = cmp.mapping.scroll_docs(4),
+			["<C-u>"] = cmp.mapping.scroll_docs(-4),
+
 			["<Tab>"] = cmp.mapping(function(fallback)
 				-- if vim.snippet.active({ direction = 1 }) then
 				-- 	vim.snippet.jump(1)
