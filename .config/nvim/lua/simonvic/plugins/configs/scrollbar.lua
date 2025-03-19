@@ -14,6 +14,7 @@ return function()
 		},
 		handlers = {
 			cursor = false
-		}
+		},
+		excluded_buftypes = {}
 	})
 end
