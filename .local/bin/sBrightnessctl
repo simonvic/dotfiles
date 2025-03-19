@@ -42,6 +42,7 @@ fade_time=10
 fade_fps=60
 
 screensaver_time=1000
+screensaver_time_resume=250
 screensaver_fps=60
 
 # Store redshift status and temperature
@@ -207,7 +208,8 @@ function restoreRedshift() {
 
 function screensaver() {
 	trap 'exit 0' TERM INT
-	trap "setBrightness '$(getBrightness)' '$screensaver_fps' '$screensaver_time'; kill %%" EXIT
+	# TODO: replace with pkill or quiet output
+	trap "setBrightness '$(getBrightness)' '$screensaver_fps' '$screensaver_time_resume'; kill %%" EXIT
 	setBrightness "$screensaverBrightnessValue" "$screensaver_fps" "$screensaver_time"
 	sleep 2147483647 &
 	wait
