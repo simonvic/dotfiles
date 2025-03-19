@@ -33,6 +33,8 @@ M.plugins = {
 	{ "L3MON4D3/LuaSnip",                            config = require("simonvic.plugins.configs.snippets") },
 	{ "saadparwaiz1/cmp_luasnip" },
 	{ "hrsh7th/nvim-cmp",                            config = require("simonvic.plugins.configs.cmp") },
+	-- { "rafamadriz/friendly-snippets" },
+	-- { "Saghen/blink.cmp",                            config = require("simonvic.plugins.configs.blinkcmp"),        version = "*" },
 	{ "williamboman/mason.nvim",                     config = require("simonvic.plugins.configs.mason") },
 	{ "neovim/nvim-lspconfig",                       config = require("simonvic.plugins.configs.lsp_config") },
 	{ "williamboman/mason-lspconfig.nvim",           config = require("simonvic.plugins.configs.mason-lspconfig"), after = "nvim-lspconfig", },
