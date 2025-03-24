@@ -2,7 +2,12 @@ return function()
 	local mason_lspconfig = require("mason-lspconfig")
 	mason_lspconfig.setup()
 
-	local default_capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+	local default_capabilities = vim.tbl_deep_extend(
+		"force",
+		vim.lsp.protocol.make_client_capabilities(),
+		require("cmp_nvim_lsp").default_capabilities()
+		-- require("blink.cmp").get_lsp_capabilities()
+	)
 
 	mason_lspconfig.setup_handlers({
 
