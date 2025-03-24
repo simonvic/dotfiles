@@ -1,12 +1,10 @@
 return function()
-	local snippet = require("luasnip") -- TODO: replace with vim.snippet
 	local lspkind = require("lspkind")
 	local cmp = require("cmp")
 	cmp.setup({
 		snippet = {
 			expand = function(args)
-				-- vim.snippet.expand(args.body)
-				snippet.lsp_expand(args.body)
+				vim.snippet.expand(args.body)
 			end,
 		},
 		view = {
@@ -44,9 +42,8 @@ return function()
 		sources = {
 			{ group_index = 1, name = "nvim_lsp_signature_help" },
 			{ group_index = 2, name = "nvim_lsp" },
-			{ group_index = 3, name = "luasnip" },
-			{ group_index = 4, name = "buffer" },
-			{ group_index = 4, name = "path" },
+			{ group_index = 3, name = "buffer" },
+			{ group_index = 3, name = "path" },
 		},
 		-- TODO: cmp-git
 		preselect = cmp.PreselectMode.None,
@@ -84,25 +81,15 @@ return function()
 			["<C-u>"] = cmp.mapping.scroll_docs(-4),
 
 			["<Tab>"] = cmp.mapping(function(fallback)
-				-- if vim.snippet.active({ direction = 1 }) then
-				-- 	vim.snippet.jump(1)
-				-- else
-				-- 	fallback()
-				-- end
-				if snippet.in_snippet() and snippet.jumpable(1) then
-					snippet.jump(1)
+				if vim.snippet.active({ direction = 1 }) then
+					vim.snippet.jump(1)
 				else
 					fallback()
 				end
 			end, { "i", "s", }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
-				-- if vim.snippet.active({direction = -1}) then
-				-- 	vim.snippet.jump(-1)
-				-- else
-				-- 	fallback()
-				-- end
-				if snippet.in_snippet() and snippet.jumpable(-1) then
-					snippet.jump(-1)
+				if vim.snippet.active({direction = -1}) then
+					vim.snippet.jump(-1)
 				else
 					fallback()
 				end
