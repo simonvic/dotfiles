@@ -45,7 +45,7 @@ return function()
 					gap = 1,
 					columns = {
 						{ "kind_icon" },
-						{ "label",      "label_description" },
+						{ "label", "label_description",  gap = 1},
 						{ "source_name" },
 					},
 					treesitter = { "lsp" },
