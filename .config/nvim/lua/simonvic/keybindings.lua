@@ -118,7 +118,8 @@ M.fn = {
 	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
 	vcs_change_preview          = function() M.not_implemented("vcs_change_preview") end,
 	vcs_change_preview_inline   = function() M.not_implemented("vcs_change_preview_inline") end,
-	-- TODO: add blame line and some other goodies
+	vcs_blame                   = function() M.not_implemented("vcs_blame") end,
+	vcs_blame_line              = function() M.not_implemented("vcs_blame_line") end,
 
 	toggle_debugger             = function() M.not_implemented("toggle_debugger") end,
 	debugger_continue           = function() M.not_implemented("debugger_continue") end,
@@ -258,6 +259,8 @@ M.mappings = {
 	{ n_i_, "<A-+>",                              cmd("foldopen"),                                 { desc = "Fold open" } },
 	{ nv__, "<leader>gl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
 	{ nv__, "<leader>gh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
+	{ n___, "<leader>gb",                         function() M.fn.vcs_blame_line() end,            { desc = "Blame current line" } },
+	{ n___, "<leader>gB",                         function() M.fn.vcs_blame() end,                 { desc = "Blame current buffer" } },
 	---------------------------------------------------------------------------- WINDOWS
 	{ n_it, "<A-LEFT>",                           cmd("wincmd h"),                                 { desc = "Focus window left" } },
 	{ n_it, "<A-DOWN>",                           cmd("wincmd j"),                                 { desc = "Focus window down" } },
