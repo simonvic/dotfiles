@@ -3,6 +3,7 @@ return function()
 	local actions = require("telescope.actions")
 	require("telescope").setup({
 		defaults = {
+			-- TODO: move to keybindings
 			mappings = {
 				i = {
 					["<esc>"] = actions.close,
@@ -28,10 +29,12 @@ return function()
 	local builtin = require("telescope.builtin")
 	keybindings.implement({
 		commands_menu       = function() vim.cmd("Telescope") end,
-		find_symbols        = builtin.lsp_dynamic_workspace_symbols,
+		workspace_symbols   = builtin.lsp_dynamic_workspace_symbols,
+		document_symbols    = builtin.lsp_document_symbols,
 		fuzzy_find          = builtin.current_buffer_fuzzy_find,
 		live_grep           = builtin.live_grep,
 		references          = builtin.lsp_references,
+		implementation      = builtin.lsp_implementations,
 		definition          = builtin.lsp_definitions,
 		diagnostic_show_all = builtin.diagnostics,
 		find_files          = builtin.find_files,

@@ -9,6 +9,7 @@ M.modes = {
 	__i_ = { "i" },
 	___t = { "t" },
 	nvi_ = { "n", "v", "i" },
+	nsi_ = { "n", "s" },
 	nv__ = { "n", "v" },
 	n_i_ = { "n", "i" },
 	n_it = { "n", "i", "t" },
@@ -30,6 +31,7 @@ local ___t = M.modes.___t
 local nvi_ = M.modes.nvi_
 local nv__ = M.modes.nv__
 local n_i_ = M.modes.n_i_
+local nsi_ = M.modes.nsi_
 local n_it = M.modes.n_it
 local n__t = M.modes.n__t
 local cmd = M.util.cmd
@@ -68,16 +70,18 @@ M.fn = {
 
 	diagnostic_show             = vim.diagnostic.open_float,
 	diagnostic_show_all         = vim.diagnostic.setqflist,
-	diagnostic_next             = vim.diagnostic.goto_next,
-	diagnostic_prev             = vim.diagnostic.goto_prev,
+	diagnostic_next             = function() vim.diagnostic.jump({ count = 1 }) end, -- TODO: open float if open already
+	diagnostic_prev             = function() vim.diagnostic.jump({ count = -1 }) end,
 
-	-- TODO: add other vim.lsp.buf. functions
 	code_actions                = vim.lsp.buf.code_action,
 	definition                  = vim.lsp.buf.definition,
 	references                  = vim.lsp.buf.references,
+	implementation              = vim.lsp.buf.implementation,
+	workspace_symbols           = vim.lsp.buf.workspace_symbol,
+	document_symbols            = vim.lsp.buf.document_symbol,
 	rename                      = vim.lsp.buf.rename,
-	open_docs                   = vim.lsp.buf.hover,
-	signature_help              = vim.lsp.buf.signature_help,
+	hover                       = function() vim.lsp.buf.hover({ border = "rounded" }) end,
+	signature_help              = function() vim.lsp.buf.signature_help({ border = "rounded" }) end, -- TODO: title doesn't change
 	format                      = vim.lsp.buf.format,
 	formatSelection             = function()
 		vim.lsp.buf.format({
@@ -106,7 +110,6 @@ M.fn = {
 
 	toggle_context              = function() M.not_implemented("toggle_context") end,
 	find_files                  = function() feed(":edit **/*") end,
-	find_symbols                = function() M.not_implemented("find_symbols") end,
 	fuzzy_find                  = function() feed(":grep %<left><left> ") end,
 	live_grep                   = function() feed(":grep ") end,
 	buffers                     = function() feed(":buffer ") end,
@@ -159,19 +162,20 @@ M.mappings = {
 	--------------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",                              cmd("write"),                                    { desc = "Save", silent = true } },
 	{ n___, "U",                                  cmd("redo"),                                     { desc = "Redo", silent = true } },
-	{ n_i_, "<A-CR>",                             function() M.fn.code_actions() end,              { desc = "Code actions" } },
-	{ n___, { "<C-b>", "gd" },                    function() M.fn.definition() end,                { desc = "Go to definition" } },
+	{ n___, { "<A-CR>", "gra" },                  function() M.fn.code_actions() end,              { desc = "Code actions" } },
+	{ n___, { "<C-b>", "grd" },                   function() M.fn.definition() end,                { desc = "Go to definition" } },
 	{ __i_, "<C-b>",                              function() M.fn.definition() end,                { desc = "Go to definition" } },
-	{ n___, { "<A-r>", "gr" },                    function() M.fn.references() end,                { desc = "Find references" } },
+	{ n___, { "<C-b>", "gri" },                   function() M.fn.implementation() end,            { desc = "Go to implementation" } },
+	{ n___, { "<A-r>", "grr" },                   function() M.fn.references() end,                { desc = "Find references" } },
 	{ __i_, "<A-r>",                              function() M.fn.references() end,                { desc = "Find references" } },
-	{ n___, { "<C-r>", "<leader>r" },             function() M.fn.rename() end,                    { desc = "Rename" } },
+	{ n___, { "<C-r>", "grn" },                   function() M.fn.rename() end,                    { desc = "Rename" } },
 	{ __i_, "<C-r>",                              function() M.fn.rename() end,                    { desc = "Rename" } },
-	{ n___, { "<C-q>", "<leader>q" },             function() M.fn.open_docs() end,                 { desc = "Open docs" } },
-	{ __i_, "<C-q>",                              function() M.fn.open_docs() end,                 { desc = "Open docs" } },
-	{ n_i_, "<A-q>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
-	{ n___, { "<C-e>", "<leader>e" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
+	{ n___, { "<C-q>", "grq" },                   function() M.fn.hover() end,                     { desc = "Open docs" } },
+	{ __i_, "<C-q>",                              function() M.fn.hover() end,                     { desc = "Open docs" } },
+	{ nsi_, "<A-q>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
+	{ n___, { "<C-e>", "<leader>d" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ __i_, "<C-e>",                              function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
-	{ n___, "<leader>E",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
+	{ n___, "<leader>D",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
 	--------------------------------------------------------------------------- MOVEMENT
 	{ nv__, "<C-LEFT>",                           "b",                                             { desc = "Previous end" } },
 	{ __i_, "<C-LEFT>",                           "<C-o>b",                                        { desc = "Previous end" } },
@@ -186,12 +190,10 @@ M.mappings = {
 	{ __i_, "<A-END>",                            "<C-o>$",                                        { desc = "End of line" } },
 	{ n___, "]h",                                 function() M.fn.vcs_change_next() end,           { desc = "Go next hunk" } },
 	{ n___, "[h",                                 function() M.fn.vcs_change_prev() end,           { desc = "Go prev hunk" } },
-	{ n___, "<leader>gh",                         function() M.fn.vcs_change_preview_inline() end, { desc = "Preview hunk diff inline" } },
-	{ n___, "<leader>gH",                         function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
+	{ n___, "<leader>h",                          function() M.fn.vcs_change_preview_inline() end, { desc = "Preview hunk diff inline" } },
+	{ n___, "<leader>H",                          function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
 	{ n___, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
 	{ n___, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
-	{ n___, "]q",                                 cmd("cnext"),                                    { desc = "Go next quickfix list entry" } },
-	{ n___, "[q",                                 cmd("cprevious"),                                { desc = "Go prev quickfix list entry" } },
 	---------------------------------------------------------------------------- SELECTION
 	{ n___, "<S-LEFT>",                           "v<LEFT>",                                       { desc = "Select left" } },
 	{ _v__, "<S-LEFT>",                           "<LEFT>",                                        { desc = "Select left" } },
@@ -254,8 +256,8 @@ M.mappings = {
 	{ _v__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
 	{ n_i_, "<A-->",                              cmd("foldclose"),                                { desc = "Fold close" } },
 	{ n_i_, "<A-+>",                              cmd("foldopen"),                                 { desc = "Fold open" } },
-	{ nv__, "<leader>dl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
-	{ nv__, "<leader>dh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
+	{ nv__, "<leader>gl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
+	{ nv__, "<leader>gh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
 	---------------------------------------------------------------------------- WINDOWS
 	{ n_it, "<A-LEFT>",                           cmd("wincmd h"),                                 { desc = "Focus window left" } },
 	{ n_it, "<A-DOWN>",                           cmd("wincmd j"),                                 { desc = "Focus window down" } },
@@ -281,8 +283,9 @@ M.mappings = {
 	{ n___, { "<leader><leader>", "<C-p>" },      function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ n___, "<A-p>",                              function() M.fn.commands_menu() end,             { desc = "Commands menu" } },
 	{ n___, "<leader>:",                          function() M.fn.commands() end,                  { desc = "Commands palette" } },
-	{ n___, { "<leader>s", "<C-A-p>" },           function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
-	{ __i_, "<C-A-p>",                            function() M.fn.find_symbols() end,              { desc = "Find symbols" } },
+	{ n___, { "<leader>S", "<C-A-p>" },           function() M.fn.workspace_symbols() end,         { desc = "Find workspace symbols" } },
+	{ __i_, "<C-A-p>",                            function() M.fn.workspace_symbols() end,         { desc = "Find workspace symbols" } },
+	{ n___, "gO",                                 function() M.fn.document_symbols() end,          { desc = "Find document symbols" } },
 	{ n___, { "<leader><tab>", "<A-Tab>" },       function() M.fn.buffers() end,                   { desc = "Buffers" } },
 	{ __i_, "<A-Tab>",                            function() M.fn.buffers() end,                   { desc = "Buffers" } },
 	{ n___, { "<leader>f", "<C-f>" },             function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
@@ -300,7 +303,7 @@ M.mappings = {
 	{ n___, "<Leader>uh",                         function() M.fn.toggle_inlay_hints() end,        { desc = "Toggle lsp inlay hints" } },
 	{ n_i_, "<A-9>",                              function() M.fn.symbols_outline_focus() end,     { desc = "Toggle symbols outline" } },
 	{ n_i_, { "<A-S-9>", "<A-)>" },               function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
-	{ n___, "<leader>S",                          function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
+	{ n___, "<leader>s",                          function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
 	---------------------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",                               function() M.fn.debugger_continue() end,         { desc = "DAP Continue" } },
 	{ n___, { "<A-F7>", "<F55>" },                function() M.fn.debugger_terminate() end,        { desc = "DAP Terminate" } },
@@ -360,8 +363,8 @@ M.plugins.ts_textobjects = {
 	},
 	lsp_interop = {
 		peek_definition_code = {
-			["<leader>df"] = "@function.outer",
-			["<leader>dc"] = "@class.outer",
+			["<leader>pf"] = "@function.outer",
+			["<leader>pc"] = "@class.outer",
 		},
 	},
 	move = {
