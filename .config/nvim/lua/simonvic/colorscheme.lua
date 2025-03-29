@@ -109,7 +109,6 @@ local function buildGroups()
 		lCursor                            = { link = "Cursor" },
 		CursorIM                           = { link = "Cursor" },
 		-- TermCursor                         = {},
-		-- TermCursorNC                       = {},
 		ColorColumn                        = { bg = p.guide },
 		CursorColumn                       = { link = "ColorColumn" },
 		CursorLine                         = {},
