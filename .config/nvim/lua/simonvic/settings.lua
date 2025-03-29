@@ -14,7 +14,9 @@ opt.splitright = true
 opt.splitbelow = true
 opt.splitkeep = "cursor"
 opt.scrolloff = 8
-
+opt.completeopt = "menuone,noinsert,noselect" -- TODO: fuzzy
+opt.backspace = "indent,eol,start,nostop"
+-- opt.messageopt = "history:500"
 opt.undofile = true
 
 -------------------------------------------------------------------------------- CASE
@@ -31,16 +33,13 @@ opt.expandtab = false
 opt.copyindent = true
 opt.preserveindent = true
 
-opt.completeopt = "menuone,noinsert,noselect"
-opt.backspace = "indent,eol,start,nostop"
-
 -------------------------------------------------------------------------------- APPEARANCE
 opt.colorcolumn = "80"
 opt.shortmess:append("c")
 opt.cursorline = true
 opt.cursorcolumn = false
 opt.termguicolors = true
-
+-- opt.winborder = "rounded"
 opt.showcmdloc = "statusline"
 
 opt.list = false
@@ -49,11 +48,11 @@ opt.fillchars = glyphs.fillchars
 
 -------------------------------------------------------------------------------- STATUSCOLUMN (gutter)
 opt.statuscolumn = ""
-	.. "%C"                                  -- folds
-	.. "%{%&number?'%3{v:lnum}':''%}"        -- line number
+	.. "%C"                                    -- folds
+	.. "%{%&number?'%3{v:lnum}':''%}"          -- line number
 	-- .. "%{%&relativenumber?'%3{v:relnum}':''%}" -- relative line number
 	.. "%{%&relativenumber?' %-2{v:relnum}':''%}" -- relative line number (left aligned)
-	.. "%s"                                  -- signs
+	.. "%s"                                    -- signs
 
 -------------------------------------------------------------------------------- NUMBERS
 opt.number = true
@@ -217,18 +216,18 @@ end
 
 function BuildStatusLine()
 	return ""
-		.. " " .. build_status_line_mode()                            -- mode
-		.. " [%S]"                                                    -- command
-		.. "%w"                                                       -- preview
-		.. "%q"                                                       -- quickfix/location list
-		.. "%="                                                       -- filling
-		.. " %c:%l"                                                   -- column:line
+		.. " " .. build_status_line_mode()                             -- mode
+		.. " [%S]"                                                     -- command
+		.. "%w"                                                        -- preview
+		.. "%q"                                                        -- quickfix/location list
+		.. "%="                                                        -- filling
+		.. " %c:%l"                                                    -- column:line
 		.. glyphs.statusline.separator .. " %{&ff}"                    -- file format
 		.. glyphs.statusline.separator .. " %{''.(&fenc!=''?&fenc:&enc).''}" -- encoding
 		.. glyphs.statusline.separator .. " %Y"                        -- file type
-		.. build_status_line_diagnostics()                            -- diagnostics
-		.. build_status_line_git_branch()                             -- git branch
-		.. " "                                                        -- Some padding
+		.. build_status_line_diagnostics()                             -- diagnostics
+		.. build_status_line_git_branch()                              -- git branch
+		.. " "                                                         -- Some padding
 end
 
 opt.statusline = "%!luaeval('BuildStatusLine()')"
