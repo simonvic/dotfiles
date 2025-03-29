@@ -238,22 +238,18 @@ opt.statusline = "%!luaeval('BuildStatusLine()')"
 vim.diagnostic.config({
 	underline = true,
 	virtual_text = false,
+	virtual_lines = false,
 	signs = false,
+	severity_sort = false,
 	float = {
 		border = "rounded",
 		header = "",
 		prefix = glyphs.diagnostics.prefix
+	},
+	jump = {
+		float = false,
+		wrap = false
 	}
 })
-local lsp = vim.lsp
-local handlers = lsp.handlers
-local winopts = { border = "rounded" }
-handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, winopts)
-handlers["textDocument/hover"] = lsp.with(handlers.hover, winopts)
-handlers["textDocument/codeAction"] = lsp.with(handlers.code_action, winopts)
--- ["textDocument/rename"]
--- ["workspace/applyEdit"]
--- ["language/status"]
---
 
 return M
