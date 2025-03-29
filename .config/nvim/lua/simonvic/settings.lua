@@ -34,11 +34,6 @@ opt.preserveindent = true
 opt.completeopt = "menuone,noinsert,noselect"
 opt.backspace = "indent,eol,start,nostop"
 
--- fold
-opt.foldlevel = 69
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 -------------------------------------------------------------------------------- APPEARANCE
 opt.colorcolumn = "80"
 opt.shortmess:append("c")
@@ -74,6 +69,20 @@ end
 -------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
 opt.foldtext = ""
+opt.foldlevel = 69
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.api.nvim_create_autocmd('LspAttach', {
+-- 	callback = function(args)
+-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
+-- 		if client:supports_method('textDocument/foldingRange') then
+-- 			vim.notify("lsp client supports foldingRange")
+-- 			local win = vim.api.nvim_get_current_win()
+-- 			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+-- 		end
+-- 	end,
+-- })
+
 
 -------------------------------------------------------------------------------- CURSOR SHAPE
 opt.guicursor = {
