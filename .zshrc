@@ -146,6 +146,43 @@ autoload -Uz promptinit
 promptinit
 prompt simonvic-minimal
 
+# ZSH syntax highlighting
+if source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2> /dev/null; then
+	typeset -A ZSH_HIGHLIGHT_STYLES=(
+		["comment"]='fg=245'
+		["unknown-token"]='fg=red'
+
+		["reserved-word"]="fg=208"
+		["builtin"]="fg=208"
+		["command-substitution-delimiter"]="fg=208"
+		["process-substitution-delimiter"]="fg=208"
+		["back-quoted-argument-delimiter"]="fg=208"
+		["commandseparator"]="fg=208"
+		["redirection"]="fg=208"
+		["globbing"]="fg=208,underline"
+
+		["alias"]="fg=220,bold"
+		["function"]="fg=220"
+		["command"]="fg=220"
+
+		["arithmetic-expansion"]="fg=111"
+		["path"]="none"
+		["path_pathseparator"]="bold"
+		["single-quoted-argument"]="fg=70"
+		["double-quoted-argument"]="fg=70"
+		["single-hyphen-option"]="none"
+		["double-hyphen-option"]="none"
+		["dollar-double-quoted-argument"]="fg=3"
+
+		["builtin"]="none"
+		["alias"]="none"
+		["function"]="none"
+		["precommand"]="bold"
+		["command"]="none"
+	)
+
+fi
+
 ################################################################################ ALIASES
 function xo() {
 	xdg-open $1 &!
