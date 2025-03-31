@@ -62,10 +62,6 @@ opt.relativenumber = true
 -------------------------------------------------------------------------------- SIGNS
 opt.signcolumn = "auto:9"
 
-for name, sign in pairs(signs.diagnostic) do
-	vim.fn.sign_define(name, sign)
-end
-
 -------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
 opt.foldtext = ""
@@ -239,7 +235,26 @@ vim.diagnostic.config({
 	underline = true,
 	virtual_text = false,
 	virtual_lines = false,
-	signs = false,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "", -- signs.diagnostic.DiagnosticSignError.text,
+			[vim.diagnostic.severity.WARN]  = "", -- signs.diagnostic.DiagnosticSignWarn.text,
+			[vim.diagnostic.severity.INFO]  = "", -- signs.diagnostic.DiagnosticSignInfo.text,
+			[vim.diagnostic.severity.HINT]  = "", -- signs.diagnostic.DiagnosticSignHint.text,
+		},
+		linehl = {
+			[vim.diagnostic.severity.ERROR] = "", -- signs.diagnostic.DiagnosticSignError.texthl,
+			[vim.diagnostic.severity.WARN]  = "", -- signs.diagnostic.DiagnosticSignWarn.texthl,
+			[vim.diagnostic.severity.INFO]  = "", -- signs.diagnostic.DiagnosticSignInfo.texthl,
+			[vim.diagnostic.severity.HINT]  = "", -- signs.diagnostic.DiagnosticSignHint.texthl,
+		},
+		numhl = {
+			[vim.diagnostic.severity.ERROR] = signs.diagnostic.DiagnosticSignError.linehl,
+			[vim.diagnostic.severity.WARN]  = signs.diagnostic.DiagnosticSignWarn.linehl,
+			[vim.diagnostic.severity.INFO]  = signs.diagnostic.DiagnosticSignInfo.linehl,
+			[vim.diagnostic.severity.HINT]  = signs.diagnostic.DiagnosticSignHint.linehl,
+		},
+	},
 	severity_sort = false,
 	float = {
 		border = "rounded",
