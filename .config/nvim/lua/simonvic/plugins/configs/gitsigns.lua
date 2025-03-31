@@ -5,6 +5,7 @@ return function()
 		preview_config = {
 			border = "rounded",
 		},
+		sign_priority = 22,
 		signs = {
 			add          = { text = glyphs.statuscolumn.vcs.addded },
 			change       = { text = glyphs.statuscolumn.vcs.changed },
