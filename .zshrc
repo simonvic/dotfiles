@@ -55,7 +55,9 @@ typeset -g -A key=(
 [Delete]="${terminfo[kdch1]}"
 [Control-Delete]="^[[3;5~"
 [Up]="${terminfo[kcuu1]}"
+[Control-P]="^P"
 [Down]="${terminfo[kcud1]}"
+[Control-N]="^N"
 [Left]="${terminfo[kcub1]}"
 [Control-Left]="${terminfo[kLFT5]}"
 [Right]="${terminfo[kcuf1]}"
@@ -73,7 +75,9 @@ bindkey "${key[Control-Backspace]}"   backward-delete-word
 bindkey "${key[Delete]}"              delete-char
 bindkey "${key[Control-Delete]}"      delete-word
 bindkey "${key[Up]}"                  up-line-or-beginning-search
+bindkey "${key[Control-P]}"           up-line-or-beginning-search
 bindkey "${key[Down]}"                down-line-or-beginning-search
+bindkey "${key[Control-N]}"           down-line-or-beginning-search
 bindkey "${key[Left]}"                backward-char
 bindkey "${key[Control-Left]}"        backward-word
 bindkey "${key[Right]}"               forward-char
