@@ -2,7 +2,7 @@ local M = {}
 
 M.listchars = {
 	eol      = "¬",
-	tab      = "> ", -- TODO: why a space?
+	tab      = "> ", -- NOTE: tab char 2nd char is repeated
 	trail    = "⋅",
 	extends  = ">",
 	precedes = "<",
