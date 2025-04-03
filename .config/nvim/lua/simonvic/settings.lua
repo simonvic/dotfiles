@@ -184,9 +184,6 @@ local function build_status_line_mode()
 	return string.format("[ %s ]", modes_aliases[mode] or mode, mode)
 end
 
-local function get_diagnostic_sign_text(sign_name)
-	return "%#" .. sign_name .. "#" .. vim.fn.sign_getdefined(sign_name)[1].text .. "%*"
-end
 
 local function build_status_line_diagnostics()
 	local clients = vim.lsp.get_clients()
