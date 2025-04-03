@@ -61,6 +61,9 @@ opt.relativenumber = true
 
 -------------------------------------------------------------------------------- SIGNS
 opt.signcolumn = "auto:9"
+for name, sign in pairs(signs.diagnostic) do
+	vim.fn.sign_define(name, sign)
+end
 
 -------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
@@ -249,10 +252,10 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT]  = "", -- signs.diagnostic.DiagnosticSignHint.texthl,
 		},
 		numhl = {
-			[vim.diagnostic.severity.ERROR] = signs.diagnostic.DiagnosticSignError.linehl,
-			[vim.diagnostic.severity.WARN]  = signs.diagnostic.DiagnosticSignWarn.linehl,
-			[vim.diagnostic.severity.INFO]  = signs.diagnostic.DiagnosticSignInfo.linehl,
-			[vim.diagnostic.severity.HINT]  = signs.diagnostic.DiagnosticSignHint.linehl,
+			[vim.diagnostic.severity.ERROR] = signs.diagnostic.DiagnosticSignError.numhl,
+			[vim.diagnostic.severity.WARN]  = signs.diagnostic.DiagnosticSignWarn.numhl,
+			[vim.diagnostic.severity.INFO]  = signs.diagnostic.DiagnosticSignInfo.numhl,
+			[vim.diagnostic.severity.HINT]  = signs.diagnostic.DiagnosticSignHint.numhl,
 		},
 	},
 	severity_sort = false,

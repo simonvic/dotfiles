@@ -1,10 +1,10 @@
 local M = {}
 
 M.diagnostic = {
-	DiagnosticSignError = { text = "", texthl = "DiagnosticSignError", linehl = "DiagnosticSignError" },
-	DiagnosticSignWarn  = { text = "", texthl = "DiagnosticSignWarn",  linehl = "DiagnosticSignWarn" },
-	DiagnosticSignInfo  = { text = "", texthl = "DiagnosticSignInfo",  linehl = "DiagnosticSignInfo" },
-	DiagnosticSignHint  = { text = "", texthl = "DiagnosticSignHint",  linehl = "DiagnosticSignHint" },
+	DiagnosticSignError = { text = "", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" },
+	DiagnosticSignWarn  = { text = "", texthl = "DiagnosticSignWarn",  numhl = "DiagnosticSignWarn" },
+	DiagnosticSignInfo  = { text = "", texthl = "DiagnosticSignInfo",  numhl = "DiagnosticSignInfo" },
+	DiagnosticSignHint  = { text = "", texthl = "DiagnosticSignHint",  numhl = "DiagnosticSignHint" },
 }
 
 M.plugins = {}
