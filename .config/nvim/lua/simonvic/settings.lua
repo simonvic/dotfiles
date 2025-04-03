@@ -91,6 +91,7 @@ opt.guicursor = {
 	"i:ver25",       -- insert
 	"c:ver25",       -- command line normal
 	"ci:ver25",      -- command line insert
+	"t:ver25",       -- terminal insert mode
 	"v:block",       -- visual
 	"ve:block",      -- command line insert
 	"r:hor50",       -- replace
