@@ -8,9 +8,6 @@ return function()
 		indent = {
 			enable = true,
 		},
-		autotag = {
-			enable = true,
-		},
 		incremental_selection = {
 			enable = true,
 			keymaps = require("simonvic.keybindings").plugins.treesitter,
