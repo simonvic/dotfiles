@@ -148,8 +148,6 @@ M.fn = {
 	cursors_toggle              = function() M.not_implemented("cursors_toggle") end,
 	cursors_delete              = function() M.not_implemented("cursors_delete") end,
 	cursors_clear               = function() M.not_implemented("cursors_clear") end,
-
-	toggle_comment              = function() M.not_implemented("toggle_comment") end,
 }
 
 M.leader = " "
@@ -252,7 +250,6 @@ M.mappings = {
 	{ n___, "<C-A-l>",                            "gg=G<C-o>",                                     { desc = "Reindent file" } },
 	{ n_i_, "<A-S-l>",                            function() M.fn.format() end,                    { desc = "Reformat" } },
 	{ _v__, "<A-S-l>",                            function() M.fn.formatSelection() end,           { desc = "Reformat selection" } },
-	{ nv__, "<leader>cc",                         function() M.fn.toggle_comment() end,            { desc = "Comment toggle" } },
 	{ _v__, "<TAB>",                              ">gv",                                           { desc = "Increase indent" } },
 	{ _v__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
 	{ n_i_, "<A-->",                              cmd("foldclose"),                                { desc = "Fold close" } },
