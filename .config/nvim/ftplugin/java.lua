@@ -1,5 +1,3 @@
-local vim = vim
-
 vim.opt.colorcolumn = "100";
 vim.opt.textwidth = 100;
 
@@ -7,7 +5,9 @@ local ok, jdtls = pcall(require, "jdtls");
 if not ok then
 	return
 end
+
 local cmd = { "/usr/bin/jdtls" }
+-- cmd = { vim.fn.stdpath("data") .. "/mason/bin/jdtls" }
 
 -- Lombok support
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
