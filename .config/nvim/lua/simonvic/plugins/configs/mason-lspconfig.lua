@@ -2,25 +2,17 @@ return function()
 	local mason_lspconfig = require("mason-lspconfig")
 	mason_lspconfig.setup()
 
-	local default_capabilities = vim.tbl_deep_extend(
-		"force",
-		vim.lsp.protocol.make_client_capabilities(),
-		require("cmp_nvim_lsp").default_capabilities()
-		-- require("blink.cmp").get_lsp_capabilities()
-	)
-
 	mason_lspconfig.setup_handlers({
 
 		-- Default handler
 		function(server_name)
-			require("lspconfig")[server_name].setup({ capabilities = default_capabilities })
+			require("lspconfig")[server_name].setup({})
 		end,
 
 		-- Per-language handlers
 
 		["lua_ls"] = function(server_name)
 			require("lspconfig")[server_name].setup({
-				capabilities = default_capabilities,
 				settings = {
 					Lua = {
 						diagnostics = { globals = { "vim" }, },
@@ -33,7 +25,6 @@ return function()
 
 		["html"] = function(server_name)
 			require("lspconfig").html.setup({
-				capabilities = default_capabilities,
 				settings = {
 					html = {
 						format = {
@@ -47,7 +38,6 @@ return function()
 
 		["ltex"] = function(server_name)
 			require("lspconfig")[server_name].setup({
-				capabilities = default_capabilities,
 				filetypes = { "tex" },
 			})
 		end
