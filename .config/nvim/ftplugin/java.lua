@@ -1,6 +1,7 @@
 local vim = vim
 
 vim.opt.colorcolumn = "100";
+vim.opt.textwidth = 100;
 
 local ok, jdtls = pcall(require, "jdtls");
 if not ok then
