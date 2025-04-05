@@ -42,7 +42,7 @@ M.plugins = {
 	{ "jake-stewart/multicursor.nvim",               config = require("simonvic.plugins.configs.multicursor") },
 	{ "lewis6991/gitsigns.nvim",                     config = require("simonvic.plugins.configs.gitsigns") },
 	{ "echasnovski/mini.align",                      config = require("simonvic.plugins.configs.align"),           version = false },
-	{ "NvChad/nvim-colorizer.lua",                   config = require("simonvic.plugins.configs.colorizer") },
+	{ "catgoose/nvim-colorizer.lua",                 config = require("simonvic.plugins.configs.colorizer") },
 	{ "max397574/colortils.nvim",                    config = require("simonvic.plugins.configs.colortils") },
 	{ "kylechui/nvim-surround",                      config = require("simonvic.plugins.configs.surround") },
 	---------------------------------------------------------------------------
