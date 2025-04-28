@@ -59,35 +59,7 @@ M.plugins = {
 	{ "gruvbox-community/gruvbox" },
 }
 
-function M.with_vimplug()
-	vim.call("plug#begin")
-	for _, plugin in ipairs(M.plugins) do
-		if plugin[1] then
-			local plug_args = {}
-			if plugin.run then plug_args["do"] = plugin.run end
-			if plugin.branch then plug_args["branch"] = plugin.branch end
-			if plugin.tag then plug_args["tag"] = plugin.tag end
-			if next(plug_args) then
-				vim.fn["plug#"](plugin[1], plug_args)
-			else
-				vim.fn["plug#"](plugin[1])
-			end
-		end
-	end
-	vim.call("plug#end")
-	for _, v in ipairs(M.plugins) do
-		if v.config then
-			v.config()
-		end
-	end
-end
-
-function M.with_packer()
-	table.insert(M.plugins, { "wbthomason/packer.nvim" })
-	return require("packer").startup(M.plugins)
-end
-
-function M.with_lazy()
+function M.setup()
 	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 	if not vim.uv.fs_stat(lazypath) then
 		vim.fn.system({
