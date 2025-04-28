@@ -9,6 +9,11 @@ end
 local cmd = { "/usr/bin/jdtls" }
 -- cmd = { vim.fn.stdpath("data") .. "/mason/bin/jdtls" }
 
+-- jdtls workspace data folder
+vim.list_extend(cmd, {
+	"-data", vim.fn.expand('~/.cache/jdtls/workspaces/') .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+})
+
 -- Lombok support
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
 if vim.fn.empty(jars_lombok) == 0 then
