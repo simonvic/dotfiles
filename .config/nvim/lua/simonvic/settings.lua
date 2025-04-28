@@ -48,12 +48,12 @@ opt.fillchars = glyphs.fillchars
 
 -------------------------------------------------------------------------------- STATUSCOLUMN (gutter)
 opt.statuscolumn = ""
-	.. "%C"                                   -- folds
-	.. "%{%&number?' %{v:lnum}':''%}"         -- line number
-	.. "%="                                   -- spacing
-	.. "%{%&relativenumber?' %2{v:relnum}':''%}" -- relative line number
-	.. "%s"                                   -- signs
-	.. " "                                    -- spacing
+	.. "%C"                                      -- folds
+	.. "%{%&number?' %{v:lnum}':''%}"            -- line number
+	.. "%="                                      -- spacing
+	.. "%{%&relativenumber?' %2.2{v:relnum} ':''%}" -- relative line number
+	.. "%s"                                      -- signs
+	.. " "                                       -- spacing
 
 -------------------------------------------------------------------------------- NUMBERS
 opt.number = true
