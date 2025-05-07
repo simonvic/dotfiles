@@ -13,6 +13,7 @@ M.plugins = {
 	{ "nvim-telescope/telescope.nvim",               config = require("simonvic.plugins.configs.nvim-telescope") },
 	{ "stevearc/dressing.nvim",                      config = require("simonvic.plugins.configs.dressing") },
 	{ "akinsho/toggleterm.nvim",                     config = require("simonvic.plugins.configs.toggleterm") },
+	-- { "folke/snacks.nvim",                           config = require("simonvic.plugins.configs.snacks") },
 	-- { "nvim-neo-tree/neo-tree.nvim",                 config = require("simonvic.plugins.configs.neo-tree"),        branch = "v3.x", },
 	-- { "s1n7ax/nvim-window-picker",                   config = require("simonvic.plugins.configs.window-picker") },
 	{ "nvim-tree/nvim-tree.lua",                     config = require("simonvic.plugins.configs.nvimtree") },

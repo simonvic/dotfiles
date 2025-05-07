@@ -81,7 +81,7 @@ M.fn = {
 	document_symbols            = vim.lsp.buf.document_symbol,
 	rename                      = vim.lsp.buf.rename,
 	hover                       = function() vim.lsp.buf.hover({ border = "rounded" }) end,
-	signature_help              = function() vim.lsp.buf.signature_help({ border = "rounded" }) end, -- TODO: title doesn't change
+	signature_help              = function() vim.lsp.buf.signature_help({ border = "rounded", anchor_bias = "above" }) end,
 	format                      = vim.lsp.buf.format,
 	formatSelection             = function()
 		vim.lsp.buf.format({
@@ -345,6 +345,18 @@ M.plugins.ts_textobjects = {
 -------------------------------------------------------------------------------- TELESCOPE
 M.plugins.telescope = {
 }
+
+-------------------------------------------------------------------------------- SNACKS
+M.plugins.snacks = {
+	input = {
+		keys = {
+			["<esc>"] = { "close", mode = { "n", "i" } },
+			["<A-CR>"] = "qflist",
+			["<C-CR>"] = "qflist_all",
+		},
+	}
+}
+
 
 -------------------------------------------------------------------------------- NVIMTREE
 M.plugins.nvimtree = {
