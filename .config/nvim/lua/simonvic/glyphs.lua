@@ -1,5 +1,10 @@
 local M = {}
 
+M.ui = {
+	unselected = "",
+	selected = "󰄲",
+}
+
 M.listchars = {
 	eol      = "¬",
 	tab      = "> ", -- NOTE: tab char 2nd char is repeated
@@ -70,7 +75,9 @@ M.dap = {
 }
 
 M.vcs = {
+	commit    = "",
 	ignored   = "",
+	staged    = "",
 	added     = "",
 	modified  = "",
 	removed   = "",
