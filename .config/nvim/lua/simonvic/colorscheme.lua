@@ -215,6 +215,11 @@ local function buildGroups()
 		------------------------------------------------------------------------ Telescope
 		TelescopeMatching                  = { fg = p.accent },
 
+		------------------------------------------------------------------------ Telescope
+		SnacksPickerPrompt                 = { fg = p.accent },
+		SnacksPickerMatch                  = { fg = p.accent_dark },
+		SnacksPickerSelected               = { fg = p.accent },
+
 		------------------------------------------------------------------------ Lazy
 		LazyH1                             = { link = "TabLineSel" },
 		LazyButton                         = { link = "TabLine" },
