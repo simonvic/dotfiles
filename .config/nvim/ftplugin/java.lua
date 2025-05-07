@@ -60,11 +60,12 @@ local pick_many = function(items, prompt, label_f, opts)
 	local co = coroutine.running()
 	vim.ui.select(choices, { prompt = prompt, },
 		function(choice, index)
-			vim.notify("accepted")
 			local qf = vim.fn.getqflist()
 			local qf_text = {}
 			for i, qf_entry in pairs(qf) do
-				table.insert(qf_text, qf_entry.text)
+				-- Remove prefix digits added by snacks
+				local text, _ = string.gsub(qf_entry.text, "[0-9]+ ", "")
+				table.insert(qf_text, text)
 			end
 			local selected_items = {}
 			for i, item in pairs(items) do
