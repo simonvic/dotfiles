@@ -1,89 +1,52 @@
-vim.opt.colorcolumn = "100";
-vim.opt.textwidth = 100;
+vim.opt.colorcolumn = "100"
+vim.opt.textwidth = 100
 
 local ok, jdtls = pcall(require, "jdtls");
 if not ok then
+	vim.notify("nvim-jdtls plugin not installed. Raw-dogging jdtls")
+	vim.lsp.enable("jdtls")
 	return
 end
 
-local cmd = { "/usr/bin/jdtls" }
--- cmd = { vim.fn.stdpath("data") .. "/mason/bin/jdtls" }
-
--- jdtls workspace data folder
-vim.list_extend(cmd, {
-	"-data", vim.fn.expand('~/.cache/jdtls/workspaces/') .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-})
+local lsp_config = vim.lsp.config.jdtls
+local cmd = lsp_config.cmd
 
 -- Lombok support
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
 if vim.fn.empty(jars_lombok) == 0 then
 	jars_lombok = vim.split(jars_lombok, "\n")
+	-- TODO: is it safe to assume cmd is string[] ?
+	---@diagnostic disable-next-line: param-type-mismatch
 	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok[#jars_lombok] })
 end
 
-local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
+local mason_packages = vim.fn.expand("$MASON") .. "/packages"
 local bundles = {}
 
 -- Debug support
--- for upstream version: https://github.com/microsoft/java-debug
--- and glob "~/.m2/repository/com/microsoft/java/com.microsoft.java.debug.plugin/*/*.jar"
-local jars_debug = vim.fn.glob(mason_path .. "/java-debug-adapter/extension/server/*.jar", true)
+local jars_debug = vim.fn.glob(mason_packages .. "/java-debug-adapter/extension/server/*.jar", true)
 if vim.fn.empty(jars_debug) == 0 then
 	vim.list_extend(bundles, vim.split(jars_debug, "\n"))
 end
 
 -- Testing support
--- for upstream version: https://github.com/microsoft/vscode-java-test
--- and glob "~/.vscode-oss/extensions/vscjava.vscode-java-test-*/server/*.jar"
-local jars_testing = vim.fn.glob(mason_path .. "/java-test/extension/server/*.jar", true)
+local jars_testing = vim.fn.glob(mason_packages .. "/java-test/extension/server/*.jar", true)
 if vim.fn.empty(jars_testing) == 0 then
 	vim.list_extend(bundles, vim.split(jars_testing, "\n"))
 end
 
 local jdtls_config = {
 	cmd = cmd,
-	root_dir = require("jdtls.setup").find_root({ ".gradlew", ".git", "mvnw", "pom.xml" }),
-	init_options = {
-		bundles = bundles
-	},
+	root_dir = vim.fs.root(0, lsp_config.root_markers),
+	init_options = { bundles = bundles },
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		local keybindings = require("simonvic.keybindings")
 		keybindings.set(keybindings.plugins.jdtls) -- TODO: set with opt bufnr
-	end,
-	settings = {
-		java = {
-			codeGeneration = {
-				generateComments = true,
-				hashCodeEquals = {
-					useJava7Objects = true,
-				},
-				useBlocks = false
-			},
-			implementationCodeLens = "all",
-			referencesCodeLens = { enabled = true },
-			inlayHints = {
-				parameterNames = {
-					enabled = "all",
-				},
-			},
-			format = {
-				settings = {
-					url = "~/.config/jdtls/settings.xml"
-				},
-				comments = { enabled = false },
-			},
-			sources = {
-				organizeImports = {
-					starThreshold = 5,
-					staticStarThreshold = 3
-				}
-			}
-		}
-	}
+	end
 }
 
-
+-- Custom pick_many and pick_one implementations
 local pick_many = function(items, prompt, label_f, opts)
 	if not items or #items == 0 then
 		return {}
