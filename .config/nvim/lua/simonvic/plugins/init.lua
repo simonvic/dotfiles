@@ -36,7 +36,6 @@ M.plugins = {
 	{ "williamboman/mason.nvim",                     config = require("simonvic.plugins.configs.mason") },
 	{ "neovim/nvim-lspconfig",                       config = require("simonvic.plugins.configs.lsp_config") },
 	{ "williamboman/mason-lspconfig.nvim",           config = require("simonvic.plugins.configs.mason-lspconfig"), after = "nvim-lspconfig", },
-	{ "terrortylor/nvim-comment",                    config = require("simonvic.plugins.configs.comment") },
 	{ "stevearc/aerial.nvim",                        config = require("simonvic.plugins.configs.aerial") },
 	{ "windwp/nvim-autopairs",                       config = require("simonvic.plugins.configs.autopairs") },
 	{ "jake-stewart/multicursor.nvim",               config = require("simonvic.plugins.configs.multicursor") },
