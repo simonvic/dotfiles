@@ -21,7 +21,7 @@ M.plugins = {
 	-- { "folke/which-key.nvim",                        config = require("simonvic.plugins.configs.whichkey") },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
-	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"),      run = ":TSUpdate", },
+	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter") },
 	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects") },
 	{ "nvim-treesitter/nvim-treesitter-context",     config = require("simonvic.plugins.configs.ts-context") },
 	{ "nvim-treesitter/nvim-treesitter-refactor",    config = require("simonvic.plugins.configs.ts-refactor") },
@@ -32,7 +32,7 @@ M.plugins = {
 	-- { "hrsh7th/cmp-path" },
 	-- { "hrsh7th/nvim-cmp",                            config = require("simonvic.plugins.configs.cmp") },
 	{ "rafamadriz/friendly-snippets" },
-	{ "Saghen/blink.cmp",                            config = require("simonvic.plugins.configs.blinkcmp"),        version = "*" },
+	{ "Saghen/blink.cmp",                            config = require("simonvic.plugins.configs.blinkcmp"),       version = "*" },
 	{ "neovim/nvim-lspconfig",                       config = require("simonvic.plugins.configs.lsp_config") },
 	{ "mason-org/mason.nvim",                        config = require("simonvic.plugins.configs.mason") },
 	{ "mason-org/mason-lspconfig.nvim",              config = require("simonvic.plugins.configs.mason-lspconfig") },
@@ -40,14 +40,14 @@ M.plugins = {
 	{ "windwp/nvim-autopairs",                       config = require("simonvic.plugins.configs.autopairs") },
 	{ "jake-stewart/multicursor.nvim",               config = require("simonvic.plugins.configs.multicursor") },
 	{ "lewis6991/gitsigns.nvim",                     config = require("simonvic.plugins.configs.gitsigns") },
-	{ "echasnovski/mini.align",                      config = require("simonvic.plugins.configs.align"),           version = false },
+	{ "echasnovski/mini.align",                      config = require("simonvic.plugins.configs.align"),          version = false },
 	{ "catgoose/nvim-colorizer.lua",                 config = require("simonvic.plugins.configs.colorizer") },
 	{ "max397574/colortils.nvim",                    config = require("simonvic.plugins.configs.colortils") },
 	{ "kylechui/nvim-surround",                      config = require("simonvic.plugins.configs.surround") },
 	---------------------------------------------------------------------------
 	--                                                          ADVANCED CODING
 	{ "mfussenegger/nvim-dap",                       config = require("simonvic.plugins.configs.debugger") },
-	{ "rcarriga/nvim-dap-ui",                        config = require("simonvic.plugins.configs.dap_ui"),          after = "nvim-dap", },
+	{ "rcarriga/nvim-dap-ui",                        config = require("simonvic.plugins.configs.dap_ui") },
 	{ "mfussenegger/nvim-jdtls" },
 	{ "mrcjkb/rustaceanvim" },
 	{ "lervag/vimtex",                               config = require("simonvic.plugins.configs.vimtex") },
