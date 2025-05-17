@@ -40,6 +40,7 @@ local jdtls_config = {
 	root_dir = vim.fs.root(0, lsp_config.root_markers),
 	init_options = { bundles = bundles },
 	settings = lsp_config.settings,
+	capabilities = lsp_config.capabilities,
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		local keybindings = require("simonvic.keybindings")
