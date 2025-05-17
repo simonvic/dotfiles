@@ -212,6 +212,23 @@ local function buildGroups()
 		CmpItemKindConstant                = { link = "Constant" },
 		CmpItemKindStruct                  = { link = "Type" },
 
+		------------------------------------------------------------------------ blink
+		BlinkCmpMenu                       = { fg = p.text },
+		BlinkCmpLabelDeprecated            = { link = "DiagnosticDeprecated" },
+		BlinkCmpKindFunction               = { link = "Function" },
+		BlinkCmpKindMethod                 = { link = "Function" },
+		BlinkCmpKindConstructor            = { link = "Function" },
+		BlinkCmpKindVariable               = { link = "@variable" },
+		BlinkCmpKindField                  = { link = "@variable.member" },
+		BlinkCmpKindProperty               = { link = "@variable.member" },
+		BlinkCmpKindClass                  = { link = "Type" },
+		BlinkCmpKindInterface              = { link = "Type" },
+		BlinkCmpKindModule                 = { link = "Type" },
+		BlinkCmpKindEnum                   = { link = "Type" },
+		BlinkCmpKindEnumMember             = { link = "Constant" },
+		BlinkCmpKindConstant               = { link = "Constant" },
+		BlinkCmpKindStruct                 = { link = "Type" },
+
 		------------------------------------------------------------------------ Telescope
 		TelescopeMatching                  = { fg = p.accent },
 
