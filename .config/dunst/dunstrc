@@ -21,7 +21,7 @@
 	width = (0, 500)
 	height = (0, 500)
 	origin = top-center
-	offset = (0, 65)
+	offset = (0, 15) # on X11, set to 65
 	scale = 0
 	notification_limit = 0
 	corner_radius = 0
