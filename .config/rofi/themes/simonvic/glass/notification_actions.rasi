@@ -5,7 +5,7 @@ window {
 	location: north west;
 	anchor: north west;
 	x-offset: calc(50% + 260px);
-	y-offset: 65px;
+	y-offset: 15px; // on X11, set to 65px
 }
 
 listview {
