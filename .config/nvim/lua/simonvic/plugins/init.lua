@@ -21,10 +21,9 @@ M.plugins = {
 	-- { "folke/which-key.nvim",                        config = require("simonvic.plugins.configs.whichkey") },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
-	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter") },
-	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects") },
+	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"), branch = "main" },
+	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects"), branch = "main" },
 	{ "nvim-treesitter/nvim-treesitter-context",     config = require("simonvic.plugins.configs.ts-context") },
-	{ "nvim-treesitter/nvim-treesitter-refactor",    config = require("simonvic.plugins.configs.ts-refactor") },
 	{ "windwp/nvim-ts-autotag",                      config = require("simonvic.plugins.configs.ts-autotag") },
 	-- { "hrsh7th/cmp-nvim-lsp" },
 	-- { "hrsh7th/cmp-nvim-lsp-signature-help" },

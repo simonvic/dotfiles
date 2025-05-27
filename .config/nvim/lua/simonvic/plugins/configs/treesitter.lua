@@ -1,16 +1,12 @@
 return function()
-	require("nvim-treesitter.configs").setup {
-		-- ensure_installed = "all",
-		highlight = {
-			enable = true,
-			disable = { "css", "ggitcommit" },
-		},
-		indent = {
-			enable = true,
-		},
-		incremental_selection = {
-			enable = true,
-			keymaps = require("simonvic.keybindings").plugins.treesitter,
-		},
-	}
+	-- Use nvim-treesitter indentation expr
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "*" },
+		callback = function(args)
+			local lang = vim.treesitter.language.get_lang(args.match)
+			if lang and vim.treesitter.language.add(lang) then
+				vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
+		end,
+	})
 end

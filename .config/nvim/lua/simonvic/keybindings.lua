@@ -15,6 +15,8 @@ M.modes = {
 	n_it = { "n", "i", "t" },
 	n__t = { "n", "t" },
 	_vi_ = { "v", "i" },
+	_xo_ = { "x", "o" },
+	nxo_ = { "n", "x", "o" }
 }
 
 M.util = {
@@ -34,6 +36,8 @@ local n_i_ = M.modes.n_i_
 local nsi_ = M.modes.nsi_
 local n_it = M.modes.n_it
 local n__t = M.modes.n__t
+local _xo_ = M.modes._xo_
+local nxo_ = M.modes.nxo_
 local cmd = M.util.cmd
 local cmd_sel = M.util.cmd_sel
 
@@ -150,6 +154,33 @@ M.fn = {
 	cursors_toggle              = function() M.not_implemented("cursors_toggle") end,
 	cursors_delete              = function() M.not_implemented("cursors_delete") end,
 	cursors_clear               = function() M.not_implemented("cursors_clear") end,
+
+	-- TODO: builtin implementation?
+	move_argument_next          = function() M.not_implemented("move_argument_next") end,
+	move_argument_prev          = function() M.not_implemented("move_argument_prev") end,
+	move_function_next          = function() M.not_implemented("move_function_next") end,
+	move_function_prev          = function() M.not_implemented("move_function_prev") end,
+	move_class_next             = function() M.not_implemented("move_class_next") end,
+	move_class_prev             = function() M.not_implemented("move_class_prev") end,
+
+	goto_next_function          = function() M.not_implemented("goto_next_function") end,
+	goto_next_argument          = function() M.not_implemented("goto_next_argument") end,
+	goto_next_class             = function() M.not_implemented("goto_next_class") end,
+	goto_next_comment           = function() M.not_implemented("goto_next_comment") end,
+	goto_prev_function          = function() M.not_implemented("goto_prev_function") end,
+	goto_prev_argument          = function() M.not_implemented("goto_prev_argument") end,
+	goto_prev_class             = function() M.not_implemented("goto_prev_class") end,
+	goto_prev_comment           = function() M.not_implemented("goto_prev_comment") end,
+
+	select_around_function      = function() M.not_implemented("select_around_function") end,
+	select_inside_function      = function() M.not_implemented("select_inside_function") end,
+	select_around_argument      = function() M.not_implemented("select_around_argument") end,
+	select_inside_argument      = function() M.not_implemented("select_inside_argument") end,
+	select_around_class         = function() M.not_implemented("select_around_class") end,
+	select_inside_class         = function() M.not_implemented("select_inside_class") end,
+	select_around_comment       = function() M.not_implemented("select_around_comment") end,
+	select_inside_comment       = function() M.not_implemented("select_inside_comment") end,
+
 }
 
 M.leader = " "
@@ -184,6 +215,14 @@ M.mappings = {
 	{ n___, "<leader>H",                          function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
 	{ n___, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
 	{ n___, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
+	{ nxo_, "]f",                                 function() M.fn.goto_next_function() end,        { desc = "Go to next function" } },
+	{ nxo_, "]a",                                 function() M.fn.goto_next_argument() end,        { desc = "Go to next argument" } },
+	{ nxo_, "]c",                                 function() M.fn.goto_next_class() end,           { desc = "Go to next class" } },
+	{ nxo_, "]k",                                 function() M.fn.goto_next_comment() end,         { desc = "Go to next comment" } },
+	{ nxo_, "[f",                                 function() M.fn.goto_prev_function() end,        { desc = "Go to previous function" } },
+	{ nxo_, "[a",                                 function() M.fn.goto_prev_argument() end,        { desc = "Go to previous argument" } },
+	{ nxo_, "[c",                                 function() M.fn.goto_prev_class() end,           { desc = "Go to previous class" } },
+	{ nxo_, "[k",                                 function() M.fn.goto_prev_comment() end,         { desc = "Go to previous comment" } },
 	---------------------------------------------------------------------------- EDITING
 	{ n___, "<C-A-l>",                            "gg=G<C-o>",                                     { desc = "Reindent file" } },
 	{ n_i_, "<A-S-l>",                            function() M.fn.format() end,                    { desc = "Reformat" } },
@@ -194,6 +233,20 @@ M.mappings = {
 	{ nv__, "<leader>gh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
 	{ n___, "<leader>gb",                         function() M.fn.vcs_blame_line() end,            { desc = "Blame current line" } },
 	{ n___, "<leader>gB",                         function() M.fn.vcs_blame() end,                 { desc = "Blame current buffer" } },
+	{ n___, "mal",                                function() M.fn.move_argument_next() end,        { desc = "Move argument to next" } },
+	{ n___, "mah",                                function() M.fn.move_argument_prev() end,        { desc = "Move argument to previous" } },
+	{ n___, "mfl",                                function() M.fn.move_function_next() end,        { desc = "Move function to next" } },
+	{ n___, "mfh",                                function() M.fn.move_function_prev() end,        { desc = "Move function to previous" } },
+	{ n___, "mcl",                                function() M.fn.move_class_next() end,           { desc = "Move class to next" } },
+	{ n___, "mch",                                function() M.fn.move_class_prev() end,           { desc = "Move class to previous" } },
+	{ _xo_, "af",                                 function() M.fn.select_around_function() end,    { desc = "Select around function" } },
+	{ _xo_, "if",                                 function() M.fn.select_inside_function() end,    { desc = "Select inside function" } },
+	{ _xo_, "aa",                                 function() M.fn.select_around_argument() end,    { desc = "Select around argument" } },
+	{ _xo_, "ia",                                 function() M.fn.select_inside_argument() end,    { desc = "Select inside argument" } },
+	{ _xo_, "ac",                                 function() M.fn.select_around_class() end,       { desc = "Select around class" } },
+	{ _xo_, "ic",                                 function() M.fn.select_inside_class() end,       { desc = "Select inside class" } },
+	{ _xo_, "ak",                                 function() M.fn.select_around_comment() end,     { desc = "Select around comment" } },
+	{ _xo_, "ik",                                 function() M.fn.select_inside_comment() end,     { desc = "Select inside comment" } },
 	---------------------------------------------------------------------------- WINDOWS
 	{ n_i_, "<A-PageUp>",                         cmd("bnext"),                                    { desc = "Next buffer" } },
 	{ n_i_, "<A-PageDown>",                       cmd("bprevious"),                                { desc = "Previous buffer" } },
@@ -267,80 +320,6 @@ M.mappings = {
 
 -------------------------------------------------------------------------------- PLUGINS
 M.plugins = {}
-
--------------------------------------------------------------------------------- TREESITTER
-M.plugins.treesitter = {
-	init_selection    = false,
-	node_incremental  = "<A-v>",
-	scope_incremental = false,
-	node_decremental  = "<A-V>",
-}
-
--------------------------------------------------------------------------------- TS-TEXTOBJECTS
-M.plugins.ts_textobjects = {
-	swap = {
-		swap_next = {
-			["mal"] = "@parameter.inner",
-			["mfl"] = "@function.outer",
-			["mcl"] = "@class.outer",
-		},
-		swap_previous = {
-			["mah"] = "@parameter.inner",
-			["mfh"] = "@function.outer",
-			["mch"] = "@class.outer",
-		},
-	},
-	lsp_interop = {
-		peek_definition_code = {
-			["<leader>pf"] = "@function.outer",
-			["<leader>pc"] = "@class.outer",
-		},
-	},
-	move = {
-		goto_next_start = {
-			["]f"] = "@function.outer",
-			["]a"] = "@parameter.inner",
-			["]c"] = "@class.outer",
-			["]k"] = "@comment.outer",
-		},
-		goto_next_end = {
-			["]F"] = "@function.outer",
-			["]A"] = "@parameter.outer",
-			["]C"] = "@class.outer",
-			["]K"] = "@comment.outer",
-		},
-		goto_previous_start = {
-			["[f"] = "@function.outer",
-			["[a"] = "@parameter.inner",
-			["[c"] = "@class.outer",
-			["[k"] = "@comment.outer",
-		},
-		goto_previous_end = {
-			["[F"] = "@function.outer",
-			["[A"] = "@parameter.outer",
-			["[C"] = "@class.outer",
-			["[K"] = "@comment.outer",
-		},
-		goto_next = {
-			-- ["]i"] = "@conditional.outer",
-		},
-		goto_previous = {
-			-- ["[i"] = "@conditional.outer",
-		}
-	},
-	select = {
-		keymaps = {
-			["af"] = "@function.outer",
-			["aa"] = "@parameter.outer",
-			["ac"] = "@class.outer",
-			["ak"] = "@comment.outer",
-			["if"] = "@function.inner",
-			["ia"] = "@parameter.inner",
-			["ic"] = "@class.inner",
-			["ik"] = "@comment.inner",
-		},
-	},
-}
 
 -------------------------------------------------------------------------------- TELESCOPE
 M.plugins.telescope = {

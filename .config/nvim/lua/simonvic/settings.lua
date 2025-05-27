@@ -268,4 +268,17 @@ vim.diagnostic.config({
 	}
 })
 
+-------------------------------------------------------------------------------- TREESITTER
+-- Enable treesitter for all available filetypes
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "*" },
+	callback = function(args)
+		local lang = vim.treesitter.language.get_lang(args.match)
+		if lang and vim.treesitter.language.add(lang) then
+			vim.treesitter.start(args.buf, lang)
+			-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+		end
+	end,
+})
+
 return M
