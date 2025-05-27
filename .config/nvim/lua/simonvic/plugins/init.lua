@@ -4,7 +4,6 @@ M.plugins = {
 	---------------------------------------------------------------------------
 	--                                                      LIBS / DEPENDENCIES
 	{ "nvim-lua/plenary.nvim" },
-	{ "MunifTanjim/nui.nvim" },
 	{ "kyazdani42/nvim-web-devicons" },
 	{ "nvim-neotest/nvim-nio" },
 	---------------------------------------------------------------------------
