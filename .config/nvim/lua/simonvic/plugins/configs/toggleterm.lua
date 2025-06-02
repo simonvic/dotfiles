@@ -4,6 +4,8 @@ return function()
 		shading_factor = 2,
 		direction = "horizontal",
 		highlights = {
+			Normal = { link = "Normal" },
+			StatusLine = { link = "StatusLine" },
 			WinBar = { link = "WinBar" }
 		},
 		float_opts = {
