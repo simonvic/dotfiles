@@ -30,6 +30,7 @@
 <!-- <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_invocation" value="separate_lines_if_wrapped"/> -->
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_try_clause" value="separate_lines_if_wrapped"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_lambda_declaration" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.text_block_indentation" value="3"/> <!-- indent preserve -->
 </profile>
 </profiles>
 
