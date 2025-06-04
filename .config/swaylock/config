@@ -1,14 +1,15 @@
 # fade-in=1
-effect-blur=10x10
+effect-blur=32x10
 color=333333
-# image="${XDG_CONFIG_HOME:-$HOME/.config}/sway/desktop_wallpaper"
+# image="$XDG_CONFIG_HOME/sway/desktop_wallpaper"
 screenshot
 
-font-size=40
+font=LatoLight
+font-size=100
 
 clock
 indicator
-indicator-radius=128
+indicator-radius=256
 indicator-thickness=16
 indicator-caps-lock
 indicator-idle-visible
@@ -22,9 +23,10 @@ key-hl-color=F0544C
 bs-hl-color=F0544C
 caps-lock-bs-hl-color=F0544C
 caps-lock-key-hl-color=F0544C
-ring-color=00000055
+ring-color=00000000
 ring-ver-color=F0544C55
 ring-wrong-color=F0544Cff
+ring-clear-color=00000055
 line-uses-ring
 separator-color=F0544Cff
 text-color=DADADAff
@@ -32,3 +34,4 @@ text-ver-color=DADADAff
 text-wrong-color=DADADAff
 text-ver=...
 text-wrong=!!!
+text-clear=___
