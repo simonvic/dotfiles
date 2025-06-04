@@ -121,7 +121,10 @@ function lockscreen() {
 	if [[ $showSongAsGreeter == true ]]; then
 		greeterText=$(sPlayerctl info 2> /dev/null )
 	fi
-	local args="\
+	case "$XDG_SESSION_TYPE" in
+		wayland) swaylock -f ;;
+		x11)
+			local args="\
 --pass-media-keys --pass-screen-keys --pass-power-keys --pass-volume-keys \
 --redraw-thread --force-clock \
 --keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
@@ -135,32 +138,32 @@ function lockscreen() {
 --greeter-size=$greeterSize --greeter-pos=$greeterPos \
 --line-uses-ring"
 
-	case "$indicatorType" in
-		ring) args="$args --radius=$radius --ring-width=$ringWidth" ;;
-		bars) args="$args \
+			case "$indicatorType" in
+				ring) args="$args --radius=$radius --ring-width=$ringWidth" ;;
+				bars) args="$args \
 --bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight \
 --bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor \
 --bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-pos=$barPosition"
-			;;
-	esac
-	
-	local background=""
-	case "$bgType" in
-		color) background="--color=$bgColor" ;;
-		image) background="--image=$bgImage" ;;
-		simpleBlur) background="--blur=$bgBlurSigma" ;;
-		magick)
-			takeScreenshot
-			background="--image=$tempScreenshotFile"
-			;;
-	esac
+					;;
+			esac
+			
+			local background=""
+			case "$bgType" in
+				color) background="--color=$bgColor" ;;
+				image) background="--image=$bgImage" ;;
+				simpleBlur) background="--blur=$bgBlurSigma" ;;
+				magick)
+					takeScreenshot
+					background="--image=$tempScreenshotFile"
+					;;
+			esac
 
-	pgrep i3lock || i3lock $args --date-str="$dateString" \
-		--greeter-text="$greeterText" --verif-text="$verifyText" \
-		--wrong-text="$wrongText" --noinput-text="$noInputText" \
-		"$background"
-	
-
+			pgrep i3lock || i3lock $args --date-str="$dateString" \
+				--greeter-text="$greeterText" --verif-text="$verifyText" \
+				--wrong-text="$wrongText" --noinput-text="$noInputText" \
+				"$background"
+		;;
+	esac
 }
 
 function printUsage() {
