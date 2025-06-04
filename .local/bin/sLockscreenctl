@@ -94,7 +94,18 @@ barStep=1
 barPeriodicStep=10
 barPosition=540
 
-# @NOTE: the filetype extension matters. (e.g. png(lossless), jpg(lossy))
+# Arguments to pass to i3lock
+i3lockArgs=(
+	"--pass-media-keys"
+	"--pass-screen-keys"
+	"--pass-power-keys"
+	"--pass-volume-keys"
+	"--redraw-thread"
+	"--force-clock"
+	"--line-uses-ring"
+)
+
+# NOTE: filetype extension matters. (e.g. png(lossless), jpg(lossy))
 tempScreenshotFile=/tmp/simonvic/sLockscreenctl/tempScreenshot.jpg
 
 ###############################################################################
@@ -117,52 +128,74 @@ function takeScreenshot() {
 }
 
 function lockscreen() {
-	# who wrote this shit? Me? ThAt's uNpOssiBlE
 	if [[ $showSongAsGreeter == true ]]; then
 		greeterText=$(sPlayerctl info 2> /dev/null )
 	fi
 	case "$XDG_SESSION_TYPE" in
 		wayland) swaylock -f ;;
 		x11)
-			local args="\
---pass-media-keys --pass-screen-keys --pass-power-keys --pass-volume-keys \
---redraw-thread --force-clock \
---keyhl-color=$inputTypeColor --bshl-color=$inputDeleteColor --separator-color=$separatorColor \
---verif-color=$textColor --wrong-color=$textColor \
---time-color=$textColor --time-str=$timeString --time-font=$font --time-size=$timeSize \
---ind-pos=$indicatorPos --time-pos=$timePos --date-pos=$datePos \
---date-color=$textColor --date-str=$dateString  --date-font=$font --date-size=$dateSize \
---inside-color=$insideColor --insidever-color=$insideVerifyingColor --insidewrong-color=$insideWrongColor \
---ring-color=$ringColor --ringver-color=$ringVerifyingColor --ringwrong-color=$ringWrongColor \
---greeter-text=$greeterText --greeter-color=$textColor --greeter-font=$font \
---greeter-size=$greeterSize --greeter-pos=$greeterPos \
---line-uses-ring"
+			i3lockArgs+=(
+				"--keyhl-color=$inputTypeColor"
+				"--bshl-color=$inputDeleteColor"
+				"--separator-color=$separatorColor"
+				"--verif-color=$textColor"
+				"--wrong-color=$textColor"
+				"--time-color=$textColor"
+				"--time-str=$timeString"
+				"--time-font=$font"
+				"--time-size=$timeSize"
+				"--ind-pos=$indicatorPos"
+				"--time-pos=$timePos"
+				"--date-pos=$datePos"
+				"--date-color=$textColor"
+				"--date-str=$dateString"
+				"--date-font=$font"
+				"--date-size=$dateSize"
+				"--inside-color=$insideColor"
+				"--insidever-color=$insideVerifyingColor"
+				"--insidewrong-color=$insideWrongColor"
+				"--ring-color=$ringColor"
+				"--ringver-color=$ringVerifyingColor"
+				"--ringwrong-color=$ringWrongColor"
+				"--greeter-color=$textColor"
+				"--greeter-font=$font"
+				"--greeter-size=$greeterSize"
+				"--greeter-pos=$greeterPos"
+				"--greeter-text=$greeterText"
+				"--verif-text=$verifyText"
+				"--wrong-text=$wrongText"
+				"--noinput-text=$noInputText"
+			)
 
 			case "$indicatorType" in
-				ring) args="$args --radius=$radius --ring-width=$ringWidth" ;;
-				bars) args="$args \
---bar-indicator --bar-direction=$barDirection --bar-max-height=$barMaxHeight \
---bar-count=$barCount --bar-base-width=$barBaseWidth --bar-color=$barBaseColor \
---bar-step=$barStep --bar-periodic-step=$barPeriodicStep --bar-pos=$barPosition"
-					;;
-			esac
-			
-			local background=""
-			case "$bgType" in
-				color) background="--color=$bgColor" ;;
-				image) background="--image=$bgImage" ;;
-				simpleBlur) background="--blur=$bgBlurSigma" ;;
-				magick)
-					takeScreenshot
-					background="--image=$tempScreenshotFile"
+				ring) i3lockArgs+=("--radius=$radius" "--ring-width=$ringWidth") ;;
+				bars)
+					i3lockArgs+=(
+						"--bar-indicator"
+						"--bar-direction=$barDirection"
+						"--bar-max-height=$barMaxHeight"
+						"--bar-count=$barCount"
+						"--bar-base-width=$barBaseWidth"
+						"--bar-color=$barBaseColor"
+						"--bar-step=$barStep"
+						"--bar-periodic-step=$barPeriodicStep"
+						"--bar-pos=$barPosition"
+					)
 					;;
 			esac
 
-			pgrep i3lock || i3lock $args --date-str="$dateString" \
-				--greeter-text="$greeterText" --verif-text="$verifyText" \
-				--wrong-text="$wrongText" --noinput-text="$noInputText" \
-				"$background"
-		;;
+			case "$bgType" in
+				color) i3lockArgs+=("--color=$bgColor") ;;
+				image) i3lockArgs+=("--image=$bgImage") ;;
+				simpleBlur) i3lockArgs+=("--blur=$bgBlurSigma") ;;
+				magick)
+					takeScreenshot
+					i3lockArgs+=("--image=$tempScreenshotFile")
+					;;
+			esac
+
+			pgrep i3lock || i3lock "${i3lockArgs[@]}"
+			;;
 	esac
 }
 
