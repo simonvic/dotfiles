@@ -20,12 +20,12 @@ return function()
 	local nxo_ = keybindings.modes.nxo_
 	keybindings.set({
 		-- Override vim builtins
-		{ nxo_, ",", function() pcall(ts_repeat_move.repeat_last_move_next) end, },
-		{ nxo_, ";", function() pcall(ts_repeat_move.repeat_last_move_previous) end, },
-		{ nxo_, "f", function() pcall(ts_repeat_move.builtin_f_expr) end,            { expr = true } },
-		{ nxo_, "F", function() pcall(ts_repeat_move.builtin_F_expr) end,            { expr = true } },
-		{ nxo_, "t", function() pcall(ts_repeat_move.builtin_t_expr) end,            { expr = true } },
-		{ nxo_, "T", function() pcall(ts_repeat_move.builtin_T_expr) end,            { expr = true } },
+		{ nxo_, ",", ts_repeat_move.repeat_last_move_next, },
+		{ nxo_, ";", ts_repeat_move.repeat_last_move_previous, },
+		{ nxo_, "f", ts_repeat_move.builtin_f_expr,            { expr = true } },
+		{ nxo_, "F", ts_repeat_move.builtin_F_expr,            { expr = true } },
+		{ nxo_, "t", ts_repeat_move.builtin_t_expr,            { expr = true } },
+		{ nxo_, "T", ts_repeat_move.builtin_T_expr,            { expr = true } },
 	})
 	local swap = require("nvim-treesitter-textobjects.swap")
 	local move = require("nvim-treesitter-textobjects.move")
@@ -57,5 +57,4 @@ return function()
 		select_around_comment  = function() pcall(select.select_textobject, "@comment.outer", "textobjects") end,
 		select_inside_comment  = function() pcall(select.select_textobject, "@comment.inner", "textobjects") end,
 	})
-
 end
