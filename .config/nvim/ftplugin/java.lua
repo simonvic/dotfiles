@@ -41,6 +41,16 @@ local jdtls_config = {
 	init_options = { bundles = bundles },
 	settings = lsp_config.settings,
 	capabilities = lsp_config.capabilities,
+	-- capabilities = vim.tbl_deep_extend("force", lsp_config.capabilities, {
+	-- 	textDocument = {
+	-- 		completion = {
+	-- 			completionItem = {
+	-- 				-- treesitter might have better syntax highlighting
+	-- 				labelDetailsSupport = false
+	-- 			}
+	-- 		}
+	-- 	}
+	-- }),
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		local keybindings = require("simonvic.keybindings")
