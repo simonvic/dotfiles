@@ -357,7 +357,7 @@
 		"format-alt": "{icon} <small>󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
 		"format-ethernet": "󰈀",
 		"tooltip-format": "{ifname} {ipaddr}/{cidr}\n{icon} {signalStrength}% | 󰘊 {frequency}\n{essid}",
-		"format-linked": "{ifname} (No IP) ",
+		"format-linked": "{ifname} (No IP) 󰪎",
 		"format-disabled": "󰤮",
 		"format-disconnected": "󰤭",
 		"format-icons": [
@@ -375,7 +375,7 @@
 		"format-wifi": "{icon}<span size='x-small'>{frequency}</span> {essid} <span size='x-small'>{ipaddr}</span>\n<span size='smaller'>󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</span>",
 		"format-ethernet": "󰈀 <small>{ifname} {ipaddr} 󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}</small>",
 		"tooltip-format": "{ifname} {ipaddr}/{cidr}\n{icon} {signalStrength}% | 󰘊 {frequency}\n{essid}",
-		"format-linked": "{ifname} (No IP) ",
+		"format-linked": "{ifname} (No IP) 󰪎",
 		"format-disabled": "󰤮",
 		"format-disconnected": "󰤭",
 		"format-icons": [
