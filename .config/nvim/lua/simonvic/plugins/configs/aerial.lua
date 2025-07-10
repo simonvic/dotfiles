@@ -13,6 +13,7 @@ return function()
 			placement = "window",
 		},
 		backends = { "lsp", "treesitter", "markdown" },
+		filter_kind = false,
 		attach_mode = "window",
 		close_automatic_events = {},
 		keymaps = keybindings.plugins.aerial.base,
