@@ -62,9 +62,10 @@ M.palette = {
 	ok             = "#A9FF68",
 }
 
-local function buildGroups()
-	local p = M.palette
-	if M.config.transparent then
+local function buildGroups(config, palette)
+	local p = vim.tbl_deep_extend("force", M.palette, palette or {})
+	local c = vim.tbl_deep_extend("force", M.config, config or {})
+	if c.transparent then
 		p.zdepth__4 = "none"
 		p.zdepth__3 = "none"
 		p.zdepth__2 = "none"
@@ -80,7 +81,7 @@ local function buildGroups()
 
 		------------------------------------------------------------------------ ui
 		Normal                             = { bg = p.zdepth_0, fg = p.text },
-		NormalNC                           = {}, -- TODO: darken non-focused windows?
+		NormalNC                           = {},
 		NormalFloat                        = {},
 		Visual                             = { bg = p.accent_xxdark },
 		SnippetTabstop                     = { bg = p.accent_xxdark, italic = true },
@@ -94,7 +95,7 @@ local function buildGroups()
 		TabLineSel                         = { bg = p.zdepth_1, underline = true, sp = p.accent_xdark },
 		TabLineFill                        = { bg = p.zdepth__1 },
 		StatusLine                         = { bg = p.zdepth_1 },
-		MsgArea                            = { bg = p.zdepth_1, bold = M.config.bold_commandline },
+		MsgArea                            = { bg = p.zdepth_1, bold = c.bold_commandline },
 		MoreMsg                            = { bg = p.zdepth_1, bold = true },
 		Question                           = { bg = p.zepth_1, bold = true },
 		WinSeparator                       = { bg = p.zdepth_1, fg = p.text_xdark },
@@ -137,16 +138,16 @@ local function buildGroups()
 		Number                             = { fg = p.literal_number },
 		Boolean                            = { fg = p.literal_bool },
 		Identifier                         = { link = "Normal" },
-		Constant                           = { fg = p.constant, bold = M.config.bold_constants },
+		Constant                           = { fg = p.constant, bold = c.bold_constants },
 		Function                           = { fg = p["function"] },
-		Type                               = { bg = "none", fg = p.text_xxlight, bold = M.config.bold_types },
+		Type                               = { bg = "none", fg = p.text_xxlight, bold = c.bold_types },
 		PreProc                            = { fg = p.metakeyword },
 		Keyword                            = { fg = p.keyword },
 		Statement                          = { link = "Keyword" },
 		Delimiter                          = { link = "Keyword" },
 		Operator                           = { link = "Keyword" },
-		Comment                            = { bg = "none", fg = p.text_dark, italic = M.config.italic_comments },
-		SpecialComment                     = { bg = "none", fg = p.text_dark, italic = M.config.italic_comments, bold = M.config.bold_docs },
+		Comment                            = { bg = "none", fg = p.text_dark, italic = c.italic_comments },
+		SpecialComment                     = { bg = "none", fg = p.text_dark, italic = c.italic_comments, bold = c.bold_docs },
 		Todo                               = { bg = "none", fg = p.hint, bold = true },
 		Error                              = { fg = p.error, undercurl = true },
 		ErrorMsg                           = { fg = p.error },
@@ -509,10 +510,17 @@ end
 
 M.groups = buildGroups()
 
-function M.apply()
+function M.apply(overrides)
+	local groups = M.groups
+	if overrides then
+		local config = vim.tbl_deep_extend("force", M.config, overrides.config or {})
+		local palette = vim.tbl_deep_extend("force", M.palette, overrides.palette or {})
+		groups = buildGroups(config, palette)
+		groups = vim.tbl_deep_extend("force", groups, overrides.groups or {})
+	end
 	vim.g.colors_name = "simonvic"
 	vim.o.termguicolors = true
-	for group, colors in pairs(M.groups) do
+	for group, colors in pairs(groups) do
 		vim.api.nvim_set_hl(0, group, colors)
 	end
 end
