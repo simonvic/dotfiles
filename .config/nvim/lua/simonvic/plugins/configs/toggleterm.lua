@@ -6,7 +6,8 @@ return function()
 		highlights = {
 			Normal = { link = "Normal" },
 			StatusLine = { link = "StatusLine" },
-			WinBar = { link = "WinBar" }
+			WinBar = { link = "WinBar" },
+			WinBarNC = { link = "WinBarNC" }
 		},
 		float_opts = {
 			border = "curved",
