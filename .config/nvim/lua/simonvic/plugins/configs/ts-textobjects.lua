@@ -18,14 +18,26 @@ return function()
 	local keybindings = require("simonvic.keybindings")
 	local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
 	local nxo_ = keybindings.modes.nxo_
+	local function make_repeatable_func(fn)
+		return function()
+			local _, keys = pcall(fn)
+			if keys then
+				local cmd = ('normal! %d%s'):format(vim.v.count1, vim.keycode(keys))
+				vim.cmd(cmd)
+			end
+		end
+	end
 	keybindings.set({
 		-- Override vim builtins
-		{ nxo_, ",", ts_repeat_move.repeat_last_move_next, },
-		{ nxo_, ";", ts_repeat_move.repeat_last_move_previous, },
-		{ nxo_, "f", ts_repeat_move.builtin_f_expr,            { expr = true } },
-		{ nxo_, "F", ts_repeat_move.builtin_F_expr,            { expr = true } },
-		{ nxo_, "t", ts_repeat_move.builtin_t_expr,            { expr = true } },
-		{ nxo_, "T", ts_repeat_move.builtin_T_expr,            { expr = true } },
+		-- { nxo_, ",", ts_repeat_move.repeat_last_move_next, },
+		-- { nxo_, ";", ts_repeat_move.repeat_last_move_previous, },
+		-- workaround for https://github.com/nvim-treesitter/nvim-treesitter-textobjects/issues/775
+		{ nxo_, ",", make_repeatable_func(ts_repeat_move.repeat_last_move_next) },
+		{ nxo_, ";", make_repeatable_func(ts_repeat_move.repeat_last_move_previous) },
+		{ nxo_, "f", ts_repeat_move.builtin_f_expr,                                 { expr = true } },
+		{ nxo_, "F", ts_repeat_move.builtin_F_expr,                                 { expr = true } },
+		{ nxo_, "t", ts_repeat_move.builtin_t_expr,                                 { expr = true } },
+		{ nxo_, "T", ts_repeat_move.builtin_T_expr,                                 { expr = true } },
 	})
 	local swap = require("nvim-treesitter-textobjects.swap")
 	local move = require("nvim-treesitter-textobjects.move")
