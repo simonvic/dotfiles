@@ -118,6 +118,9 @@ local function buildGroups(config, palette)
 		SignColumn                         = { bg = p.zdepth_1, fg = p.text_xdark },
 		FoldColumn                         = { bg = p.zdepth_1, fg = p.text_xdark },
 		QuickFixLine                       = { link = "PmenuSel" },
+		qfFileName                         = { fg = p.text_xxdark },
+		qfSeparator1                       = { fg = p.accent_xdark },
+		qfSeparator2                       = { link = "qfSeparator1" },
 
 		------------------------------------------------------------------------ text
 		Title                              = { fg = p.text_light, bold = true },
