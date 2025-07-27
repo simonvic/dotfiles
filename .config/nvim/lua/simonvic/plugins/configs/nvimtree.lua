@@ -41,6 +41,9 @@ return function()
 			signcolumn = "auto",
 			float = {
 				enable = false, -- TODO: might be handy
+				open_win_config = {
+					border = vim.o.winborder
+				}
 			},
 		},
 		actions = {
@@ -72,7 +75,7 @@ return function()
 			},
 			file_popup = {
 				open_win_config = {
-					border = "rounded"
+					border = vim.o.winborder
 				}
 			}
 		},

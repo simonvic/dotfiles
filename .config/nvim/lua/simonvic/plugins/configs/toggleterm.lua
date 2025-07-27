@@ -10,7 +10,7 @@ return function()
 			WinBarNC = { link = "WinBarNC" }
 		},
 		float_opts = {
-			border = "curved",
+			border = vim.o.winborder,
 		},
 	})
 	require("simonvic.keybindings").implement({

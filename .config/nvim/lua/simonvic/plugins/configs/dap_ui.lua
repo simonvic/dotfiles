@@ -5,6 +5,9 @@ return function()
 	local dapui = require("dapui")
 	---@diagnostic disable-next-line: missing-fields
 	dapui.setup({
+		floating = {
+			border = vim.o.winborder
+		},
 		mappings = keybindings.plugins.dapui,
 		icons = {
 			expanded = glyphs.fs.dir.expanded,

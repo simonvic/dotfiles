@@ -4,7 +4,7 @@ return function()
 		preset = "helix",
 		win = {
 			no_overlap = true,
-			border = "rounded",
+			border = vim.o.winborder,
 			padding = { 1, 2 },
 			title = true,
 			zindex = 1000,

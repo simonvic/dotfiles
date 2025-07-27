@@ -15,11 +15,11 @@ return function()
 		},
 		window = {
 			completion = {
-				border = "rounded",
+				border = vim.o.winborder,
 				col_offset = -3,
 			},
 			documentation = {
-				border = "rounded",
+				border = vim.o.winborder,
 			},
 		},
 		experimental = {

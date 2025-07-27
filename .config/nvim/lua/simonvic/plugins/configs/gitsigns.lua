@@ -2,9 +2,6 @@ return function()
 	local glyphs = require("simonvic.glyphs")
 	local gitsigns = require('gitsigns')
 	gitsigns.setup({
-		preview_config = {
-			border = "rounded",
-		},
 		sign_priority = 22,
 		signs = {
 			add          = { text = glyphs.statuscolumn.vcs.addded },

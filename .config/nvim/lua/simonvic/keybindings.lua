@@ -84,8 +84,8 @@ M.fn = {
 	workspace_symbols           = vim.lsp.buf.workspace_symbol,
 	document_symbols            = vim.lsp.buf.document_symbol,
 	rename                      = vim.lsp.buf.rename,
-	hover                       = function() vim.lsp.buf.hover({ border = "rounded" }) end,
-	signature_help              = function() vim.lsp.buf.signature_help({ border = "rounded", anchor_bias = "above" }) end,
+	hover                       = vim.lsp.buf.hover,
+	signature_help              = function() vim.lsp.buf.signature_help({ anchor_bias = "above" }) end,
 	format                      = vim.lsp.buf.format,
 	formatSelection             = function()
 		vim.lsp.buf.format({

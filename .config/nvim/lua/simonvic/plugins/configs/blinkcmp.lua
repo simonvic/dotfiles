@@ -36,7 +36,6 @@ return function()
 
 			menu = {
 				auto_show = false,
-				border = "rounded",
 				max_height = 32,
 				scrolloff = 8,
 				scrollbar = false,
@@ -55,7 +54,6 @@ return function()
 			documentation = {
 				auto_show = false,
 				window = {
-					border = "rounded",
 					max_height = 64,
 					scrollbar = true,
 				},
@@ -71,7 +69,6 @@ return function()
 		signature = {
 			enabled = true,
 			window = {
-				border = "rounded",
 				treesitter_highlighting = true,
 			},
 			trigger = {

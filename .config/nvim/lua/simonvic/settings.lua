@@ -39,7 +39,7 @@ opt.shortmess:append("c")
 opt.cursorline = true
 opt.cursorcolumn = false
 opt.termguicolors = true
--- opt.winborder = "rounded"
+opt.winborder = "rounded"
 opt.showcmdloc = "statusline"
 
 opt.list = false
@@ -258,7 +258,6 @@ vim.diagnostic.config({
 	},
 	severity_sort = false,
 	float = {
-		border = "rounded",
 		header = "",
 		prefix = glyphs.diagnostics.prefix
 	},

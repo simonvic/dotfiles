@@ -32,7 +32,7 @@ M.plugins = {
 	-- { "hrsh7th/nvim-cmp",                            config = require("simonvic.plugins.configs.cmp") },
 	{ "rafamadriz/friendly-snippets" },
 	{ "Saghen/blink.cmp",                            config = require("simonvic.plugins.configs.blinkcmp"),       version = "*" },
-	{ "neovim/nvim-lspconfig",                       config = require("simonvic.plugins.configs.lsp_config") },
+	{ "neovim/nvim-lspconfig", },
 	{ "mason-org/mason.nvim",                        config = require("simonvic.plugins.configs.mason") },
 	{ "mason-org/mason-lspconfig.nvim",              config = require("simonvic.plugins.configs.mason-lspconfig") },
 	{ "stevearc/aerial.nvim",                        config = require("simonvic.plugins.configs.aerial") },
