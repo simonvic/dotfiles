@@ -67,7 +67,7 @@ function M.setup()
 	vim.opt.rtp:prepend(lazypath)
 	require("lazy").setup(M.plugins, {
 		ui = {
-			border = "rounded",
+			border = vim.o.winborder,
 			icons = {
 				list = {
 					""
