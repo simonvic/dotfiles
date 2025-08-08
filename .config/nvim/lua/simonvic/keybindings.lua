@@ -305,7 +305,7 @@ M.mappings = {
 	{ n___, { "<C-F6>", "<F30>" },                function() M.fn.test_method() end,               { desc = "Test method" } },
 	{ n___, { "<C-S-F7>", "<F43>" },              function() M.fn.setup_debug_config() end,        { desc = "Setup debug launch config" } },
 	{ n___, { "<C-F7>", "<F31>" },                function() M.fn.hotcode_replace() end,           { desc = "Hotcode replace" } },
-	{ n___, "<C-A-b>",                            function() M.fn.super_implementation() end,      { desc = "Go to super implementation" } },
+	{ n___, { "grI", "<C-A-b>" },                 function() M.fn.super_implementation() end,      { desc = "Go to super implementation" } },
 	---------------------------------------------------------------------------- Multicursor
 	{ n___, { "<leader>cj", "<C-J>", "<C-S-j>" }, function() M.fn.cursors_add_down() end,          { desc = "Add cursor and move down" } },
 	{ n___, { "<leader>ck", "<C-K>", "<C-S-K>" }, function() M.fn.cursors_add_up() end,            { desc = "Add cursor and move up" } },
@@ -470,7 +470,7 @@ M.plugins.jdtls = {
 	{ n_i_, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,              { desc = "Test method" } },
 	{ n_i_, { "<C-S-F7>", "<F43>" }, function() require("jdtls.dap").setup_dap_main_class_configs() end, { desc = "Setup debug launch config" } },
 	{ n_i_, { "<C-F7>", "<F31>" },   cmd("JdtUpdateHotcode"),                                            { desc = "Hotcode replace" } },
-	{ n_i_, "<C-A-b>",               function() require("jdtls").super_implementation() end,             { desc = "Go to super implementation" } },
+	{ n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,             { desc = "Go to super implementation" } },
 }
 
 -------------------------------------------------------------------------------- DAPUI
