@@ -20,8 +20,10 @@ return function()
 					["<esc>"] = actions.close,
 					["<C-h>"] = actions.select_horizontal,
 					["<C-v>"] = actions.select_vertical,
-					["<A-CR>"] = actions.send_selected_to_qflist,
-					["<C-CR>"] = actions.send_to_qflist,
+					["<C-q>"] = actions.smart_send_to_qflist,
+					-- TODO: send to loclist?
+					-- ["<A-CR>"] = actions.send_selected_to_qflist,
+					-- ["<C-CR>"] = actions.send_to_qflist,
 				}
 			}
 		},
