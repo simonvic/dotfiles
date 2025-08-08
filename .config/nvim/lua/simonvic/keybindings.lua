@@ -67,7 +67,7 @@ M.fn = {
 	toggle_relative_number      = function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end,
 	toggle_inlay_hints          = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
 
-	terminal                    = function() vim.cmd("terminal") end,
+	terminal                    = function() vim.cmd("botright terminal") end,
 	terminal_float              = function() vim.cmd("terminal") end,
 
 	commands                    = function() vim.cmd("map") end,
