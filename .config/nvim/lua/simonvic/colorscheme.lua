@@ -11,6 +11,7 @@ M.config = {
 
 
 M.palette = {
+	accent_xxxdark = "#3F2727",
 	accent_xxdark  = "#4C302F",
 	accent_xdark   = "#88302B",
 	accent_dark    = "#CC443D",
@@ -85,8 +86,8 @@ local function buildGroups(config, palette)
 		NormalFloat                        = {},
 		Visual                             = { bg = p.accent_xxdark },
 		SnippetTabstop                     = { bg = p.accent_xxdark, italic = true },
-		Search                             = { bg = p.accent_xxdark },
-		CurSearch                          = { bg = p.accent_xdark },
+		Search                             = { bg = p.accent_xxxdark },
+		CurSearch                          = { bg = p.accent_xxxdark },
 		IncSearch                          = { link = "Search" },
 		Substitute                         = { link = "Search" },
 		WinBar                             = { bg = p.zdepth_1, fg = p.text, bold = true, sp = "#333333" },
