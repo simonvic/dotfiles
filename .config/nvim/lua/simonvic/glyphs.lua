@@ -3,6 +3,7 @@ local M = {}
 M.ui = {
 	unselected = "",
 	selected = "󰄲",
+	caret = ">"
 }
 
 M.listchars = {

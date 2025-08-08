@@ -1,8 +1,19 @@
 return function()
+	local glyphs = require("simonvic.glyphs")
 	local keybindings = require("simonvic.keybindings")
 	local actions = require("telescope.actions")
 	require("telescope").setup({
 		defaults = {
+			dynamic_preview_title = true,
+			selection_caret = glyphs.ui.caret .. " ",
+			multi_icon = glyphs.ui.selected .. " ",
+			sorting_strategy = "ascending",
+			path_display = {
+				"filename_first"
+			},
+			layout_config = {
+				prompt_position = "top",
+			},
 			-- TODO: move to keybindings
 			mappings = {
 				i = {
