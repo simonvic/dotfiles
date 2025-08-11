@@ -518,13 +518,15 @@ M.groups = buildGroups()
 
 function M.apply(overrides)
 	local groups = M.groups
+	local name = "simonvic"
 	if overrides then
 		local config = vim.tbl_deep_extend("force", M.config, overrides.config or {})
 		local palette = vim.tbl_deep_extend("force", M.palette, overrides.palette or {})
 		groups = buildGroups(config, palette)
 		groups = vim.tbl_deep_extend("force", groups, overrides.groups or {})
+		name = overrides.name or name
 	end
-	vim.g.colors_name = "simonvic"
+	vim.g.colors_name = name
 	vim.o.termguicolors = true
 	for group, colors in pairs(groups) do
 		vim.api.nvim_set_hl(0, group, colors)

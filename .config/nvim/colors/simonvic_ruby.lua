@@ -1,4 +1,5 @@
 require("simonvic.colorscheme").apply({
+	name = "simonvic_ruby",
 	palette = {
 		special        = "#F0544C",
 		constant       = "#EF8D4C",
@@ -12,4 +13,3 @@ require("simonvic.colorscheme").apply({
 		literal_number = "#6897BB",
 	}
 })
-vim.g.colors_name = "simonvic_ruby"

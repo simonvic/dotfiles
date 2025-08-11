@@ -1,4 +1,5 @@
 require("simonvic.colorscheme").apply({
+	name = "simonvic_silver_monochrome",
 	config = {
 		bold_constants = true,
 	},
@@ -20,4 +21,3 @@ require("simonvic.colorscheme").apply({
 		Keyword = { bold = true },
 	}
 })
-vim.g.colors_name = "simonvic_silver_monochrome"

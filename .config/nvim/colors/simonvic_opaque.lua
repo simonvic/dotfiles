@@ -1,6 +1,6 @@
 require("simonvic.colorscheme").apply({
+	name = "simonvic_opaque",
 	config = {
 		transparent = false
 	}
 })
-vim.g.colors_name = "simonvic_opaque"
