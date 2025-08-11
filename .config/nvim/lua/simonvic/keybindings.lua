@@ -87,7 +87,7 @@ M.fn = {
 	hover                       = vim.lsp.buf.hover,
 	signature_help              = function() vim.lsp.buf.signature_help({ anchor_bias = "above" }) end,
 	format                      = vim.lsp.buf.format,
-	formatSelection             = function()
+	format_selected             = function()
 		vim.lsp.buf.format({
 			range = {
 				["start"] = vim.api.nvim_buf_get_mark(0, "<"),
@@ -124,8 +124,11 @@ M.fn = {
 	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
 	vcs_change_preview          = function() M.not_implemented("vcs_change_preview") end,
 	vcs_change_preview_inline   = function() M.not_implemented("vcs_change_preview_inline") end,
+	vcs_change_select           = function() M.not_implemented("vcs_change_select") end,
 	vcs_blame                   = function() M.not_implemented("vcs_blame") end,
 	vcs_blame_line              = function() M.not_implemented("vcs_blame_line") end,
+	vcs_reset                   = function() M.not_implemented("vcs_reset") end,
+	vcs_reset_buffer            = function() M.not_implemented("vcs_reset_buffer") end,
 
 	toggle_debugger             = function() M.not_implemented("toggle_debugger") end,
 	debugger_continue           = function() M.not_implemented("debugger_continue") end,
@@ -204,17 +207,17 @@ M.mappings = {
 	{ __i_, "<C-r>",                              function() M.fn.rename() end,                    { desc = "Rename" } },
 	{ n___, { "<C-q>", "grq" },                   function() M.fn.hover() end,                     { desc = "Open docs" } },
 	{ __i_, "<C-q>",                              function() M.fn.hover() end,                     { desc = "Open docs" } },
-	{ nsi_, "<A-q>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
+	{ nsi_, "<C-'>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
 	{ n___, { "<C-e>", "<leader>d" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ __i_, "<C-e>",                              function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ n___, "<leader>D",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
 	--------------------------------------------------------------------------- MOVEMENT
-	{ n___, "]h",                                 function() M.fn.vcs_change_next() end,           { desc = "Go next hunk" } },
-	{ n___, "[h",                                 function() M.fn.vcs_change_prev() end,           { desc = "Go prev hunk" } },
+	{ nxo_, "]h",                                 function() M.fn.vcs_change_next() end,           { desc = "Go next hunk" } },
+	{ nxo_, "[h",                                 function() M.fn.vcs_change_prev() end,           { desc = "Go prev hunk" } },
 	{ n___, "<leader>h",                          function() M.fn.vcs_change_preview_inline() end, { desc = "Preview hunk diff inline" } },
 	{ n___, "<leader>H",                          function() M.fn.vcs_change_preview() end,        { desc = "Preview hunk diff" } },
-	{ n___, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
-	{ n___, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
+	{ nxo_, "]d",                                 function() M.fn.diagnostic_next() end,           { desc = "Go next diagnostic" } },
+	{ nxo_, "[d",                                 function() M.fn.diagnostic_prev() end,           { desc = "Go prev diagnostic" } },
 	{ nxo_, "]f",                                 function() M.fn.goto_next_function() end,        { desc = "Go to next function" } },
 	{ nxo_, "]a",                                 function() M.fn.goto_next_argument() end,        { desc = "Go to next argument" } },
 	{ nxo_, "]c",                                 function() M.fn.goto_next_class() end,           { desc = "Go to next class" } },
@@ -226,13 +229,17 @@ M.mappings = {
 	---------------------------------------------------------------------------- EDITING
 	{ n___, "<C-A-l>",                            "gg=G<C-o>",                                     { desc = "Reindent file" } },
 	{ n_i_, "<A-S-l>",                            function() M.fn.format() end,                    { desc = "Reformat" } },
-	{ _v__, "<A-S-l>",                            function() M.fn.formatSelection() end,           { desc = "Reformat selection" } },
+	{ _v__, "<A-S-l>",                            function() M.fn.format_selected() end,           { desc = "Reformat selection" } },
 	{ _v__, "<TAB>",                              ">gv",                                           { desc = "Increase indent" } },
 	{ _v__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
 	{ nv__, "<leader>gl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
 	{ nv__, "<leader>gh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
+	{ nv__, "<leader>gk",                         ":diffget BASE<CR>",                             { desc = "Diffget base" } },
 	{ n___, "<leader>gb",                         function() M.fn.vcs_blame_line() end,            { desc = "Blame current line" } },
 	{ n___, "<leader>gB",                         function() M.fn.vcs_blame() end,                 { desc = "Blame current buffer" } },
+	{ _xo_, "ah",                                 function() M.fn.vcs_change_select() end,         { desc = "Select around hunk" } },
+	{ n___, "<leader>gr",                         function() M.fn.vcs_reset() end,                 { desc = "VCS reset hunk" } },
+	{ n___, "<leader>gR",                         function() M.fn.vcs_reset_buffer() end,          { desc = "VCS reset entire buffer" } },
 	{ n___, "mal",                                function() M.fn.move_argument_next() end,        { desc = "Move argument to next" } },
 	{ n___, "mah",                                function() M.fn.move_argument_prev() end,        { desc = "Move argument to previous" } },
 	{ n___, "mfl",                                function() M.fn.move_function_next() end,        { desc = "Move function to next" } },
@@ -269,7 +276,7 @@ M.mappings = {
 	{ n___, "gO",                                 function() M.fn.document_symbols() end,          { desc = "Find document symbols" } },
 	{ n___, { "<leader><tab>", "<A-Tab>" },       function() M.fn.buffers() end,                   { desc = "Buffers" } },
 	{ __i_, "<A-Tab>",                            function() M.fn.buffers() end,                   { desc = "Buffers" } },
-	{ n___, { "<leader>f", "<C-f>" },             function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
+	{ n___, "<leader>f",                          function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
 	{ __i_, "<C-f>",                              function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
 	{ n___, { "<leader>F", "<C-A-F>" },           function() M.fn.live_grep() end,                 { desc = "Live grep" } },
 	{ __i_, "<C-A-f>",                            function() M.fn.live_grep() end,                 { desc = "Live grep" } },
@@ -297,7 +304,7 @@ M.mappings = {
 	{ n___, { "<C-F9>", "<F33>" },                function() M.fn.breakpoint_condition() end,      { desc = "DAP Conditional breakpoint" } },
 	{ n___, { "<A-F9>", "<F57>" },                function() M.fn.breakpoint_log() end,            { desc = "DAP Log breakpoint" } },
 	{ n___, { "<S-F9>", "<F21>" },                function() M.fn.breapoint_condition_log() end,   { desc = "DAP Conditional log breakpoint" } },
-	{ n___, "<A-C-q>",                            function() M.fn.inspect_variable() end,          { desc = "DAP Inspect variable" } },
+	{ nv__, "<A-C-q>",                            function() M.fn.inspect_variable() end,          { desc = "DAP Inspect variable" } },
 	---------------------------------------------------------------------------- CODING
 	{ n___, "<A-i>",                              function() M.fn.organize_imports() end,          { desc = "Organize imports" } },
 	{ n___, "<F6>",                               function() M.fn.pick_tests() end,                { desc = "Pick test" } },
@@ -465,6 +472,8 @@ M.plugins.blink = {
 M.plugins.jdtls = {
 	-- TODO: add abstract functions?
 	{ n_i_, "<A-i>",                 function() require("jdtls").organize_imports() end,                 { desc = "Organize imports" } },
+	{ n_i_, "<F5>",                  function() require("jdtls").compile("incremental") end,             { desc = "Compile" } },
+	{ n_i_, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                    { desc = "Compile" } },
 	{ n_i_, "<F6>",                  function() require("jdtls").pick_test() end,                        { desc = "Pick test" } },
 	{ n_i_, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                       { desc = "Test class" } },
 	{ n_i_, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,              { desc = "Test method" } },
@@ -575,11 +584,23 @@ function M.add_lang_map(mappings)
 	end
 end
 
+M.langmaps = {
+	italian141 = {
+		-- from, to, bidirectional
+		{ "-", "/" },
+		{ "_", "?" },
+		{ "è", "[" },
+		{ "+", "]" },
+		{ "é", "{" },
+		{ "*", "}" },
+	}
+}
+
 function M.apply()
 	vim.g.mapleader = M.leader
 	vim.g.maplocalleader = M.localleader
 	M.set(M.mappings)
-	-- M.add_lang_map(langmaps.italian141)
+	-- M.add_lang_map(M.langmaps.italian141)
 	-- M.add_lang_map(langmaps.custom)
 	-- M.add_lang_map(langmaps.eretic)
 end

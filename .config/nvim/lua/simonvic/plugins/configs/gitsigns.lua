@@ -18,7 +18,10 @@ return function()
 		vcs_change_prev           = function() vim.cmd("Gitsigns prev_hunk") end,
 		vcs_change_preview_inline = gitsigns.preview_hunk_inline,
 		vcs_change_preview        = gitsigns.preview_hunk,
+		vcs_change_select         = gitsigns.select_hunk,
 		vcs_blame                 = function() vim.cmd("Gitsigns blame") end,
 		vcs_blame_line            = function() vim.cmd("Gitsigns blame_line") end,
+		vcs_reset                 = gitsigns.reset_hunk,
+		vcs_reset_buffer          = gitsigns.reset_buffer,
 	})
 end
