@@ -103,10 +103,12 @@ local function buildGroups(config, palette)
 		VertSplit                          = { link = "WinSeparator" },
 		FloatBorder                        = { link = "WinSeparator" },
 		FloatTitle                         = { link = "Title" },
-		Pmenu                              = { bg = p.zdepth_1 },
+		Pmenu                              = { fg = p.text, bg = p.zdepth_1 },
+		PmenuKind                          = { fg = p.text_dark },
+		PmenuExtra                         = { fg = p.text_dark },
 		PmenuSel                           = { bg = p.accent_xxdark },
-		PmenuSbar                          = { bg = p.zdepth_2 },
-		PmenuThumb                         = { bg = p.accent_dark },
+		PmenuSbar                          = { bg = p.accent_xxxdark },
+		PmenuThumb                         = { bg = p.accent_xdark },
 		Cursor                             = { bg = p.zdepth0, fg = p.text_dark },
 		lCursor                            = { link = "Cursor" },
 		CursorIM                           = { link = "Cursor" },
@@ -235,11 +237,11 @@ local function buildGroups(config, palette)
 		BlinkCmpKindStruct                 = { link = "Type" },
 
 		------------------------------------------------------------------------ Telescope
-		TelescopeMatching                  = { fg = p.accent },
+		TelescopeMatching                  = { underdotted = true, sp = p.accent },
 
 		------------------------------------------------------------------------ Telescope
 		SnacksPickerPrompt                 = { fg = p.accent },
-		SnacksPickerMatch                  = { fg = p.accent_dark },
+		SnacksPickerMatch                  = { underdotted = true, sp = p.accent },
 		SnacksPickerSelected               = { fg = p.accent },
 
 		------------------------------------------------------------------------ Lazy
