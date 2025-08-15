@@ -101,7 +101,7 @@ M.fn = {
 	commands_menu               = function() M.not_implemented("commands_menu") end,
 
 	-- eventually add default implementation with netrw
-	filetree_focus              = function() vim.cmd("Explore") end,
+	filetree_focus              = function() vim.cmd("Lexplore") end,
 	filetree_toggle             = function() M.not_implemented("filetree_toggle") end,
 	filetree_refresh            = function() M.not_implemented("filetree_refresh") end,
 	filetree_expand_or_descend  = function() M.not_implemented("filetree_expand_or_descend") end,
