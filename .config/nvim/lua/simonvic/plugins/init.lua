@@ -19,6 +19,7 @@ M.plugins = {
 	{ "petertriho/nvim-scrollbar",                   config = require("simonvic.plugins.configs.scrollbar") },
 	-- { "onsails/lspkind.nvim" },
 	-- { "folke/which-key.nvim",                        config = require("simonvic.plugins.configs.whichkey") },
+	{ "mbbill/undotree",                             config = require("simonvic.plugins.configs.undotree") },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
 	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"), branch = "main" },

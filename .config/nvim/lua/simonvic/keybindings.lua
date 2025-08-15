@@ -112,6 +112,8 @@ M.fn = {
 	symbols_outline_focus       = function() M.not_implemented("symbols_outline_focus") end,
 	symbols_outline_float       = function() M.not_implemented("symbols_outline_float") end,
 
+	undotree                    = function() M.not_implemented("undotree") end,
+
 	zen_mode                    = function() M.not_implemented("zen_mode") end,
 
 	toggle_context              = function() M.not_implemented("toggle_context") end,
@@ -290,6 +292,7 @@ M.mappings = {
 	{ n___, "<Leader>uN",                         function() M.fn.toggle_line_number() end,        { desc = "Toggle number column" } },
 	{ n___, "<Leader>uh",                         function() M.fn.toggle_inlay_hints() end,        { desc = "Toggle lsp inlay hints" } },
 	{ n___, "<Leader>uZ",                         function() M.fn.zen_mode() end,                  { desc = "Toggle folds column" } },
+	{ n___, "<Leader>uu",                         function() M.fn.undotree() end,                  { desc = "Toggle Undotree" } },
 	{ n___, "<A-9>",                              function() M.fn.symbols_outline_focus() end,     { desc = "Toggle symbols outline" } },
 	{ n___, { "<A-S-9>", "<A-)>" },               function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
 	{ n___, "<leader>s",                          function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
