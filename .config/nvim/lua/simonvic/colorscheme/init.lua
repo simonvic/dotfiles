@@ -1,15 +1,31 @@
 local M = {}
 
-M.config = {
-	transparent = true,
-	italic_comments = true,
-	bold_docs = false,
-	bold_types = false,
-	bold_constants = true,
-	bold_commandline = true,
-}
+---@alias Palette table<string, string>
 
+---@alias Groups vim.api.keyset.highlight
 
+---@class Colorscheme
+---@field name string
+---@field palette Palette
+---@field groups Groups
+---@field apply fun(colorscheme: Colorscheme)
+
+---@class Overrides
+---@field name? string
+---@field palette? Palette
+---@field groups? Groups|fun(palette:Palette):Groups
+
+---Apply the given colorscheme (fallbacks to default one)
+---@param colorscheme Colorscheme
+function M.apply(colorscheme)
+	vim.g.colors_name = colorscheme.name
+	vim.o.termguicolors = true -- TODO: move this out
+	for group, colors in pairs(colorscheme.groups) do
+		vim.api.nvim_set_hl(0, group, colors)
+	end
+end
+
+---@type Palette
 M.palette = {
 	accent_xxxdark = "#3F2727",
 	accent_xxdark  = "#4C302F",
@@ -18,14 +34,14 @@ M.palette = {
 	accent         = "#F0544C",
 	accent_light   = "#F6645D",
 	accent_xlight  = "#EF9F9B",
-	zdepth__4      = "#000000",
-	zdepth__3      = "#111111",
-	zdepth__2      = "#222222",
-	zdepth__1      = "#252525",
-	zdepth_0       = "#333333",
-	zdepth_1       = "#3A3A3A",
-	zdepth_2       = "#444444",
-	zdepth_3       = "#505050",
+	zdepth__4      = "none",
+	zdepth__3      = "none",
+	zdepth__2      = "none",
+	zdepth__1      = "none",
+	zdepth_0       = "none",
+	zdepth_1       = "none",
+	zdepth_2       = "none",
+	zdepth_3       = "none",
 	text_xxxdark   = "#505050",
 	text_xxdark    = "#555555",
 	text_xdark     = "#666666",
@@ -63,20 +79,15 @@ M.palette = {
 	ok             = "#A9FF68",
 }
 
-local function buildGroups(config, palette)
-	local p = vim.tbl_deep_extend("force", M.palette, palette or {})
-	local c = vim.tbl_deep_extend("force", M.config, config or {})
-	if c.transparent then
-		p.zdepth__4 = "none"
-		p.zdepth__3 = "none"
-		p.zdepth__2 = "none"
-		p.zdepth__1 = "none"
-		p.zdepth_0  = "none"
-		p.zdepth_1  = "none"
-		p.zdepth_2  = "none"
-		p.zdepth_3  = "none"
-	end
-	return {
+---Build highlight groups
+---@param palette Palette
+---@return vim.api.keyset.highlight
+function M.build_groups(palette)
+	local p = palette
+	local groups = {
+
+		-- ["@comment.textblock"]             = { bg = "#222222" },
+		["@string.textblock"]              = { bg = "#283422" },
 
 		------------------------------------------------------------------------ GENERAL
 
@@ -96,7 +107,7 @@ local function buildGroups(config, palette)
 		TabLineSel                         = { bg = p.zdepth_1, underline = true, sp = p.accent_xdark },
 		TabLineFill                        = { bg = p.zdepth__1 },
 		StatusLine                         = { bg = p.zdepth_1 },
-		MsgArea                            = { bg = p.zdepth_1, bold = c.bold_commandline },
+		MsgArea                            = { bg = p.zdepth_1, bold = true },
 		MoreMsg                            = { bg = p.zdepth_1, bold = true },
 		Question                           = { bg = p.zepth_1, bold = true },
 		WinSeparator                       = { bg = p.zdepth_1, fg = p.text_xdark },
@@ -144,16 +155,16 @@ local function buildGroups(config, palette)
 		Number                             = { fg = p.literal_number },
 		Boolean                            = { fg = p.literal_bool },
 		Identifier                         = { link = "Normal" },
-		Constant                           = { fg = p.constant, bold = c.bold_constants },
+		Constant                           = { fg = p.constant, bold = true },
 		Function                           = { fg = p["function"] },
-		Type                               = { bg = "none", fg = p.text_xxlight, bold = c.bold_types },
+		Type                               = { bg = "none", fg = p.text_xxlight },
 		PreProc                            = { fg = p.metakeyword },
 		Keyword                            = { fg = p.keyword },
 		Statement                          = { link = "Keyword" },
 		Delimiter                          = { link = "Keyword" },
 		Operator                           = { link = "Keyword" },
-		Comment                            = { bg = "none", fg = p.text_dark, italic = c.italic_comments },
-		SpecialComment                     = { bg = "none", fg = p.text_dark, italic = c.italic_comments, bold = c.bold_docs },
+		Comment                            = { bg = "none", fg = p.text_dark, italic = true },
+		SpecialComment                     = { bg = "none", fg = p.text_dark, italic = true },
 		Todo                               = { bg = "none", fg = p.hint, bold = true },
 		Error                              = { fg = p.error, undercurl = true },
 		ErrorMsg                           = { fg = p.error },
@@ -333,7 +344,6 @@ local function buildGroups(config, palette)
 		NeoTreeTitleBar                    = { link = "WinBar" },
 
 		------------------------------------------------------------------------ Scrollbar
-		-- These colors are read from the scrollbar plugin config
 		ScrollbarHandle                    = { bg = p.accent_xxdark },
 		ScrollbarError                     = { fg = p.error },
 		ScrollbarWarn                      = { fg = p.warn },
@@ -512,25 +522,34 @@ local function buildGroups(config, palette)
 		gitcommitDiscardedFile             = { link = "Underlined" },
 
 	}
+	return groups
 end
 
-M.groups = buildGroups()
-
-function M.apply(overrides)
-	local groups = M.groups
-	local name = "simonvic"
+---Build a colorscheme
+---@param overrides? Overrides
+---@return Colorscheme
+function M.build_colorscheme(overrides)
+	local name = overrides and overrides.name or "simonvic"
+	local palette = M.palette
+	local groups
 	if overrides then
-		local config = vim.tbl_deep_extend("force", M.config, overrides.config or {})
-		local palette = vim.tbl_deep_extend("force", M.palette, overrides.palette or {})
-		groups = buildGroups(config, palette)
-		groups = vim.tbl_deep_extend("force", groups, overrides.groups or {})
-		name = overrides.name or name
+		palette = vim.tbl_deep_extend("force", palette, overrides and overrides.palette or {})
+		groups = M.build_groups(palette)
+		local groups_type = type(overrides.groups)
+		if groups_type == "table" then
+			groups = vim.tbl_deep_extend("force", groups, overrides.groups)
+		elseif groups_type == "function" then
+			groups = vim.tbl_deep_extend("force", groups, overrides.groups(palette))
+		end
+	else
+		groups = M.build_groups(palette)
 	end
-	vim.g.colors_name = name
-	vim.o.termguicolors = true
-	for group, colors in pairs(groups) do
-		vim.api.nvim_set_hl(0, group, colors)
-	end
+	return {
+		name = name,
+		palette = palette,
+		groups = groups,
+		apply = M.apply
+	}
 end
 
 return M

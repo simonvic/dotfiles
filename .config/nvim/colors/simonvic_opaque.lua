@@ -1,6 +1,1 @@
-require("simonvic.colorscheme").apply({
-	name = "simonvic_opaque",
-	config = {
-		transparent = false
-	}
-})
+require("simonvic.colorscheme.opaque"):apply()
