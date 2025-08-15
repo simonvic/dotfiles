@@ -29,8 +29,8 @@ return function()
 				size = 16,
 				elements = {
 					{ id = "stacks",  size = 0.20, },
-					{ id = "scopes",  size = 0.40, },
-					{ id = "watches", size = 0.40, },
+					{ id = "watches", size = 0.20, },
+					{ id = "scopes",  size = 0.60, },
 				},
 			},
 		},
