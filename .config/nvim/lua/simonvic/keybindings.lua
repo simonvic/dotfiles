@@ -160,6 +160,9 @@ M.fn = {
 	cursors_delete              = function() M.not_implemented("cursors_delete") end,
 	cursors_clear               = function() M.not_implemented("cursors_clear") end,
 
+	notif_history               = function() M.not_implemented("notif_history") end,
+	notif_dismiss               = function() M.not_implemented("notif_dismiss") end,
+
 	-- TODO: builtin implementation?
 	move_argument_next          = function() M.not_implemented("move_argument_next") end,
 	move_argument_prev          = function() M.not_implemented("move_argument_prev") end,
@@ -296,6 +299,8 @@ M.mappings = {
 	{ n___, "<A-9>",                              function() M.fn.symbols_outline_focus() end,     { desc = "Toggle symbols outline" } },
 	{ n___, { "<A-S-9>", "<A-)>" },               function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
 	{ n___, "<leader>s",                          function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
+	{ n___, "<Leader>nh",                         function() M.fn.notif_history() end,             { desc = "Show notifications history" } },
+	{ n___, "<Leader>nd",                         function() M.fn.notif_dismiss() end,             { desc = "Dismiss notifications" } },
 	---------------------------------------------------------------------------- DEBUGGING
 	{ n___, "<F7>",                               function() M.fn.debugger_continue() end,         { desc = "DAP Continue" } },
 	{ n___, { "<A-F7>", "<F55>" },                function() M.fn.debugger_terminate() end,        { desc = "DAP Terminate" } },
