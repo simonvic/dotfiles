@@ -145,11 +145,6 @@ M.fn = {
 	breapoint_condition_log     = function() M.not_implemented("breapoint_condition_log") end,
 	inspect_variable            = function() M.not_implemented("inspect_variable") end,
 
-	organize_imports            = function() M.not_implemented("organize_imports") end,
-	pick_tests                  = function() M.not_implemented("pick_tests") end,
-	test_class                  = function() M.not_implemented("test_class") end,
-	test_method                 = function() M.not_implemented("test_method") end,
-
 	cursors_add_down            = function() M.not_implemented("cursors_add_down") end,
 	cursors_add_up              = function() M.not_implemented("cursors_add_up") end,
 	cursors_add_word            = function() M.not_implemented("cursors_add_word") end,
@@ -313,14 +308,6 @@ M.mappings = {
 	{ n___, { "<A-F9>", "<F57>" },                function() M.fn.breakpoint_log() end,            { desc = "DAP Log breakpoint" } },
 	{ n___, { "<S-F9>", "<F21>" },                function() M.fn.breapoint_condition_log() end,   { desc = "DAP Conditional log breakpoint" } },
 	{ nv__, "<A-C-q>",                            function() M.fn.inspect_variable() end,          { desc = "DAP Inspect variable" } },
-	---------------------------------------------------------------------------- CODING
-	{ n___, "<A-i>",                              function() M.fn.organize_imports() end,          { desc = "Organize imports" } },
-	{ n___, "<F6>",                               function() M.fn.pick_tests() end,                { desc = "Pick test" } },
-	{ n___, { "<S-F6>", "<F18>" },                function() M.fn.test_class() end,                { desc = "Test class" } },
-	{ n___, { "<C-F6>", "<F30>" },                function() M.fn.test_method() end,               { desc = "Test method" } },
-	{ n___, { "<C-S-F7>", "<F43>" },              function() M.fn.setup_debug_config() end,        { desc = "Setup debug launch config" } },
-	{ n___, { "<C-F7>", "<F31>" },                function() M.fn.hotcode_replace() end,           { desc = "Hotcode replace" } },
-	{ n___, { "grI", "<C-A-b>" },                 function() M.fn.super_implementation() end,      { desc = "Go to super implementation" } },
 	---------------------------------------------------------------------------- Multicursor
 	{ n___, { "<leader>cj", "<C-J>", "<C-S-j>" }, function() M.fn.cursors_add_down() end,          { desc = "Add cursor and move down" } },
 	{ n___, { "<leader>ck", "<C-K>", "<C-S-K>" }, function() M.fn.cursors_add_up() end,            { desc = "Add cursor and move up" } },
@@ -479,15 +466,16 @@ M.plugins.blink = {
 -------------------------------------------------------------------------------- NVIM-JDTLS
 M.plugins.jdtls = {
 	-- TODO: add abstract functions?
-	{ n_i_, "<A-i>",                 function() require("jdtls").organize_imports() end,                 { desc = "Organize imports" } },
-	{ n_i_, "<F5>",                  function() require("jdtls").compile("incremental") end,             { desc = "Compile" } },
-	{ n_i_, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                    { desc = "Compile" } },
-	{ n_i_, "<F6>",                  function() require("jdtls").pick_test() end,                        { desc = "Pick test" } },
-	{ n_i_, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                       { desc = "Test class" } },
-	{ n_i_, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,              { desc = "Test method" } },
-	{ n_i_, { "<C-S-F7>", "<F43>" }, function() require("jdtls.dap").setup_dap_main_class_configs() end, { desc = "Setup debug launch config" } },
-	{ n_i_, { "<C-F7>", "<F31>" },   cmd("JdtUpdateHotcode"),                                            { desc = "Hotcode replace" } },
-	{ n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,             { desc = "Go to super implementation" } },
+	{ n___, "<F5>",                  function() require("jdtls").compile("incremental") end,                               { buffer = true, desc = "Compile (incremental)" } },
+	{ n___, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                                      { buffer = true, desc = "Compile (full)" } },
+	{ n___, { "<A-F5>", "<F55>" },   function() require("jdtls").build_projects() end,                                     { buffer = true, desc = "Build" } },
+	{ n___, "<A-i>",                 function() require("jdtls").organize_imports() end,                                   { buffer = true, desc = "Organize imports" } },
+	{ n___, "<F6>",                  function() require("jdtls").pick_test() end,                                          { buffer = true, desc = "Pick test" } },
+	{ n___, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                                         { buffer = true, desc = "Test class" } },
+	{ n___, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,                                { buffer = true, desc = "Test method" } },
+	{ n___, { "<C-S-F7>", "<F43>" }, function() require("jdtls.dap").setup_dap_main_class_configs({ verbose = true }) end, { buffer = true, desc = "Setup debug launch config" } },
+	{ n___, { "<C-F7>", "<F31>" },   vim.cmd.JdtUpdateHotcode,                                                             { buffer = true, desc = "Hotcode replace" } },
+	{ n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,                               { buffer = true, desc = "Go to super implementation" } },
 }
 
 -------------------------------------------------------------------------------- DAPUI

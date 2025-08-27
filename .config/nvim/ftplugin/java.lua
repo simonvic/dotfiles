@@ -56,7 +56,7 @@ local jdtls_config = {
 	on_attach = function(client, bufnr)
 		jdtls.setup_dap({ hotcode_replace = "auto" })
 		local keybindings = require("simonvic.keybindings")
-		keybindings.set(keybindings.plugins.jdtls) -- TODO: set with opt bufnr
+		keybindings.set(keybindings.plugins.jdtls)
 	end
 }
 
