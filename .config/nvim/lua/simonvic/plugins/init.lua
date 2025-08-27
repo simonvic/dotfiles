@@ -48,7 +48,7 @@ M.plugins = {
 	--                                                          ADVANCED CODING
 	{ "mfussenegger/nvim-dap",                       config = require("simonvic.plugins.configs.debugger") },
 	{ "rcarriga/nvim-dap-ui",                        config = require("simonvic.plugins.configs.dap_ui") },
-	{ "mfussenegger/nvim-jdtls" },
+	{ "mfussenegger/nvim-jdtls",                     config = require("simonvic.plugins.configs.nvim_jdtls") },
 	{ "mrcjkb/rustaceanvim" },
 	{ "lervag/vimtex",                               config = require("simonvic.plugins.configs.vimtex") },
 	{ "iamcco/markdown-preview.nvim",                config = require("simonvic.plugins.configs.mdpreview") },
