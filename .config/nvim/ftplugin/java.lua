@@ -3,8 +3,10 @@ vim.opt.textwidth = 100
 
 local ok, jdtls = pcall(require, "jdtls");
 if not ok then
-	vim.notify("nvim-jdtls plugin not installed. Raw-dogging jdtls")
-	vim.lsp.enable("jdtls")
+	if not vim.lsp.is_enabled("jdtls") then
+		vim.notify("nvim-jdtls plugin not installed. Raw-dogging jdtls")
+		vim.lsp.enable("jdtls")
+	end
 	return
 end
 
