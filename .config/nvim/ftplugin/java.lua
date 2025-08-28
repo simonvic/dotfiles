@@ -13,6 +13,16 @@ end
 local lsp_config = vim.lsp.config.jdtls
 local cmd = lsp_config.cmd
 
+-- Setup project root directory
+local root_dir = vim.fs.root(0, lsp_config.root_markers)
+
+-- Setup workspace data directory
+local project_name = vim.fn.fnamemodify(root_dir or "unknown", ":t")
+---@diagnostic disable-next-line: param-type-mismatch
+vim.list_extend(cmd, {
+	"-data", vim.fn.expand("~/.cache/jdtls/workspaces/") .. project_name
+})
+
 -- Lombok support
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
 if vim.fn.empty(jars_lombok) == 0 then
@@ -39,7 +49,7 @@ end
 
 local jdtls_config = {
 	cmd = cmd,
-	root_dir = vim.fs.root(0, lsp_config.root_markers),
+	root_dir = root_dir,
 	init_options = { bundles = bundles },
 	settings = lsp_config.settings,
 	capabilities = lsp_config.capabilities,
