@@ -62,7 +62,8 @@
 			"backlight#extended",
 			// "custom/redshift#extended",
 			"idle_inhibitor",
-			"battery#extended"
+			"battery#extended",
+			"custom/tlp#extended"
 			//"user"
 		],
 		"include": [
