@@ -430,7 +430,12 @@ function power() {
 
 	local mode; mode=$(tlp-stat --mode)
 	local title="sBatteryctl | Power"
-	local body="Power profile set to: <b>$mode</b>"
+	local body
+	if [[ "$1" == "auto" ]]; then
+		body="Automatic profile mode.\nCurrently: <b>$mode</b>"
+	else
+		body="Power profile set to: <b>$mode</b>"
+	fi
 	local urgency=normal
 	local timeout=3500
 	local icon=""
