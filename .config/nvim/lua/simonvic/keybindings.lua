@@ -468,7 +468,7 @@ M.plugins.jdtls = {
 	-- TODO: add abstract functions?
 	{ n___, "<F5>",                  function() require("jdtls").compile("incremental") end,                               { buffer = true, desc = "Compile (incremental)" } },
 	{ n___, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                                      { buffer = true, desc = "Compile (full)" } },
-	{ n___, { "<A-F5>", "<F55>" },   function() require("jdtls").build_projects() end,                                     { buffer = true, desc = "Build" } },
+	{ n___, { "<A-F5>", "<F53>" },   function() require("jdtls").build_projects() end,                                     { buffer = true, desc = "Build" } },
 	{ n___, "<A-i>",                 function() require("jdtls").organize_imports() end,                                   { buffer = true, desc = "Organize imports" } },
 	{ n___, "<F6>",                  function() require("jdtls").pick_test() end,                                          { buffer = true, desc = "Pick test" } },
 	{ n___, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                                         { buffer = true, desc = "Test class" } },
