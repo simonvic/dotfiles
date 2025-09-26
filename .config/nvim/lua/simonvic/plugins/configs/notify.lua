@@ -1,6 +1,7 @@
 return function()
 	local notify = require("notify")
 	notify.setup({
+		fps = 60,
 		stages = "slide",
 		render = "compact"
 	})
