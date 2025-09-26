@@ -1,26 +1,26 @@
-	{
+{
 
-		"sout": {
-			"prefix": "sout",
-			"body": [
-				"System.out.println($1);"
-			]
-		},
+	"sout": {
+		"prefix": "sout",
+		"body": [
+			"System.out.println($1);"
+		]
+	},
 
-		"serr": {
-			"prefix": "serr",
-			"body": [
-				"System.err.println($1);"
-			]
-		},
+	"serr": {
+		"prefix": "serr",
+		"body": [
+			"System.err.println($1);"
+		]
+	},
 
-		"record": {
-			"prefix": "record",
-			"body": [
-				"record ${1:${TM_FILENAME_BASE}}($2) {",
-				"\t$0",
-				"}"
-			]
-		}
-
+	"record": {
+		"prefix": "record",
+		"body": [
+			"record ${1:${TM_FILENAME_BASE}}($2) {",
+			"\t$0",
+			"}"
+		]
 	}
+
+}
