@@ -5,6 +5,7 @@ return function()
 			return {}
 		end
 
+		local qf_backup = vim.fn.getqflist()
 		local choices = {}
 		for i, item in pairs(items) do
 			table.insert(choices, label_f(item))
@@ -20,6 +21,7 @@ return function()
 					local text, _ = string.gsub(qf_entry.text, "[0-9]+ ", "")
 					table.insert(qf_text, text)
 				end
+				vim.fn.setqflist(qf_backup)
 				local selected_items = {}
 				for i, item in pairs(items) do
 					if vim.list_contains(qf_text, label_f(item)) then
