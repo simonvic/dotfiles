@@ -34,10 +34,7 @@ return function()
 			show_on_open_dirs = false,
 		},
 		view = {
-			width = {
-				max = 30,
-				padding = 1,
-			},
+			width = 50,
 			signcolumn = "auto",
 			float = {
 				enable = false, -- TODO: might be handy
