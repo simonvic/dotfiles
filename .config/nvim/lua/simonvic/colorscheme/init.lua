@@ -366,6 +366,10 @@ function M.build_groups(palette)
 		MultiCursorDisabledCursor          = { bg = p.accent_xdark, underdotted = true, sp = p.accent_xxdark },
 		MultiCursorDisabledVisual          = { link = "Visual" },
 
+		------------------------------------------------------------------------ Undotree
+		UndotreeNode                      = { fg = p.accent },
+		UndotreeBranch                    = { fg = p.accent_xdark },
+
 		------------------------------------------------------------------------ Treesitter
 		TSCurrentScope                     = { bg = "#202020" },
 
