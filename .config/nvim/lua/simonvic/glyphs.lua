@@ -67,12 +67,12 @@ M.symbols = {
 }
 
 M.dap = {
-	stopped             = "",
-	breakpoint          = "",
-	breakpointCondition = "",
-	breakpointRejected  = "",
-	logPoint            = "",
-	current_frame       = "",
+	stopped              = "",
+	breakpoint           = "",
+	breakpoint_condition = "",
+	breakpoint_rejected  = "",
+	log_point            = "",
+	current_frame        = "",
 }
 
 M.vcs = {
