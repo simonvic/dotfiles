@@ -75,6 +75,22 @@ M.dap = {
 	current_frame        = "",
 }
 
+M.dapui = {
+	controls = {
+		icons = {
+			disconnect = "",
+			pause      = "",
+			play       = "",
+			run_last   = "",
+			step_back  = "",
+			step_into  = "",
+			step_out   = "",
+			step_over  = "",
+			terminate  = ""
+		}
+	}
+}
+
 M.vcs = {
 	commit    = "",
 	ignored   = "",

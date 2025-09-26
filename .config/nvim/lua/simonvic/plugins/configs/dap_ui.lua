@@ -14,6 +14,10 @@ return function()
 			collapsed = glyphs.fs.dir.collapsed,
 			current_frame = glyphs.dap.current_frame,
 		},
+		controls = {
+			enabled = true,
+			icons = glyphs.dapui.controls.icons
+		},
 		layouts = {
 			{
 				position = "bottom",
