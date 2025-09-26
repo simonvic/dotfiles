@@ -3,10 +3,10 @@ local M = {}
 local glyphs = require("simonvic.glyphs")
 
 M.diagnostic = {
-	DiagnosticSignError = { text = glyphs.diagnostics.Error, texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" },
-	DiagnosticSignWarn  = { text = glyphs.diagnostics.Warn,  texthl = "DiagnosticSignWarn",  numhl = "DiagnosticSignWarn" },
-	DiagnosticSignInfo  = { text = glyphs.diagnostics.Info,  texthl = "DiagnosticSignInfo",  numhl = "DiagnosticSignInfo" },
-	DiagnosticSignHint  = { text = glyphs.diagnostics.Hint,  texthl = "DiagnosticSignHint",  numhl = "DiagnosticSignHint" },
+	DiagnosticSignError = { text = glyphs.diagnostics.error, texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" },
+	DiagnosticSignWarn  = { text = glyphs.diagnostics.warn,  texthl = "DiagnosticSignWarn",  numhl = "DiagnosticSignWarn" },
+	DiagnosticSignInfo  = { text = glyphs.diagnostics.info,  texthl = "DiagnosticSignInfo",  numhl = "DiagnosticSignInfo" },
+	DiagnosticSignHint  = { text = glyphs.diagnostics.hint,  texthl = "DiagnosticSignHint",  numhl = "DiagnosticSignHint" },
 }
 
 M.plugins = {}
