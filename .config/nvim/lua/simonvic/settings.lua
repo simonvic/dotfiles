@@ -177,6 +177,7 @@ local modes_aliases = {
 	["!"]   = "SHELL",
 	["t"]   = "TERM INSERT",
 	["nt"]  = "TERM NORMAL",
+	["ntT"] = "TERM (NORMAL)",
 }
 
 local function build_status_line_mode()
