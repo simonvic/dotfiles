@@ -9,5 +9,6 @@ return require("simonvic.colorscheme"):build({
 		zdepth_1  = "#3A3A3A",
 		zdepth_2  = "#444444",
 		zdepth_3  = "#505050",
+		zdepth_4  = "#555555",
 	}
 })

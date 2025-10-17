@@ -1,22 +1,21 @@
 return require("simonvic.colorscheme"):build({
 	name = "simonvic_silver_monochrome",
 	palette = {
-		constant       = "#FFFFFF",
-		member         = "#FAFAFA",
-		["function"]   = "#CACACA",
-		special        = "#FAFAFA",
-		metakeyword    = "#FFFFFF",
-		keyword        = "#FFFFFF",
-		keyword_light  = "#FFFFFF",
-		literal_string = "#EFEFEF",
-		literal_bool   = "#EFEFEF",
-		literal_number = "#EFEFEF",
-		url            = "#EFEFEF",
+		constant          = "#FFFFFF",
+		member            = "#FAFAFA",
+		func              = "#CACACA",
+		special           = "#FAFAFA",
+		metakeyword       = "#FFFFFF",
+		keyword           = "#FFFFFF",
+		keyword_1         = "#FFFFFF",
+		literal_string__4 = "#303030",
+		literal_string    = "#EFEFEF",
+		literal_bool      = "#EFEFEF",
+		literal_number    = "#EFEFEF",
+		url               = "#EFEFEF",
 	},
 	groups = {
-		String = { italic = true },
+		String  = { bg = "#202020" },
 		Keyword = { bold = true },
 	}
 })
-
-
