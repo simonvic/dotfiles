@@ -8,6 +8,7 @@ local M = {}
 ---@field name string
 ---@field palette Palette
 ---@field groups Groups
+---@field build fun(colorscheme: Colorscheme, overrides: Overrides): Colorscheme
 ---@field apply fun(colorscheme: Colorscheme)
 
 ---@class Overrides
@@ -15,11 +16,35 @@ local M = {}
 ---@field palette? Palette
 ---@field groups? Groups|fun(palette:Palette):Groups
 
----Apply the given colorscheme (fallbacks to default one)
+---Build a new colorscheme
+---@param colorscheme Colorscheme
+---@param overrides? Overrides
+---@return Colorscheme
+function M.build(colorscheme, overrides)
+	local name = overrides and overrides.name or colorscheme.name
+	local palette = vim.tbl_deep_extend("force", colorscheme.palette, overrides and overrides.palette or {})
+	local groups = M.build_groups(palette)
+	if overrides then
+		local groups_type = type(overrides.groups)
+		if groups_type == "table" then
+			groups = vim.tbl_deep_extend("force", groups, overrides.groups)
+		elseif groups_type == "function" then
+			groups = vim.tbl_deep_extend("force", groups, overrides.groups(palette))
+		end
+	end
+	return { ---@type Colorscheme
+		name = name,
+		palette = palette,
+		groups = groups,
+		build = M.build,
+		apply = M.apply,
+	}
+end
+
+---Apply the given colorscheme
 ---@param colorscheme Colorscheme
 function M.apply(colorscheme)
 	vim.g.colors_name = colorscheme.name
-	vim.o.termguicolors = true -- TODO: move this out
 	for group, colors in pairs(colorscheme.groups) do
 		vim.api.nvim_set_hl(0, group, colors)
 	end
@@ -33,7 +58,8 @@ M.palette = {
 	accent_dark    = "#CC443D",
 	accent         = "#F0544C",
 	accent_light   = "#F6645D",
-	accent_xlight  = "#EF9F9B",
+	accent_xlight  = "#F27F79",
+	accent_xxlight = "#EF9F9B",
 	zdepth__4      = "none",
 	zdepth__3      = "none",
 	zdepth__2      = "none",
@@ -126,7 +152,7 @@ function M.build_groups(palette)
 		-- TermCursor                         = {},
 		ColorColumn                        = { bg = p.guide },
 		CursorColumn                       = { link = "ColorColumn" },
-		CursorLine                         = {},
+		CursorLine                         = { bg = p.guide },
 		CursorLineNr                       = { bg = p.zdepth_1, fg = p.text_xxxlight, bold = true },
 		LineNr                             = { bg = p.zdepth_1, fg = p.text_dark },
 		SignColumn                         = { bg = p.zdepth_1, fg = p.text_xdark },
@@ -367,11 +393,11 @@ function M.build_groups(palette)
 		MultiCursorDisabledVisual          = { link = "Visual" },
 
 		------------------------------------------------------------------------ Undotree
-		UndotreeNode                      = { fg = p.accent },
-		UndotreeBranch                    = { fg = p.accent_xdark },
+		UndotreeNode                       = { fg = p.accent },
+		UndotreeBranch                     = { fg = p.accent_xdark },
 
 		------------------------------------------------------------------------ Treesitter
-		TSCurrentScope                     = { bg = "#202020" },
+		TSCurrentScope                     = { bg = p.guide },
 
 		------------------------------------------------------------------------ TREESITTER GROUPS
 		["@comment.todo"]                  = { link = "Todo" },
@@ -405,7 +431,7 @@ function M.build_groups(palette)
 		["@variable.member"]               = { fg = p.member },
 		["@variable.builtin"]              = { link = "Keyword" },
 		["@module.builtin"]                = { link = "Keyword" },
-		["@keyword.directive"]             = { link = "Keyword" },
+		["@keyword.directive"]             = { link = "PreProc" },
 		["@keyword.import"]                = { link = "Keyword" },
 
 		------------------------------------------------------------------------ SEMANTIC GROUPS
@@ -525,35 +551,11 @@ function M.build_groups(palette)
 		gitcommitUntrackedFile             = { link = "Underlined" },
 		gitcommitDiscardedFile             = { link = "Underlined" },
 
+		------------------------------------------------------------------------ treesitter-test
+		["@punctuation.delimiter.test"]    = { link = "NonText" },
+
 	}
 	return groups
-end
-
----Build a colorscheme
----@param overrides? Overrides
----@return Colorscheme
-function M.build_colorscheme(overrides)
-	local name = overrides and overrides.name or "simonvic"
-	local palette = M.palette
-	local groups
-	if overrides then
-		palette = vim.tbl_deep_extend("force", palette, overrides and overrides.palette or {})
-		groups = M.build_groups(palette)
-		local groups_type = type(overrides.groups)
-		if groups_type == "table" then
-			groups = vim.tbl_deep_extend("force", groups, overrides.groups)
-		elseif groups_type == "function" then
-			groups = vim.tbl_deep_extend("force", groups, overrides.groups(palette))
-		end
-	else
-		groups = M.build_groups(palette)
-	end
-	return {
-		name = name,
-		palette = palette,
-		groups = groups,
-		apply = M.apply
-	}
 end
 
 return M

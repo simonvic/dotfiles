@@ -1,4 +1,4 @@
-return require("simonvic.colorscheme").build_colorscheme({
+return require("simonvic.colorscheme"):build({
 	name = "simonvic_ruby_monochrome",
 	palette = {
 		constant       = "#FFFFFF",

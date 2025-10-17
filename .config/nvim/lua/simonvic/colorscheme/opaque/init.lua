@@ -1,4 +1,4 @@
-return require("simonvic.colorscheme").build_colorscheme({
+return require("simonvic.colorscheme"):build({
 	name = "simonvic_opaque",
 	palette = {
 		zdepth__4 = "#000000",

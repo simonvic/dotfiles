@@ -1,4 +1,4 @@
-return require("simonvic.colorscheme").build_colorscheme({
+return require("simonvic.colorscheme"):build({
 	name = "simonvic_silver_monochrome",
 	palette = {
 		constant       = "#FFFFFF",
@@ -18,4 +18,5 @@ return require("simonvic.colorscheme").build_colorscheme({
 		Keyword = { bold = true },
 	}
 })
+
 

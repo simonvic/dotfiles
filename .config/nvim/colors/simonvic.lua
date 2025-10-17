@@ -1,1 +1,1 @@
-require("simonvic.colorscheme.default"):apply()
+require("simonvic.colorscheme.base"):apply()
