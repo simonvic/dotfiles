@@ -103,10 +103,12 @@ M.palette = {
 	literal_bool      = "#8CB0FF",
 	literal_number    = "#6897BB",
 
-	added             = "#2B5640",
+	added__2          = "#2B5640",
+	added             = "#3A8C62",
 	changed__2        = "#635B2B",
-	changed           = "#87663E",
-	deleted           = "#873E41",
+	changed           = "#D3954A",
+	deleted__2        = "#873E41",
+	deleted           = "#C13C40",
 	error             = "#E8312E",
 	warn              = "#E87B2E",
 	note              = "#D8E44C",
@@ -205,13 +207,13 @@ function M.build_groups(palette)
 		WarningMsg                         = { fg = p.warn },
 
 		------------------------------------------------------------------------ diff
-		Added                              = { bg = p.added, },
-		Changed                            = { bg = p.changed, },
-		Removed                            = { bg = p.deleted, },
-		DiffAdd                            = { link = "Added" },
+		Added                              = { bg = p.added__2, },
+		Changed                            = { bg = p.changed__2, },
+		Removed                            = { bg = p.deleted__2, },
+		DiffAdd                            = { bg = p.added__2 },
 		DiffChange                         = { bg = p.changed__2 },
-		DiffText                           = { link = "Changed" },
-		DiffDelete                         = { link = "Removed" },
+		DiffText                           = { bg = p.changed__2 },
+		DiffDelete                         = { bg = p.deleted__2 },
 
 		------------------------------------------------------------------------ signs & diagnostics
 		DiagnosticOk                       = {},
@@ -238,6 +240,9 @@ function M.build_groups(palette)
 		GitSignsAddNr                      = {},
 		GitSignsChangeNr                   = {},
 		GitSignsDeleteNr                   = {},
+		GitSignsAddInline                  = { bg = p.added__2 },
+		GitSignsChangeInline               = { bg = p.changed__2 },
+		GitSignsDeleteInline               = { bg = p.deleted__2 },
 
 		------------------------------------------------------------------------ PLUGINS
 

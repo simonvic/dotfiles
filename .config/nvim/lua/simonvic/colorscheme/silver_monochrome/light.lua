@@ -38,6 +38,16 @@ return require("simonvic.colorscheme.silver_monochrome"):build({
 		literal_bool      = "#333333",
 		literal_number    = "#333333",
 
+		added__2          = "#B9CEC3",
+		changed__2        = "#C9C4A5",
+		deleted__2        = "#D6A0A0",
+		deleted           = "#BA484C",
+		error             = "#E8312E",
+		warn              = "#E87B2E",
+		note              = "#D8E44C",
+		info              = "#A1C7CE",
+		hint              = "#8C9293",
+
 	},
 	groups = function(p)
 		return {
