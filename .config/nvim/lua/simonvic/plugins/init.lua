@@ -54,7 +54,7 @@ M.plugins = {
 	{ "iamcco/markdown-preview.nvim",                config = require("simonvic.plugins.configs.mdpreview") },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
-	{ "doums/darcula" },
+	{ "simonvic/colorscheme.nvim" },
 	{ "gruvbox-community/gruvbox" },
 }
 
