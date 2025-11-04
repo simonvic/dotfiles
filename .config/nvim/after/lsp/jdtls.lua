@@ -7,8 +7,19 @@ return {
 		"-configuration", vim.fn.expand("~/.cache/jdtls/config"),
 	},
 	root_markers = {
-		"pom.xml", "build.gradle", ".git", "build.gradle.kts", "build.xml",
-		"settings.gradle", "settings.gradle.kts"
+		{ -- for multi module projects
+			'gradlew',
+			'build.gradle',
+			'build.gradle.kts',
+			'mvnw',
+			'.git',
+		},
+		{ -- for mono projects
+			'build.xml',
+			'pom.xml',
+			'settings.gradle',
+			'settings.gradle.kts',
+		},
 	},
 	settings = {
 		java = {
