@@ -208,7 +208,7 @@ M.mappings = {
 	{ n___, { "<C-q>", "grq" },                   function() M.fn.hover() end,                     { desc = "Open docs" } },
 	{ __i_, "<C-q>",                              function() M.fn.hover() end,                     { desc = "Open docs" } },
 	{ nsi_, "<C-'>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
-	{ n___, { "<C-e>", "<leader>d" },             function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
+	{ n___, "<leader>d",                          function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ __i_, "<C-e>",                              function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ n___, "<leader>D",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
 	--------------------------------------------------------------------------- MOVEMENT
