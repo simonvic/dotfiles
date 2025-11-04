@@ -43,14 +43,14 @@
 		"position": "top",
 		"layer": "bottom",
 		"height": 55,
-		"margin-top": -55, // TODO: when primary is hidden, this goes out of the screen
+		"margin-top": -55, // FIXME: when primary is hidden, this goes out of the screen
 		"margin-right": 20,
 		"margin-left": 20,
 		"margin-bottom": 0,
 		"modules-left": [
-			"wlr/taskbar"
+			// "wlr/taskbar"
 			// "sway/window"
-			//"sway/workspaces#extended", // TODO: urgent workspace forces the bar to be visible
+			"sway/workspaces#extended" // FIXME: urgent workspace forces the bar to be visible
 		],
 		"modules-center": [
 			"clock#extended"
