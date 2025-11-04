@@ -11,6 +11,7 @@ M.modes = {
 	nvi_ = { "n", "v", "i" },
 	nsi_ = { "n", "s", "i" },
 	nv__ = { "n", "v" },
+	nx__ = { "n", "x" },
 	n_i_ = { "n", "i" },
 	n_it = { "n", "i", "t" },
 	n__t = { "n", "t" },
@@ -32,6 +33,7 @@ local __i_ = M.modes.__i_
 local ___t = M.modes.___t
 local nvi_ = M.modes.nvi_
 local nv__ = M.modes.nv__
+local nx__ = M.modes.nx__
 local n_i_ = M.modes.n_i_
 local nsi_ = M.modes.nsi_
 local n_it = M.modes.n_it
@@ -190,14 +192,14 @@ M.leader = " "
 M.localleader = " "
 M.mappings = {
 	--modes,lhs,                                  rhs,                                             options },
-	{ n___, "-",                                  "/",                                             { desc = "Search forward" } },
-	{ n___, "_",                                  "?",                                             { desc = "Search backward" } },
-	{ n___, "è",                                  "[",                                             { desc = "Backward [ alias", remap = true } },
-	{ n___, "+",                                  "]",                                             { desc = "Forward ] alias", remap = true } },
+	{ nx__, "-",                                  "/",                                             { desc = "Search forward" } },
+	{ nx__, "_",                                  "?",                                             { desc = "Search backward" } },
+	{ nx__, "è",                                  "[",                                             { desc = "Backward [ alias", remap = true } },
+	{ nx__, "+",                                  "]",                                             { desc = "Forward ] alias", remap = true } },
 	--------------------------------------------------------------------------- ACTIONS
 	{ nvi_, "<C-s>",                              cmd("write"),                                    { desc = "Save", silent = true } },
 	{ n___, "U",                                  cmd("redo"),                                     { desc = "Redo", silent = true } },
-	{ n___, { "<A-CR>", "gra" },                  function() M.fn.code_actions() end,              { desc = "Code actions" } },
+	{ nx__, { "<A-CR>", "gra" },                  function() M.fn.code_actions() end,              { desc = "Code actions" } },
 	{ n___, { "<C-b>", "grd" },                   function() M.fn.definition() end,                { desc = "Go to definition" } },
 	{ __i_, "<C-b>",                              function() M.fn.definition() end,                { desc = "Go to definition" } },
 	{ n___, { "gri" },                            function() M.fn.implementation() end,            { desc = "Go to implementation" } },
@@ -307,7 +309,7 @@ M.mappings = {
 	{ n___, { "<C-F9>", "<F33>" },                function() M.fn.breakpoint_condition() end,      { desc = "DAP Conditional breakpoint" } },
 	{ n___, { "<A-F9>", "<F57>" },                function() M.fn.breakpoint_log() end,            { desc = "DAP Log breakpoint" } },
 	{ n___, { "<S-F9>", "<F21>" },                function() M.fn.breapoint_condition_log() end,   { desc = "DAP Conditional log breakpoint" } },
-	{ nv__, "<A-C-q>",                            function() M.fn.inspect_variable() end,          { desc = "DAP Inspect variable" } },
+	{ nx__, "<A-C-q>",                            function() M.fn.inspect_variable() end,          { desc = "DAP Inspect variable" } },
 	---------------------------------------------------------------------------- Multicursor
 	{ n___, { "<leader>cj", "<C-J>", "<C-S-j>" }, function() M.fn.cursors_add_down() end,          { desc = "Add cursor and move down" } },
 	{ n___, { "<leader>ck", "<C-K>", "<C-S-K>" }, function() M.fn.cursors_add_up() end,            { desc = "Add cursor and move up" } },
