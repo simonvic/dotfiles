@@ -1,4 +1,4 @@
-return require("simonvic.colorscheme.opaque"):build({
+return require("simonvic.colorscheme.opal.opaque"):build({
 	palette = {
 
 		accent__4      = "#EF9F9B",

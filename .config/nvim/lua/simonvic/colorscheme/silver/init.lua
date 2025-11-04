@@ -1,5 +1,5 @@
 return require("simonvic.colorscheme"):build({
-	name = "simonvic_silver_monochrome",
+	name = "simonvic_silver",
 	palette = {
 		constant          = "#FFFFFF",
 		member            = "#FAFAFA",
