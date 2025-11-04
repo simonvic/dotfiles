@@ -11,14 +11,17 @@ if not ok then
 end
 
 local lsp_config = vim.lsp.config.jdtls
+-- TODO: is it safe to assume cmd is string[] ?
+---@type string[]
+---@diagnostic disable-next-line: assign-type-mismatch
 local cmd = lsp_config.cmd
 
 -- Setup project root directory
 local root_dir = vim.fs.root(0, lsp_config.root_markers)
 
 -- Setup workspace data directory
+-- TODO: should not be needed anymore since jdtls 1.51.0
 local project_name = vim.fn.fnamemodify(root_dir or "unknown", ":t")
----@diagnostic disable-next-line: param-type-mismatch
 vim.list_extend(cmd, {
 	"-data", vim.fn.expand("~/.cache/jdtls/workspaces/") .. project_name
 })
@@ -27,8 +30,6 @@ vim.list_extend(cmd, {
 local jars_lombok = vim.fn.glob("~/.m2/repository/org/projectlombok/lombok/*/lombok-*[0-9].jar", true)
 if vim.fn.empty(jars_lombok) == 0 then
 	jars_lombok = vim.split(jars_lombok, "\n")
-	-- TODO: is it safe to assume cmd is string[] ?
-	---@diagnostic disable-next-line: param-type-mismatch
 	vim.list_extend(cmd, { "--jvm-arg=-javaagent:" .. jars_lombok[#jars_lombok] })
 end
 
