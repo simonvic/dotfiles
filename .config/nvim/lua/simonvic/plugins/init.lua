@@ -78,6 +78,9 @@ function M.setup()
 		install = {
 			colorscheme = { "simonvic" }
 		},
+		rocks = {
+			enabled = false
+		},
 		checker = {
 			enabled = true,
 			notify = true,
