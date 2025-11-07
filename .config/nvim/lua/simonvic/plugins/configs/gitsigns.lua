@@ -14,8 +14,8 @@ return function()
 	})
 	require("simonvic.keybindings").implement({
 		-- TODO: replace with gitsigns functions
-		vcs_change_next           = function() vim.cmd("Gitsigns next_hunk") end,
-		vcs_change_prev           = function() vim.cmd("Gitsigns prev_hunk") end,
+		vcs_change_next           = function() gitsigns.nav_hunk("next") end,
+		vcs_change_prev           = function() gitsigns.nav_hunk("prev") end,
 		vcs_change_preview_inline = gitsigns.preview_hunk_inline,
 		vcs_change_preview        = gitsigns.preview_hunk,
 		vcs_change_select         = gitsigns.select_hunk,
