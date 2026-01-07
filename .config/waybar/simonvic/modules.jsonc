@@ -718,6 +718,13 @@
 		"tooltip-format": "{alt}",
 		"exec": "sNews fetch 2> /dev/null; xml=$(sNews check); count=$(xmllint --xpath 'count(//item)' - <<< \"$xml\"); titles=$(xmllint --xpath '//item[position()<=99]/title/text()' - <<< \"$xml\"); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \" $count\" \"$(printf '%s' \"$titles\" | sed 's/^/· /' | tr '\n' '\r' )\"",
 		"on-click": "sNews fetch"
+	},
+	"custom/ufw" : {
+		"interval": 5,
+		"format": "{}",
+		"return-type": "json",
+		"tooltip-format": "{alt}",
+		"exec": "ufw_status=$(sudo ufw status); read -r _ ufw_active_status <<< $(grep Status <<< $ufw_status); icon=$(case $ufw_active_status in active) echo '';; inactive) echo '';; *) echo ?;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"$(printf '%s' \"<small><tt>$ufw_status</tt></small>\" | tr '\n' '\r')\""
 	}
 
 }
