@@ -414,7 +414,7 @@ function wakelock() {
 }
 
 ##
-#	Manage power
+#	Manage TLP mode
 function power() {
 	if [[ -z $1 ]]; then
 		printUsage
@@ -424,6 +424,7 @@ function power() {
 		auto) sudo tlp start ;;
 		ac) sudo tlp ac ;;
 		bat) sudo tlp bat ;;
+		sav) sudo tlp power-saver ;;
 		*) printUsage; return ;;
 	esac
 	updateBar
@@ -440,10 +441,11 @@ function power() {
 	local timeout=3500
 	local icon=""
 	case "$mode" in
-		AC) icon="power-profile-performance-symbolic" ;;
-		AC*) icon="power-profile-performance-symbolic" ;;
-		battery) icon="power-profile-balanced-symbolic" ;;
-		battery*) icon="power-profile-power-saver-symbolic" ;;
+		*AC) icon="power-profile-performance-symbolic" ;;
+		*AC*manual*) icon="power-profile-performance-symbolic" ;;
+		*BAT) icon="power-profile-balanced-symbolic" ;;
+		*BAT*manual*) icon="power-profile-balanced-symbolic" ;;
+		*SAV) icon="power-profile-power-saver-symbolic" ;;
 	esac
 	sendNotification "$icon" "$timeout" "$urgency" "$title" "$body"
 }
@@ -464,7 +466,8 @@ function printUsage() {
 	current                     # Show current information on the battery
 	wakelock toggle [on|off]    # Toggle on/off the wakelock
 	wakelock status             # Print current wakelock status
-	power <auto|ac|bat>         # Set power mode to auto, AC or battery
+	power <auto|ac|bat|sav>     # Set power mode to auto, AC, battery or power
+	                              saving
 
 - Abbreviations
 	m = monitor
