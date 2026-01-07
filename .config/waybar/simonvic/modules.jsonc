@@ -671,11 +671,12 @@
 		"on-click": "sBatteryctl power ac",
 		"on-click-right": "sBatteryctl power auto",
 		"on-click-middle": "sBatteryctl power bat",
-		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in AC) echo '';; AC*) echo 󰠠;; battery) echo 󰌪;; battery*) echo 󱤅;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"TLP mode: $icon $mode\""
+		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in *AC) echo '';; *AC*manual*) echo 󰠠;; *BAT) echo 󰌪;; *BAT*manual*) echo 󱤅;; *SAV*) echo 󰾆;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"TLP mode: $icon $mode\""
 		// 󱐋 AC
 		// 󰠠 AC (manual)
 		// 󰌪 battery
 		// 󱤅 battery (manual)
+		// 󰾆 power saver
 	},
 	"custom/tlp#extended": {
 		"interval": 5,
@@ -686,11 +687,7 @@
 		"on-click": "sBatteryctl power ac",
 		"on-click-right": "sBatteryctl power auto",
 		"on-click-middle": "sBatteryctl power bat",
-		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in AC) echo '󱐋';; AC*) echo 󰠠;; battery) echo 󰌪;; battery*) echo 󱤅;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon $mode\" \"TLP mode: $icon $mode\""
-		// 󱐋 AC
-		// 󰠠 AC (manual)
-		// 󰌪 battery
-		// 󱤅 battery (manual)
+		"exec": "mode=$(tlp-stat -m); icon=$(case $mode in *AC) echo 󱐋;; *AC*manual*) echo 󰠠;; *BAT) echo 󰌪;; *BAT*manual*) echo 󱤅;; *SAV*) echo 󰾆;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon $mode\" \"TLP mode: $icon $mode\""
 	},
 	"custom/redshift": {
 		"interval": 5,
