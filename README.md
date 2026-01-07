@@ -109,7 +109,7 @@ Here is a list of the Wayland packages that replaced their X11 counterpart:
 
 <h2 align="center">Lockscreen</h2>
 
-<img src="https://imgur.com/1xyHtuH.gif" width="100%">
+<img src="https://i.imgur.com/1xyHtuH.gif" width="100%">
 
 <details>
 <summary>Other themes preview</summary>
