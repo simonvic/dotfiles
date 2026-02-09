@@ -2,8 +2,9 @@ return {
 	settings = {
 		html = {
 			format = {
-				indentInnerHtml = true,
-				contentUnformatted = "pre,code,textarea"
+				indentInnerHtml = false,
+				contentUnformatted = "pre,code,textarea",
+				wrapAttributes = "preserve",
 			}
 		}
 	}
