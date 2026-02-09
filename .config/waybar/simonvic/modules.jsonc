@@ -215,6 +215,7 @@
 		"format": "󰾴 {swapPercentage}%"
 	},
 	"temperature": {
+		"warning-threshold": 70,
 		"critical-threshold": 80,
 		// "format-critical": "{temperatureC}°C {icon}",
 		"format": "{icon} {temperatureC}°C",

@@ -64,6 +64,10 @@ window#waybar.tertiary .modules-right>*>* {
 	box-shadow: inset 0 -2px #F0544C;
 }
 
+#temperature.warning {
+	color: #E87B2E;
+}
+
 #temperature.critical {
 	color: #FF4543;
 }
