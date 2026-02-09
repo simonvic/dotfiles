@@ -23,7 +23,7 @@ input type:touchpad {
 
 input type:keyboard xkb_numlock enabled
 
-output "*" bg desktop_wallpaper fill
+output "*" bg desktop_wallpaper stretch
 
 bar {
 	id primary
