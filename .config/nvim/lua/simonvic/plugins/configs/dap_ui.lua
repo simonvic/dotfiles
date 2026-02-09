@@ -20,21 +20,21 @@ return function()
 		},
 		layouts = {
 			{
-				position = "bottom",
-				size = 8,
-				elements = {
-					{ id = "breakpoints", size = 0.10 },
-					{ id = "repl",        size = 0.40 },
-					{ id = "console",     size = 0.50 }
-				},
-			},
-			{
 				position = "right",
 				size = 16,
 				elements = {
 					{ id = "stacks",  size = 0.20, },
 					{ id = "watches", size = 0.20, },
 					{ id = "scopes",  size = 0.60, },
+				},
+			},
+			{
+				position = "bottom",
+				size = 8,
+				elements = {
+					{ id = "breakpoints", size = 0.10 },
+					{ id = "console",     size = 0.50 },
+					{ id = "repl",        size = 0.40 },
 				},
 			},
 		},
