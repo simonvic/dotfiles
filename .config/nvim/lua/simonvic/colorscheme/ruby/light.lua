@@ -1,9 +1,9 @@
 return require("simonvic.colorscheme.ruby"):build({
 	palette = {
 
-		accent__4         = "#EF9F9B",
-		accent__3         = "#EF9F9B",
-		accent__2         = "#EF9F9B",
+		accent__4         = "#F8D7D5",
+		accent__3         = "#F7CAC7",
+		accent__2         = "#F1ACA9",
 		accent__1         = "#EF9F9B",
 		accent            = "#F0544C",
 		accent_1          = "#4C302F",
