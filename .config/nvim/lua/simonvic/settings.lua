@@ -15,6 +15,7 @@ opt.splitbelow = true
 opt.splitkeep = "cursor"
 opt.scrolloff = 8
 opt.completeopt = "menuone,noselect,fuzzy,nosort"
+opt.wildmode="longest,longest:full,list:full"
 opt.backspace = "indent,eol,start,nostop"
 -- opt.messageopt = "history:500"
 opt.undofile = true
