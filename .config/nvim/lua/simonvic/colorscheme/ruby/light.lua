@@ -21,8 +21,8 @@ return require("simonvic.colorscheme.ruby"):build({
 		text_3            = "#111111",
 		text_4            = "#000000",
 
-		guide             = "#DDDDDD",
-		code_bg           = "#BBBBBB",
+		guide             = "#EEEEEE",
+		code_bg           = "#E7E7E7",
 		url               = "#333333",
 
 		literal_string__4 = "#D1DDD0",

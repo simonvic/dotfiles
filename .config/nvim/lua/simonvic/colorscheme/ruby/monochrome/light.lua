@@ -21,8 +21,8 @@ return require("simonvic.colorscheme.ruby.monochrome"):build({
 		text_3            = "#111111",
 		text_4            = "#000000",
 
-		guide             = "#DDDDDD",
-		code_bg           = "#BBBBBB",
+		guide             = "#EEEEEE",
+		code_bg           = "#E7E7E7",
 
 		constant          = "#000000",
 		member            = "#111111",

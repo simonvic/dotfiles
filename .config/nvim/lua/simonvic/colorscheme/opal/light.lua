@@ -21,8 +21,8 @@ return require("simonvic.colorscheme.opal"):build({
 		text_3            = "#111111",
 		text_4            = "#000000",
 
-		guide             = "#DDDDDD",
-		code_bg           = "#CCCCCC",
+		guide             = "#EEEEEE",
+		code_bg           = "#E7E7E7",
 
 		disabled          = "#666666",
 		special           = "#bf6318",
