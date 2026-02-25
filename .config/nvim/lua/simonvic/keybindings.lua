@@ -157,6 +157,8 @@ M.fn = {
 	cursors_delete              = function() M.not_implemented("cursors_delete") end,
 	cursors_clear               = function() M.not_implemented("cursors_clear") end,
 
+	color_picker                = function() M.not_implemented("color_picker") end,
+
 	notif_history               = function() M.not_implemented("notif_history") end,
 	notif_dismiss               = function() M.not_implemented("notif_dismiss") end,
 
@@ -320,6 +322,8 @@ M.mappings = {
 	{ n___, { "<leader>ct", "<C-S-X>" },          function() M.fn.cursors_toggle() end,            { desc = "Toggle cursors" } },
 	{ n___, "<leader>cd",                         function() M.fn.cursors_delete() end,            { desc = "Delete last cursor" } },
 	{ n___, { "<leader>cD", "<C-S-D>" },          function() M.fn.cursors_clear() end,             { desc = "Clear cursors" } },
+	---------------------------------------------------------------------------- Color picker
+	{ n___, "<leader>C",                          function() M.fn.color_picker() end,              { desc = "Open color picker" } },
 }
 
 -------------------------------------------------------------------------------- PLUGINS
