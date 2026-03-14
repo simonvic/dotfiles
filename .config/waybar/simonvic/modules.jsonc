@@ -262,6 +262,7 @@
 			"critical": 15
 		},
 		"format": "{icon} {capacity}%",
+		"format-full": "󰂄",
 		"format-not-charging": "󰂄",
 		"format-plugged": "󰂄",
 		"format-alt": "{icon} {capacity}% <small>{time} {power:0.3f}W</small>",
