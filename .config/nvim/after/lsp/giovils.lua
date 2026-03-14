@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
 	name = "giovils",
 	-- root_markers = { ".git" },

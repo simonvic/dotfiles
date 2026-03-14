@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
 	name = "giovils_proxy",
 	-- root_markers = { ".git" },

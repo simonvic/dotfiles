@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
 	cmd = {
 		"jdtls",
@@ -21,6 +22,7 @@ return {
 			'settings.gradle.kts',
 		},
 	},
+	---@type lspconfig.settings.jdtls
 	settings = {
 		java = {
 			codeGeneration = {
