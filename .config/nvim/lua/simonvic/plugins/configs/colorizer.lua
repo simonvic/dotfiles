@@ -3,6 +3,9 @@ return function()
 		options = {
 			parsers = {
 				css_fn = true,
+				names = {
+					enable = false
+				},
 				hex = {
 					default = true,
 					rgb = false,
