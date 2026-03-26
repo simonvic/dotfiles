@@ -43,6 +43,7 @@ inputDeleteColor="FF1010ff"
 bgType=color
 bgColor="00000033"
 bgImage="$HOME/.config/i3/desktop_wallpaper"
+bgScaleFactor=10
 bgBlurSigma=16
 bgDim=40
 
@@ -127,10 +128,10 @@ function takeScreenshot() {
 
 function blurScreenshot() {
 	magick "$tempScreenshotFile" \
-	-scale 10% \
+	-scale "$bgScaleFactor%" \
 	-blur "0x$bgBlurSigma" \
-	-colorize "$bgDim"% \
-	-resize 1000% \
+	-colorize "$bgDim%" \
+	-resize "$((100 * 100 / bgScaleFactor))%" \
 	"$tempScreenshotFile"
 }
 
