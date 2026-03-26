@@ -119,13 +119,19 @@ function takeScreenshot() {
 	if [[ ! -e $tempScreenshotFile ]]; then
 		mkdir -p "${tempScreenshotFile%/*}"
 	fi
-	scrot -z -o "$tempScreenshotFile" \
-		&& magick "$tempScreenshotFile" \
-			-scale 10% \
-			-blur "0x$bgBlurSigma" \
-			-colorize "$bgDim"% \
-			-resize 1000% \
-			"$tempScreenshotFile"
+	case "$XDG_SESSION_TYPE" in
+		wayland) grim "$tempScreenshotFile" ;;
+		x11) scrot -z -o "$tempScreenshotFile" ;;
+	esac
+}
+
+function blurScreenshot() {
+	magick "$tempScreenshotFile" \
+	-scale 10% \
+	-blur "0x$bgBlurSigma" \
+	-colorize "$bgDim"% \
+	-resize 1000% \
+	"$tempScreenshotFile"
 }
 
 function lockscreen() {
@@ -133,7 +139,12 @@ function lockscreen() {
 		greeterText=$(sPlayerctl info 2> /dev/null )
 	fi
 	case "$XDG_SESSION_TYPE" in
-		wayland) swaylock -f ;;
+		wayland)
+			if [[ "$bgType" == "magick" ]]; then
+				takeScreenshot && blurScreenshot
+			fi
+			swaylock -f
+			;;
 		x11)
 			i3lockArgs+=(
 				"--keyhl-color=$inputTypeColor"
@@ -190,7 +201,7 @@ function lockscreen() {
 				image) i3lockArgs+=("--image=$bgImage") ;;
 				simpleBlur) i3lockArgs+=("--blur=$bgBlurSigma") ;;
 				magick)
-					takeScreenshot
+					takeScreenshot && blurScreenshot
 					i3lockArgs+=("--image=$tempScreenshotFile")
 					;;
 			esac
