@@ -35,16 +35,34 @@ inputTypeColor="F0544Caa"
 inputDeleteColor="FF1010ff"
 
 #                                                                    BACKGROUND
+
 # Backgrounds available:
 # - color (rrggbbaa, transparency can be blurred with picom)
 # - image
 # - simpleBlur (i3lock-color blur method)
 # - magick (blur and dim, uses scrot and imagemagick)
 bgType=color
+
+# RRGGBBaa
+# Used only if `bgType` is `color`
 bgColor="00000033"
+
+# Path to image
+# Used only if `bgType` is `image`
 bgImage="$HOME/.config/i3/desktop_wallpaper"
+
+# Screenshot scale factor.
+# Used only if `bgType` is `magick`
+# To improve performance, Magick will scale down the image, apply the filters
+# and then scale back up
 bgScaleFactor=10
+
+# Sigma value for the blur effect
+# Used only if `bgType` is `magick`
 bgBlurSigma=16
+
+# How much (percentage) the screenshot has to be dimmed
+# Used only if `bgType` is `magick`
 bgDim=40
 
 #                                                                     INDICATOR
