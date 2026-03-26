@@ -120,11 +120,12 @@ function takeScreenshot() {
 		mkdir -p "${tempScreenshotFile%/*}"
 	fi
 	scrot -z -o "$tempScreenshotFile" \
-		&& convert -scale 10% \
+		&& magick "$tempScreenshotFile" \
+			-scale 10% \
 			-blur "0x$bgBlurSigma" \
-			-modulate "$bgDim" \
+			-colorize "$bgDim"% \
 			-resize 1000% \
-			"$tempScreenshotFile" "$tempScreenshotFile"
+			"$tempScreenshotFile"
 }
 
 function lockscreen() {
