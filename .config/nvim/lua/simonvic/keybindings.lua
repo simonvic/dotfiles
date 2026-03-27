@@ -17,7 +17,8 @@ M.modes = {
 	n__t = { "n", "t" },
 	_vi_ = { "v", "i" },
 	_xo_ = { "x", "o" },
-	nxo_ = { "n", "x", "o" }
+	nxo_ = { "n", "x", "o" },
+	c___ = { "c" },
 }
 
 M.util = {
@@ -40,6 +41,7 @@ local n_it = M.modes.n_it
 local n__t = M.modes.n__t
 local _xo_ = M.modes._xo_
 local nxo_ = M.modes.nxo_
+local c___ = M.modes.c___
 local cmd = M.util.cmd
 local cmd_sel = M.util.cmd_sel
 
@@ -324,6 +326,9 @@ M.mappings = {
 	{ n___, { "<leader>cD", "<C-S-D>" },          function() M.fn.cursors_clear() end,             { desc = "Clear cursors" } },
 	---------------------------------------------------------------------------- Color picker
 	{ n___, "<leader>C",                          function() M.fn.color_picker() end,              { desc = "Open color picker" } },
+	--------------------------------------------------------------------------- OTHER
+	{ c___, "<C-p>",                              "<Up>",                                          { desc = "Previous command starting with current text" } },
+	{ c___, "<C-n>",                              "<Down>",                                        { desc = "Next command starting with current text" } },
 }
 
 -------------------------------------------------------------------------------- PLUGINS
