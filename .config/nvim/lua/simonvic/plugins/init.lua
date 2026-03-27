@@ -52,6 +52,7 @@ M.plugins = {
 	{ "mrcjkb/rustaceanvim" },
 	{ "lervag/vimtex",                               config = require("simonvic.plugins.configs.vimtex") },
 	{ "iamcco/markdown-preview.nvim",                config = require("simonvic.plugins.configs.mdpreview") },
+	{ "tree-sitter-grammars/tree-sitter-test",       config = require("simonvic.plugins.configs.tstest") },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
 	{ "doums/darcula" },
