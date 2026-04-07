@@ -70,6 +70,7 @@ M.fn = {
 	toggle_line_number          = function() vim.opt.number = not vim.opt.number:get() end,
 	toggle_relative_number      = function() vim.opt.relativenumber = not vim.opt.relativenumber:get() end,
 	toggle_inlay_hints          = function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+	toggle_document_colors      = function() vim.lsp.document_color.enable(not vim.lsp.document_color.is_enabled()) end,
 
 	terminal                    = function() vim.cmd("botright terminal") end,
 	terminal_float              = function() vim.cmd("terminal") end,
@@ -289,12 +290,13 @@ M.mappings = {
 	---------------------------------------------------------------------------- UI
 	{ n___, "<Leader>ud",                         function() M.fn.toggle_debugger() end,           { desc = "Toggle debugger UI" } },
 	{ n___, "<Leader>ul",                         function() M.fn.toggle_list_chars() end,         { desc = "Toggle list chars" } },
-	{ n___, "<Leader>uc",                         function() M.fn.toggle_context() end,            { desc = "Toggle code context (scope)" } },
+	{ n___, "<Leader>uk",                         function() M.fn.toggle_context() end,            { desc = "Toggle code context (scope)" } },
 	{ n___, "<Leader>uz",                         function() M.fn.toggle_fold_column() end,        { desc = "Toggle folds column" } },
 	{ n___, "<Leader>us",                         function() M.fn.toggle_sign_column() end,        { desc = "Toggle signs column" } },
 	{ n___, "<Leader>un",                         function() M.fn.toggle_relative_number() end,    { desc = "Toggle relative number column" } },
 	{ n___, "<Leader>uN",                         function() M.fn.toggle_line_number() end,        { desc = "Toggle number column" } },
 	{ n___, "<Leader>uh",                         function() M.fn.toggle_inlay_hints() end,        { desc = "Toggle lsp inlay hints" } },
+	{ n___, "<Leader>uc",                         function() M.fn.toggle_document_colors() end,    { desc = "Toggle lsp document colors" } },
 	{ n___, "<Leader>uZ",                         function() M.fn.zen_mode() end,                  { desc = "Toggle folds column" } },
 	{ n___, "<Leader>uu",                         function() M.fn.undotree() end,                  { desc = "Toggle Undotree" } },
 	{ n___, "<A-9>",                              function() M.fn.symbols_outline_focus() end,     { desc = "Toggle symbols outline" } },
