@@ -6,6 +6,7 @@ local M = {}
 M.modes = {
 	n___ = { "n" },
 	_v__ = { "v" },
+	_x__ = { "x" },
 	__i_ = { "i" },
 	___t = { "t" },
 	nvi_ = { "n", "v", "i" },
@@ -30,6 +31,7 @@ M.util = {
 -- shortcuts
 local n___ = M.modes.n___
 local _v__ = M.modes._v__
+local _x__ = M.modes._x__
 local __i_ = M.modes.__i_
 local ___t = M.modes.___t
 local nvi_ = M.modes.nvi_
@@ -236,9 +238,9 @@ M.mappings = {
 	---------------------------------------------------------------------------- EDITING
 	{ n___, "<C-A-l>",                            "gg=G<C-o>",                                     { desc = "Reindent file" } },
 	{ n_i_, "<A-S-l>",                            function() M.fn.format() end,                    { desc = "Reformat" } },
-	{ _v__, "<A-S-l>",                            function() M.fn.format_selected() end,           { desc = "Reformat selection" } },
-	{ _v__, "<TAB>",                              ">gv",                                           { desc = "Increase indent" } },
-	{ _v__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
+	{ _x__, "<A-S-l>",                            function() M.fn.format_selected() end,           { desc = "Reformat selection" } },
+	{ _x__, "<TAB>",                              ">gv",                                           { desc = "Increase indent" } },
+	{ _x__, "<S-TAB>",                            "<gv",                                           { desc = "Decrease indent" } },
 	{ nv__, "<leader>gl",                         ":diffget REMOTE<CR>",                           { desc = "Diffget remote" } },
 	{ nv__, "<leader>gh",                         ":diffget LOCAL<CR>",                            { desc = "Diffget local" } },
 	{ nv__, "<leader>gk",                         ":diffget BASE<CR>",                             { desc = "Diffget base" } },
