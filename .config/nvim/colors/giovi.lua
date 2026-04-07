@@ -25,6 +25,7 @@ require("simonvic.colorscheme.ruby"):build({
 			["@constant.builtin.giovi"]            = { fg = p.metakeyword },
 			["@variable.builtin.giovi"]            = { fg = p.keyword_1, italic = true },
 			["@type.giovi"]                        = { fg = "#FAFAFA", bold = true },
+			["@type.builtin.giovi"]                = { fg = p.keyword, bold = true },
 			["@label.giovi"]                       = { fg = p.text__2 },
 			-- ["@error.giovi"]                       = { link = "DiagnosticUnderlineError" },
 
