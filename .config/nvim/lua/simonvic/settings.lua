@@ -257,6 +257,19 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT]  = signs.diagnostic.DiagnosticSignHint.numhl,
 		},
 	},
+	status = {
+		format = function(counts)
+			return string.format("%s  %s  %s  %s",
+				"%#DiagnosticSignError#" ..
+				glyphs.diagnostics.error .. "%* " .. (counts[vim.diagnostic.severity.ERROR] or 0),
+				"%#DiagnosticSignWarn#" ..
+				glyphs.diagnostics.warn .. "%* " .. (counts[vim.diagnostic.severity.WARN] or 0),
+				"%#DiagnosticSignInfo#" ..
+				glyphs.diagnostics.info .. "%* " .. (counts[vim.diagnostic.severity.INFO] or 0),
+				"%#DiagnosticSignHint#" ..
+				glyphs.diagnostics.hint .. "%* " .. (counts[vim.diagnostic.severity.HINT] or 0))
+		end
+	},
 	severity_sort = false,
 	float = {
 		header = "",
