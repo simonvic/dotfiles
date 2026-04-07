@@ -3,8 +3,8 @@ require("simonvic.colorscheme.ruby"):build({
 	groups = function(p)
 		return {
 
-			["@comment.giovi"]                     = { fg = p.text_dark, italic = false },
-			["@comment.block.giovi"]               = { fg = p.text_xdark, italic = false },
+			["@comment.giovi"]                     = { fg = p.text__1, italic = false },
+			["@comment.block.giovi"]               = { fg = p.text__2, italic = false },
 			["@comment.documentation.giovi"]       = { fg = "#738796", italic = true },
 			["@comment.documentation.block.giovi"] = { fg = "#596974", italic = true },
 
@@ -23,9 +23,9 @@ require("simonvic.colorscheme.ruby"):build({
 			["@operator.giovi"]                    = { fg = "#F05938" },
 
 			["@constant.builtin.giovi"]            = { fg = p.metakeyword },
-			["@variable.builtin.giovi"]            = { fg = p.keyword_light, italic = true },
+			["@variable.builtin.giovi"]            = { fg = p.keyword_1, italic = true },
 			["@type.giovi"]                        = { fg = "#FAFAFA", bold = true },
-			["@label.giovi"]                       = { fg = p.text_xdark },
+			["@label.giovi"]                       = { fg = p.text__2 },
 			-- ["@error.giovi"]                       = { link = "DiagnosticUnderlineError" },
 
 			["TSCurrentScope"]                     = { bg = "#333333" },
