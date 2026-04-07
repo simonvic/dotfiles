@@ -4,7 +4,7 @@ return function()
 		on_attach = function(bufnr)
 			local keybindings = require("simonvic.keybindings")
 			keybindings.set_with_opts(
-				{ buffer = bufnr, noremap = true, silent = true, nowait = true },
+				{ buf = bufnr, noremap = true, silent = true, nowait = true },
 				keybindings.plugins.nvimtree)
 		end,
 		update_focused_file = {
