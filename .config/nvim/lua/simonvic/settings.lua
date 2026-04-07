@@ -263,7 +263,6 @@ vim.diagnostic.config({
 		prefix = glyphs.diagnostics.prefix
 	},
 	jump = {
-		float = false,
 		wrap = false
 	}
 })
