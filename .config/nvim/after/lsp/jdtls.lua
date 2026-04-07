@@ -44,6 +44,12 @@ return {
 					enabled = "all",
 				},
 			},
+			signatureHelp = {
+				enabled = true,
+				description = {
+					enabled = true
+				}
+			},
 			format = {
 				settings = {
 					url = "~/.config/jdtls/settings.xml"
