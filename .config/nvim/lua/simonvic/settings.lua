@@ -42,6 +42,7 @@ opt.cursorline = true
 opt.cursorcolumn = false
 opt.termguicolors = true
 opt.winborder = "rounded"
+opt.pumborder = "rounded"
 opt.showcmdloc = "statusline"
 
 opt.list = false
