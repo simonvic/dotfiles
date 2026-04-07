@@ -24,6 +24,11 @@ return {
 	},
 	---@type lspconfig.settings.jdtls
 	settings = {
+		redhat = {
+			telemetry = {
+				enabled = false
+			}
+		},
 		java = {
 			codeGeneration = {
 				generateComments = true,
