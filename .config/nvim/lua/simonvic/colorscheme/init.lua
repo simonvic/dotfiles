@@ -1,3 +1,4 @@
+-- TODO: use SGR dim, blink, conceal, overline
 local M = {}
 
 ---@alias Palette table<string, string>
@@ -138,7 +139,8 @@ function M.build_groups(palette)
 		NormalNC                           = {},
 		NormalFloat                        = {},
 		Visual                             = { bg = p.accent__3 },
-		SnippetTabstop                     = { bg = p.accent__3, italic = true },
+		SnippetTabstop                     = { bg = p.accent__4, italic = true },
+		SnippetTabstopActive               = { bg = p.accent__3, italic = true },
 		Search                             = { bg = p.accent__4 },
 		CurSearch                          = { bg = p.accent__4 },
 		IncSearch                          = { link = "Search" },
@@ -191,6 +193,9 @@ function M.build_groups(palette)
 		MatchParen                         = { bg = p.text__4, bold = true },
 		Folded                             = { bg = p.text__4, fg = p.text_2 },
 		Directory                          = { link = "Normal" },
+		-- OkMsg = {},
+		-- WarningMsg = {},
+		-- ErrorMsg = {},
 
 		------------------------------------------------------------------------ coding
 		String                             = { fg = p.literal_string },
@@ -219,6 +224,7 @@ function M.build_groups(palette)
 		DiffAdd                            = { bg = p.added__3, },
 		DiffChange                         = { bg = p.changed__3, },
 		DiffText                           = { bg = p.changed__2, },
+		DiffTextAdd                        = { bg = p.added__2, },
 		DiffDelete                         = { bg = p.deleted__3, },
 
 		------------------------------------------------------------------------ signs & diagnostics
