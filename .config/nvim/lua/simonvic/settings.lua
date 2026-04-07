@@ -19,6 +19,7 @@ opt.wildmode="longest,longest:full,list:full"
 opt.backspace = "indent,eol,start,nostop"
 -- opt.messageopt = "history:500"
 opt.undofile = true
+opt.autocomplete = false
 
 -------------------------------------------------------------------------------- CASE
 opt.ignorecase = true
