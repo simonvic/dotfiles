@@ -64,9 +64,6 @@ opt.relativenumber = true
 
 -------------------------------------------------------------------------------- SIGNS
 opt.signcolumn = "auto:9"
-for name, sign in pairs(signs.diagnostic) do
-	vim.fn.sign_define(name, sign)
-end
 
 -------------------------------------------------------------------------------- FOLDS
 opt.foldcolumn = "auto:9"
