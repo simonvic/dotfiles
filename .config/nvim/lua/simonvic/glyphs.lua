@@ -3,7 +3,8 @@ local M = {}
 M.ui = {
 	unselected = "",
 	selected = "󰄲",
-	caret = ">"
+	caret = ">",
+	color_pill = "██"
 }
 
 M.listchars = {
@@ -149,9 +150,6 @@ M.plugins = {
 			buffers    = "󰈢",
 			git_status = "󰊢",
 		},
-	},
-	colorizer = {
-		virtualtext = "██",
 	},
 	whichkey = {
 		breadcrumb = " ",

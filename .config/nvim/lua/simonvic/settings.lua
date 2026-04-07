@@ -232,6 +232,13 @@ end
 opt.statusline = "%!luaeval('BuildStatusLine()')"
 
 
+-------------------------------------------------------------------------------- LSP
+vim.lsp.document_color.enable(
+	true,
+	nil, -- all buffers and all clients
+	{ style = glyphs.ui.color_pill }
+)
+
 -------------------------------------------------------------------------------- DIAGNOSTICS
 vim.diagnostic.config({
 	underline = true,

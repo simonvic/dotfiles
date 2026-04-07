@@ -17,7 +17,7 @@ return function()
 			display = {
 				mode = "virtualtext",
 				virtualtext = {
-					char = require("simonvic.glyphs").plugins.colorizer.virtualtext,
+					char = require("simonvic.glyphs").ui.color_pill,
 					position = "eol",
 					hl_mode = "foreground",
 				}
