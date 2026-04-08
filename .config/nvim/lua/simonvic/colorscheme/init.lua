@@ -461,6 +461,7 @@ function M.build_groups(palette)
 		["@markup.italic"]                 = { fg = p.text, italic = true },
 		["@markup.strikethrough"]          = { fg = p.text, strikethrough = true },
 		["@markup.raw"]                    = { link = "markdownCode" },
+		["@markup.raw.block"]              = { link = "markdownCodeBlock" },
 		["@markup.raw.delimiter"]          = { link = "markdownCodeDelimiter" },
 		["@markup.list"]                   = { link = "Keyword" },
 		["@markup.quote"]                  = { link = "markdownBlockquote" },
