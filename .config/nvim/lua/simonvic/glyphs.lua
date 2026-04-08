@@ -17,8 +17,12 @@ M.listchars = {
 }
 
 M.fillchars = {
+	-- stl       = " ",
+	-- stlnc     = " ",
+	-- wbr       = " ",
 	fold      = " ",
 	foldopen  = "",
+	-- foldsep   = "│",
 	foldclose = "",
 	eob       = " ",
 }

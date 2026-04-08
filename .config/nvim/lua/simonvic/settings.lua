@@ -55,6 +55,7 @@ opt.statuscolumn = ""
 	.. "%{%&number?' %{v:lnum}':''%}"            -- line number
 	.. "%="                                      -- spacing
 	.. "%{%&relativenumber?' %2.2{v:relnum} ':''%}" -- relative line number
+	-- .. "%{%v:lua.require('gitsigns').statuscolumn()%}" -- gitsigns
 	.. "%s"                                      -- signs
 	.. " "                                       -- spacing
 
@@ -71,17 +72,6 @@ opt.foldtext = ""
 opt.foldlevel = 69
 opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.api.nvim_create_autocmd('LspAttach', {
--- 	callback = function(args)
--- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
--- 		if client:supports_method('textDocument/foldingRange') then
--- 			vim.notify("lsp client supports foldingRange")
--- 			local win = vim.api.nvim_get_current_win()
--- 			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
--- 		end
--- 	end,
--- })
-
 
 -------------------------------------------------------------------------------- CURSOR SHAPE
 opt.guicursor = {
@@ -215,6 +205,10 @@ end
 
 function BuildStatusLine()
 	return ""
+		-- TODO: add &busy ?
+		-- TODO: add vim.ui.progress ?
+		-- .. "%.64(" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":~") .. "%)"
+		-- .. "%="
 		.. " " .. build_status_line_mode()                             -- mode
 		.. " [%S]"                                                     -- command
 		.. "%w"                                                        -- preview
@@ -296,6 +290,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		if lang and vim.treesitter.language.add(lang) then
 			vim.treesitter.start(args.buf, lang)
 			-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+			-- vim.bo[args.buf].syntax = "ON" -- only if additional legacy syntax is needed
 		end
 	end,
 })
