@@ -23,6 +23,7 @@ M.fillchars = {
 	fold      = " ",
 	foldopen  = "",
 	-- foldsep   = "│",
+	foldinner = "║",
 	foldclose = "",
 	eob       = " ",
 }
