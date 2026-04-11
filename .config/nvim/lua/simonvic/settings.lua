@@ -227,6 +227,57 @@ vim.lsp.document_color.enable(
 	{ style = glyphs.ui.color_pill }
 )
 
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("simonvic.lsp", {}),
+	callback = function(ev)
+		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+
+		-- Completion menu
+		if client:supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, ev.buf, {
+				autotrigger = false,
+			})
+		end
+
+		-- Folding range
+		-- Treesitter is enough and usually better
+		if false and client:supports_method('textDocument/foldingRange') then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+		end
+
+		-- Auto-format on save.
+		if false and client:supports_method("textDocument/formatting")
+			and not client:supports_method("textDocument/willSaveWaitUntil") then
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = "simonvic.lsp",
+				buffer = ev.buf,
+				callback = function()
+					vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
+				end,
+			})
+		end
+
+		-- Highlight references
+		if false and client:supports_method("textDocument/documentHighlight") then
+			vim.api.nvim_create_autocmd("CursorHold", {
+				group = "simonvic.lsp",
+				buffer = ev.buf,
+				callback = function()
+					vim.lsp.buf.document_highlight()
+				end,
+			})
+			vim.api.nvim_create_autocmd("CursorMoved", {
+				group = "simonvic.lsp",
+				buffer = ev.buf,
+				callback = function()
+					vim.lsp.buf.clear_references()
+				end,
+			})
+		end
+	end,
+})
+
 -------------------------------------------------------------------------------- DIAGNOSTICS
 vim.diagnostic.config({
 	underline = true,
