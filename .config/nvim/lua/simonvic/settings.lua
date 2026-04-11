@@ -90,13 +90,6 @@ opt.guicursor = {
 	"o:hor50-blinkon0", --  operator pending
 }
 
--------------------------------------------------------------------------------- RESTORE CURSOR ON EXIT
-vim.api.nvim_create_augroup("resetCursor", { clear = true })
-vim.api.nvim_create_autocmd("VimLeave", {
-	group = "resetCursor",
-	command = "set guicursor=a:ver25"
-})
-
 -------------------------------------------------------------------------------- TITLE
 opt.title = true
 -- opt.titlestring = ""
