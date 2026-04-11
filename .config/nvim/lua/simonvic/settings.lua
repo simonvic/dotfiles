@@ -17,6 +17,7 @@ opt.scrolloff = 8
 opt.completeopt = "menuone,noselect,fuzzy,nosort,popup"
 opt.wildmode = "longest:full,full"
 opt.backspace = "indent,eol,start,nostop"
+opt.nrformats = "bin,hex,blank"
 -- opt.messageopt = "history:500"
 opt.undofile = true
 opt.autocomplete = false
