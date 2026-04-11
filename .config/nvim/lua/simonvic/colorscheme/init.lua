@@ -164,6 +164,7 @@ function M.build_groups(palette)
 		PmenuSel                           = { bg = p.accent__3 },
 		PmenuSbar                          = { bg = p.accent__4 },
 		PmenuThumb                         = { bg = p.accent__2 },
+		PmenuMatch                         = { underdotted = true, sp = p.accent },
 		Cursor                             = { bg = p.zdepth0, fg = p.text__1 },
 		lCursor                            = { link = "Cursor" },
 		CursorIM                           = { link = "Cursor" },
@@ -316,7 +317,7 @@ function M.build_groups(palette)
 		------------------------------------------------------------------------ cmp
 		CmpItemMenu                        = { fg = p.text },
 		CmpItemAbbr                        = { fg = p.text },
-		CmpItemAbbrMatch                   = { fg = p.text, bold = true },
+		CmpItemAbbrMatch                   = { link = "PmenuMatch" },
 		CmpItemAbbrDeprecated              = { link = "DiagnosticDeprecated" },
 		CmpItemKind                        = { link = "LspKind" },
 		CmpItemKindFile                    = { link = "LspKindFile" },
@@ -378,11 +379,11 @@ function M.build_groups(palette)
 		BlinkCmpKindTypeParameter          = { link = "LspKindTypeParameter" },
 
 		------------------------------------------------------------------------ Telescope
-		TelescopeMatching                  = { underdotted = true, sp = p.accent },
+		TelescopeMatching                  = { link = "PmenuMatch" },
 
 		------------------------------------------------------------------------ Telescope
 		SnacksPickerPrompt                 = { fg = p.accent },
-		SnacksPickerMatch                  = { underdotted = true, sp = p.accent },
+		SnacksPickerMatch                  = { link = "PmenuMatch" },
 		SnacksPickerSelected               = { fg = p.accent },
 
 		------------------------------------------------------------------------ Lazy
