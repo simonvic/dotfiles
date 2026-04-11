@@ -43,6 +43,9 @@ return {
 				parameterNames = {
 					enabled = "all",
 				},
+				parameterTypes = {
+					enabled = true,
+				}
 			},
 			signatureHelp = {
 				enabled = true,
