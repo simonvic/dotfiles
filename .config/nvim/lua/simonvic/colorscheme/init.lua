@@ -280,6 +280,10 @@ function M.build_groups(palette)
 
 		------------------------------------------------------------------------ Lsp
 		LspInfoBorder                      = { link = "FloatBorder" },
+		LspReferenceText                   = { link = "Search" },
+		LspSignatureActiveParameter        = { link = "Search" },
+		LspInlayHint                       = { link = "NonText" },
+		LspCodeLens                        = { link = "NonText" },
 
 		------------------------------------------------------------------------ cmp
 		CmpItemMenu                        = { fg = p.text },
