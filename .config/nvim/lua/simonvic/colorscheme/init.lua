@@ -151,6 +151,7 @@ function M.build_groups(palette)
 		TabLineSel                         = { bg = p.zdepth_1, underline = true, sp = p.accent__2 },
 		TabLineFill                        = { bg = p.zdepth__1 },
 		StatusLine                         = { bg = p.zdepth_1 },
+		StatusLineNC                       = { bg = p.zdepth_0 },
 		MsgArea                            = { bg = p.zdepth_1, bold = true },
 		MoreMsg                            = { bg = p.zdepth_1, bold = true },
 		Question                           = { bg = p.zepth_1, bold = true },
