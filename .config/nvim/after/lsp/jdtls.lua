@@ -40,6 +40,9 @@ return {
 			implementationCodeLens = "all",
 			referencesCodeLens = { enabled = true },
 			inlayHints = {
+				formatParameters = {
+					enabled = true,
+				},
 				parameterNames = {
 					enabled = "all",
 				},
