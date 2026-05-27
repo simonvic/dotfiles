@@ -409,6 +409,7 @@ function M.build_groups(palette)
 
 		------------------------------------------------------------------------ Telescope
 		TelescopeMatching                  = { link = "PmenuMatch" },
+		TelescopeTitle                     = { link = "Title" },
 
 		------------------------------------------------------------------------ Telescope
 		SnacksPickerPrompt                 = { fg = p.accent },
