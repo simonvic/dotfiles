@@ -15,6 +15,7 @@ opt.splitbelow = true
 opt.splitkeep = "cursor"
 opt.scrolloff = 8
 opt.completeopt = "menuone,noselect,fuzzy,nosort,popup"
+opt.completeitemalign = "kind,abbr,menu"
 opt.wildmode = "longest:full,full"
 opt.backspace = "indent,eol,start,nostop"
 opt.nrformats = "bin,hex,blank"
@@ -227,6 +228,34 @@ vim.lsp.document_color.enable(
 	{ style = glyphs.ui.color_pill }
 )
 
+local symbols_kind = {
+	[1]  = { "Text", glyphs.symbols.Text },
+	[2]  = { "Method", glyphs.symbols.Method },
+	[3]  = { "Function", glyphs.symbols.Function },
+	[4]  = { "Constructor", glyphs.symbols.Constructor },
+	[5]  = { "Field", glyphs.symbols.Field },
+	[6]  = { "Variable", glyphs.symbols.Variable },
+	[7]  = { "Class", glyphs.symbols.Class },
+	[8]  = { "Interface", glyphs.symbols.Interface },
+	[9]  = { "Module", glyphs.symbols.Module },
+	[10] = { "Property", glyphs.symbols.Property },
+	[11] = { "Unit", glyphs.symbols.Unit },
+	[12] = { "Value", glyphs.symbols.Value },
+	[13] = { "Enum", glyphs.symbols.Enum },
+	[14] = { "Keyword", glyphs.symbols.Keyword },
+	[15] = { "Snippet", glyphs.symbols.Snippet },
+	[16] = { "Color", glyphs.symbols.Color },
+	[17] = { "File", glyphs.symbols.File },
+	[18] = { "Reference", glyphs.symbols.Reference },
+	[19] = { "Folder", glyphs.symbols.Folder },
+	[20] = { "EnumMember", glyphs.symbols.EnumMember },
+	[21] = { "Constant", glyphs.symbols.Constant },
+	[22] = { "Struct", glyphs.symbols.Struct },
+	[23] = { "Event", glyphs.symbols.Event },
+	[24] = { "Operator", glyphs.symbols.Operator },
+	[25] = { "TypeParameter", glyphs.symbols.TypeParameter },
+}
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("simonvic.lsp", {}),
 	callback = function(ev)
@@ -236,6 +265,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if client:supports_method("textDocument/completion") then
 			vim.lsp.completion.enable(true, client.id, ev.buf, {
 				autotrigger = false,
+				convert = function(item)
+					local complete_item = {}
+					if item.kind == 16 then -- if kind is Color
+						complete_item.kind = glyphs.ui.color_pill
+					else
+						complete_item.kind_hlgroup = "LspKind" .. symbols_kind[item.kind][1]
+						complete_item.kind = symbols_kind[item.kind][2]
+					end
+					-- complete_item.abbr = item.label
+					-- if item.labelDetails then
+					-- 	complete_item.menu = (item.labelDetails.detail or "") .. (item.labelDetails.description or "")
+					-- end
+					-- complete_item.menu = item.detail
+					-- complete_item.info = item.documentation
+					return complete_item
+				end,
 			})
 		end
 
