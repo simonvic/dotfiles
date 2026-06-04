@@ -29,7 +29,7 @@ ZSH_S_COLOR_DATETIME='242'
 ZSH_S_COLOR_DECORATIONS='245'
 ZSH_S_COLOR_RETURN_TRUE='115'
 ZSH_S_COLOR_RETURN_FALSE='136'
-ZSH_S_COLOR_VCS_BRANCH='229'
+ZSH_S_COLOR_VCS_BRANCH='203'
 
 # %0/       Returns the entire directory structure.
 # %1/       Returns the current directory.
