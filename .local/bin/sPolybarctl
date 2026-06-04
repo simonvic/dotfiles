@@ -1,20 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
-
 polybarLogsDir="/tmp/simonvic/sPolybarctl/logs"
 messagesLogsDir="/tmp/simonvic/sPolybarctl/logs/msg"
 
@@ -28,24 +13,21 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
-#	Get the pid of a polybar
-#	@param polybar name
-#	@return pid of a polybar or nothing if 
-#		zero or more than one pid have been found
+# Get the pid of a polybar
+# @param polybar name
+# @return pid of a polybar or nothing if
+# 	zero or more than one pid have been found
 function getPolybarPid() {
-	local pid; pid=$(pgrep -f "polybar $1")
+	local pid && pid=$(pgrep -f "polybar $1")
 	[[ $(echo "$pid" | wc -w) -eq 1 ]] && echo "$pid"
 }
 
-
-##
-#	Get pid argument for polybar-msg
-#	@param polybar name or empty
-#	@return "-p $pid" or empty
+# Get pid argument for polybar-msg
+# @param polybar name or empty
+# @return "-p $pid" or empty
 function getPidArgument() {
 	if [[ -n "$1" ]]; then
-		local pid; pid=$(getPolybarPid "$1")
+		local pid && pid=$(getPolybarPid "$1")
 		if [[ -n "$pid" ]]; then
 			echo "-p $pid"
 		fi
@@ -60,61 +42,51 @@ function status() {
 	esac
 }
 
-##
-#	Send a message (polybar-msg) to a polybar
-#	@param message for polybar-msg
-#	@param polybar name or empty to send msg to all polybar
+# Send a message (polybar-msg) to a polybar
+# @param message for polybar-msg
+# @param polybar name or empty to send msg to all polybar
 function polybarMsg() {
 	polybar-msg $(getPidArgument "$2") $1 >> "$messagesLogsDir/polybar-msg.log" 2>&1
 }
 
-##
-#	Show a polybar
-#	@param polybar name or empty to show all polybars
+# Show a polybar
+# @param polybar name or empty to show all polybars
 function show() {
 	polybarMsg "cmd show" "$1"
 }
 
-
-##
-#	Hide a polybar
-#	@param polybar name or empty to hide all polybars
+# Hide a polybar
+# @param polybar name or empty to hide all polybars
 function hide() {
 	polybarMsg "cmd hide" "$1"
 }
 
-
-##
-#	Toggle a polybar
-#	@param polybar name or empty to toggle all polybars
+# Toggle a polybar
+# @param polybar name or empty to toggle all polybars
 function toggle() {
 	polybarMsg "cmd toggle" "$1"
 }
 
-##
-#	Update all bar-switches state of a polybar via a hook
-#	@param polybar name
+# Update all bar-switches state of a polybar via a hook
+# @param polybar name
 function updateSwitches() {
 	polybarMsg "action bar-switch-$1 hook 0"
 }
 
-##
-#	Launch a polyabr
-#	@param polybar name
+# Launch a polyabr
+# @param polybar name
 function launchPolybar() {
 	if [[ -n "$1" ]]; then
 		polybar "$1" >> "$polybarLogsDir/$1.log" 2>&1 &
 	fi
 }
 
-##
-#	Kill all active polybars
+# Kill all active polybars
 function killPolybars() {
 	polybarMsg "cmd quit"
 }
 
-##
-#	Launch and hide the predefined polybars
+# Launch and hide the predefined polybars
 function launch() {
 	killPolybars
 

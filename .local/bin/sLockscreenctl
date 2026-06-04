@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 # Consult the i3lock man page for a better explanation on some settings
 
 #                                                                       OPTIONS
@@ -66,6 +52,7 @@ bgBlurSigma=16
 bgDim=40
 
 #                                                                     INDICATOR
+
 # Available options: ring, bars
 indicatorType=ring
 
@@ -146,16 +133,16 @@ function takeScreenshot() {
 
 function blurScreenshot() {
 	magick "$tempScreenshotFile" \
-	-scale "$bgScaleFactor%" \
-	-blur "0x$bgBlurSigma" \
-	-colorize "$bgDim%" \
-	-resize "$((100 * 100 / bgScaleFactor))%" \
-	"$tempScreenshotFile"
+		-scale "$bgScaleFactor%" \
+		-blur "0x$bgBlurSigma" \
+		-colorize "$bgDim%" \
+		-resize "$((100 * 100 / bgScaleFactor))%" \
+		"$tempScreenshotFile"
 }
 
 function lockscreen() {
 	if [[ $showSongAsGreeter == true ]]; then
-		greeterText=$(sPlayerctl info 2> /dev/null )
+		greeterText=$(sPlayerctl info 2> /dev/null)
 	fi
 	case "$XDG_SESSION_TYPE" in
 		wayland)

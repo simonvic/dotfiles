@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6911
 notificationAppName="simonvic.Bluetoothctl"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
@@ -34,51 +20,46 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
-#	Get if bluetooth is powered on
-#	@return true|false
+# Get if bluetooth is powered on
+# @return true|false
 function isPowered() {
 	[[ $(bluetoothctl show | grep "Powered: yes") ]] && echo true || echo false
 }
 
-##
-#	Get if bluetooth is powering on or off
-#	@return true|false
+# Get if bluetooth is powering on or off
+# @return true|false
 function isPowering() {
 	[[ $(bluetoothctl show | grep -E "PowerState: off-enabling|PowerState: on-disabling") ]] && echo true || echo false
 }
 
-##
-#	Get if connected to a bluetooth device
-#	@return true|false
+# Get if connected to a bluetooth device
+# @return true|false
 function isConnected() {
 	[[ $(bluetoothctl info | grep "Connected: yes") ]] && echo true || echo false
 }
 
-##
-#	Update all polybar modules of bluetooth
-#	Hook triggered:
-#		1: powered off
-#		2: powering on/off
-#		3: powered on
-#		4: connected
+# Update all polybar modules of bluetooth
+# Hook triggered:
+# 	1: powered off
+# 	2: powering on/off
+# 	3: powered on
+# 	4: connected
 function updatePolybar() {
 	if [[ $(isPowering) == true ]]; then
 		sPolybarctl message "action bluetooth hook 2"
-    elif [[ $(isPowered) == true ]]; then
-    	if [[ $(isConnected) == true ]]; then
+	elif [[ $(isPowered) == true ]]; then
+		if [[ $(isConnected) == true ]]; then
 			sPolybarctl message "action bluetooth hook 4"
-    	else
+		else
 			sPolybarctl message "action bluetooth hook 3"
-    	fi
-    else
-			sPolybarctl message "action bluetooth hook 1"
-    fi
+		fi
+	else
+		sPolybarctl message "action bluetooth hook 1"
+	fi
 	# sPolybarctl message "action earbuds hook 0"
 	# sPolybarctl message "action earbuds-extended hook 0"
 }
 
-##
 # Helper function for notifications
 # @param body
 # @param icon (default: $notificationDefaultIcon)
@@ -94,9 +75,8 @@ function sendNotification() {
 		"sBluetoothctl" "$1"
 }
 
-##
-#	Change bluetooth power
-#	@param toggle,on or off
+# Change bluetooth power
+# @param toggle,on or off
 function power() {
 	local newState=$1
 	if [[ $newState == "toggle" ]]; then
@@ -117,26 +97,22 @@ function power() {
 	fi
 }
 
-
-##
-#	Find the device UUID given a name
-#	@param device name
-#	@return device UUID
+# Find the device UUID given a name
+# @param device name
+# @return device UUID
 function findDeviceUUID() {
 	bluetoothctl devices | grep -i "$1" | awk -F ' ' '{print $2}'
 }
 
-##
-#	Check if connected to device
-#	@param UUID of device
-#	@return boolean
+# Check if connected to device
+# @param UUID of device
+# @return boolean
 function isConnectedTo() {
 	[[ $(bluetoothctl devices Connected | grep "$1") ]] && echo true || echo false
 }
 
-##
-#	Connect to a device
-#	@param device name
+# Connect to a device
+# @param device name
 function connect() {
 	if [[ -z "$1" ]]; then
 		printUsage
@@ -145,7 +121,7 @@ function connect() {
 	if [[ $(isPowered) == "false" ]]; then
 		power on
 	fi
-	local uuid; uuid=$(findDeviceUUID "$1")
+	local uuid && uuid=$(findDeviceUUID "$1")
 	sendNotification "Connecting to\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconProcessing" 69000
 	if bluetoothctl connect "$uuid"; then
 		sendNotification "Connected to\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconConnected"
@@ -155,9 +131,8 @@ function connect() {
 	updatePolybar
 }
 
-##
-#	Disconnect from a device
-#	@param device name
+# Disconnect from a device
+# @param device name
 function disconnect() {
 	if [[ -z "$1" ]]; then
 		printUsage
@@ -166,7 +141,7 @@ function disconnect() {
 	if [[ $(isPowered) == "false" ]]; then
 		return
 	fi
-	local uuid; uuid=$(findDeviceUUID "$1")
+	local uuid && uuid=$(findDeviceUUID "$1")
 	sendNotification "Disconnecting from\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconProcessing" 69000
 	if bluetoothctl disconnect "$uuid"; then
 		sendNotification "Disconnected from\n<b>$1\n(<small>$uuid</small>)</b>" "$notificationIconDisconnected"
@@ -176,7 +151,6 @@ function disconnect() {
 	updatePolybar
 }
 
-##
 # Print icon based on device type
 # From: https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/src/dbus-common.c
 # @param device type
@@ -202,12 +176,11 @@ function prettifyIcon() {
 		"scanner") icon="󰚫" ;;
 		"unknown") icon="?" ;;
 		"video-display") icon="󰍹" ;;
-		*) icon=$1
+		*) icon=$1 ;;
 	esac
 	printf "%s" "$icon"
 }
 
-##
 # Build prettified line with device details (meant for rofi-dmenu)
 # @param uuid
 # @param name
@@ -238,14 +211,13 @@ function prettifyDevice() {
 	printf "%s%s" "$output" "\n"
 }
 
-##
 # Open menu (rofi)
 function menu() {
-	local paired; paired=$(bluetoothctl devices)
+	local paired && paired=$(bluetoothctl devices)
 	local i=0
 	local ignored uuid name connectedIdxs prettyDevices
 	while read -r ignored uuid name; do
-		local details; details=$(bluetoothctl info "$uuid")
+		local details && details=$(bluetoothctl info "$uuid")
 		if grep -q "Connected: yes" <<< "$details"; then
 			if [[ -z "$connectedIdxs" ]]; then
 				connectedIdxs="$i"
@@ -257,14 +229,15 @@ function menu() {
 		((i++))
 	done <<< "$paired"
 	sendNotification "Select bluetooth device..." "$notificationDefaultIcon" 69000
-	local selectedIdx; selectedIdx=$(printf "%b" "$prettyDevices" | rofi -dmenu \
-		-i \
-		-markup-rows \
-		-matching "$matchingMode" \
-		-format "i" \
-		-a "$connectedIdxs" \
-		-p " " \
-		-theme "$dmenu_theme" \
+	local selectedIdx && selectedIdx=$(
+		printf "%b" "$prettyDevices" | rofi -dmenu \
+			-i \
+			-markup-rows \
+			-matching "$matchingMode" \
+			-format "i" \
+			-a "$connectedIdxs" \
+			-p " " \
+			-theme "$dmenu_theme"
 	)
 
 	if [[ -z "$selectedIdx" ]]; then

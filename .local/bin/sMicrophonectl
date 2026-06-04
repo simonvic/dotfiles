@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6904
 notificationAppName="simonvic.Microphone"
 notificationTimeoutMS=1500
@@ -48,68 +34,60 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
-#	Get current microphone input level
-#	@return volume
+# Get current microphone input level
+# @return volume
 function getVolume() {
 	pactl get-source-volume @DEFAULT_SOURCE@ | head -n1 | cut -d '/' -f 2 | sed 's|%||' | sed 's| ||g'
 }
 
-##
-#	Check if microphone is muted
-#	@return true|false
+# Check if microphone is muted
+# @return true|false
 function isMute() {
 	[[ $(pactl get-source-mute @DEFAULT_SOURCE@) == "Mute: yes" ]] && echo true || echo false
 }
 
-##
-#	Set microhpone mute
-#	@param true|false
+# Set microhpone mute
+# @param true|false
 function setMute() {
 	pactl set-source-mute @DEFAULT_SOURCE@ "$1"
 }
 
-##
-#	Set microhpone volume
-#	@param +|-amount
+# Set microhpone volume
+# @param +|-amount
 function setVolume() {
 	pactl set-source-volume @DEFAULT_SOURCE@ "$1"
 }
 
-##
-#	Increase microphone input volume
-#	@param increase amount
+# Increase microphone input volume
+# @param increase amount
 function increaseVolume() {
 	setMute false
 	local increaseAmount=$1
-	local currentVolume; currentVolume=$(getVolume)
+	local currentVolume && currentVolume=$(getVolume)
 	[[ $((currentVolume + increaseAmount)) -gt $maxVolume ]] \
 		&& setVolume "$maxVolume%" \
 		|| setVolume "+$increaseAmount%"
 }
 
-##
-#	Decrease microphone input volume
-#	@param decrease amount
+# Decrease microphone input volume
+# @param decrease amount
 function decreaseVolume() {
 	setMute false
 	setVolume "-$1%"
 }
 
-##
-#	Build ASCII bar
-#	@param current volume
+# Build ASCII bar
+# @param current volume
 function buildBar() {
-	DrawBar.sh                               \
-		--length $notificationBarLength      \
-		--step $notificationBarStep          \
-		--value "$1"                         \
-		--bar-chars "$notificationBarChars"  \
-		--borders "$notificationBarBorders"	
+	DrawBar.sh \
+		--length $notificationBarLength \
+		--step $notificationBarStep \
+		--value "$1" \
+		--bar-chars "$notificationBarChars" \
+		--borders "$notificationBarBorders"
 }
 
-##
-#	Send notification
+# Send notification
 function sendNotification() {
 	local bar=""
 	local summary=""
@@ -124,7 +102,7 @@ function sendNotification() {
 		urgency=normal
 		summary="Muted"
 	else
-		local volume; volume=$(getVolume)
+		local volume && volume=$(getVolume)
 		summary="$volume%"
 		bar=$(buildBar "$volume")
 		if [[ $volume -ge $warningLevel ]]; then
@@ -144,7 +122,7 @@ function sendNotification() {
 	fi
 
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
-	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
+	body=$(printf "$notificationBodyFormat" "$bar" "$summary")
 	notify-send \
 		--app-name "$notificationAppName" \
 		--replace-id "$notificationUID" \
@@ -153,7 +131,6 @@ function sendNotification() {
 		--urgency "$urgency" \
 		"$summary" "$body"
 }
-
 
 function printUsage() {
 	printf "%s\n" "
@@ -175,21 +152,21 @@ function printUsage() {
 }
 
 case $1 in
-set | s)
-	setVolume "$2%"
-	sendNotification
-	;;
-increase | i)
-	increaseVolume "$2"
-	sendNotification
-	;;
-decrease | d)
-	decreaseVolume "$2"
-	sendNotification
-	;;
-mute | m)
-	setMute "$2"
-	sendNotification
-	;;
-help | *) printUsage ;;
+	set | s)
+		setVolume "$2%"
+		sendNotification
+		;;
+	increase | i)
+		increaseVolume "$2"
+		sendNotification
+		;;
+	decrease | d)
+		decreaseVolume "$2"
+		sendNotification
+		;;
+	mute | m)
+		setMute "$2"
+		sendNotification
+		;;
+	help | *) printUsage ;;
 esac

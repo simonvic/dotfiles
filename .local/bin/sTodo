@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6908
 notificationAppName="simonvic.TODO"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
@@ -44,7 +30,6 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-
 printUsage() {
 	printf "%s\n" "
 - Usage
@@ -71,7 +56,6 @@ printUsage() {
 "
 }
 
-##
 # @param todo status (done|todo|deleted) or empty
 # @return count
 function getCount() {
@@ -89,7 +73,6 @@ function prettifyList() {
 	done < /dev/stdin
 }
 
-##
 # @param todo status (done|todo|deleted) or empty
 # @param description or empty
 # @return count
@@ -97,7 +80,6 @@ function list() {
 	grep "^[0-9]\+,$1" "$todoFile" | grep "$2"
 }
 
-##
 # @param Description
 function addNew() {
 	if [[ -z "$1" ]]; then
@@ -108,7 +90,6 @@ function addNew() {
 	fi
 }
 
-##
 # @param status (done|todo|deleted)
 # @param id
 function mark() {
@@ -120,14 +101,14 @@ function editFile() {
 }
 
 function buildBar() {
-	DrawBar.sh                               \
-		--length $notificationBarLength      \
-		--step $notificationBarStep          \
-		--value "$1"                         \
-		--bar-chars "$notificationBarChars"  \
+	DrawBar.sh \
+		--length $notificationBarLength \
+		--step $notificationBarStep \
+		--value "$1" \
+		--bar-chars "$notificationBarChars" \
 		--borders "$notificationBarBorders"
 }
-##
+
 # @param status (done|todo|deleted)
 # @param description or empty
 function sendNotification() {
@@ -147,7 +128,6 @@ function sendNotification() {
 	body+="</small>\n"
 	body+="\n$(buildBar $todoPercent) $todoPercent%\n"
 	body+="<b>$todoSymbol $todoCount</b> todo <b>│</b> <b>$doneSymbol $doneCount</b> done <b>│</b> <b>$deletedSymbol $deletedCount</b> deleted <b>│</b> <b> $totalCount</b> total"
-	
 
 	[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	choice=$(notify-send \

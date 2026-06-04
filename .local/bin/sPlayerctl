@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6905
 notificationSelectPlayerUID=6906
 notificationAppName="simonvic.Playerctl"
@@ -44,10 +30,8 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-
-##
-#	Get player name currently under control
-#	@return player name
+# Get player name currently under control
+# @return player name
 function getSelectedPlayer() {
 	if [[ ! -e "$selectedPlayerFile" ]]; then
 		mkdir -p "${selectedPlayerFile%/*}"
@@ -66,7 +50,6 @@ function getAlbum() { playerctl -p "$player" metadata album; }
 function getIcon() { playerctl -p "$player" metadata mpris:artUrl; }
 function getStatus() { playerctl -p "$player" status; }
 
-##
 # Send notification
 # @param summary
 # @param body
@@ -85,7 +68,6 @@ function sendNotification() {
 		"$2"
 }
 
-##
 # Show notification and rofi dmenu for player selection
 function promptPlayerSelection() {
 	local pastSelectionBody=""
@@ -118,7 +100,7 @@ function promptPlayerSelection() {
 			--icon "$notificationSelectPlayerIcon" \
 			--urgency "$notificationUrgency" \
 			"sPlayerctl | Playerctl" \
-			"Select a player you wish to control.\n<small>$pastSelectionBody</small>" 
+			"Select a player you wish to control.\n<small>$pastSelectionBody</small>"
 	else
 		setPlayer "$selectedPlayer"
 		local body=""
@@ -135,7 +117,6 @@ function promptPlayerSelection() {
 	fi
 }
 
-##
 # Set controlled player
 # @param player name, or auto for automode
 function setPlayer() {
@@ -146,7 +127,6 @@ function setPlayer() {
 	esac
 }
 
-##
 # Get the appropriate icon based on the player status (e.g. playing, paused)
 # @return icon name
 function getStatusIcon() {
@@ -157,12 +137,11 @@ function getStatusIcon() {
 	esac
 }
 
-##
 # Send default notification when interacting with a player
 # @param icon - Icon art will be used if notificationUseIconArt=true, otherwise default will be used
 function sendDefaultNotification() {
 	sleep "$notificationDelaySec"
-	local title; title=$(getTitle)
+	local title && title=$(getTitle)
 	local icon
 	if [[ "$notificationUseIconArt" == true ]]; then
 		icon=$(getIcon)
@@ -192,7 +171,6 @@ function playPause() {
 	sendDefaultNotification
 }
 
-##
 # @param all - stop all players (Default: only selected player)
 function stop() {
 	case "$1" in
@@ -212,11 +190,10 @@ function previous() {
 	sendDefaultNotification "$notificationPlayingIcon"
 }
 
-##
-#	Get formatted song info
-#	@return info
+# Get formatted song info
+# @return info
 function info() {
-	local artist; artist=$(getArtist)
+	local artist && artist=$(getArtist)
 	[[ -n "$artist" ]] && artist="($artist)"
 	case "$1" in
 		"n" | "notification") sendDefaultNotification ;;
@@ -224,8 +201,7 @@ function info() {
 	esac
 }
 
-##
-#	Select player to control
+# Select player to control
 function selectPlayer() {
 	case "$1" in
 		set)

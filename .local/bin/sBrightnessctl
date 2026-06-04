@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6903
 notificationAppName="simonvic.Brightness"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
@@ -84,7 +70,7 @@ function setBrightness() {
 #	@param -inc | -dec
 #	@param amount default: defaultBrightnessChangeValue
 function changeBrightness() {
-	xbacklight "$1" "${2:-$defaultBrightnessChangeValue}" 
+	xbacklight "$1" "${2:-$defaultBrightnessChangeValue}"
 }
 
 ##
@@ -144,13 +130,13 @@ function setRedshiftTemperature() {
 #	Build ASCII bar
 #	@param current brightness
 function buildBar() {
-	DrawBar.sh                               \
-		--length "$notificationBarLength"    \
-		--step "$notificationBarStep"        \
-		--value "$1"                         \
-		--bar-chars "$notificationBarChars"  \
+	DrawBar.sh \
+		--length "$notificationBarLength" \
+		--step "$notificationBarStep" \
+		--value "$1" \
+		--bar-chars "$notificationBarChars" \
 		--borders "$notificationBarBorders"
-	}
+}
 
 ##
 #	Send notification
@@ -158,12 +144,12 @@ function sendNotification() {
 	local body=""
 	local icon=""
 	local urgency=normal
-	local brightness; brightness=$(getBrightness)
+	local brightness && brightness=$(getBrightness)
 	local summary=""
 	local bodyFormat=""
-	local bar; bar=$(buildBar "$brightness")
+	local bar && bar=$(buildBar "$brightness")
 
-	if [[ $brightness -ge 75 ]]; then		
+	if [[ $brightness -ge 75 ]]; then
 		icon=$notificationHighIcon
 	elif [[ $brightness -gt 25 ]]; then
 		icon=$notificationMediumIcon
@@ -180,7 +166,7 @@ function sendNotification() {
 		bodyFormat=$notificationBodyFormat
 	fi
 
-	body=$(printf "$bodyFormat" "$bar" "$summary" )
+	body=$(printf "$bodyFormat" "$bar" "$summary")
 	# Send the notification
 	notify-send \
 		--app-name "$notificationAppName" \
@@ -189,7 +175,7 @@ function sendNotification() {
 		--expire-time "$notificationTimeoutMS" \
 		--urgency "$urgency" \
 		"$summary" "$body"
-	}
+}
 
 function restoreRedshift() {
 	if [[ "$redshiftEnabled" == false ]]; then

@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6910
 notificationAppName="simonvic.WiFi"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
@@ -33,7 +19,6 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
 # Scan for wifi signals
 # @param rescan (default: auto)
 # @return wifi signals
@@ -41,7 +26,6 @@ function getSignals() {
 	nmcli -get-values ACTIVE,SIGNAL,CHAN,FREQ,RATE,SECURITY,SSID device wifi list --rescan "${1:-auto}"
 }
 
-##
 # Get index of active wifi SSID
 # @param newline separated signals
 # @return active index
@@ -57,7 +41,6 @@ function getActive() {
 	echo $activeIdx
 }
 
-##
 # Print pretty wifi signal (meant for display in rofi)
 # @param active
 # @param strength
@@ -77,7 +60,7 @@ function prettifyWifiSignal() {
 	local ssid=$7
 
 	local output
-	
+
 	# [[ "$active" == "yes" ]] && output+=" "
 
 	if [[ "$strength" -le 25 ]]; then
@@ -104,7 +87,6 @@ function prettifyWifiSignal() {
 	printf "%s\n" "$output"
 }
 
-##
 # Helper function for notifications
 # @param body
 # @param icon (default: $notificationDefaultIcon)
@@ -120,14 +102,13 @@ function sendNotification() {
 		"WiFi" "$1"
 }
 
-##
 # Prompt wifi selection
 # @param rescan policy (auto|yes|no)
 function promptSelection() {
 	if [[ "$1" != "no" ]]; then
 		sendNotification "Scanning for WiFi signals..." "$notificationProcessingIcon" 69000
 	fi
-	local signals; signals=$(getSignals "$1")
+	local signals && signals=$(getSignals "$1")
 	local prettyOutput
 	local idx=0
 	local activeIdx
@@ -141,14 +122,15 @@ function promptSelection() {
 	done <<< "$signals"
 
 	sendNotification "Select WiFi ..." "$notificationProcessingIcon" 69000
-	local selectedIdx; selectedIdx=$(printf "%b" "$prettyOutput" | rofi -dmenu \
-		-i \
-		-markup-rows \
-		-matching "$matchingMode" \
-		-format "i" \
-		-a "$activeIdx" \
-		-p " " \
-		-theme "$dmenu_theme" \
+	local selectedIdx && selectedIdx=$(
+		printf "%b" "$prettyOutput" | rofi -dmenu \
+			-i \
+			-markup-rows \
+			-matching "$matchingMode" \
+			-format "i" \
+			-a "$activeIdx" \
+			-p " " \
+			-theme "$dmenu_theme"
 	)
 
 	if [[ -z "$selectedIdx" ]]; then
@@ -166,7 +148,7 @@ function promptSelection() {
 		return
 	fi
 
-	local selectedWifi; selectedWifi=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
+	local selectedWifi && selectedWifi=$(echo "$signals" | head -$((selectedIdx + 1)) | tail -1)
 	local ignored selectedSSID
 	IFS=":" read -r ignored ignored ignored ignored ignored ignored selectedSSID <<< "$selectedWifi"
 
@@ -207,6 +189,5 @@ function printUsage() {
 case "$1" in
 	rescan | r) promptSelection "${2:-yes}" ;;
 	help) printUsage ;;
-	*) promptSelection
+	*) promptSelection ;;
 esac
-

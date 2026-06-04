@@ -1,19 +1,5 @@
 #!/bin/bash
 
-###############################################################################
-#	Made by
-#       _                              _
-#      (_)                            (_)
-#  ___  _  ____    ___   ____   _   _  _   ____
-# /___)| ||    \  / _ \ |  _ \ | | | || | / ___)
-#|___ || || | | || |_| || | | | \ V / | |( (___
-#(___/ |_||_|_|_| \___/ |_| |_|  \_/  |_| \____)
-#
-#	Check updates and give a look at my dotfiles here:
-#		https://github.com/simonvic/dotfiles
-#
-###############################################################################
-
 notificationUID=6909
 notificationAppName="simonvic.Volume"
 notificationSound="/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"
@@ -60,9 +46,8 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
-#	Get current volume
-#	@return volume
+# Get current volume
+# @return volume
 function getVolume() {
 	local volume
 	volume=$(pactl get-sink-volume @DEFAULT_SINK@)
@@ -70,35 +55,30 @@ function getVolume() {
 	printf "%s" "${volume##* }"
 }
 
-##
-#	Check if is muted
-#	@return true|false
+# Check if is muted
+# @return true|false
 function isMute() {
 	[[ $(pactl get-sink-mute @DEFAULT_SINK@) == "Mute: yes" ]] && echo true || echo false
 }
 
-##
-#	Set mute
-#	@param true|false
+# Set mute
+# @param true|false
 function setMute() {
 	pactl set-sink-mute @DEFAULT_SINK@ "$1"
 }
 
-
-##
-#	Set volume
-#	@param +|- amount
+# Set volume
+# @param +|- amount
 function setVolume() {
 	pactl set-sink-volume @DEFAULT_SINK@ "$1"
 }
 
-##
-#	Increase volume
-#	@param amount
+# Increase volume
+# @param amount
 function increaseVolume() {
 	setMute false
 	local increaseAmount=$1
-	local currentVolume; currentVolume=$(getVolume)
+	local currentVolume && currentVolume=$(getVolume)
 	if [[ $((currentVolume + increaseAmount)) -gt $maxVolume ]]; then
 		setVolume "$maxVolume%"
 	else
@@ -106,34 +86,30 @@ function increaseVolume() {
 	fi
 }
 
-##
-#	Decrease volume
-#	@param amount
+# Decrease volume
+# @param amount
 function decreaseVolume() {
 	setMute false
 	setVolume "-$1%"
 }
 
-##
-#	Build ASCII bar
-#	@param current volume
+# Build ASCII bar
+# @param current volume
 function buildBar() {
-	DrawBar.sh                               \
-		--length $notificationBarLength      \
-		--step $notificationBarStep          \
-		--value "$1"                         \
-		--bar-chars "$notificationBarChars"  \
-		--borders "$notificationBarBorders"	
+	DrawBar.sh \
+		--length $notificationBarLength \
+		--step $notificationBarStep \
+		--value "$1" \
+		--bar-chars "$notificationBarChars" \
+		--borders "$notificationBarBorders"
 }
 
-
-##
-#	Send notification
+# Send notification
 function sendNotification() {
-	local volume; volume=$(getVolume)
+	local volume && volume=$(getVolume)
 	local summary="$volume%"
 	local urgency="normal"
-	local bar; bar=$(buildBar "$volume")
+	local bar && bar=$(buildBar "$volume")
 	local body=""
 	local icon=""
 	local hintValue=""
@@ -159,7 +135,7 @@ function sendNotification() {
 		[[ -n "$notificationSound" ]] && paplay "$notificationSound" --server /run/user/1000/pulse/native &
 	fi
 
-	body=$(printf "$notificationBodyFormat" "$bar" "$summary" )
+	body=$(printf "$notificationBodyFormat" "$bar" "$summary")
 	[[ $notificationSendVolumeHint == true ]] && hintValue=$volume
 	notify-send \
 		"$summary" "$body" \
