@@ -1,0 +1,67 @@
+[pager]
+	; log  = /usr/share/git/diff-highlight/diff-highlight | less
+	; show = /usr/share/git/diff-highlight/diff-highlight | less
+	; diff = /usr/share/git/diff-highlight/diff-highlight | less
+	; log = LESS='--mouse' delta
+	; show = LESS='--mouse' delta
+	; diff = LESS='--mouse' delta
+
+[color "diff-highlight"]
+	oldNormal = red
+	oldHighlight = red 52
+	newNormal = green
+	newHighlight = green 22
+
+[color "diff"]
+	meta = yellow bold
+	frag = yellow italic
+	func = 146 bold
+	commit = yellow bold
+	old = red
+	new = green
+	whitespace = 248 reverse
+
+[delta]
+	features = file-header hunk-header line-numbers commits syntax
+	side-by-side = false
+	tabs = 4
+	wrap-max-lines = 2
+	inline-hint-style = grey bold
+
+[delta "no-syntax"]
+	minus-style = red
+	zero-style = dim
+	plus-style = green
+
+[delta "syntax"]
+	syntax-theme = gruvbox-dark
+	minus-style = syntax "#4a2e30"
+	zero-style = syntax
+	plus-style = syntax "#23332a"
+
+[delta "line-numbers"]
+	line-numbers = true
+    line-numbers-left-format = "{nm:>3} "
+	line-numbers-left-style = auto
+	line-numbers-right-format = "│{np:>3} "
+	line-numbers-right-style = auto
+	line-numbers-minus-style = red italic bold
+	line-numbers-zero-style = grey italic bold
+	line-numbers-plus-style = green italic bold
+
+[delta "file-header"]
+	file-style = yellow italic bold
+	file-decoration-style = grey ol
+
+[delta "hunk-header"]
+	hunk-header-style = omit
+	hunk-header-decoration-style = grey box
+	hunk-header-file-style = yellow italic
+	hunk-header-line-number-style = yellow italic
+
+[delta "commits"]
+	commit-style = raw
+	commit-decoration-style = grey ol
+
+
+; vim: ft=gitconfig
