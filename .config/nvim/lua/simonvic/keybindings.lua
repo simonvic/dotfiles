@@ -121,7 +121,21 @@ M.fn = {
 
 	undotree                    = function() M.not_implemented("undotree") end,
 
-	zen_mode                    = function() M.not_implemented("zen_mode") end,
+	zen_mode                    = function()
+		local colorcolumns = vim.split(vim.o.colorcolumn, ",")
+		local width = tonumber(colorcolumns[#colorcolumns]:gsub("+", ""):gsub("-", "") or "80") + 20
+		vim.api.nvim_open_win(0, true, {
+			relative = "editor",
+			width = width,
+			height = math.floor(vim.api.nvim_win_get_height(0) * 0.95),
+			focusable = true,
+			row = 2,
+			col = vim.o.columns / 2 - width / 2,
+			zindex = 50,
+			title = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t"),
+			title_pos = "center",
+		})
+	end,
 
 	toggle_context              = function() M.not_implemented("toggle_context") end,
 	find_files                  = function() feed(":edit **/*") end,
