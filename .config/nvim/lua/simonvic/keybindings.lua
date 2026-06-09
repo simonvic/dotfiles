@@ -27,6 +27,14 @@ M.util = {
 	cmd = function(command) return "<Cmd>" .. command .. "<CR>" end,
 	cmd_sel = function(command) return "'<,'>" .. command .. "<CR>" end,
 	cmd_esc = function(command) return "<Cmd>" .. command .. "<CR><ESC>" end,
+	feed = function(keys, termcodes)
+		termcodes = termcodes or true
+		if termcodes then
+			keys = vim.api.nvim_replace_termcodes(keys, true, true, true)
+		end
+		vim.api.nvim_feedkeys(keys, "n", false)
+	end
+
 }
 
 -- shortcuts
@@ -55,14 +63,6 @@ end
 
 local foldcolumn = vim.opt.foldcolumn
 local signcolumn = vim.opt.signcolumn
-
-local function feed(keys, termcodes)
-	termcodes = termcodes or true
-	if termcodes then
-		keys = vim.api.nvim_replace_termcodes(keys, true, true, true)
-	end
-	vim.api.nvim_feedkeys(keys, "n", false)
-end
 
 ---@class simonvic.keybindings.Implementations
 M.fn = {
@@ -140,10 +140,10 @@ M.fn = {
 	end,
 
 	toggle_context              = function() M.not_implemented("toggle_context") end,
-	find_files                  = function() feed(":edit **/*") end,
-	fuzzy_find                  = function() feed(":grep %<left><left> ") end,
-	live_grep                   = function() feed(":grep ") end,
-	buffers                     = function() feed(":buffer ") end,
+	find_files                  = function() M.util.feed(":edit **/*") end,
+	fuzzy_find                  = function() M.util.feed(":grep %<left><left> ") end,
+	live_grep                   = function() M.util.feed(":grep ") end,
+	buffers                     = function() M.util.feed(":buffer ") end,
 
 	vcs_change_next             = function() M.not_implemented("vcs_change_next") end,
 	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
