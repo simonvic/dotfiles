@@ -53,7 +53,7 @@ M.plugins = {
 	{ src = "https://github.com/mfussenegger/nvim-dap",                       data = { on_setup = require("simonvic.plugins.configs.debugger") } },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui",                        data = { on_setup = require("simonvic.plugins.configs.dap_ui") } },
 	{ src = "https://github.com/mfussenegger/nvim-jdtls",                     data = { on_setup = require("simonvic.plugins.configs.nvim_jdtls") } },
-	{ src = "https://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/mrcjkb/rustaceanvim",                         data = { on_setup = require("simonvic.plugins.configs.rustacean") } },
 	{ src = "https://github.com/lervag/vimtex",                               data = { on_setup = require("simonvic.plugins.configs.vimtex") } },
 	{ src = "https://github.com/iamcco/markdown-preview.nvim",                data = { on_setup = require("simonvic.plugins.configs.mdpreview") } },
 	{ src = "https://github.com/tree-sitter-grammars/tree-sitter-test",       data = { on_setup = require("simonvic.plugins.configs.tstest") } },

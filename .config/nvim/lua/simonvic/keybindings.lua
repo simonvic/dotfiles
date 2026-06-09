@@ -506,6 +506,15 @@ M.plugins.jdtls = {
 	{ m.n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,                               { buf = 0, desc = "Go to super implementation" } },
 }
 
+-------------------------------------------------------------------------------- RUSTACEAN
+
+---@type simonvic.keybindings.Mappings
+M.plugins.rustacean = {
+	{ m.n___, "<F6>",                function() vim.cmd.RustLsp("testables") end,                    { buf = 0, desc = "Run test" } },
+	{ m.n___, "<F5>",                function() vim.cmd.RustLsp("debuggables") end,                  { buf = 0, desc = "Run debuggables" } },
+	{ m.n___, { "<S-F5>", "<F17>" }, function() vim.cmd.RustLsp({ "debuggables", bang = true }) end, { buf = 0, desc = "Run last debuggable" } },
+}
+
 -------------------------------------------------------------------------------- DAPUI
 M.plugins.dapui = {
 	["edit"]   = "e",
