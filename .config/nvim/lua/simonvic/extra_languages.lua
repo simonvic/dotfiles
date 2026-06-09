@@ -50,6 +50,15 @@ vim.api.nvim_create_autocmd("User", {
 			},
 		}
 
+		parsers.antlr4 = {
+			install_info = {
+				-- path = "~/Documents/Productivity/Programming/treesitter/tree-sitter-antlr4",
+				url = "https://github.com/simonvic/tree-sitter-antlr4",
+				queries = "queries",
+				generate = true,
+			},
+		}
+
 	end
 })
 
