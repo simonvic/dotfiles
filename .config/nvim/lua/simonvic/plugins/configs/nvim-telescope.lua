@@ -17,6 +17,7 @@ return function()
 					preview_width = 0.7
 				}
 			},
+			cycle_layout_list = { "vertical", "bottom_pane", "horizontal" },
 			-- TODO: move to keybindings
 			mappings = {
 				i = {
@@ -25,6 +26,7 @@ return function()
 					["<C-v>"] = actions.select_vertical,
 					["<C-q>"] = actions.smart_send_to_qflist,
 					["<A-CR>"] = require("telescope.actions.layout").toggle_preview,
+					["<A-Space>"] = require("telescope.actions.layout").cycle_layout_next,
 					-- TODO: send to loclist?
 					-- ["<A-CR>"] = actions.send_selected_to_qflist,
 					-- ["<C-CR>"] = actions.send_to_qflist,
