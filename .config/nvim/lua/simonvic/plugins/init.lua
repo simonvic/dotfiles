@@ -79,7 +79,9 @@ function M.setup()
 	vim.pack.add(M.plugins)
 	for _, plugin in pairs(M.plugins) do
 		if plugin.data and plugin.data.on_setup then
-			plugin.data.on_setup()
+			if not pcall(plugin.data.on_setup) then
+				vim.notify("Error executing on_setup() for plugin " .. vim.inspect(plugin), vim.log.levels.ERROR)
+			end
 		end
 	end
 	-- vim.iter(vim.pack.get()):each(function(plugin)
