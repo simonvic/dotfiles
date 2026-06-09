@@ -1,65 +1,95 @@
 local M = {}
 
+---@class simonvic.PluginSpec.Data
+---@field on_setup? function Callback to configure the plugin. Invoked after all plugins are installed
+
+---@class simonvic.PluginSpec: vim.pack.Spec
+---@field data? simonvic.PluginSpec.Data Plugin data
+
+---@type simonvic.PluginSpec[]
 M.plugins = {
 	---------------------------------------------------------------------------
 	--                                                      LIBS / DEPENDENCIES
-	{ "nvim-lua/plenary.nvim" },
-	{ "kyazdani42/nvim-web-devicons" },
-	{ "nvim-neotest/nvim-nio" },
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/kyazdani42/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 	---------------------------------------------------------------------------
 	--                                                                  UI / UX
-	{ "rcarriga/nvim-notify",                        config = require("simonvic.plugins.configs.notify") },
-	{ "nvim-telescope/telescope.nvim",               config = require("simonvic.plugins.configs.nvim-telescope") },
-	{ "stevearc/dressing.nvim",                      config = require("simonvic.plugins.configs.dressing") },
-	{ "akinsho/toggleterm.nvim",                     config = require("simonvic.plugins.configs.toggleterm") },
-	-- { "folke/snacks.nvim",                           config = require("simonvic.plugins.configs.snacks") },
-	-- { "nvim-neo-tree/neo-tree.nvim",                 config = require("simonvic.plugins.configs.neo-tree"),        branch = "v3.x", },
-	-- { "s1n7ax/nvim-window-picker",                   config = require("simonvic.plugins.configs.window-picker") },
-	{ "nvim-tree/nvim-tree.lua",                     config = require("simonvic.plugins.configs.nvimtree") },
-	{ "petertriho/nvim-scrollbar",                   config = require("simonvic.plugins.configs.scrollbar") },
-	-- { "onsails/lspkind.nvim" },
-	-- { "folke/which-key.nvim",                        config = require("simonvic.plugins.configs.whichkey") },
-	{ "mbbill/undotree",                             config = require("simonvic.plugins.configs.undotree") },
+	{ src = "https://github.com/rcarriga/nvim-notify",                        data = { on_setup = require("simonvic.plugins.configs.notify") } },
+	{ src = "https://github.com/nvim-telescope/telescope.nvim",               data = { on_setup = require("simonvic.plugins.configs.nvim-telescope") } },
+	{ src = "https://github.com/stevearc/dressing.nvim",                      data = { on_setup = require("simonvic.plugins.configs.dressing") } },
+	{ src = "https://github.com/akinsho/toggleterm.nvim",                     data = { on_setup = require("simonvic.plugins.configs.toggleterm") } },
+	{ src = "https://github.com/nvim-tree/nvim-tree.lua",                     data = { on_setup = require("simonvic.plugins.configs.nvimtree") } },
+	{ src = "https://github.com/petertriho/nvim-scrollbar",                   data = { on_setup = require("simonvic.plugins.configs.scrollbar") } },
+	-- { src = "https://github.com/onsails/lspkind.nvim" },
+	-- { src = "https://github.com/folke/which-key.nvim",                        data = { on_setup = require("simonvic.plugins.configs.whichkey") } },
+	{ src = "https://github.com/mbbill/undotree",                             data = { on_setup = require("simonvic.plugins.configs.undotree") } },
 	---------------------------------------------------------------------------
 	--                                                                   CODING
-	{ "nvim-treesitter/nvim-treesitter",             config = require("simonvic.plugins.configs.treesitter"), branch = "main" },
-	{ "nvim-treesitter/nvim-treesitter-textobjects", config = require("simonvic.plugins.configs.ts-textobjects"), branch = "main" },
-	{ "nvim-treesitter/nvim-treesitter-context",     config = require("simonvic.plugins.configs.ts-context") },
-	{ "windwp/nvim-ts-autotag",                      config = require("simonvic.plugins.configs.ts-autotag") },
-	-- { "hrsh7th/cmp-nvim-lsp" },
-	-- { "hrsh7th/cmp-nvim-lsp-signature-help" },
-	-- { "hrsh7th/cmp-buffer" },
-	-- { "hrsh7th/cmp-path" },
-	-- { "hrsh7th/nvim-cmp",                            config = require("simonvic.plugins.configs.cmp") },
-	{ "rafamadriz/friendly-snippets" },
-	{ "Saghen/blink.cmp",                            config = require("simonvic.plugins.configs.blinkcmp"),       version = "*" },
-	{ "neovim/nvim-lspconfig", },
-	{ "mason-org/mason.nvim",                        config = require("simonvic.plugins.configs.mason") },
-	{ "mason-org/mason-lspconfig.nvim",              config = require("simonvic.plugins.configs.mason-lspconfig") },
-	{ "stevearc/aerial.nvim",                        config = require("simonvic.plugins.configs.aerial") },
-	{ "windwp/nvim-autopairs",                       config = require("simonvic.plugins.configs.autopairs") },
-	{ "jake-stewart/multicursor.nvim",               config = require("simonvic.plugins.configs.multicursor") },
-	{ "lewis6991/gitsigns.nvim",                     config = require("simonvic.plugins.configs.gitsigns") },
-	{ "echasnovski/mini.align",                      config = require("simonvic.plugins.configs.align"),          version = false },
-	{ "catgoose/nvim-colorizer.lua",                 config = require("simonvic.plugins.configs.colorizer") },
-	{ "max397574/colortils.nvim",                    config = require("simonvic.plugins.configs.colortils") },
-	{ "kylechui/nvim-surround",                      config = require("simonvic.plugins.configs.surround") },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",             data = { on_setup = require("simonvic.plugins.configs.treesitter") } },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", data = { on_setup = require("simonvic.plugins.configs.ts-textobjects") } },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-context",     data = { on_setup = require("simonvic.plugins.configs.ts-context") } },
+	{ src = "https://github.com/windwp/nvim-ts-autotag",                      data = { on_setup = require("simonvic.plugins.configs.ts-autotag") } },
+	-- { src = "https://github.com/hrsh7th/cmp-nvim-lsp" },
+	-- { src = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help" },
+	-- { src = "https://github.com/hrsh7th/cmp-buffer" },
+	-- { src = "https://github.com/hrsh7th/cmp-path" },
+	-- { src = "https://github.com/hrsh7th/nvim-cmp",                            data = { on_setup = require("simonvic.plugins.configs.cmp") } },
+	{ src = "https://github.com/rafamadriz/friendly-snippets" },
+	{ src = "https://github.com/Saghen/blink.cmp",                            data = { on_setup = require("simonvic.plugins.configs.blinkcmp") },       version = vim.version.range("v1.*") },
+	{ src = "https://github.com/neovim/nvim-lspconfig", },
+	{ src = "https://github.com/mason-org/mason.nvim",                        data = { on_setup = require("simonvic.plugins.configs.mason") } },
+	{ src = "https://github.com/mason-org/mason-lspconfig.nvim",              data = { on_setup = require("simonvic.plugins.configs.mason-lspconfig") } },
+	{ src = "https://github.com/stevearc/aerial.nvim",                        data = { on_setup = require("simonvic.plugins.configs.aerial") } },
+	{ src = "https://github.com/windwp/nvim-autopairs",                       data = { on_setup = require("simonvic.plugins.configs.autopairs") } },
+	{ src = "https://github.com/jake-stewart/multicursor.nvim",               data = { on_setup = require("simonvic.plugins.configs.multicursor") } },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim",                     data = { on_setup = require("simonvic.plugins.configs.gitsigns") } },
+	{ src = "https://github.com/nvim-mini/mini.align",                        data = { on_setup = require("simonvic.plugins.configs.align") } },
+	{ src = "https://github.com/catgoose/nvim-colorizer.lua",                 data = { on_setup = require("simonvic.plugins.configs.colorizer") } },
+	{ src = "https://github.com/max397574/colortils.nvim",                    data = { on_setup = require("simonvic.plugins.configs.colortils") } },
+	{ src = "https://github.com/kylechui/nvim-surround",                      data = { on_setup = require("simonvic.plugins.configs.surround") } },
 	---------------------------------------------------------------------------
 	--                                                          ADVANCED CODING
-	{ "mfussenegger/nvim-dap",                       config = require("simonvic.plugins.configs.debugger") },
-	{ "rcarriga/nvim-dap-ui",                        config = require("simonvic.plugins.configs.dap_ui") },
-	{ "mfussenegger/nvim-jdtls",                     config = require("simonvic.plugins.configs.nvim_jdtls") },
-	{ "mrcjkb/rustaceanvim" },
-	{ "lervag/vimtex",                               config = require("simonvic.plugins.configs.vimtex") },
-	{ "iamcco/markdown-preview.nvim",                config = require("simonvic.plugins.configs.mdpreview") },
-	{ "tree-sitter-grammars/tree-sitter-test",       config = require("simonvic.plugins.configs.tstest") },
+	{ src = "https://github.com/mfussenegger/nvim-dap",                       data = { on_setup = require("simonvic.plugins.configs.debugger") } },
+	{ src = "https://github.com/rcarriga/nvim-dap-ui",                        data = { on_setup = require("simonvic.plugins.configs.dap_ui") } },
+	{ src = "https://github.com/mfussenegger/nvim-jdtls",                     data = { on_setup = require("simonvic.plugins.configs.nvim_jdtls") } },
+	{ src = "https://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/lervag/vimtex",                               data = { on_setup = require("simonvic.plugins.configs.vimtex") } },
+	{ src = "https://github.com/iamcco/markdown-preview.nvim",                data = { on_setup = require("simonvic.plugins.configs.mdpreview") } },
+	{ src = "https://github.com/tree-sitter-grammars/tree-sitter-test",       data = { on_setup = require("simonvic.plugins.configs.tstest") } },
 	---------------------------------------------------------------------------
 	--                                                             COLORSCHEMES
-	{ "doums/darcula" },
-	{ "gruvbox-community/gruvbox" },
+	{ src = "https://github.com/doums/darcula" },
+	{ src = "https://github.com/gruvbox-community/gruvbox" },
 }
 
 function M.setup()
+	-- vim.api.nvim_create_autocmd({"PackChangedPre"}, {
+	-- 	group = vim.api.nvim_create_augroup("simonvic.pack", {}),
+	-- 	callback = function(ev)
+	-- 		vim.print(ev.data.spec.name .. ":" .. vim.inspect(ev))
+	-- 	end
+	-- })
+	-- vim.api.nvim_create_autocmd({"PackChanged"}, {
+	-- 	group = vim.api.nvim_create_augroup("simonvic.pack", {clear = false}),
+	-- 	callback = function(ev)
+	-- 		vim.print(ev.data.spec.name .. ":" .. vim.inspect(ev))
+	-- 	end
+	-- })
+	vim.pack.add(M.plugins)
+	for _, plugin in pairs(M.plugins) do
+		if plugin.data and plugin.data.on_setup then
+			plugin.data.on_setup()
+		end
+	end
+	-- vim.iter(vim.pack.get()):each(function(plugin)
+	-- 	if plugin.spec.data and plugin.spec.data.on_setup then
+	-- 		plugin.spec.data.on_setup()
+	-- 	end
+	-- end)
+end
+
+function M.setup_with_lazy()
 	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 	if not vim.uv.fs_stat(lazypath) then
 		vim.fn.system({
@@ -67,7 +97,35 @@ function M.setup()
 		})
 	end
 	vim.opt.rtp:prepend(lazypath)
-	require("lazy").setup(M.plugins, {
+
+	---Convert vim.pack plugin specs to lazy plugin specs
+	---@param specs (string|vim.pack.Spec)[]
+	---@return LazyPluginBase[]
+	local function to_lazy_specs(specs)
+		local lazy_specs = {}
+		for _, plugin in pairs(specs) do
+			local lazy_spec ---@type LazyPluginBase
+			if type(plugin) == "string" then
+				lazy_spec = { plugin }
+			else
+				lazy_spec = { plugin.src }
+				if plugin.data and plugin.data.on_setup then
+					lazy_spec.config = plugin.data.on_setup
+				end
+				if plugin.version then
+					if type(plugin.version) == "string" then
+						lazy_spec.version = plugin.version
+					else
+						lazy_spec.version = ">=" .. tostring(plugin.version.from)
+					end
+				end
+			end
+			table.insert(lazy_specs, lazy_spec)
+		end
+		return lazy_specs
+	end
+
+	require("lazy").setup(to_lazy_specs(M.plugins), {
 		ui = {
 			border = vim.o.winborder,
 			icons = {

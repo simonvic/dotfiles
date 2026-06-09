@@ -1,5 +1,5 @@
 require("simonvic.settings")
-require("simonvic.plugins").setup()
+require("simonvic.plugins").setup_with_lazy()
 vim.cmd.colorscheme("simonvic_ruby")
 require("simonvic.keybindings").apply()
 require("simonvic.extra_languages")
