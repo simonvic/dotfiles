@@ -77,7 +77,7 @@ function M.setup()
 			}
 		},
 		install = {
-			colorscheme = { "simonvic" }
+			colorscheme = { "simonvic_ruby" }
 		},
 		rocks = {
 			enabled = false
