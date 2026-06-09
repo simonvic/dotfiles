@@ -508,16 +508,16 @@ M.plugins.blink = {
 ---@type simonvic.keybindings.Mappings
 M.plugins.jdtls = {
 	-- TODO: add abstract functions?
-	{ n___, "<F5>",                  function() require("jdtls").compile("incremental") end,                               { buffer = true, desc = "Compile (incremental)" } },
-	{ n___, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                                      { buffer = true, desc = "Compile (full)" } },
-	{ n___, { "<A-F5>", "<F53>" },   function() require("jdtls").build_projects() end,                                     { buffer = true, desc = "Build" } },
-	{ n___, "<A-i>",                 function() require("jdtls").organize_imports() end,                                   { buffer = true, desc = "Organize imports" } },
-	{ n___, "<F6>",                  function() require("jdtls").pick_test() end,                                          { buffer = true, desc = "Pick test" } },
-	{ n___, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                                         { buffer = true, desc = "Test class" } },
-	{ n___, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,                                { buffer = true, desc = "Test method" } },
-	{ n___, { "<C-S-F7>", "<F43>" }, function() require("jdtls.dap").setup_dap_main_class_configs({ verbose = true }) end, { buffer = true, desc = "Setup debug launch config" } },
-	{ n___, { "<C-F7>", "<F31>" },   vim.cmd.JdtUpdateHotcode,                                                             { buffer = true, desc = "Hotcode replace" } },
-	{ n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,                               { buffer = true, desc = "Go to super implementation" } },
+	{ n___, "<F5>",                  function() require("jdtls").compile("incremental") end,                               { buf = 0, desc = "Compile (incremental)" } },
+	{ n___, { "<S-F5>", "<F17>" },   function() require("jdtls").compile("full") end,                                      { buf = 0, desc = "Compile (full)" } },
+	{ n___, { "<A-F5>", "<F53>" },   function() require("jdtls").build_projects() end,                                     { buf = 0, desc = "Build" } },
+	{ n___, "<A-i>",                 function() require("jdtls").organize_imports() end,                                   { buf = 0, desc = "Organize imports" } },
+	{ n___, "<F6>",                  function() require("jdtls").pick_test() end,                                          { buf = 0, desc = "Pick test" } },
+	{ n___, { "<S-F6>", "<F18>" },   function() require("jdtls").test_class() end,                                         { buf = 0, desc = "Test class" } },
+	{ n___, { "<C-F6>", "<F30>" },   function() require("jdtls").test_nearest_method() end,                                { buf = 0, desc = "Test method" } },
+	{ n___, { "<C-S-F7>", "<F43>" }, function() require("jdtls.dap").setup_dap_main_class_configs({ verbose = true }) end, { buf = 0, desc = "Setup debug launch config" } },
+	{ n___, { "<C-F7>", "<F31>" },   vim.cmd.JdtUpdateHotcode,                                                             { buf = 0, desc = "Hotcode replace" } },
+	{ n___, { "grI", "<C-A-b>" },    function() require("jdtls").super_implementation() end,                               { buf = 0, desc = "Go to super implementation" } },
 }
 
 -------------------------------------------------------------------------------- DAPUI
