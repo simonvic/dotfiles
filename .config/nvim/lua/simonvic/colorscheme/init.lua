@@ -1,8 +1,6 @@
 -- TODO: use SGR dim, blink, conceal, overline
 local M = {}
 
----@alias Palette table<string, string>
-
 ---@alias Groups vim.api.keyset.highlight
 
 ---@class Colorscheme
@@ -51,7 +49,7 @@ function M.apply(colorscheme)
 	end
 end
 
----@type Palette
+---@class Palette
 --- color__n: base color - n, blends more with background
 --- color_0: base color
 --- color_n: base color + n, stands out more from the background

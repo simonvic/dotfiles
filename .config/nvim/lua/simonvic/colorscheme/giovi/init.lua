@@ -1,5 +1,6 @@
 return require("simonvic.colorscheme.ruby"):build({
 	name = "giovi",
+	---@class GioviPalette:Palette
 	palette = {
 		giovi_doc          = "#738796",
 		giovi_doc_block    = "#596974",
@@ -14,6 +15,7 @@ return require("simonvic.colorscheme.ruby"):build({
 		giovi_operator     = "#F05938",
 		giovi_type         = "#FAFAFA",
 	},
+	---@param p GioviPalette
 	groups = function(p)
 		return {
 
