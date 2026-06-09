@@ -3,6 +3,7 @@
 
 local M = {}
 
+---@class simonvic.keybindings.Modes
 M.modes = {
 	n___ = { "n" },
 	_v__ = { "v" },
@@ -63,6 +64,7 @@ local function feed(keys, termcodes)
 	vim.api.nvim_feedkeys(keys, "n", false)
 end
 
+---@class simonvic.keybindings.Implementations
 M.fn = {
 
 	toggle_list_chars           = function() vim.opt.list = not vim.opt.list:get() end,
@@ -211,6 +213,11 @@ M.fn = {
 
 M.leader = " "
 M.localleader = " "
+
+---@alias simonvic.keybindings.Mapping [simonvic.keybindings.Modes, string|string[], string|function, vim.keymap.set.Opts]
+---@alias simonvic.keybindings.Mappings simonvic.keybindings.Mapping[]
+
+---@type simonvic.keybindings.Mappings
 M.mappings = {
 	--modes,lhs,                                  rhs,                                             options },
 	{ nx__, "-",                                  "/",                                             { desc = "Search forward" } },
@@ -369,6 +376,8 @@ M.plugins.snacks = {
 
 
 -------------------------------------------------------------------------------- NVIMTREE
+
+---@type simonvic.keybindings.Mappings
 M.plugins.nvimtree = {
 	{ n___, "|",                 function() require("nvim-tree.api").tree.toggle() end,                    { desc = "Toggle filetree" } },
 	{ n___, "<F5>",              function() require("nvim-tree.api").tree.reload() end,                    { desc = "Refresh filetree" } },
@@ -468,6 +477,8 @@ M.plugins.neotree = {
 }
 
 -------------------------------------------------------------------------------- BLINK
+
+---@type blink.cmp.KeymapConfig
 M.plugins.blink = {
 	preset = "none",
 
@@ -493,6 +504,8 @@ M.plugins.blink = {
 }
 
 -------------------------------------------------------------------------------- NVIM-JDTLS
+
+---@type simonvic.keybindings.Mappings
 M.plugins.jdtls = {
 	-- TODO: add abstract functions?
 	{ n___, "<F5>",                  function() require("jdtls").compile("incremental") end,                               { buffer = true, desc = "Compile (incremental)" } },
@@ -574,13 +587,16 @@ M.plugins.aerial = {
 	}
 }
 
+--------------------------------------------------------------------------------
 
+---Set keymaps
+---@param bindings simonvic.keybindings.Mappings
 function M.set(bindings)
 	for _, keybind in ipairs(bindings) do
 		if type(keybind[2]) == "string" then
-			vim.keymap.set(keybind[1], keybind[2], keybind[3], keybind[4] or {})
+			vim.keymap.set(keybind[1], keybind[2] --[[@as string]], keybind[3], keybind[4] or {})
 		else
-			for _, mapping in ipairs(keybind[2]) do
+			for _, mapping in ipairs(keybind[2] --[[@as string[] ]]) do
 				vim.keymap.set(keybind[1], mapping, keybind[3], keybind[4] or {})
 			end
 		end
@@ -600,8 +616,10 @@ function M.set_with_opts(opts, bindings)
 	end
 end
 
-function M.add_lang_map(mappings)
-	for _, mapping in ipairs(mappings) do
+--- Add a lang mapping
+---@param langmap simonvic.keybindings.LangMap
+function M.add_lang_map(langmap)
+	for _, mapping in ipairs(langmap) do
 		vim.opt.langmap:append(mapping[1] .. mapping[2])
 		if mapping[3] or false then
 			vim.opt.langmap:append(mapping[2] .. mapping[1])
@@ -609,6 +627,8 @@ function M.add_lang_map(mappings)
 	end
 end
 
+---@alias simonvic.keybindings.LangMap [string, string, boolean?]
+---@type { [string]: simonvic.keybindings.LangMap[] }
 M.langmaps = {
 	italian141 = {
 		-- from, to, bidirectional
@@ -621,6 +641,7 @@ M.langmaps = {
 	}
 }
 
+--- Apply configured keybindings along with leader and local leader keys
 function M.apply()
 	vim.g.mapleader = M.leader
 	vim.g.maplocalleader = M.localleader
@@ -630,6 +651,8 @@ function M.apply()
 	-- M.add_lang_map(langmaps.eretic)
 end
 
+--- Implement keybindings
+---@param implementations simonvic.keybindings.Implementations
 function M.implement(implementations)
 	M.fn = vim.tbl_extend("force", M.fn, implementations)
 end
