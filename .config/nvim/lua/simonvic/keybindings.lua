@@ -23,18 +23,24 @@ M.modes = {
 	c___ = { "c" },
 }
 
+---@class simonvic.keybindings.Util
 M.util = {
 	cmd = function(command) return "<Cmd>" .. command .. "<CR>" end,
 	cmd_sel = function(command) return "'<,'>" .. command .. "<CR>" end,
 	cmd_esc = function(command) return "<Cmd>" .. command .. "<CR><ESC>" end,
+
 	feed = function(keys, termcodes)
 		termcodes = termcodes or true
 		if termcodes then
 			keys = vim.api.nvim_replace_termcodes(keys, true, true, true)
 		end
 		vim.api.nvim_feedkeys(keys, "n", false)
-	end
+	end,
 
+	not_implemented = function(name)
+		name = name or "Key mapping"
+		vim.notify(name .. " not implemented", vim.log.levels.WARN)
+	end,
 }
 
 -- shortcuts
@@ -56,10 +62,6 @@ local c___ = M.modes.c___
 local cmd = M.util.cmd
 local cmd_sel = M.util.cmd_sel
 
-function M.not_implemented(name)
-	name = name or "Key mapping"
-	vim.notify(name .. " not implemented", vim.log.levels.WARN)
-end
 
 local foldcolumn = vim.opt.foldcolumn
 local signcolumn = vim.opt.signcolumn
@@ -107,21 +109,21 @@ M.fn = {
 
 	-- plugin abstractions
 
-	commands_menu               = function() M.not_implemented("commands_menu") end,
+	commands_menu               = function() M.util.not_implemented("commands_menu") end,
 
 	-- eventually add default implementation with netrw
 	filetree_focus              = function() vim.cmd("Lexplore") end,
-	filetree_toggle             = function() M.not_implemented("filetree_toggle") end,
-	filetree_refresh            = function() M.not_implemented("filetree_refresh") end,
-	filetree_expand_or_descend  = function() M.not_implemented("filetree_expand_or_descend") end,
-	filetree_collapse_or_ascend = function() M.not_implemented("filetree_collapse_or_ascend") end,
-	filetree_vcs_change_next    = function() M.not_implemented("filetree_vcs_change_next") end,
-	filetree_vcs_change_prev    = function() M.not_implemented("filetree_vcs_change_prev") end,
+	filetree_toggle             = function() M.util.not_implemented("filetree_toggle") end,
+	filetree_refresh            = function() M.util.not_implemented("filetree_refresh") end,
+	filetree_expand_or_descend  = function() M.util.not_implemented("filetree_expand_or_descend") end,
+	filetree_collapse_or_ascend = function() M.util.not_implemented("filetree_collapse_or_ascend") end,
+	filetree_vcs_change_next    = function() M.util.not_implemented("filetree_vcs_change_next") end,
+	filetree_vcs_change_prev    = function() M.util.not_implemented("filetree_vcs_change_prev") end,
 
-	symbols_outline_focus       = function() M.not_implemented("symbols_outline_focus") end,
-	symbols_outline_float       = function() M.not_implemented("symbols_outline_float") end,
+	symbols_outline_focus       = function() M.util.not_implemented("symbols_outline_focus") end,
+	symbols_outline_float       = function() M.util.not_implemented("symbols_outline_float") end,
 
-	undotree                    = function() M.not_implemented("undotree") end,
+	undotree                    = function() M.util.not_implemented("undotree") end,
 
 	zen_mode                    = function()
 		local colorcolumns = vim.split(vim.o.colorcolumn, ",")
@@ -139,75 +141,75 @@ M.fn = {
 		})
 	end,
 
-	toggle_context              = function() M.not_implemented("toggle_context") end,
+	toggle_context              = function() M.util.not_implemented("toggle_context") end,
 	find_files                  = function() M.util.feed(":edit **/*") end,
 	fuzzy_find                  = function() M.util.feed(":grep %<left><left> ") end,
 	live_grep                   = function() M.util.feed(":grep ") end,
 	buffers                     = function() M.util.feed(":buffer ") end,
 
-	vcs_change_next             = function() M.not_implemented("vcs_change_next") end,
-	vcs_change_prev             = function() M.not_implemented("vcs_change_prev") end,
-	vcs_change_preview          = function() M.not_implemented("vcs_change_preview") end,
-	vcs_change_preview_inline   = function() M.not_implemented("vcs_change_preview_inline") end,
-	vcs_change_select           = function() M.not_implemented("vcs_change_select") end,
-	vcs_blame                   = function() M.not_implemented("vcs_blame") end,
-	vcs_blame_line              = function() M.not_implemented("vcs_blame_line") end,
-	vcs_reset                   = function() M.not_implemented("vcs_reset") end,
-	vcs_reset_buffer            = function() M.not_implemented("vcs_reset_buffer") end,
+	vcs_change_next             = function() M.util.not_implemented("vcs_change_next") end,
+	vcs_change_prev             = function() M.util.not_implemented("vcs_change_prev") end,
+	vcs_change_preview          = function() M.util.not_implemented("vcs_change_preview") end,
+	vcs_change_preview_inline   = function() M.util.not_implemented("vcs_change_preview_inline") end,
+	vcs_change_select           = function() M.util.not_implemented("vcs_change_select") end,
+	vcs_blame                   = function() M.util.not_implemented("vcs_blame") end,
+	vcs_blame_line              = function() M.util.not_implemented("vcs_blame_line") end,
+	vcs_reset                   = function() M.util.not_implemented("vcs_reset") end,
+	vcs_reset_buffer            = function() M.util.not_implemented("vcs_reset_buffer") end,
 
-	toggle_debugger             = function() M.not_implemented("toggle_debugger") end,
-	debugger_continue           = function() M.not_implemented("debugger_continue") end,
-	debugger_terminate          = function() M.not_implemented("debugger_terminate") end,
-	debugger_rerun              = function() M.not_implemented("debugger_rerun") end,
-	debugger_stepover           = function() M.not_implemented("debugger_stepover") end,
-	debugger_stepin             = function() M.not_implemented("debugger_stepin") end,
-	debugger_stepout            = function() M.not_implemented("debugger_stepout") end,
-	breakpoint_toggle           = function() M.not_implemented("breakpoint_toggle") end,
-	breakpoint_condition        = function() M.not_implemented("breakpoint_condition") end,
-	breakpoint_log              = function() M.not_implemented("breakpoint_log") end,
-	breapoint_condition_log     = function() M.not_implemented("breapoint_condition_log") end,
-	inspect_variable            = function() M.not_implemented("inspect_variable") end,
+	toggle_debugger             = function() M.util.not_implemented("toggle_debugger") end,
+	debugger_continue           = function() M.util.not_implemented("debugger_continue") end,
+	debugger_terminate          = function() M.util.not_implemented("debugger_terminate") end,
+	debugger_rerun              = function() M.util.not_implemented("debugger_rerun") end,
+	debugger_stepover           = function() M.util.not_implemented("debugger_stepover") end,
+	debugger_stepin             = function() M.util.not_implemented("debugger_stepin") end,
+	debugger_stepout            = function() M.util.not_implemented("debugger_stepout") end,
+	breakpoint_toggle           = function() M.util.not_implemented("breakpoint_toggle") end,
+	breakpoint_condition        = function() M.util.not_implemented("breakpoint_condition") end,
+	breakpoint_log              = function() M.util.not_implemented("breakpoint_log") end,
+	breapoint_condition_log     = function() M.util.not_implemented("breapoint_condition_log") end,
+	inspect_variable            = function() M.util.not_implemented("inspect_variable") end,
 
-	cursors_add_down            = function() M.not_implemented("cursors_add_down") end,
-	cursors_add_up              = function() M.not_implemented("cursors_add_up") end,
-	cursors_add_word            = function() M.not_implemented("cursors_add_word") end,
-	cursors_add_selection       = function() M.not_implemented("cursors_add_selection") end,
-	cursors_skip_selection      = function() M.not_implemented("cursors_skip_selection") end,
-	cursors_align               = function() M.not_implemented("cursors_align") end,
-	cursors_toggle              = function() M.not_implemented("cursors_toggle") end,
-	cursors_delete              = function() M.not_implemented("cursors_delete") end,
-	cursors_clear               = function() M.not_implemented("cursors_clear") end,
+	cursors_add_down            = function() M.util.not_implemented("cursors_add_down") end,
+	cursors_add_up              = function() M.util.not_implemented("cursors_add_up") end,
+	cursors_add_word            = function() M.util.not_implemented("cursors_add_word") end,
+	cursors_add_selection       = function() M.util.not_implemented("cursors_add_selection") end,
+	cursors_skip_selection      = function() M.util.not_implemented("cursors_skip_selection") end,
+	cursors_align               = function() M.util.not_implemented("cursors_align") end,
+	cursors_toggle              = function() M.util.not_implemented("cursors_toggle") end,
+	cursors_delete              = function() M.util.not_implemented("cursors_delete") end,
+	cursors_clear               = function() M.util.not_implemented("cursors_clear") end,
 
-	color_picker                = function() M.not_implemented("color_picker") end,
+	color_picker                = function() M.util.not_implemented("color_picker") end,
 
-	notif_history               = function() M.not_implemented("notif_history") end,
-	notif_dismiss               = function() M.not_implemented("notif_dismiss") end,
+	notif_history               = function() M.util.not_implemented("notif_history") end,
+	notif_dismiss               = function() M.util.not_implemented("notif_dismiss") end,
 
 	-- TODO: builtin implementation?
-	move_argument_next          = function() M.not_implemented("move_argument_next") end,
-	move_argument_prev          = function() M.not_implemented("move_argument_prev") end,
-	move_function_next          = function() M.not_implemented("move_function_next") end,
-	move_function_prev          = function() M.not_implemented("move_function_prev") end,
-	move_class_next             = function() M.not_implemented("move_class_next") end,
-	move_class_prev             = function() M.not_implemented("move_class_prev") end,
+	move_argument_next          = function() M.util.not_implemented("move_argument_next") end,
+	move_argument_prev          = function() M.util.not_implemented("move_argument_prev") end,
+	move_function_next          = function() M.util.not_implemented("move_function_next") end,
+	move_function_prev          = function() M.util.not_implemented("move_function_prev") end,
+	move_class_next             = function() M.util.not_implemented("move_class_next") end,
+	move_class_prev             = function() M.util.not_implemented("move_class_prev") end,
 
-	goto_next_function          = function() M.not_implemented("goto_next_function") end,
-	goto_next_argument          = function() M.not_implemented("goto_next_argument") end,
-	goto_next_class             = function() M.not_implemented("goto_next_class") end,
-	goto_next_comment           = function() M.not_implemented("goto_next_comment") end,
-	goto_prev_function          = function() M.not_implemented("goto_prev_function") end,
-	goto_prev_argument          = function() M.not_implemented("goto_prev_argument") end,
-	goto_prev_class             = function() M.not_implemented("goto_prev_class") end,
-	goto_prev_comment           = function() M.not_implemented("goto_prev_comment") end,
+	goto_next_function          = function() M.util.not_implemented("goto_next_function") end,
+	goto_next_argument          = function() M.util.not_implemented("goto_next_argument") end,
+	goto_next_class             = function() M.util.not_implemented("goto_next_class") end,
+	goto_next_comment           = function() M.util.not_implemented("goto_next_comment") end,
+	goto_prev_function          = function() M.util.not_implemented("goto_prev_function") end,
+	goto_prev_argument          = function() M.util.not_implemented("goto_prev_argument") end,
+	goto_prev_class             = function() M.util.not_implemented("goto_prev_class") end,
+	goto_prev_comment           = function() M.util.not_implemented("goto_prev_comment") end,
 
-	select_around_function      = function() M.not_implemented("select_around_function") end,
-	select_inside_function      = function() M.not_implemented("select_inside_function") end,
-	select_around_argument      = function() M.not_implemented("select_around_argument") end,
-	select_inside_argument      = function() M.not_implemented("select_inside_argument") end,
-	select_around_class         = function() M.not_implemented("select_around_class") end,
-	select_inside_class         = function() M.not_implemented("select_inside_class") end,
-	select_around_comment       = function() M.not_implemented("select_around_comment") end,
-	select_inside_comment       = function() M.not_implemented("select_inside_comment") end,
+	select_around_function      = function() M.util.not_implemented("select_around_function") end,
+	select_inside_function      = function() M.util.not_implemented("select_inside_function") end,
+	select_around_argument      = function() M.util.not_implemented("select_around_argument") end,
+	select_inside_argument      = function() M.util.not_implemented("select_inside_argument") end,
+	select_around_class         = function() M.util.not_implemented("select_around_class") end,
+	select_inside_class         = function() M.util.not_implemented("select_inside_class") end,
+	select_around_comment       = function() M.util.not_implemented("select_around_comment") end,
+	select_inside_comment       = function() M.util.not_implemented("select_inside_comment") end,
 
 }
 
