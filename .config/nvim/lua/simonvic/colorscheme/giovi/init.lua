@@ -28,7 +28,7 @@ return require("simonvic.colorscheme.ruby"):build({
 			["@number.giovi"]                      = { fg = p.giovi_int },
 			["@number.float.giovi"]                = { fg = p.giovi_real },
 			["@string.giovi"]                      = { fg = p.giovi_text },
-			["@string.textblock.giovi"]            = { bg = p.giovi_text_block__1, fg = p.giovi_text_block },
+			["@string.textblock.giovi"]            = { bg = p.giovi_textblock__1, fg = p.giovi_textblock },
 			["@string.exact.giovi"]                = { fg = p.giovi_text_exact },
 
 			["@punctuation.giovi"]                 = { fg = p.giovi_punctation },
