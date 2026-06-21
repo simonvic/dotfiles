@@ -52,6 +52,11 @@ return function()
 		document_symbols    = builtin.lsp_document_symbols,
 		fuzzy_find          = builtin.current_buffer_fuzzy_find,
 		live_grep           = builtin.live_grep,
+		live_grep_glob      = function()
+			vim.ui.input({ scope = "window", prompt = "Glob pattern" }, function(input)
+				builtin.live_grep({ glob_pattern = input })
+			end)
+		end,
 		references          = builtin.lsp_references,
 		implementation      = builtin.lsp_implementations,
 		definition          = builtin.lsp_definitions,

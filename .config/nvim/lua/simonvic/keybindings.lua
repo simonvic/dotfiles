@@ -129,6 +129,7 @@ M.fn = {
 	find_files                  = function() M.util.feed(":edit **/*") end,
 	fuzzy_find                  = function() M.util.feed(":grep %<left><left> ") end,
 	live_grep                   = function() M.util.feed(":grep ") end,
+	live_grep_glob              = function() M.util.feed(":grep --glob=''<left>") end,
 	buffers                     = function() M.util.feed(":buffer ") end,
 
 	vcs_change_next             = function() M.util.not_implemented("vcs_change_next") end,
@@ -294,8 +295,8 @@ M.mappings = {
 	{ m.__i_, "<A-Tab>",                            function() M.fn.buffers() end,                   { desc = "Buffers" } },
 	{ m.n___, "<leader>f",                          function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
 	{ m.__i_, "<C-f>",                              function() M.fn.fuzzy_find() end,                { desc = "Fuzzy find" } },
-	{ m.n___, { "<leader>F", "<C-A-F>" },           function() M.fn.live_grep() end,                 { desc = "Live grep" } },
-	{ m.__i_, "<C-A-f>",                            function() M.fn.live_grep() end,                 { desc = "Live grep" } },
+	{ m.n___, { "<leader>F", "<C-S-f>" },           function() M.fn.live_grep() end,                 { desc = "Live grep" } },
+	{ m.n___, { "<leader><C-S-f>", "<C-A-S-F>" },   function() M.fn.live_grep_glob() end,            { desc = "Live grep with file glob pattern" } },
 	---------------------------------------------------------------------------- UI
 	{ m.n___, "<Leader>ud",                         function() M.fn.toggle_debugger() end,           { desc = "Toggle debugger UI" } },
 	{ m.n___, "<Leader>ul",                         function() M.fn.toggle_list_chars() end,         { desc = "Toggle list chars" } },
