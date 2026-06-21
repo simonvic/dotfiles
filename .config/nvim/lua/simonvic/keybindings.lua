@@ -310,8 +310,7 @@ M.mappings = {
 	{ m.n___, "<Leader>uZ",                         function() M.fn.zen_mode() end,                  { desc = "Toggle zen mode" } },
 	{ m.n___, "<Leader>uu",                         function() M.fn.undotree() end,                  { desc = "Toggle Undotree" } },
 	{ m.n___, "<A-9>",                              function() M.fn.symbols_outline_focus() end,     { desc = "Toggle symbols outline" } },
-	{ m.n___, { "<A-S-9>", "<A-)>" },               function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
-	{ m.n___, "<leader>s",                          function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
+	{ m.n___, { "<Leader>s", "<A-S-9>", "<A-)>" },  function() M.fn.symbols_outline_float() end,     { desc = "Toggle symbols outline floating navigation" } },
 	{ m.n___, "<Leader>nh",                         function() M.fn.notif_history() end,             { desc = "Show notifications history" } },
 	{ m.n___, "<Leader>nd",                         function() M.fn.notif_dismiss() end,             { desc = "Dismiss notifications" } },
 	---------------------------------------------------------------------------- DEBUGGING
