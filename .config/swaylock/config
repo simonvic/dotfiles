@@ -1,14 +1,10 @@
-# fade-in=1
-effect-blur=32x10
-color=333333
+color=000000aa
 # image="$XDG_CONFIG_HOME/sway/desktop_wallpaper"
-screenshot
+# image="/tmp/simonvic/sLockscreenctl/tempScreenshot.jpg"
 
 font=LatoLight
 font-size=100
 
-clock
-indicator
 indicator-radius=256
 indicator-thickness=16
 indicator-caps-lock
@@ -17,8 +13,6 @@ inside-color=00000000
 inside-clear-color=00000000
 inside-caps-lock-color=00000000
 inside-ver-color=F0544C55
-timestr=%H:%M:%S
-datestr=%A, %d %B
 key-hl-color=F0544C
 bs-hl-color=F0544C
 caps-lock-bs-hl-color=F0544C
@@ -35,3 +29,13 @@ text-wrong-color=DADADAff
 text-ver=...
 text-wrong=!!!
 text-clear=___
+
+# swaylock-effects specific settings
+
+# fade-in=1
+# effect-blur=32x10
+# screenshot
+# clock
+# indicator
+# timestr=%H:%M:%S
+# datestr=%A, %d %B

@@ -31,7 +31,7 @@ bgType=color
 
 # RRGGBBaa
 # Used only if `bgType` is `color`
-bgColor="00000033"
+bgColor="000000aa"
 
 # Path to image
 # Used only if `bgType` is `image`
@@ -45,11 +45,11 @@ bgScaleFactor=10
 
 # Sigma value for the blur effect
 # Used only if `bgType` is `magick`
-bgBlurSigma=16
+bgBlurSigma=8
 
 # How much (percentage) the screenshot has to be dimmed
 # Used only if `bgType` is `magick`
-bgDim=40
+bgDim=20
 
 #                                                                     INDICATOR
 
