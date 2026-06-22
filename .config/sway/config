@@ -152,11 +152,11 @@ set $mod Mod4
 
 #                                                                      TERMINAL
 # start a terminal
-bindsym $mod+Return                      exec xfce4-terminal
-bindsym $mod+Mod1+Return                 exec kitty
+bindsym $mod+Return                      exec kitty
+bindsym $mod+Mod1+Return                 exec xfce4-terminal
 
 # Drop down terminal
-bindsym $mod+Shift+Return                exec xfce4-terminal --drop-down
+# bindsym $mod+Shift+Return                exec xfce4-terminal --drop-down
 
 
 #                                                                       POLYBAR
