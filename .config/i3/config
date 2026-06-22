@@ -188,6 +188,10 @@ bindsym Ctrl+Shift+XF86MonBrightnessUp   exec --no-startup-id sBrightnessctl red
 bindsym Ctrl+Shift+XF86MonBrightnessDown exec --no-startup-id sBrightnessctl redshift decrease 400
 bindsym Ctrl+XF86ScreenSaver             exec --no-startup-id sBrightnessctl redshift toggle
 
+#                                                               DARK/LIGHT MODE
+bindsym Mod1+XF86MonBrightnessUp         exec --no-startup-id sBrightnessctl theme light
+bindsym Mod1+XF86MonBrightnessDown       exec --no-startup-id sBrightnessctl theme dark
+
 #                                                          MEDIA PLAYER CONTROL
 bindsym XF86AudioPlay                    exec --no-startup-id sPlayerctl play-pause
 bindsym XF86AudioStop                    exec --no-startup-id sPlayerctl stop
