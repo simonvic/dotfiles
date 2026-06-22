@@ -8,12 +8,12 @@
 }
 
 tooltip {
-	border-radius: 10px;
-	background-color: #333333;
+	border-radius: 0.5rem;
+	background-color: rgba(0, 0, 0, 0.30);
 }
 
 window#waybar {
-	background-color: rgba(0, 0, 0, 0.33);
+	background: rgba(0, 0, 0, 0.33);
 	color: #DADADA;
 }
 
@@ -51,16 +51,18 @@ window#waybar.tertiary .modules-right>*>* {
 }
 
 #workspaces>button {
+	color: #DADADA;
 	padding: 0 6px;
 	margin: 0 2px;
-	border-bottom: 0px solid transparent;
+	border: 0px solid transparent;
+	border-radius: 0.5rem;
 }
 
 #workspaces>button:hover {
-	background-color: rgba(240, 84, 76, 0.33);
+	background: rgba(240, 84, 76, 0.33);
 }
 
-#workspaces>button.focused {
+#workspaces>button.focused>* {
 	box-shadow: inset 0 -2px #F0544C;
 }
 
@@ -76,6 +78,11 @@ window#waybar.tertiary .modules-right>*>* {
 	padding: 0 8px;
 }
 
+.drawer > * {
+	border-radius: 0.5rem;
+	box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
 #custom-power,
 #custom-suspend,
 #custom-reboot,
@@ -83,6 +90,7 @@ window#waybar.tertiary .modules-right>*>* {
 #custom-logout {
 	margin: 0 2px;
 	padding: 0 6px;
+	border-radius: 0.5rem;
 }
 
 #custom-power:hover,
