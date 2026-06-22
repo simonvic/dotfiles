@@ -201,6 +201,34 @@ function screensaver() {
 	wait
 }
 
+# Set preferred system theme
+# @param 'dark'|'light'
+function setTheme() {
+	setWallpaper "$1"
+	gsettings set "org.gnome.desktop.interface" "color-scheme" "prefer-$1"
+}
+
+# Set desktop wallpaper based on system theme
+# @param 'dark'|'light'
+function setWallpaper() {
+	case "$XDG_SESSION_TYPE" in
+		x11)
+			ln --force --symbolic "desktop_wallpaper_$1" "${XDG_CONFIG_HOME:-$HOME/.config}/i3/desktop_wallpaper"
+			feh --no-fehbg --bg-fill "${XDG_CONFIG_HOME:-$HOME/.config}/i3/desktop_wallpaper"
+			;;
+		wayland)
+			ln --force --symbolic "desktop_wallpaper_$1" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/desktop_wallpaper"
+			swaymsg output '*' bg "${XDG_CONFIG_HOME:-$HOME/.config}/sway/desktop_wallpaper" stretch
+			# local transition_type
+			# transition_type=$([[ "$1" == "light" ]] && echo "grow" || echo "outer")
+			# awww img "${XDG_CONFIG_HOME:-$HOME/.config}/sway/desktop_wallpaper_$1" \
+			# 	--transition-fps=60 \
+			# 	--transition-type="$transition_type" \
+			# 	--transition-duration="0.5"
+			;;
+	esac
+}
+
 ##
 #	Update system bar (polybar/waybar)
 function updateBar() {
@@ -238,6 +266,7 @@ function printUsage() {
 	redshift decrease [amount]   # Decrease the redshift temperature by [amount] if specified or the default value otherwise
 	redshift restore             # Load previously saved redshift state
 	redshift print               # Print the current redshift temperature (used in polybar)
+	theme [dark|light]           # Set preferred system theme
 	polybar update               # Update polybar modules
 
 - Abbreviations
@@ -292,6 +321,12 @@ case $1 in
 				# updateBar
 				;;
 			print) echo "$redshiftTemperature" ;;
+		esac
+		;;
+	theme)
+		case $2 in
+			dark | light) setTheme "$2" ;;
+			*) printUsage ;;
 		esac
 		;;
 	polybar)
