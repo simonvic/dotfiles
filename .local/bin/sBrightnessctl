@@ -49,32 +49,28 @@ usercfg=${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/${0##*/}.sh
 
 ###############################################################################
 
-##
-#	Get brightness level
-#	@return brightness [0 - 100]
+# Get brightness level
+# @return brightness [0 - 100]
 function getBrightness() {
 	xbacklight -get
 }
 
-##
-#	Set brightness level
-#	@param brightness [0 - 100]
-#	@param transition fps. Default: $fade_fps
-#	@param transition duration. Default: $fade_time
+# Set brightness level
+# @param brightness [0 - 100]
+# @param transition fps. Default: $fade_fps
+# @param transition duration. Default: $fade_time
 function setBrightness() {
 	xbacklight -set "$1" -fps "${2:-$fade_fps}" -time "${3:-$fade_time}"
 }
 
-##
-#	Change brightness level
-#	@param -inc | -dec
-#	@param amount default: defaultBrightnessChangeValue
+# Change brightness level
+# @param -inc | -dec
+# @param amount default: defaultBrightnessChangeValue
 function changeBrightness() {
 	xbacklight "$1" "${2:-$defaultBrightnessChangeValue}"
 }
 
-##
-#	Toggle Redshift status
+# Toggle Redshift status
 function toggleRedshift() {
 	case "$XDG_SESSION_TYPE" in
 		x11)
@@ -102,9 +98,8 @@ function toggleRedshift() {
 	sed -i "s/redshiftEnabled=.*/redshiftEnabled=$redshiftEnabled/" "$redshiftStateFile"
 }
 
-##
-#	Change redshift temperature
-#	@param temperature [1000 - 25000]
+# Change redshift temperature
+# @param temperature [1000 - 25000]
 function setRedshiftTemperature() {
 	if [[ "$1" -lt 1000 ]] || [[ "$1" -gt 25000 ]]; then
 		return
@@ -126,9 +121,8 @@ function setRedshiftTemperature() {
 	sed -i "s/redshiftTemperature=.*/redshiftTemperature=$redshiftTemperature/" "$redshiftStateFile"
 }
 
-##
-#	Build ASCII bar
-#	@param current brightness
+# Build ASCII bar
+# @param current brightness
 function buildBar() {
 	DrawBar.sh \
 		--length "$notificationBarLength" \
@@ -138,8 +132,7 @@ function buildBar() {
 		--borders "$notificationBarBorders"
 }
 
-##
-#	Send notification
+# Send notification
 function sendNotification() {
 	local body=""
 	local icon=""
@@ -229,8 +222,7 @@ function setWallpaper() {
 	esac
 }
 
-##
-#	Update system bar (polybar/waybar)
+# Update system bar (polybar/waybar)
 function updateBar() {
 	case "$XDG_SESSION_TYPE" in
 		x11)
