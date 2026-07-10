@@ -20,3 +20,5 @@ set index-active-fg         "#DADADA"
 set statusbar-home-tilde    true
 set window-title-home-tilde true
 
+set selection-notification false
+
