@@ -220,7 +220,7 @@ M.mappings = {
 	{ m.n___, { "<A-r>", "grr" },                   function() M.fn.references() end,                { desc = "Find references" } },
 	{ m.n___, { "<C-r>", "grn" },                   function() M.fn.rename() end,                    { desc = "Rename" } },
 	{ m.n___, { "<C-q>", "grq" },                   function() M.fn.hover() end,                     { desc = "Open docs" } },
-	{ m.nsi_, "<C-'>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
+	{ m.nsi_, "<C-h>",                              function() M.fn.signature_help() end,            { desc = "Signature help" } },
 	{ m.n___, "<leader>d",                          function() M.fn.diagnostic_show() end,           { desc = "Show diagnostics" } },
 	{ m.n___, "<leader>D",                          function() M.fn.diagnostic_show_all() end,       { desc = "Show diagnostics for entire project" } },
 	--------------------------------------------------------------------------- MOVEMENT
