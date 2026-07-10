@@ -30,6 +30,11 @@ return {
 			}
 		},
 		java = {
+			completion = {
+				favoriteStaticMembers = {
+					"org.assertj.core.api.Assertions.*",
+				},
+			},
 			codeGeneration = {
 				generateComments = true,
 				hashCodeEquals = {
