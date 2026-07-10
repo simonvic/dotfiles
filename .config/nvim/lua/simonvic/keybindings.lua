@@ -64,6 +64,8 @@ M.fn = {
 
 	terminal                    = function() vim.cmd("botright terminal") end,
 	terminal_float              = function() vim.cmd("terminal") end,
+	quickfix_list               = function() vim.cmd("copen") end,
+	location_list               = function() vim.cmd("lopen") end,
 
 	commands                    = function() vim.cmd("map") end,
 
@@ -279,6 +281,8 @@ M.mappings = {
 	{ m.n___, "|",                                  function() M.fn.filetree_focus() end,            { desc = "Focus filetree" } },
 	{ m.n__t, { "<A-S-ù>", "<A-§>" },               function() M.fn.terminal() end,                  { desc = "Toggle dropdown terminal" } },
 	{ m.n__t, "<A-ù>",                              function() M.fn.terminal_float() end,            { desc = "Toggle floating terminal" } },
+	{ m.n___, "<leader>q",                          function() M.fn.quickfix_list() end,             { desc = "Toggle quickfix list" } },
+	{ m.n___, "<leader>l",                          function() M.fn.location_list() end,             { desc = "Toggle location list" } },
 	-- { m.___t, "<Esc>",                              "<C-\\><C-n>",                                   { desc = "Exit terminal mode" } },
 	{ m.n___, { "<leader><leader>", "<C-p>" },      function() M.fn.find_files() end,                { desc = "Find files" } },
 	{ m.n___, "<A-p>",                              function() M.fn.commands_menu() end,             { desc = "Commands menu" } },
