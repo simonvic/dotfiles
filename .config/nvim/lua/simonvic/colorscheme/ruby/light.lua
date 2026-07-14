@@ -25,6 +25,7 @@ return require("simonvic.colorscheme.ruby"):build({
 		code_bg           = "#E7E7E7",
 		url               = "#333333",
 
+		metakeyword       = "#A0A512",
 		literal_string__4 = "#D1DDD0",
 
 		added__3          = "#CADBD3",
