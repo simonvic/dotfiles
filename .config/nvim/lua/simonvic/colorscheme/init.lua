@@ -151,6 +151,7 @@ function M.build_groups(palette)
 		StatusLine                         = { bg = p.zdepth_1 },
 		StatusLineNC                       = { bg = p.zdepth_0 },
 		MsgArea                            = { bg = p.zdepth_1, bold = true },
+		MsgSeparator                       = { underdashed = true },
 		MoreMsg                            = { bg = p.zdepth_1, bold = true },
 		Question                           = { bg = p.zdepth_1, bold = true },
 		WinSeparator                       = { bg = p.zdepth_1, fg = p.text__2 },
