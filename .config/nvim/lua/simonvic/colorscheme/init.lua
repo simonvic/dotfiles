@@ -640,6 +640,7 @@ function M.build_groups(palette)
 		rustSelf                           = { link = "Keyword" },
 		["@keyword.import.rust"]           = { link = "Keyword" },
 		["@lsp.type.decorator.rust"]       = { link = "PreProc" },
+		["@lsp.type.macro.rust"]           = { link = "PreProc" },
 
 		------------------------------------------------------------------------ makefile
 		makeCommands                       = { link = "Function" },
