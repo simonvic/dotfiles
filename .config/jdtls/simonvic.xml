@@ -26,7 +26,7 @@
 <setting id="org.eclipse.jdt.core.formatter.wrap_before_switch_case_arrow_operator" value="true"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_delcaration" value="separate_lines_if_wrapped"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_enum_constant_declaration" value="separate_lines_if_wrapped"/>
-<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_annotation" value="separate_lines_if_wrapped"/>
+<setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_annotation" value="preserve_positions"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_record_declaration" value="separate_lines_if_wrapped"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_invocation" value="separate_lines_if_wrapped"/>
 <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_for_statment" value="separate_lines_if_wrapped"/>
