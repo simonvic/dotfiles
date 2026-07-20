@@ -38,6 +38,7 @@ return function()
 				hidden = true
 			},
 			diagnostics = {
+				path_display = "hidden",
 				sort_by = "severity"
 			},
 			buffers = {
