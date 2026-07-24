@@ -1,7 +1,6 @@
 return function()
 	local glyphs = require("simonvic.glyphs")
 	local keybindings = require("simonvic.keybindings")
-	local actions = require("telescope.actions")
 	require("telescope").setup({
 		defaults = {
 			dynamic_preview_title = true,
@@ -18,20 +17,7 @@ return function()
 				}
 			},
 			cycle_layout_list = { "vertical", "bottom_pane", "horizontal" },
-			-- TODO: move to keybindings
-			mappings = {
-				i = {
-					["<esc>"] = actions.close,
-					["<C-h>"] = actions.select_horizontal,
-					["<C-v>"] = actions.select_vertical,
-					["<C-q>"] = actions.smart_send_to_qflist,
-					["<A-CR>"] = require("telescope.actions.layout").toggle_preview,
-					["<A-Space>"] = require("telescope.actions.layout").cycle_layout_next,
-					-- TODO: send to loclist?
-					-- ["<A-CR>"] = actions.send_selected_to_qflist,
-					-- ["<C-CR>"] = actions.send_to_qflist,
-				}
-			}
+			mappings = keybindings.plugins.telescope()
 		},
 		pickers = {
 			find_files = {

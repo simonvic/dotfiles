@@ -342,8 +342,23 @@ M.mappings = {
 M.plugins = {}
 
 -------------------------------------------------------------------------------- TELESCOPE
-M.plugins.telescope = {
-}
+M.plugins.telescope = function()
+	local actions = require("telescope.actions")
+	local layout = require("telescope.actions.layout")
+	return {
+		i = {
+			["<esc>"] = actions.close,
+			["<C-s>"] = actions.select_horizontal,
+			["<C-v>"] = actions.select_vertical,
+			["<C-q>"] = actions.smart_send_to_qflist,
+			["<A-CR>"] = layout.toggle_preview,
+			["<A-Space>"] = layout.cycle_layout_next,
+			-- TODO: send to loclist?
+			-- ["<A-CR>"] = actions.send_selected_to_qflist,
+			-- ["<C-CR>"] = actions.send_to_qflist,
+		}
+	}
+end
 
 -------------------------------------------------------------------------------- SNACKS
 M.plugins.snacks = {
