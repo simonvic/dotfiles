@@ -593,6 +593,17 @@ M.plugins.aerial = {
 	}
 }
 
+-------------------------------------------------------------------------------- DAPUI
+M.plugins.ccc = function()
+	local mapping = require("ccc").mapping
+	return {
+		["L"] = mapping.increase10,
+		["H"] = mapping.decrease10,
+		["0"] = mapping.set0,
+		["$"] = mapping.set100,
+	}
+end
+
 --------------------------------------------------------------------------------
 
 ---Set keymaps
