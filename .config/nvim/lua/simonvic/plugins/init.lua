@@ -46,8 +46,8 @@ M.plugins = {
 	{ src = "https://github.com/lewis6991/gitsigns.nvim",                     data = { on_setup = require("simonvic.plugins.configs.gitsigns") } },
 	{ src = "https://github.com/nvim-mini/mini.align",                        data = { on_setup = require("simonvic.plugins.configs.align") } },
 	{ src = "https://github.com/catgoose/nvim-colorizer.lua",                 data = { on_setup = require("simonvic.plugins.configs.colorizer") } },
-	{ src = "https://github.com/max397574/colortils.nvim",                    data = { on_setup = require("simonvic.plugins.configs.colortils") } },
-	-- { src = "https://github.com/uga-rosa/ccc.nvim",                           data = { on_setup = require("simonvic.plugins.configs.ccc") } },
+	-- { src = "https://github.com/max397574/colortils.nvim",                    data = { on_setup = require("simonvic.plugins.configs.colortils") } },
+	{ src = "https://github.com/uga-rosa/ccc.nvim",                           data = { on_setup = require("simonvic.plugins.configs.ccc") } },
 	{ src = "https://github.com/kylechui/nvim-surround",                      data = { on_setup = require("simonvic.plugins.configs.surround") } },
 	---------------------------------------------------------------------------
 	--                                                          ADVANCED CODING
