@@ -4,9 +4,18 @@ local M = {}
 ---@class simonvic.glyphs.UI
 M.ui = {
 	unselected = "",
-	selected = "󰄲",
-	caret = ">",
-	color_pill = "██"
+	selected   = "󰄲",
+	disabled   = "",
+	enabled    = "",
+	collapsed  = "",
+	expanded   = "",
+	caret      = ">",
+	here       = "",
+	color_pill = "██",
+	filter     = "󰈲",
+	play       = "",
+	pause      = "",
+	stop       = "",
 }
 
 M.listchars = {
@@ -86,29 +95,22 @@ M.symbols = {
 ---Debugger related glyphs
 ---@class simonvic.glyphs.Dap
 M.dap = {
-	stopped              = "",
+	stopped              = M.ui.here,
 	breakpoint           = "",
 	breakpoint_condition = "",
 	breakpoint_rejected  = "",
 	log_point            = "",
-	current_frame        = "",
-}
-
----Dapui (plugin) related glyphs
----@class simonvic.glyphs.Dapui
-M.dapui = {
-	controls = {
-		icons = {
-			disconnect = "",
-			pause      = "",
-			play       = "",
-			run_last   = "",
-			step_back  = "",
-			step_into  = "",
-			step_out   = "",
-			step_over  = "",
-			terminate  = ""
-		}
+	current_frame        = M.ui.here,
+	controls             = {
+		play       = M.ui.play,
+		pause      = M.ui.pause,
+		stop       = M.ui.stop,
+		disconnect = "",
+		run_last   = "",
+		step_back  = "",
+		step_into  = "",
+		step_out   = "",
+		step_over  = "",
 	}
 }
 
@@ -135,8 +137,8 @@ M.fs = {
 	hidden         = " ",
 	symlink_arrow  = "󱦰",
 	dir            = {
-		collapsed    = "",
-		expanded     = "",
+		collapsed    = M.ui.collapsed,
+		expanded     = M.ui.expanded,
 		default      = "",
 		open         = "",
 		empty        = "",

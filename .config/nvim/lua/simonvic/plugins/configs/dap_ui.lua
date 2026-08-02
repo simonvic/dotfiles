@@ -10,13 +10,13 @@ return function()
 		},
 		mappings = keybindings.plugins.dapui,
 		icons = {
-			expanded = glyphs.fs.dir.expanded,
-			collapsed = glyphs.fs.dir.collapsed,
+			expanded = glyphs.ui.expanded,
+			collapsed = glyphs.ui.collapsed,
 			current_frame = glyphs.dap.current_frame,
 		},
 		controls = {
 			enabled = true,
-			icons = glyphs.dapui.controls.icons
+			icons = glyphs.dap.controls.icons
 		},
 		layouts = {
 			{
