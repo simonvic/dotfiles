@@ -1,5 +1,7 @@
 local M = {}
 
+---General-purpose UI glyphs
+---@class simonvic.glyphs.UI
 M.ui = {
 	unselected = "",
 	selected = "󰄲",
@@ -28,14 +30,20 @@ M.fillchars = {
 	eob       = " ",
 }
 
+---Glyphs for the tabline
+---@class simonvic.glyphs.Tabline
 M.tabline = {
 	close = ""
 }
 
+---Glyphs for the statusline
+---@class simonvic.glyphs.Statusline
 M.statusline = {
 	separator = " |"
 }
 
+---Diagnostic related glyphs
+---@class simonvic.glyphs.Diagnostics
 M.diagnostics = {
 	prefix = "• ",
 	hint   = "",
@@ -44,6 +52,9 @@ M.diagnostics = {
 	error  = "",
 }
 
+---LSP symbols kinds related glyphs
+---See: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#symbolKind
+---@class simonvic.glyphs.Diagnostics
 M.symbols = {
 	Text          = "󰉿",
 	Method        = "󰆧",
@@ -72,6 +83,8 @@ M.symbols = {
 	TypeParameter = "",
 }
 
+---Debugger related glyphs
+---@class simonvic.glyphs.Dap
 M.dap = {
 	stopped              = "",
 	breakpoint           = "",
@@ -81,6 +94,8 @@ M.dap = {
 	current_frame        = "",
 }
 
+---Dapui (plugin) related glyphs
+---@class simonvic.glyphs.Dapui
 M.dapui = {
 	controls = {
 		icons = {
@@ -97,6 +112,8 @@ M.dapui = {
 	}
 }
 
+---VCS (git) related glyphs
+---@class simonvic.glyphs.Vcs
 M.vcs = {
 	commit    = "",
 	ignored   = "",
@@ -110,6 +127,8 @@ M.vcs = {
 	conflict  = "",
 }
 
+---Filesystem related glyphs
+---@class simonvic.glyphs.Fs
 M.fs = {
 	default        = "",
 	unsaved        = "󰏫",
@@ -132,6 +151,8 @@ M.fs = {
 	},
 }
 
+---Glyphs for the statuscolumn
+---@class simonvic.glyphs.Statuscolumn
 M.statuscolumn = {
 	vcs = {
 		addded          = "┃",
@@ -143,6 +164,8 @@ M.statuscolumn = {
 	},
 }
 
+---Plugins specific glyphs
+---@class simonvic.glyphs.Plugins
 M.plugins = {
 	mason = {
 		package_installed   = "✓",
