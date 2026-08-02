@@ -53,6 +53,7 @@ M.plugins = {
 	--                                                          ADVANCED CODING
 	{ src = "https://github.com/mfussenegger/nvim-dap",                       data = { on_setup = require("simonvic.plugins.configs.debugger") } },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui",                        data = { on_setup = require("simonvic.plugins.configs.dap_ui") } },
+	-- { src = "https://github.com/igorlfs/nvim-dap-view",                       data = { on_setup = require("simonvic.plugins.configs.dap_view") } },
 	{ src = "https://github.com/mfussenegger/nvim-jdtls",                     data = { on_setup = require("simonvic.plugins.configs.nvim_jdtls") } },
 	{ src = "https://github.com/mrcjkb/rustaceanvim",                         data = { on_setup = require("simonvic.plugins.configs.rustacean") } },
 	{ src = "https://github.com/lervag/vimtex",                               data = { on_setup = require("simonvic.plugins.configs.vimtex") } },

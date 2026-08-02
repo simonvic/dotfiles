@@ -464,6 +464,23 @@ function M.build_groups(palette)
 		DapUIUnavailable                   = { bg = p.zdepth_1, fg = p.disabled },
 		DapUIUnavailableNC                 = { link = "DapUIUnavailable" },
 
+		------------------------------------------------------------------------ DapView
+		NvimDapViewControlNC               = { link = "DapUIPlayPauseNC" },
+		NvimDapViewControlPause            = { link = "DapUIPlayPause" },
+		NvimDapViewControlPlay             = { link = "DapUIPlayPause" },
+		NvimDapViewControlTerminate        = { link = "DapUIStop" },
+		NvimDapViewControlDisconnect       = { link = "DapUIStop" },
+		NvimDapViewControlRunLast          = { link = "DapUIRestart" },
+		NvimDapViewControlStepBack         = { link = "DapUIStepBack" },
+		NvimDapViewControlStepInto         = { link = "DapUIStepInto" },
+		NvimDapViewControlStepOut          = { link = "DapUIStepOut" },
+		NvimDapViewControlStepOver         = { link = "DapUIStepOver" },
+		NvimDapViewLineNumber              = { link = "DapUILineNumber" },
+		NvimDapViewSeparator               = { link = "WinSeparator" },
+		NvimDapViewWatchError              = { link = "DapUIWatchesError" },
+		NvimDapViewWatchExpr               = { link = "DapUIWatchesValue" },
+		NvimDapViewWatchUpdated            = { link = "DapUIModifiedValue" },
+
 		------------------------------------------------------------------------ NvimTree
 		NvimTreeFolderIcon                 = {},
 		NvimTreeIndentMarker               = { link = "NonText" },
