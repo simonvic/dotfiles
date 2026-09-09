@@ -2,7 +2,7 @@ return function()
 	local dapview = require("dap-view")
 	local glyphs = require("simonvic.glyphs")
 	dapview.setup({
-		auto_toggle = "keep_terminal",
+		auto_toggle = "open",
 		virtual_text = {
 			enabled = true,
 			position = "inline",
