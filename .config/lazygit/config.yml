@@ -1,0 +1,44 @@
+notARepository: skip
+git:
+  diffRenderers:
+    - command: delta --paging=never --syntax-theme=gruvbox-{{colorScheme}}
+gui:
+  mouseEvents: true
+  sidePanelWidth: 0.2
+  shrinkSidePanelsToContent: true
+  sidePanels:
+    - [status]
+    - [branches, remotes, tags]
+    - [files, worktrees, submodules]
+    - [commits, reflog]
+    - [stash]
+  expandFocusedSidePanel: true
+  expandedSidePanelWeight: 5
+  mainPanelSplitMode: vertical
+  nerdFontsVersion: "3"
+  scrollOffMargin: 8
+  border: rounded
+  theme:
+    activeBorderColor:
+      - '#F0544C'
+      - bold
+    cherryPickedCommitBgColor:
+      - cyan
+    cherryPickedCommitFgColor:
+      - blue
+    unstagedChangesColor:
+      - red
+    defaultFgColor:
+      - default
+    authorColors:
+      'simonvic': '#F0544C'
+    inactiveBorderColor:
+      - '#AAAAAA'
+    optionsTextColor:
+      - '#CACACA'
+  darkTheme:
+    selectedLineBgColor:
+      - '#88302B'
+  lightTheme:
+    selectedLineBgColor:
+      - '#EF9F9B'
