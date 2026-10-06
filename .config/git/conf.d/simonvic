@@ -33,12 +33,6 @@
 	zero-style = dim
 	plus-style = green
 
-[delta "syntax"]
-	syntax-theme = gruvbox-dark
-	minus-style = syntax "#4a2e30"
-	zero-style = syntax
-	plus-style = syntax "#23332a"
-
 [delta "line-numbers"]
 	line-numbers = true
     line-numbers-left-format = "{nm:>3} "
