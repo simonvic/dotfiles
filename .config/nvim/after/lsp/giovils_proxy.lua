@@ -5,8 +5,8 @@ return {
 	cmd = {
 		"java",
 		"-jar",
-		"/home/simonvic/Documents/Productivity/Programming/JAVA/Giovi/target/Giovi.jar",
-		"--ls-proxy"
+		"/home/simonvic/Documents/Productivity/Programming/JAVA/GioviLS/target/GioviLS.jar",
+		"--proxy"
 	},
 	filetypes = { "giovi" },
 	settings = {},

@@ -5,8 +5,7 @@ return {
 	cmd = {
 		"java",
 		"-jar",
-		"/home/simonvic/Documents/Productivity/Programming/JAVA/Giovi/target/Giovi.jar",
-		"--ls"
+		"/home/simonvic/Documents/Productivity/Programming/JAVA/GioviLS/target/GioviLS.jar"
 	},
 	filetypes = { "giovi" },
 	settings = {},
