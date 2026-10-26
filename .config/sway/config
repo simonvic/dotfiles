@@ -61,6 +61,9 @@ bar {
 
 # TODO: remove no-startuo-id (ignored in wayland)
 
+# Background wallpaper
+#exec --no-startup-id awww-daemon
+
 # Notification deamon
 exec --no-startup-id dunst
 
