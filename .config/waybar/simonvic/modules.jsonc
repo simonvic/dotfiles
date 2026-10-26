@@ -663,7 +663,7 @@
 		"format": "󰈐 {} {alt}",
 		"return-type": "json",
 		"tooltip-format": "cpu: {}\ngpu: {alt}",
-		"exec": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(sensors | grep cpu_fan | cut -d: -f2 | tr -d ' ')\" \"$(sensors | grep gpu_fan | cut -d: -f2 | tr -d ' ')\""
+		"exec": "sensors=$(sensors); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(echo \"$sensors\" | grep cpu_fan | cut -d: -f2 | tr -d ' ')\" \"$(echo \"$sensors\" | grep gpu_fan | cut -d: -f2 | tr -d ' ')\""
 	},
 	"custom/tlp": {
 		"interval": 5,
