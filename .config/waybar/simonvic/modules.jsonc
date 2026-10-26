@@ -353,6 +353,17 @@
 			"power-saver": "󰾆"
 		}
 	},
+	"power-profiles-daemon#extended": {
+		"format": "{icon} {profile}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"tooltip": true,
+		"format-icons": {
+			"default": "󰓅",
+			"performance": "󰓅",
+			"balanced": "󰾅",
+			"power-saver": "󰾆"
+		}
+	},
 	"network": {
 		 //"interface": "wlp2*", // (Optional) To force the use of this interface
 		"interval": 5,
