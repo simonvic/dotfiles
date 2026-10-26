@@ -654,9 +654,9 @@
 		"format": " {}",
 		"return-type": "json",
 		"tooltip-format": "<tt>{alt}</tt>",
-		"exec": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(auracle outdated | wc -l)\" \"$(auracle outdated | sed 's/-> //' | column -t | tr '\n' '\r' )\"",
+		"exec": "aur_outdated=$(auracle outdated); aur_table=$(echo \"$aur_outdated\" | sed 's/-> //g' | column -t); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(wc -l <<< \"$aur_outdated\")\" \"${aur_table//\n/\\\\n}\"",
 		"on-click": "i3-sensible-terminal -e 'auracle outdated' --hold",
-		"on-click-right": "printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(auracle outdated | wc -l)\" \"$(auracle outdated | sed 's/-> //' | column -t | tr '\n' '\r' )\""
+		"on-click-right": "aur_outdated=$(auracle outdated); aur_table=$(echo \"$aur_outdated\" | sed 's/-> //g' | column -t); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$(wc -l <<< \"$aur_outdated\")\" \"${aur_table//\n/\\\\n}\"",
 	},
 	"custom/fan": {
 		"interval": 3,
@@ -727,7 +727,7 @@
 		"format": "{}",
 		"return-type": "json",
 		"tooltip-format": "{alt}",
-		"exec": "ufw_status=$(sudo ufw status); read -r _ ufw_active_status <<< $(grep Status <<< $ufw_status); icon=$(case $ufw_active_status in active) echo '';; inactive) echo '';; *) echo ?;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"$(printf '%s' \"<small><tt>$ufw_status</tt></small>\" | tr '\n' '\r')\""
+		"exec": "ufw_status=$(sudo ufw status); read -r _ ufw_active_status <<< $(grep Status <<< $ufw_status); icon=$(case $ufw_active_status in active) echo '';; inactive) echo '';; *) echo ?;; esac); printf '{\"text\":\"%s\",\"alt\":\"%s\"}' \"$icon\" \"<small><tt>${ufw_status//\n/\\\\n}</tt></small>\""
 	}
 
 }
