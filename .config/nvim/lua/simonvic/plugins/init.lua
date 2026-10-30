@@ -67,8 +67,8 @@ M.plugins = {
 
 function M.setup()
 	if not vim.go.loadplugins then
-    	return
-  	end
+		return
+	end
 	-- vim.api.nvim_create_autocmd({"PackChangedPre"}, {
 	-- 	group = vim.api.nvim_create_augroup("simonvic.pack", {}),
 	-- 	callback = function(ev)
