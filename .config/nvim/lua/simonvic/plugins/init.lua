@@ -18,6 +18,7 @@ M.plugins = {
 	{ src = "https://github.com/rcarriga/nvim-notify",                        data = { on_setup = require("simonvic.plugins.configs.notify") } },
 	{ src = "https://github.com/nvim-telescope/telescope.nvim",               data = { on_setup = require("simonvic.plugins.configs.nvim-telescope") } },
 	{ src = "https://github.com/stevearc/dressing.nvim",                      data = { on_setup = require("simonvic.plugins.configs.dressing") } },
+	-- { src = "https://github.com/stevearc/quicker.nvim",                       data = { on_setup = require("simonvic.plugins.configs.quicker") } },
 	{ src = "https://github.com/akinsho/toggleterm.nvim",                     data = { on_setup = require("simonvic.plugins.configs.toggleterm") } },
 	{ src = "https://github.com/nvim-tree/nvim-tree.lua",                     data = { on_setup = require("simonvic.plugins.configs.nvimtree") } },
 	{ src = "https://github.com/petertriho/nvim-scrollbar",                   data = { on_setup = require("simonvic.plugins.configs.scrollbar") } },
