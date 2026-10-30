@@ -40,7 +40,7 @@ return function()
 				scrolloff = 8,
 				scrollbar = false,
 				draw = {
-					padding = { 0, 1 }, -- padding for scrollbar
+					padding = { 1, 1 }, -- padding for scrollbar
 					gap = 1,
 					columns = {
 						{ "kind_icon" },
